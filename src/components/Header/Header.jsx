@@ -1,8 +1,5 @@
-import { Outlet } from 'react-router-dom';
+import { Link, Outlet } from 'react-router-dom';
 import { useTheme } from '@emotion/react';
-
-import { Container } from 'components/App/App.styled';
-import { FaFlagUsa } from 'react-icons/fa';
 
 import {
   HeaderWrapper,
@@ -10,23 +7,27 @@ import {
   NavBar,
   NavLinkStyled,
 } from './Header.styled';
+import Logo from './Logo';
 
 export const Header = () => {
-  const theme = useTheme();
+  // const theme = useTheme();
 
   return (
     <>
       <NavBar>
-        <Container>
+        <>
           <HeaderWrapper>
-            <FaFlagUsa size="40px" color={theme.colors.light} />
+            {/* <FaFlagUsa size="40px" color={theme.colors.light} /> */}
 
             <LinkWrapper>
-              <NavLinkStyled to="/">Home</NavLinkStyled>
-              <NavLinkStyled to="/country">Countries</NavLinkStyled>
+              <Link to="/">
+                <Logo />
+              </Link>
+              <NavLinkStyled to="/Catalogs">Каталог</NavLinkStyled>
+              <NavLinkStyled to="/Brands">Бренди</NavLinkStyled>
             </LinkWrapper>
           </HeaderWrapper>
-        </Container>
+        </>
       </NavBar>
 
       <Outlet />

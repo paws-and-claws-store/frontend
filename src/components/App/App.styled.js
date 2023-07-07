@@ -1,24 +1,25 @@
 import styled from '@emotion/styled';
 
 export const Section = styled.section`
-  padding-top: ${props => props.theme.spacing.step * 5}px;
-  padding-bottom: ${props => props.theme.spacing.step * 5}px;
+  /* padding-top: ${props => props.theme.spacing.step * 5}px; */
+  /* padding-bottom: ${props => props.theme.spacing.step * 5}px; */
 
   @media (min-width: ${props => props.theme.breakpoints.s}) {
-    padding-top: ${props => props.theme.spacing.step * 10}px;
-    padding-bottom: ${props => props.theme.spacing.step * 10}px;
+    /* padding-top: ${props => props.theme.spacing.step * 10}px; */
+    /* padding-bottom: ${props => props.theme.spacing.step * 10}px; */
   }
   @media (min-width: ${props => props.theme.breakpoints.l}) {
-    padding-top: ${props => props.theme.spacing.step * 20}px;
-    padding-bottom: ${props => props.theme.spacing.step * 20}px;
+    /* padding-top: ${props => props.theme.spacing.step * 20}px; */
+    /* padding-bottom: ${props => props.theme.spacing.step * 20}px; */
   }
 `;
 
 export const Container = styled.div`
   width: 100%;
+  outline: 1px solid red;
 
-  padding-left: ${props => props.theme.spacing.step * 5}px;
-  padding-right: ${props => props.theme.spacing.step * 5}px;
+  /* padding-left: ${props => props.theme.spacing.step * 5}px; */
+  /* padding-right: ${props => props.theme.spacing.step * 5}px; */
 
   margin-left: auto;
   margin-right: auto;

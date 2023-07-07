@@ -2,27 +2,28 @@ import styled from '@emotion/styled';
 import { NavLink } from 'react-router-dom';
 
 export const NavBar = styled.header`
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
   display: flex;
   align-items: center;
+  width: ${props => props.theme.breakpoints.xl};
+  margin: 0 auto;
+  outline: 1px solid black;
 
-  padding-top: 20px;
-  padding-bottom: 20px;
   background-color: ${props => props.theme.colors.mainBackground};
 
-  box-shadow: 0px 2px 10px 1px ${props => props.theme.colors.dark};
-  border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px;
-
-  height: 90px;
+  /* height: 90px; */
 `;
 
 export const HeaderWrapper = styled.div`
   display: flex;
   align-items: center;
+  padding-left: ${props => props.theme.spacing.step * 19 - 3}px;
 `;
 
 export const NavLinkStyled = styled(NavLink)`
-  color: ${props => props.theme.colors.light};
+  color: ${props => props.theme.colors.dark};
   font-size: ${props => props.theme.fontSizes.medium};
   font-weight: 700;
 
@@ -36,12 +37,12 @@ export const NavLinkStyled = styled(NavLink)`
 
   &:hover,
   &:focus {
-    color: ${props => props.theme.colors.white};
+    color: ${props => props.theme.colors.green};
   }
 
   &.active {
     color: ${props => props.theme.colors.white};
-    background-color: ${props => props.theme.colors.accent};
+    /* background-color: ${props => props.theme.colors.accent}; */
 
     padding: 6px 12px;
     border-radius: 4px;
@@ -56,5 +57,5 @@ export const LinkWrapper = styled.div`
   align-items: center;
   gap: ${props => props.theme.spacing.step * 5}px;
 
-  margin-left: ${props => props.theme.spacing.step * 7}px;
+  /* margin-left: ${props => props.theme.spacing.step * 7}px; */
 `;
