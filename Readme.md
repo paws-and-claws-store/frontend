@@ -1,3 +1,3 @@
-#Paws & Clawsc
+# frontend
 
 Task 1
