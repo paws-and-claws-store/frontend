@@ -1,5 +1,5 @@
 import { Header } from 'components';
-import { Home } from 'pages';
+import { AboutUs, Brands, Catalog, Home } from 'pages';
 import { Navigate, Route, Routes } from 'react-router-dom';
 
 export const App = () => {
@@ -7,8 +7,9 @@ export const App = () => {
     <Routes>
       <Route path="/" element={<Header />}>
         <Route index element={<Home />} />
-        <Route path="/Catalogs" />
-        <Route path="/AboutUs" />
+        <Route path="/Catalog" element={<Catalog />} />
+        <Route path="/Brands" element={<Brands />} />
+        <Route path="/AboutUs" element={<AboutUs />} />
       </Route>
       <Route path="*" element={<Navigate to={'/'} />} />
     </Routes>

@@ -41,7 +41,7 @@ export const NavLinkStyled = styled(NavLink)`
   }
 
   &.active {
-    color: ${props => props.theme.colors.white};
+    color: ${props => props.theme.colors.green};
     /* background-color: ${props => props.theme.colors.accent}; */
 
     padding: 6px 12px;

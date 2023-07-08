@@ -1,3 +1,0 @@
-# frontend
-
-Task 1
