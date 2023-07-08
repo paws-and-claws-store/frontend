@@ -8,3 +8,7 @@ export const Hero = styled.section`
   width: 100%;
   background-image: url(${Images});
 `;
+
+export const Box = styled.div`
+  padding-top: 90px;
+`;

@@ -23,8 +23,8 @@ export const Header = () => {
               <Link to="/">
                 <Logo />
               </Link>
-              <NavLinkStyled to="/Catalog">Каталог</NavLinkStyled>
-              <NavLinkStyled to="/Brands">Бренди</NavLinkStyled>
+              <NavLinkStyled to="/catalog">Каталог</NavLinkStyled>
+              <NavLinkStyled to="/brands">Бренди</NavLinkStyled>
               {/* <NavLinkStyled to="/AboutUs">Про нас</NavLinkStyled> */}
             </LinkWrapper>
           </HeaderWrapper>

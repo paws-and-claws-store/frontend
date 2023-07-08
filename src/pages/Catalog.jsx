@@ -1,9 +1,11 @@
+
 import React from 'react';
+import { Box } from './Home.styled';
 
 export const Catalog = () => {
   return (
-    <div>
+    <Box>
       <h1>Catalog</h1>
-    </div>
+    </Box>
   );
 };

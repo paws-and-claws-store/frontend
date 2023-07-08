@@ -1,9 +1,10 @@
 import React from 'react';
+import { Box } from './Home.styled';
 
 export const AboutUs = () => {
   return (
-    <div>
+    <Box>
       <h1>AboutUs</h1>
-    </div>
+    </Box>
   );
 };
