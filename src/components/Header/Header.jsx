@@ -3,11 +3,20 @@ import { Link, Outlet } from 'react-router-dom';
 
 import {
   HeaderWrapper,
+  Leng,
+  LengLinkStyled,
+  LinkItemWrapper,
   LinkWrapper,
+  LogoWrapper,
   NavBar,
   NavLinkStyled,
+  NavLinksWrapper,
 } from './Header.styled';
-import Logo from './Logo';
+import LogoIcon from 'components/Icons/Logo';
+import SerachIcon from 'components/Icons/Search';
+import SignInIcon from 'components/Icons/SignIn';
+import CartIcon from 'components/Icons/Cart';
+// import { Search } from './Search';
 
 export const Header = () => {
   // const theme = useTheme();
@@ -20,12 +29,42 @@ export const Header = () => {
             {/* <FaFlagUsa size="40px" color={theme.colors.light} /> */}
 
             <LinkWrapper>
-              <Link to="/">
-                <Logo />
-              </Link>
-              <NavLinkStyled to="/catalog">Каталог</NavLinkStyled>
-              <NavLinkStyled to="/brands">Бренди</NavLinkStyled>
-              {/* <NavLinkStyled to="/AboutUs">Про нас</NavLinkStyled> */}
+              <LogoWrapper>
+                <Link to="/">
+                  <LogoIcon />
+                </Link>
+              </LogoWrapper>
+
+              <NavLinksWrapper>
+                <NavLinkStyled to="/catalog">Каталог</NavLinkStyled>
+                <NavLinkStyled to="/brands">Бренди</NavLinkStyled>
+              </NavLinksWrapper>
+              <Leng>
+                <LengLinkStyled to={'/en'}>En</LengLinkStyled>
+                <LengLinkStyled to={'/ua'} className="accent">
+                  Укр
+                </LengLinkStyled>
+              </Leng>
+
+              <LinkItemWrapper>
+                <li>
+                  {/* <Search /> */}
+
+                  <button>
+                    <SerachIcon />
+                  </button>
+                </li>
+                <li>
+                  <Link to={'/cart'}>
+                    <CartIcon />
+                  </Link>
+                </li>
+                <li>
+                  <button>
+                    <SignInIcon />
+                  </button>
+                </li>
+              </LinkItemWrapper>
             </LinkWrapper>
           </HeaderWrapper>
         </>

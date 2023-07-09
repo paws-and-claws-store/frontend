@@ -10,5 +10,6 @@ export const Hero = styled.section`
 `;
 
 export const Box = styled.div`
-  padding-top: 90px;
+  text-align: center;
+  padding: 10%;
 `;

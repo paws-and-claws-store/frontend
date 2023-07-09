@@ -1,61 +1,111 @@
 import styled from '@emotion/styled';
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 
 export const NavBar = styled.header`
   position: fixed;
+  top: 0;
   left: 50%;
   transform: translateX(-50%);
-  display: flex;
-  align-items: center;
-  width: ${props => props.theme.breakpoints.xl};
-  margin: 0 auto;
-  outline: 1px solid black;
+
+  /* outline: 1px solid black; */
 
   background-color: ${props => props.theme.colors.mainBackground};
 
-  /* height: 90px; */
+  margin-left: auto;
+  margin-right: auto;
+
+  @media (min-width: ${props => props.theme.breakpoints.s}) {
+    width: ${props => props.theme.breakpoints.s};
+  }
+  @media (min-width: ${props => props.theme.breakpoints.m}) {
+    width: ${props => props.theme.breakpoints.m};
+  }
+  @media (min-width: ${props => props.theme.breakpoints.l}) {
+    width: ${props => props.theme.breakpoints.l};
+  }
+  @media (min-width: ${props => props.theme.breakpoints.xl}) {
+    width: ${props => props.theme.breakpoints.xl};
+  }
 `;
 
+//   padding-left: ${props => props.theme.spacing.step * 20 + 1}px;
+//   padding-right: ${props => props.theme.spacing.step * 20 + 1}px;
+
 export const HeaderWrapper = styled.div`
+  padding-left: ${props => props.theme.spacing.step * 19 - 2}px;
+  padding-right: ${props => props.theme.spacing.step * 19 - 1}px;
+`;
+
+export const NavLinksWrapper = styled.div`
   display: flex;
-  align-items: center;
-  padding-left: ${props => props.theme.spacing.step * 19 - 3}px;
+  margin-right: 24%;
+  gap: ${props => props.theme.spacing.step * 5}px;
 `;
 
 export const NavLinkStyled = styled(NavLink)`
-  color: ${props => props.theme.colors.dark};
-  font-size: ${props => props.theme.fontSizes.medium};
-  font-weight: 700;
+  color: ${props => props.theme.colors.black};
+  font-size: ${props => props.theme.fontSizes.large};
+  font-weight: 500;
+  transition-property: color, background-color, transform;
 
-  text-transform: uppercase;
-
+  transform: scale(1);
   transition-property: color, background-color, transform;
   transition-duration: 0.2s;
   transition-timing-function: ${props => props.theme.animations.cubicBezier};
-
-  transform: scale(0.9);
 
   &:hover,
   &:focus {
     color: ${props => props.theme.colors.green};
   }
 
+  &:active {
+    color: ${props => props.theme.colors.white};
+  }
+
   &.active {
     color: ${props => props.theme.colors.green};
     /* background-color: ${props => props.theme.colors.accent}; */
 
-    padding: 6px 12px;
-    border-radius: 4px;
+    /* padding: 6px 12px; */
+    /* border-radius: 4px; */
 
-    transform: scale(1);
+    /* transform: scale(1); */
     pointer-events: none;
   }
+`;
+export const LogoWrapper = styled.div`
+  margin-right: auto;
 `;
 
 export const LinkWrapper = styled.div`
   display: flex;
   align-items: center;
-  gap: ${props => props.theme.spacing.step * 5}px;
+  justify-content: flex-end;
+  /* gap: ${props => props.theme.spacing.step * 5}px; */
 
   /* margin-left: ${props => props.theme.spacing.step * 7}px; */
+`;
+
+export const LinkItemWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: ${props => props.theme.spacing.step * 5}px;
+
+  margin-left: ${props => props.theme.spacing.step * 5 + 4}px;
+`;
+
+export const Leng = styled.div`
+  display: flex;
+  gap: ${props => props.theme.spacing.step * 2}px;
+
+  font-size: ${props => props.theme.fontSizes.medium};
+  text-transform: uppercase;
+`;
+
+export const LengLinkStyled = styled(Link)`
+  color: ${props => props.theme.colors.green};
+  &.accent {
+    color: ${props => props.theme.colors.orange};
+  }
 `;

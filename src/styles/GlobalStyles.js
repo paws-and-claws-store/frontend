@@ -1,5 +1,9 @@
 import { css } from '@emotion/react';
 import { theme } from 'styles/theme';
+// import '@fontsource-variable/raleway';
+import '@fontsource/raleway/400.css';
+import '@fontsource/raleway/500.css';
+import '@fontsource/raleway/600.css';
 
 export const GlobalStyles = css`
   html {
@@ -8,10 +12,9 @@ export const GlobalStyles = css`
   }
 
   body {
+    /* font-family: 'Raleway Variable', sans-serif; */
+    font-family: 'Raleway';
     margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
-      'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans',
-      'Helvetica Neue', sans-serif;
     background: ${theme.colors.mainBackground};
     min-height: 100vh;
 
@@ -29,7 +32,8 @@ export const GlobalStyles = css`
   }
 
   ul,
-  ol {
+  ol,
+  li {
     list-style: none;
     padding-left: 0;
     margin: 0;
@@ -53,10 +57,11 @@ export const GlobalStyles = css`
   a {
     text-decoration: none;
     color: inherit;
+    margin: 0;
+    padding: 0;
   }
 
   code {
-    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-      monospace;
+    font-family: Releway, monospace;
   }
 `;
