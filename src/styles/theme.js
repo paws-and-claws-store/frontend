@@ -19,10 +19,10 @@ export const theme = Object.freeze({
   },
   fontSizes: {
     small: '14px',
-    medium: '18px',
+    medium: '16px',
     large: '20px',
     xl: '30px',
-    xxl: '34px',
+    xxl: '32px',
     xxxl: '42px',
   },
   breakpoints: {

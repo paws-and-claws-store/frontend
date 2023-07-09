@@ -15,3 +15,11 @@ export const Box = styled.div`
   text-align: center;
   padding: 10%;
 `;
+
+export const Title = styled.h2`
+  text-transform: capitalize;
+  font-size: ${props => props.theme.fontSizes.xxl};
+  color: ${props => props.theme.colors.green};
+  font-weight: 600;
+  margin: ${props => props.theme.spacing.step * 8}px 0;
+`;
