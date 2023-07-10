@@ -1,6 +1,7 @@
 import { css } from '@emotion/react';
 import { theme } from 'styles/theme';
 // import '@fontsource-variable/raleway';
+import '@fontsource/raleway/300.css';
 import '@fontsource/raleway/400.css';
 import '@fontsource/raleway/500.css';
 import '@fontsource/raleway/600.css';
@@ -28,7 +29,7 @@ export const GlobalStyles = css`
   h5,
   h6,
   p {
-    margin-top: 0;
+    margin: 0;
   }
 
   ul,
