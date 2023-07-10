@@ -48,10 +48,10 @@ export const NavLinkStyled = styled(NavLink)`
   font-weight: ${props => props.theme.fontWeight.Medium};
   transition-property: color, background-color, transform;
 
-  transform: scale(1);
+  /* transform: scale(1);
   transition-property: color, background-color, transform;
   transition-duration: 0.2s;
-  transition-timing-function: ${props => props.theme.animations.cubicBezier};
+  transition-timing-function: ${props => props.theme.animations.cubicBezier}; */
 
   &:hover,
   &:focus {
@@ -59,7 +59,7 @@ export const NavLinkStyled = styled(NavLink)`
   }
 
   &:active {
-    color: ${props => props.theme.colors.white};
+    color: ${props => props.theme.colors.green};
   }
 
   &.active {
