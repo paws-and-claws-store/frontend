@@ -6,11 +6,9 @@ import { List, ListItem } from './CardList.styled';
 export const CardList = () => {
   return (
     <List>
-      {catalog.slice(-12).map((el, index) => {
-        console.log(index);
-        console.log(el);
+      {catalog.map(el => {
         return (
-          <ListItem key={index}>
+          <ListItem key={el.id}>
             <Card el={el} />
           </ListItem>
         );

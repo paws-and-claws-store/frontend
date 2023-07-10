@@ -15,7 +15,7 @@ export const Section = styled.section`
 `;
 
 export const Container = styled.div`
-  outline: 1px solid red;
+  /* outline: 1px solid red; */
 
   padding-left: ${props => props.theme.spacing.step * 20 + 1}px;
   padding-right: ${props => props.theme.spacing.step * 20 + 1}px;
@@ -39,7 +39,7 @@ export const Container = styled.div`
 
 export const Heading = styled.h2`
   font-size: ${props => props.theme.fontSizes.medium};
-  font-weight: 700;
+  font-weight: 600;
   color: ${props => props.theme.colors.white};
 
   text-align: ${({ textAlign }) => (!textAlign ? 'left' : textAlign)};
@@ -58,7 +58,7 @@ export const Heading = styled.h2`
 
 export const Text = styled.p`
   font-size: ${props => props.theme.fontSizes.small};
-  font-weight: 700;
+  font-weight: 600;
 
   text-align: ${({ textAlign }) => (!textAlign ? 'left' : textAlign)};
   margin-bottom: ${props => props.theme.spacing.step * 5}px;

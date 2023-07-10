@@ -5,26 +5,38 @@ export const theme = Object.freeze({
     orange: '#E68314',
     black: '#000000',
     white: '#ffffff',
+    beige: '#F3ECDC',
     mainBackground: '#F3ECDC',
 
     // secondary
     secGreen: '#D8D4B8',
-    // secGrey: '';
-
-    // accent: '#f64f59',
-    // light: 'rgba(255,255,255,.5)',
-    // dark: '#240b36',
-    // primary: '#22a6b3',
-    // imageBackground: ['red', 'linear-gradient (90deg, #ff9966,#ff5e62'],
+    secGrey: '#ECECEC',
   },
   fontSizes: {
-    small: '14px',
-    medium: '16px',
-    large: '20px',
-    xl: '30px',
+    xs: '14px',
+    s: '16px',
+    m: '18px',
+    l: '20px',
+    xl: '24px',
     xxl: '32px',
-    xxxl: '42px',
+    xxxl: '56px',
   },
+  lineHeight: {
+    s: '16px',
+    m: '18px',
+    l: '20px',
+    xl: '24px',
+    xxl: '32px',
+    xxxl: '64px',
+  },
+
+  fontWeight: {
+    Light: 300,
+    Regular: 400,
+    Medium: 500,
+    SemiBold: 600,
+  },
+
   breakpoints: {
     xs: '320px',
     s: '768px',
