@@ -1,6 +1,6 @@
 [
   {
-    "id": 5,
+    "id": 1,
     "category": "feed",
     "image": "https://i.ibb.co/h75dNqw/ACANA-Heritage-Adult-Dog-Food.jpg",
     "brand": "ACANA",
@@ -15,7 +15,7 @@
     "country": "Канада"
   },
   {
-    "id": 3,
+    "id": 2,
     "category": "feed",
     "image": "https://i.ibb.co/wrY716r/Darf-Cold-Pressed-Dog-Food-Ireland-1.jpg",
     "brand": "DARF",
@@ -30,7 +30,7 @@
     "country": "Ірландія"
   },
   {
-    "id": 7,
+    "id": 3,
     "category": "feed",
     "image": "https://i.ibb.co/Fq0C5jv/Canagan-Can-Country-Game-Ireland.jpg",
     "brand": "CANAGAN",
@@ -45,7 +45,7 @@
     "country": "Великобританія"
   },
   {
-    "id": 9,
+    "id": 4,
     "category": "feed",
     "image": "https://i.ibb.co/kHLCcQQ/Kaya-Grain-Free-Dog-Food-Puppy-Chicken1.jpg",
     "brand": "NATUREDIET",
@@ -60,7 +60,7 @@
     "country": "Великобританія"
   },
   {
-    "id": 4,
+    "id": 5,
     "category": "feed",
     "image": "https://i.ibb.co/3CkKFm9/Canagan-Free-Range-Chicken-Pet-Parlour-Dublin.jpg",
     "brand": "CANAGAN",
@@ -90,7 +90,7 @@
     "country": "Ірландія"
   },
   {
-    "id": 2,
+    "id": 7,
     "category": "feed",
     "image": "https://i.ibb.co/8M9ptYH/prod-125-68362571.jpg",
     "brand": "ROYAL CANIN",
@@ -105,7 +105,7 @@
     "country": "Франція"
   },
   {
-    "id": 1,
+    "id": 8,
     "category": "feed",
     "image": "https://i.ibb.co/nsHxhCp/Kaya-Grain-Free-Dog-Food-Puppy-Chicken.jpg",
     "brand": "KAYA GRAIN FREE",
@@ -120,7 +120,7 @@
     "country": "Ірландія"
   },
   {
-    "id": 8,
+    "id": 9,
     "category": "feed",
     "image": "https://i.ibb.co/6BwGjMm/Country-Hunter-Rabbit-With-Superfoods.jpg",
     "brand": "COUNTRY HUNTER",
@@ -135,7 +135,7 @@
     "country": "Ірландія"
   },
   {
-    "id": 5,
+    "id": 10,
     "category": "feed",
     "image": "https://i.ibb.co/h75dNqw/ACANA-Heritage-Adult-Dog-Food.jpg",
     "brand": "ACANA",
@@ -150,7 +150,7 @@
     "country": "Канада"
   },
   {
-    "id": 3,
+    "id": 11,
     "category": "feed",
     "image": "https://i.ibb.co/wrY716r/Darf-Cold-Pressed-Dog-Food-Ireland-1.jpg",
     "brand": "DARF",
@@ -165,7 +165,7 @@
     "country": "Ірландія"
   },
   {
-    "id": 7,
+    "id": 12,
     "category": "feed",
     "image": "https://i.ibb.co/Fq0C5jv/Canagan-Can-Country-Game-Ireland.jpg",
     "brand": "CANAGAN",
@@ -180,7 +180,7 @@
     "country": "Великобританія"
   },
   {
-    "id": 9,
+    "id": 13,
     "category": "feed",
     "image": "https://i.ibb.co/kHLCcQQ/Kaya-Grain-Free-Dog-Food-Puppy-Chicken1.jpg",
     "brand": "NATUREDIET",
@@ -195,7 +195,7 @@
     "country": "Великобританія"
   },
   {
-    "id": 4,
+    "id": 14,
     "category": "feed",
     "image": "https://i.ibb.co/3CkKFm9/Canagan-Free-Range-Chicken-Pet-Parlour-Dublin.jpg",
     "brand": "CANAGAN",
@@ -210,7 +210,7 @@
     "country": "Великобританія"
   },
   {
-    "id": 6,
+    "id": 15,
     "category": "feed",
     "image": "https://i.ibb.co/YkrfBT4/products-Leader-Adult-Supreme-bf7832b9-b54e-40e4-a944-87f3723d48dd.png",
     "brand": "RED MILLS",
@@ -225,7 +225,7 @@
     "country": "Ірландія"
   },
   {
-    "id": 2,
+    "id": 16,
     "category": "feed",
     "image": "https://i.ibb.co/8M9ptYH/prod-125-68362571.jpg",
     "brand": "ROYAL CANIN",
@@ -240,7 +240,7 @@
     "country": "Франція"
   },
   {
-    "id": 1,
+    "id": 17,
     "category": "feed",
     "image": "https://i.ibb.co/jMWGbM7/Rectangle-33.png",
     "brand": "KAYA GRAIN FREE",
@@ -255,7 +255,7 @@
     "country": "Ірландія"
   },
   {
-    "id": 8,
+    "id": 18,
     "category": "feed",
     "image": "https://i.ibb.co/6BwGjMm/Country-Hunter-Rabbit-With-Superfoods.jpg",
     "brand": "COUNTRY HUNTER",
