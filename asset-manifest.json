@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/frontend/static/css/main.2384e39f.css",
-    "main.js": "/frontend/static/js/main.8d1175a0.js",
+    "main.js": "/frontend/static/js/main.977afb5a.js",
     "static/media/banner2.jpg": "/frontend/static/media/banner2.ff1d5be6d4bffa5757db.jpg",
     "static/media/raleway-latin-600-normal.woff2": "/frontend/static/media/raleway-latin-600-normal.81d989fa5063ebf965a4.woff2",
     "static/media/raleway-latin-400-normal.woff2": "/frontend/static/media/raleway-latin-400-normal.0bdecdd83e78d540c297.woff2",
@@ -45,10 +45,10 @@
     "static/media/raleway-vietnamese-500-normal.woff": "/frontend/static/media/raleway-vietnamese-500-normal.97c40a1fe5f423b19113.woff",
     "index.html": "/frontend/index.html",
     "main.2384e39f.css.map": "/frontend/static/css/main.2384e39f.css.map",
-    "main.8d1175a0.js.map": "/frontend/static/js/main.8d1175a0.js.map"
+    "main.977afb5a.js.map": "/frontend/static/js/main.977afb5a.js.map"
   },
   "entrypoints": [
     "static/css/main.2384e39f.css",
-    "static/js/main.8d1175a0.js"
+    "static/js/main.977afb5a.js"
   ]
 }
