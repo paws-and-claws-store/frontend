@@ -46,7 +46,7 @@ function ControlledCarousel() {
           </p>
         </Carousel.Caption>
       </Carousel.Item>
-      <Carousel.Item>
+      <Carousel.Item interval={10000}>
         <img className="d-block w-100" src={image5} alt="Third slide" />
 
         <Carousel.Caption>

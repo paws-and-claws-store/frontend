@@ -6,6 +6,7 @@ export const NavBar = styled.header`
   top: 0;
   left: 50%;
   transform: translateX(-50%);
+  z-index: 100;
 
   /* outline: 1px solid black; */
 
