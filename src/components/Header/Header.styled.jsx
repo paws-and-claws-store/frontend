@@ -44,9 +44,10 @@ export const NavLinksWrapper = styled.div`
 
 export const NavLinkStyled = styled(NavLink)`
   color: ${props => props.theme.colors.black};
-  font-size: ${props => props.theme.fontSizes.large};
-  font-weight: ${props => props.theme.fontWeight.Medium};
-  transition-property: color, background-color, transform;
+  font-size: ${props => props.theme.fontSizes.l};
+  font-weight: ${props => props.theme.fontWeight.SemiBold};
+  line-height: ${props => props.theme.lineHeight.l};
+  /* transition-property: color, background-color, transform; */
 
   /* transform: scale(1);
   transition-property: color, background-color, transform;
@@ -99,7 +100,10 @@ export const Leng = styled.div`
   display: flex;
   gap: ${props => props.theme.spacing.step * 2}px;
 
-  font-size: ${props => props.theme.fontSizes.medium};
+  font-weight: ${props => props.theme.fontWeight.Medium};
+  font-size: ${props => props.theme.fontSizes.m};
+  line-height: ${props => props.theme.lineHeight.xl};
+
   text-transform: uppercase;
 `;
 
