@@ -1,9 +1,59 @@
 import React from 'react';
 import Carousel from 'react-bootstrap/Carousel';
 import { image1, image2, image3, image4, image5 } from '../../images';
-import './index.css';
 
 import { useState } from 'react';
+import { CarouselStyle } from './Crousel.styled';
+import { nanoid } from 'nanoid';
+import { Link } from 'react-router-dom';
+
+const banner = [
+  {
+    id: nanoid(3),
+    img: image1,
+    title: 'Порадуйте свого  улюбленця  ',
+    discription:
+      'Отримайте високоякісний корм для собак за вигідною ціною. Натуральні інгредієнти. Збалансоване харчування. Здорова шкіра і шерсть. Сильний імунітет. Знижена ціна.',
+    linkName: 'Перейти в каталог',
+    link: '/catalog',
+  },
+  {
+    id: nanoid(3),
+    img: image2,
+    title: 'Подбай про мяу-комфорт',
+    discription:
+      'Освіжи свого котика з ніжністю. Шампунь для котів - здорова шкіра, шовкова шерсть. Доглянутість, яку вони заслуговують.',
+    linkName: 'Перейти в каталог',
+    link: '/catalog',
+  },
+  {
+    id: nanoid(3),
+    img: image3,
+    title: 'Найкращий вибір для цуценят ',
+    discription:
+      'Збалансоване харчування для малих пухнастих друзів. Ми пропонуємо все необхідне для росту й розвитку цуценят.',
+    linkName: 'Перейти в каталог',
+    link: '/catalog',
+  },
+  {
+    id: nanoid(3),
+    img: image4,
+    title: 'Турбота про найменших ',
+    discription:
+      'На сторінці корму для кошенят ви знайдете широкий вибір харчових продуктів, спеціально розроблених для задоволення потреб вашої маленької кішки. Вони містять збалансовані інгредієнти, необхідні для здорового зростання і розвитку.',
+    linkName: 'Перейти в картку',
+    link: '/productCard',
+  },
+  {
+    id: nanoid(3),
+    img: image5,
+    title: 'Очищення та догляд: Шампуні для собак',
+    discription:
+      'Найкращі шампуні для собак, що забезпечують ефективне та безпечне очищення їх шерсті. Ці шампуні спеціально розроблені, щоб забезпечити ніжний догляд, видалити бруд, неприємні запахи та залишити шерсть вашого улюбленця свіжою, чистою та доглянутою.',
+    linkName: 'Перейти в картку',
+    link: '/productCard',
+  },
+];
 
 function ControlledCarousel() {
   const [index, setIndex] = useState(0);
@@ -13,50 +63,24 @@ function ControlledCarousel() {
   };
 
   return (
-    <Carousel activeIndex={index} onSelect={handleSelect}>
-      <Carousel.Item>
-        <img className="d-block w-100" src={image1} alt="First slide" />
-        <Carousel.Caption>
-          <h3>First slide label</h3>
-          <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
-        </Carousel.Caption>
-      </Carousel.Item>
-      <Carousel.Item>
-        <img className="d-block w-100" src={image2} alt="First slide" />
-        <Carousel.Caption>
-          <h3>First slide label</h3>
-          <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
-        </Carousel.Caption>
-      </Carousel.Item>
-      <Carousel.Item>
-        <img className="d-block w-100" src={image3} alt="Second slide" />
-
-        <Carousel.Caption>
-          <h3>Second slide label</h3>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-        </Carousel.Caption>
-      </Carousel.Item>
-      <Carousel.Item>
-        <img className="d-block w-100" src={image4} alt="Third slide" />
-
-        <Carousel.Caption>
-          <h3>Third slide label</h3>
-          <p>
-            Praesent commodo cursus magna, vel scelerisque nisl consectetur.
-          </p>
-        </Carousel.Caption>
-      </Carousel.Item>
-      <Carousel.Item interval={1000}>
-        <img className="d-block w-100" src={image5} alt="Third slide" />
-
-        <Carousel.Caption>
-          <h3>Third slide label</h3>
-          <p>
-            Praesent commodo cursus magna, vel scelerisque nisl consectetur.
-          </p>
-        </Carousel.Caption>
-      </Carousel.Item>
-    </Carousel>
+    <CarouselStyle activeIndex={index} onSelect={handleSelect}>
+      {banner.map(item => {
+        return (
+          <Carousel.Item>
+            <img className="d-block w-100" src={item.img} alt={item} />
+            <Carousel.Caption>
+              <div className="captionDescription">
+                <h1 className="title">{item.title}</h1>
+                <p className="discription">{item.discription}</p>
+              </div>
+              <Link to={item.link} className="bannerLink">
+                {item.linkName}
+              </Link>
+            </Carousel.Caption>
+          </Carousel.Item>
+        );
+      })}
+    </CarouselStyle>
   );
 }
 
