@@ -40,8 +40,8 @@ export const Header = () => {
                 <NavLinkStyled to="/brands">Бренди</NavLinkStyled>
               </NavLinksWrapper>
               <Leng>
-                <LengLinkStyled to={'/en'}>En</LengLinkStyled>
-                <LengLinkStyled to={'/ua'} className="accent">
+                <LengLinkStyled to={''}>En</LengLinkStyled>
+                <LengLinkStyled to={''} className="accent">
                   Укр
                 </LengLinkStyled>
               </Leng>

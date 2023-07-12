@@ -1,0 +1,86 @@
+import styled from '@emotion/styled';
+import Carousel from 'react-bootstrap/Carousel';
+
+export const CarouselStyle = styled(Carousel)`
+  .carousel {
+    overflow: hidden;
+    width: 100%;
+    height: 660px;
+    display: flex;
+
+    flex-direction: column;
+    justify-content: center;
+    z-index: 5;
+  }
+
+  .carousel-indicators {
+    gap: 16px;
+    bottom: ${props => props.theme.spacing.step * 9}px;
+  }
+
+  .carousel-control-prev,
+  .carousel-control-next {
+    display: none;
+  }
+
+  .carousel-indicators [data-bs-target] {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background-color: #f3ecdc;
+  }
+
+  .carousel-indicators .active {
+    background-color: #e68314;
+  }
+
+  .carousel-caption {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    width: ${props => props.theme.spacing.step * 184}px;
+    padding-bottom: ${props => props.theme.spacing.step * 28}px;
+    padding-left: ${props => props.theme.spacing.step * 27}px;
+  }
+
+  .title {
+    font-size: ${props => props.theme.fontSizes.xxxl};
+    font-weight: ${props => props.theme.fontWeight.SemiBold};
+    line-height: ${props => props.theme.lineHeight.xxxl};
+  }
+
+  .captionDescription {
+    display: flex;
+    flex-direction: column;
+    gap: ${props => props.theme.spacing.step * 5}px;
+    justify-content: start;
+    text-align: start;
+  }
+
+  .discription {
+    justify-content: start;
+    font-size: ${props => props.theme.fontSizes.m};
+    font-weight: ${props => props.theme.fontWeight.Regular};
+    line-height: ${props => props.theme.lineHeight.xl};
+  }
+
+  .bannerLink {
+    display: block;
+    width: ${props => props.theme.spacing.step * 76}px;
+    background-color: ${props => props.theme.colors.orange};
+    padding: ${props => props.theme.spacing.step * 4}px 0;
+    border-radius: ${props => props.theme.spacing.step * 10}px;
+
+    font-size: ${props => props.theme.fontSizes.xl};
+    font-weight: ${props => props.theme.fontWeight.Medium};
+    line-height: ${props => props.theme.lineHeight.xl};
+    align-items: center;
+
+    &:hover {
+      background-color: ${props => props.theme.colors.green};
+    }
+  }
+`;
