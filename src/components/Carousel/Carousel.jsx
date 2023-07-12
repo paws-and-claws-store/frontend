@@ -66,7 +66,7 @@ function ControlledCarousel() {
     <CarouselStyle activeIndex={index} onSelect={handleSelect}>
       {banner.map(item => {
         return (
-          <Carousel.Item>
+          <Carousel.Item key={item.id}>
             <img className="d-block w-100" src={item.img} alt={item} />
             <Carousel.Caption>
               <div className="captionDescription">

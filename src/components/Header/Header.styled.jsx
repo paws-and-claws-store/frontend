@@ -105,7 +105,7 @@ export const Leng = styled.div`
   font-size: ${props => props.theme.fontSizes.m};
   line-height: ${props => props.theme.lineHeight.xl};
 
-  text-transform: uppercase;
+  /* text-transform: uppercase; */
 `;
 
 export const LengLinkStyled = styled(Link)`

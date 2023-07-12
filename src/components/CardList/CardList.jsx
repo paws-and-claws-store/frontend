@@ -6,7 +6,7 @@ import { List, ListItem } from './CardList.styled';
 export const CardList = () => {
   return (
     <List>
-      {catalog.map(el => {
+      {catalog.slice(0, 12).map(el => {
         return (
           <ListItem key={el.id}>
             <Card el={el} />

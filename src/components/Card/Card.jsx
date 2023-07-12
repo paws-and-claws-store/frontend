@@ -11,6 +11,7 @@ import {
   SymbolCurrency,
   Wrapper,
 } from './Card.styled';
+import { Link } from 'react-router-dom';
 
 export const Card = ({ el }) => {
   const [
@@ -20,15 +21,21 @@ export const Card = ({ el }) => {
 
   return (
     <BoxCard>
-      <Image src={el.image} alt={el.foodName} />
+      <Link to={'/productCard'}>
+        <Image src={el.image} alt={el.foodName} />
+      </Link>
       <div>
         <div>
           <div>
-            <BrandNameSt>{el.brand}</BrandNameSt>
-            <div>
-              <ProductNameSt>{el.foodName}</ProductNameSt>
-            </div>
-            <ShortDiscriptionSt>{el.shortDescription}</ShortDiscriptionSt>
+            <Link to={'/brands'}>
+              <BrandNameSt>{el.brand}</BrandNameSt>
+            </Link>
+            <Link to={'/productCard'}>
+              <div>
+                <ProductNameSt>{el.foodName}</ProductNameSt>
+              </div>
+              <ShortDiscriptionSt>{el.shortDescription}</ShortDiscriptionSt>
+            </Link>
           </div>
           <SizeSt>{el.weight}</SizeSt>
         </div>
