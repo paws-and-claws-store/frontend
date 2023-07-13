@@ -1,19 +1,26 @@
 import {
+  CatalogList,
+  ContactsList,
   FooterAStyled,
   FooterH2Styled,
   FooterLinkStyled,
   FooterStyled,
   SocialLinkStyled,
   SocialListStyled,
+  UsersList,
 } from './Footer.styled';
-import { FacebookIcon, InstagramIcon, TelegramIcon } from 'components/Icons/SocialIcons';
+import {
+  FacebookIcon,
+  InstagramIcon,
+  TelegramIcon,
+} from 'components/Icons/SocialIcons';
 
 export const Footer = () => {
   return (
     <FooterStyled>
       <div>
         <FooterH2Styled>Каталог</FooterH2Styled>
-        <ul>
+        <CatalogList>
           <li>
             <FooterLinkStyled to="/">Корм для собак</FooterLinkStyled>
           </li>
@@ -23,12 +30,12 @@ export const Footer = () => {
           <li>
             <FooterLinkStyled to="/">Бренди</FooterLinkStyled>
           </li>
-        </ul>
+        </CatalogList>
       </div>
       <div>
         <FooterH2Styled>Покупцям</FooterH2Styled>
 
-        <ul>
+        <UsersList>
           <li>
             <FooterLinkStyled to="/">Доставка</FooterLinkStyled>
           </li>
@@ -42,18 +49,22 @@ export const Footer = () => {
             <FooterLinkStyled to="/">Договір публічної оферти</FooterLinkStyled>
           </li>
           <li>
-            <FooterLinkStyled to="/">Політика конфіденційності</FooterLinkStyled>
+            <FooterLinkStyled to="/">
+              Політика конфіденційності
+            </FooterLinkStyled>
           </li>
-        </ul>
+        </UsersList>
       </div>
       <div>
         <FooterH2Styled>Контакти</FooterH2Styled>
-        <ul>
+        <ContactsList>
           <li>
-            <FooterAStyled href="tel:+380000000">+380000000</FooterAStyled>
+            <FooterAStyled href="tel:+380000000">+380486752312</FooterAStyled>
           </li>
           <li>
-            <FooterAStyled href="mailto:dadfdsfsds@gmail.com">dadfdsfsds@gmail.com</FooterAStyled>
+            <FooterAStyled href="mailto:dadfdsfsds@gmail.com">
+              clawspaws@gmail.com
+            </FooterAStyled>
           </li>
           <SocialListStyled>
             <li>
@@ -72,7 +83,7 @@ export const Footer = () => {
               </SocialLinkStyled>
             </li>
           </SocialListStyled>
-        </ul>
+        </ContactsList>
       </div>
     </FooterStyled>
   );

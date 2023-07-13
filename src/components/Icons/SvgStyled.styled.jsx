@@ -12,3 +12,17 @@ export const SvgStyled = styled.svg`
     fill: ${props => props.theme.colors.secGrey};
   }
 `;
+
+export const SvgFooterStyled = styled.svg`
+  fill: ${props => props.theme.colors.white};
+
+  &:hover,
+  &:focus {
+    fill: ${props => props.theme.colors.secGreen};
+  }
+
+  &:active {
+    transform: scale(0.95);
+    fill: ${props => props.theme.colors.secGreen};
+  }
+`;

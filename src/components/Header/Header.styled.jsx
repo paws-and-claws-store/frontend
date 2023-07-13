@@ -46,7 +46,7 @@ export const NavLinksWrapper = styled.div`
 export const NavLinkStyled = styled(NavLink)`
   color: ${props => props.theme.colors.black};
   font-size: ${props => props.theme.fontSizes.l};
-  font-weight: ${props => props.theme.fontWeight.SemiBold};
+  font-weight: ${props => props.theme.fontWeight.Medium};
   line-height: ${props => props.theme.lineHeight.l};
   /* transition-property: color, background-color, transform; */
 
