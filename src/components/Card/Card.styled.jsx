@@ -45,8 +45,13 @@ export const ShortDiscriptionSt = styled.p`
 `;
 
 export const SizeSt = styled.p`
+  display: flex;
+  justify-content: center;
+  gap: ${props => props.theme.spacing.step * 1}px;
+
   height: ${props => props.theme.spacing.step * 5}px;
   margin-top: ${props => props.theme.spacing.step * 2}px;
+
   color: ${props => props.theme.colors.green};
   font-weight: ${props => props.theme.fontWeight.Regular};
   font-size: ${props => props.theme.fontSizes.s};
