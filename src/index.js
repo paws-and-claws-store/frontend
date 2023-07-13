@@ -12,7 +12,7 @@ import './index.css';
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     {/* basename */}
-    <BrowserRouter>
+    <BrowserRouter basename="/frontend">
       <ThemeProvider theme={theme}>
         <Global styles={GlobalStyles} />
         <App />
