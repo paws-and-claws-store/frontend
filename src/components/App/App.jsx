@@ -1,6 +1,7 @@
 import { Header } from 'components';
 import { Footer } from 'components/Footer/Footer';
 import { AboutUs, Brands, Cart, Catalog, Home, ProductCard } from 'pages';
+import { PageUnderConstruction } from 'pages/PageUnderConstruction';
 import { Navigate, Route, Routes } from 'react-router-dom';
 
 export const App = () => {
@@ -15,6 +16,7 @@ export const App = () => {
           <Route path="/aboutUs" element={<AboutUs />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/productCard" element={<ProductCard />} />
+          <Route path="/pageUnderConstruction" element={<PageUnderConstruction />} />
         </Route>
         <Route path="*" element={<Navigate to={'/'} />} />
       </Routes>
