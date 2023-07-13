@@ -10,11 +10,7 @@ import {
   SocialListStyled,
   UsersList,
 } from './Footer.styled';
-import {
-  FacebookIcon,
-  InstagramIcon,
-  TelegramIcon,
-} from 'components/Icons/SocialIcons';
+import { FacebookIcon, InstagramIcon, TelegramIcon } from 'components/Icons/SocialIcons';
 
 export const Footer = () => {
   return (
@@ -24,13 +20,13 @@ export const Footer = () => {
           <FooterH2Styled>Каталог</FooterH2Styled>
           <CatalogList>
             <li>
-              <FooterLinkStyled to="/">Корм для собак</FooterLinkStyled>
+              <FooterLinkStyled to="/pageUnderConstruction">Корм для собак</FooterLinkStyled>
             </li>
             <li>
-              <FooterLinkStyled to="/">Корм для котів</FooterLinkStyled>
+              <FooterLinkStyled to="/pageUnderConstruction">Корм для котів</FooterLinkStyled>
             </li>
             <li>
-              <FooterLinkStyled to="/">Бренди</FooterLinkStyled>
+              <FooterLinkStyled to="/brands">Бренди</FooterLinkStyled>
             </li>
           </CatalogList>
         </div>
@@ -39,21 +35,21 @@ export const Footer = () => {
 
           <UsersList>
             <li>
-              <FooterLinkStyled to="/">Доставка</FooterLinkStyled>
+              <FooterLinkStyled to="/pageUnderConstruction">Доставка</FooterLinkStyled>
             </li>
             <li>
-              <FooterLinkStyled to="/">Повернення й обмін</FooterLinkStyled>
+              <FooterLinkStyled to="/pageUnderConstruction">Повернення й обмін</FooterLinkStyled>
             </li>
             <li>
-              <FooterLinkStyled to="/">Про компанію</FooterLinkStyled>
+              <FooterLinkStyled to="/pageUnderConstruction">Про компанію</FooterLinkStyled>
             </li>
             <li>
-              <FooterLinkStyled to="/">
+              <FooterLinkStyled to="/pageUnderConstruction">
                 Договір публічної оферти
               </FooterLinkStyled>
             </li>
             <li>
-              <FooterLinkStyled to="/">
+              <FooterLinkStyled to="/pageUnderConstruction">
                 Політика конфіденційності
               </FooterLinkStyled>
             </li>
@@ -63,26 +59,26 @@ export const Footer = () => {
           <FooterH2Styled>Контакти</FooterH2Styled>
           <ContactsList>
             <li>
-              <FooterAStyled href="tel:+380000000">+380486752312</FooterAStyled>
+              <FooterAStyled href="tel:+380486752312">+380486752312</FooterAStyled>
             </li>
             <li>
-              <FooterAStyled href="mailto:dadfdsfsds@gmail.com">
+              <FooterAStyled href="mailto:clawspaws@gmail.com" target="_blank">
                 clawspaws@gmail.com
               </FooterAStyled>
             </li>
             <SocialListStyled>
               <li>
-                <SocialLinkStyled href="http://instagram.com">
+                <SocialLinkStyled href="http://instagram.com" target="_blank">
                   <InstagramIcon />
                 </SocialLinkStyled>
               </li>
               <li>
-                <SocialLinkStyled href="http://instagram.com">
+                <SocialLinkStyled href="http://facebook.com" target="_blank">
                   <FacebookIcon />
                 </SocialLinkStyled>
               </li>
               <li>
-                <SocialLinkStyled href="http://instagram.com">
+                <SocialLinkStyled href="http://telegram.com" target="_blank">
                   <TelegramIcon />
                 </SocialLinkStyled>
               </li>

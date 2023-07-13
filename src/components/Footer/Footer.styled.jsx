@@ -76,7 +76,7 @@ export const FooterH2Styled = styled.h2`
   line-height: ${props => props.theme.lineHeight.xl};
 `;
 
-export const FooterAStyled = styled(Link)`
+export const FooterAStyled = styled.a`
   color: ${props => props.theme.colors.white};
   font-size: ${props => props.theme.fontSizes.l};
   font-weight: ${props => props.theme.fontWeight.Medium};
@@ -116,8 +116,9 @@ export const SocialListStyled = styled.ul`
   gap: ${props => props.theme.spacing.step * 6}px;
 `;
 
-export const SocialLinkStyled = styled(Link)`
-  padding: 8px;
+export const SocialLinkStyled = styled.a`
+  display: block;
+  ${'' /* padding: 8px; */}
 `;
 
 export const CatalogList = styled.ul`
