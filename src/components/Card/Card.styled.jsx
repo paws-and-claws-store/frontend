@@ -25,7 +25,7 @@ export const ProductNameSt = styled.h2`
   margin-top: ${props => props.theme.spacing.step}px;
   color: ${props => props.theme.colors.black};
   text-transform: capitalize;
-  font-weight: ${props => props.theme.fontWeight.SemiBold};
+  font-weight: ${props => props.theme.fontWeight.Medium};
   font-size: ${props => props.theme.fontSizes.l};
   line-height: ${props => props.theme.lineHeight.xl};
 `;
@@ -39,7 +39,7 @@ export const ShortDiscriptionSt = styled.p`
   margin-top: ${props => props.theme.spacing.step}px;
   margin-top: ${props => props.theme.spacing.step}px;
   color: ${props => props.theme.colors.black};
-  font-weight: ${props => props.theme.fontWeight.Regular};
+  font-weight: ${props => props.theme.fontWeight.Light};
   font-size: ${props => props.theme.fontSizes.s};
   line-height: ${props => props.theme.lineHeight.l};
 `;
@@ -90,6 +90,10 @@ export const Button = styled.button`
   background-color: ${props => props.theme.colors.orange};
   color: ${props => props.theme.colors.white};
   border-radius: ${props => props.theme.spacing.step * 10}px;
+
+  font-weight: ${props => props.theme.fontWeight.medium};
+  font-size: ${props => props.theme.fontSizes.l};
+  line-height: ${props => props.theme.lineHeight.xl};
 
   &:hover {
     background-color: ${props => props.theme.colors.green};
