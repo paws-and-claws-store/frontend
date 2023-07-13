@@ -16,6 +16,7 @@ import LogoIcon from 'components/Icons/Logo';
 import SerachIcon from 'components/Icons/Search';
 import SignInIcon from 'components/Icons/SignIn';
 import CartIcon from 'components/Icons/Cart';
+import { Footer } from 'components/Footer/Footer';
 // import { Search } from './Search';
 
 export const Header = () => {
@@ -71,6 +72,7 @@ export const Header = () => {
       </NavBar>
 
       <Outlet />
+      <Footer />
     </>
   );
 };
