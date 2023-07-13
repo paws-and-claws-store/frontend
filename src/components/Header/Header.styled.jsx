@@ -101,7 +101,7 @@ export const Leng = styled.div`
   display: flex;
   gap: ${props => props.theme.spacing.step * 2}px;
 
-  font-weight: ${props => props.theme.fontWeight.Medium};
+  font-weight: ${props => props.theme.fontWeight.Regular};
   font-size: ${props => props.theme.fontSizes.m};
   line-height: ${props => props.theme.lineHeight.xl};
 

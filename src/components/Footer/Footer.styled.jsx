@@ -1,7 +1,10 @@
 import styled from '@emotion/styled';
 import { Link } from 'react-router-dom';
-
 export const FooterStyled = styled.footer`
+  background-color: ${props => props.theme.colors.green};
+`;
+
+export const FooterContainer = styled.div`
   /* position: fixed;
   top: 0;
   left: 50%;
@@ -11,8 +14,6 @@ export const FooterStyled = styled.footer`
   /* outline: 1px solid black; */
   display: flex;
   justify-content: space-between;
-
-  background-color: ${props => props.theme.colors.green};
 
   margin: ${props => props.theme.spacing.step * 8}px auto 0;
 
