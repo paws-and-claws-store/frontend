@@ -1,5 +1,5 @@
 import React from 'react';
-import { SvgFooterStyled, SvgStyled } from './SvgStyled.styled';
+import { SvgFooterStyled } from './SvgStyled.styled';
 
 export const InstagramIcon = () => {
   return (
