@@ -5,12 +5,9 @@ import {
   HeaderWrapper,
   Leng,
   LengLinkStyled,
-  LinkItemWrapper,
   LinkWrapper,
-  LogoWrapper,
   NavBar,
   NavLinkStyled,
-  NavLinksWrapper,
 } from './Header.styled';
 import LogoIcon from 'components/Icons/Logo';
 import SerachIcon from 'components/Icons/Search';

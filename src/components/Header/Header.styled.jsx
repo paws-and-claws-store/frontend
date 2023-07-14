@@ -35,7 +35,7 @@ export const NavBar = styled.header`
 //   padding-right: ${props => props.theme.spacing.step * 20 + 1}px;
 
 export const HeaderWrapper = styled.div`
-  outline: 1px solid black;
+  /* outline: 1px solid black; */
   padding-left: ${props => props.theme.spacing.step * 19 - 2}px;
   padding-right: ${props => props.theme.spacing.step * 19}px;
   display: flex;
