@@ -8,6 +8,8 @@ export const NavBar = styled.header`
   transform: translateX(-50%);
   z-index: 100;
 
+  /* display: flex; */
+  /* justify-content: space-between; */
   /* outline: 1px solid black; */
 
   background-color: ${props => props.theme.colors.mainBackground};
@@ -33,20 +35,24 @@ export const NavBar = styled.header`
 //   padding-right: ${props => props.theme.spacing.step * 20 + 1}px;
 
 export const HeaderWrapper = styled.div`
+  outline: 1px solid black;
   padding-left: ${props => props.theme.spacing.step * 19 - 2}px;
-  padding-right: ${props => props.theme.spacing.step * 19 - 1}px;
+  padding-right: ${props => props.theme.spacing.step * 19}px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 `;
 
 export const NavLinksWrapper = styled.div`
-  display: flex;
-  margin-right: 24%;
+  /* display: flex; */
+  /* margin-left: 24%; */
   gap: ${props => props.theme.spacing.step * 5}px;
 `;
 
 export const NavLinkStyled = styled(NavLink)`
   color: ${props => props.theme.colors.black};
-  font-size: ${props => props.theme.fontSizes.l};
-  font-weight: ${props => props.theme.fontWeight.Medium};
+  font-size: ${props => props.theme.fontSizes.s};
+  font-weight: ${props => props.theme.fontWeight.Regular};
   line-height: ${props => props.theme.lineHeight.l};
   /* transition-property: color, background-color, transform; */
 
@@ -81,8 +87,9 @@ export const LogoWrapper = styled.div`
 
 export const LinkWrapper = styled.div`
   display: flex;
-  align-items: center;
-  justify-content: flex-end;
+  gap: ${props => props.theme.spacing.step * 5}px;
+  /* align-items: center; */
+  /* justify-content: flex-end; */
   /* gap: ${props => props.theme.spacing.step * 5}px; */
 
   /* margin-left: ${props => props.theme.spacing.step * 7}px; */
@@ -99,6 +106,7 @@ export const LinkItemWrapper = styled.div`
 
 export const Leng = styled.div`
   display: flex;
+  align-items: center;
   gap: ${props => props.theme.spacing.step * 2}px;
 
   font-weight: ${props => props.theme.fontWeight.Regular};

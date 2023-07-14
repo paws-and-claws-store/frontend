@@ -17,6 +17,7 @@ export const CarouselStyle = styled(Carousel)`
     gap: 16px;
     margin-bottom: 0;
     bottom: ${props => props.theme.spacing.step * 9}px;
+    /* transform: translateY(100%); */
   }
 
   .carousel-control-prev,
@@ -25,9 +26,12 @@ export const CarouselStyle = styled(Carousel)`
   }
 
   .carousel-indicators [data-bs-target] {
+    margin: 0;
     width: 16px;
     height: 16px;
     border-radius: 50%;
+    border: 0;
+
     background-color: #f3ecdc;
   }
 
@@ -63,9 +67,9 @@ export const CarouselStyle = styled(Carousel)`
 
   .discription {
     justify-content: start;
-    font-size: ${props => props.theme.fontSizes.m};
+    font-size: ${props => props.theme.fontSizes.s};
     font-weight: ${props => props.theme.fontWeight.Regular};
-    line-height: ${props => props.theme.lineHeight.xl};
+    line-height: ${props => props.theme.lineHeight.l};
   }
 
   .bannerLink {

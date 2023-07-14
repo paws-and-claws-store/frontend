@@ -17,8 +17,8 @@ export const Section = styled.section`
 export const Container = styled.div`
   /* outline: 1px solid red; */
 
-  padding-left: ${props => props.theme.spacing.step * 20 + 1}px;
-  padding-right: ${props => props.theme.spacing.step * 20 + 1}px;
+  padding-left: ${props => props.theme.spacing.step * 20 + 2}px;
+  padding-right: ${props => props.theme.spacing.step * 20 + 2}px;
 
   margin-left: auto;
   margin-right: auto;

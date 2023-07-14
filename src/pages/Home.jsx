@@ -10,7 +10,7 @@ export const Home = () => {
         <Hero>
           <ControlledCarousel />
         </Hero>
-        <Title>акційні пропозиції</Title>
+        <Title>Aкційні пропозиції</Title>
         <CardList />
       </Container>
     </Section>

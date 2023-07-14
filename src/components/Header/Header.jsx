@@ -27,42 +27,29 @@ export const Header = () => {
         <>
           <HeaderWrapper>
             {/* <FaFlagUsa size="40px" color={theme.colors.light} /> */}
+            <Link to="/">
+              <LogoIcon />
+            </Link>
 
             <LinkWrapper>
-              <LogoWrapper>
-                <Link to="/">
-                  <LogoIcon />
-                </Link>
-              </LogoWrapper>
+              <NavLinkStyled to="/catalog">Каталог</NavLinkStyled>
+              <NavLinkStyled to="/brands">Бренди</NavLinkStyled>
+            </LinkWrapper>
 
-              <NavLinksWrapper>
-                <NavLinkStyled to="/catalog">Каталог</NavLinkStyled>
-                <NavLinkStyled to="/brands">Бренди</NavLinkStyled>
-              </NavLinksWrapper>
+            <LinkWrapper>
               <Leng>
                 <LengLinkStyled>Eng</LengLinkStyled>
                 <LengLinkStyled className="accent">Укр</LengLinkStyled>
               </Leng>
-
-              <LinkItemWrapper>
-                <li>
-                  {/* <Search /> */}
-
-                  <button>
-                    <SerachIcon />
-                  </button>
-                </li>
-                <li>
-                  <Link to={'/cart'}>
-                    <CartIcon />
-                  </Link>
-                </li>
-                <li>
-                  <button>
-                    <SignInIcon />
-                  </button>
-                </li>
-              </LinkItemWrapper>
+              <button>
+                <SerachIcon />
+              </button>
+              <Link to={'/cart'}>
+                <CartIcon />
+              </Link>
+              <button>
+                <SignInIcon />
+              </button>
             </LinkWrapper>
           </HeaderWrapper>
         </>

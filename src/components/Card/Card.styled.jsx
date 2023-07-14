@@ -1,8 +1,8 @@
 import styled from '@emotion/styled';
 
 export const BoxCard = styled.div`
-  width: 304px;
-  height: 512px;
+  width: ${props => props.theme.spacing.step * 76}px;
+  height: ${props => props.theme.spacing.step * 128}px;
   border: 1px solid ${props => props.theme.colors.green};
   padding: ${props => props.theme.spacing.step * 5}px;
 `;
@@ -13,7 +13,7 @@ export const BrandNameSt = styled.h3`
   text-transform: uppercase;
   font-weight: ${props => props.theme.fontWeight.SemiBold};
   font-size: ${props => props.theme.fontSizes.s};
-  line-height: ${props => props.theme.spacing.step * 4}px;
+  line-height: ${props => props.theme.lineHeight.s};
 `;
 
 export const ProductNameSt = styled.h2`
@@ -84,9 +84,9 @@ export const Wrapper = styled.div`
 
 export const Button = styled.button`
   display: block;
-  padding: ${props => props.theme.spacing.step * 2}px;
+  padding: ${props => props.theme.spacing.step * 2}px 0;
   width: ${props => props.theme.spacing.step * 39}px;
-  height: ${props => props.theme.spacing.step * 10}px;
+  /* height: ${props => props.theme.spacing.step * 10}px; */
   background-color: ${props => props.theme.colors.orange};
   color: ${props => props.theme.colors.white};
   border-radius: ${props => props.theme.spacing.step * 10}px;

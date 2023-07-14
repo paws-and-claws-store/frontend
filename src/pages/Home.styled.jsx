@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import Images from '../images/banner2.jpg';
 
 export const Hero = styled.section`
-  margin-top: ${props => props.theme.spacing.step * 23}px;
+  margin-top: ${props => props.theme.spacing.step * 22}px;
   /*max-width: 1276px;
   height: 660px;
   width: 100%;
@@ -13,13 +13,13 @@ export const Hero = styled.section`
 
 export const Box = styled.div`
   text-align: center;
-  padding: 10%;
+  /* padding: 10%; */
 `;
 
 export const Title = styled.h2`
-  text-transform: capitalize;
-  font-size: ${props => props.theme.fontSizes.xxl};
+  font-size: ${props => props.theme.fontSizes.xl};
   color: ${props => props.theme.colors.green};
-  font-weight: ${props => props.theme.fontWeight.SemiBold};
+  font-weight: ${props => props.theme.fontWeight.Medium};
+  line-height: ${props => props.theme.lineHeight.xxl};
   margin: ${props => props.theme.spacing.step * 8}px 0;
 `;

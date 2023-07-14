@@ -13,6 +13,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     {/* basename */}
     <BrowserRouter basename="/frontend/">
+      {/* <BrowserRouter basename=""> */}
       <ThemeProvider theme={theme}>
         <Global styles={GlobalStyles} />
         <App />
