@@ -1,7 +1,4 @@
 import {
-  CatalogList,
-  ContactsList,
-  FooterAStyled,
   FooterBox,
   FooterContainer,
   FooterH2Styled,
@@ -10,7 +7,6 @@ import {
   FooterStyled,
   SocialLinkStyled,
   SocialListStyled,
-  UsersList,
 } from './Footer.styled';
 import {
   FacebookIcon,
