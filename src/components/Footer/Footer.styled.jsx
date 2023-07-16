@@ -112,7 +112,8 @@ export const FooterAStyled = styled.a`
 export const SocialListStyled = styled.ul`
   margin-top: ${props => props.theme.spacing.step * 5}px;
   display: flex;
-  gap: ${props => props.theme.spacing.step * 6}px;
+
+  gap: ${props => props.theme.spacing.step * 10}px;
 `;
 
 export const SocialLinkStyled = styled.a`
