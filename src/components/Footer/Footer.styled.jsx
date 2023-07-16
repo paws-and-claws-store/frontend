@@ -2,25 +2,23 @@ import styled from '@emotion/styled';
 import { Link } from 'react-router-dom';
 export const FooterStyled = styled.footer`
   background-color: ${props => props.theme.colors.green};
+  margin-top: ${props => props.theme.spacing.step * 8}px;
+`;
+
+export const FooterBox = styled.div`
+  width: 304px;
+  padding-top: 40px;
 `;
 
 export const FooterContainer = styled.div`
-  /* position: fixed;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 100;*/
-
-  /* outline: 1px solid black; */
   display: flex;
   justify-content: space-between;
+  margin: 0 auto;
+  gap: ${props => props.theme.spacing.step * 5}px;
 
-  margin: ${props => props.theme.spacing.step * 8}px auto 0;
-
-  padding-top: ${props => props.theme.spacing.step * 8}px;
-  padding-bottom: ${props => props.theme.spacing.step * 49}px;
-  padding-left: ${props => props.theme.spacing.step * 20 + 2}px;
-  padding-right: ${props => props.theme.spacing.step * 13 + 2}px;
+  padding: 0 ${props => props.theme.spacing.step * 20 + 2}px
+    ${props => props.theme.spacing.step * 53}px
+    ${props => props.theme.spacing.step * 20 + 2}px;
 
   @media (min-width: ${props => props.theme.breakpoints.s}) {
     width: ${props => props.theme.breakpoints.s};
@@ -37,8 +35,8 @@ export const FooterContainer = styled.div`
 `;
 export const FooterLinkStyled = styled(Link)`
   color: ${props => props.theme.colors.white};
-  font-size: ${props => props.theme.fontSizes.l};
-  font-weight: ${props => props.theme.fontWeight.Medium};
+  font-size: ${props => props.theme.fontSizes.s};
+
   line-height: ${props => props.theme.lineHeight.l};
   /* transition-property: color, background-color, transform; */
 
@@ -70,10 +68,10 @@ export const FooterLinkStyled = styled(Link)`
 `;
 
 export const FooterH2Styled = styled.h2`
-  color: ${props => props.theme.colors.secGreen};
-  font-size: ${props => props.theme.fontSizes.xl};
+  color: ${props => props.theme.colors.white};
+  font-size: ${props => props.theme.fontSizes.l};
   font-weight: ${props => props.theme.fontWeight.Medium};
-  line-height: ${props => props.theme.lineHeight.xl};
+  line-height: ${props => props.theme.lineHeight.l};
 `;
 
 export const FooterAStyled = styled.a`
@@ -112,6 +110,7 @@ export const FooterAStyled = styled.a`
 `;
 
 export const SocialListStyled = styled.ul`
+  margin-top: ${props => props.theme.spacing.step * 5}px;
   display: flex;
   gap: ${props => props.theme.spacing.step * 6}px;
 `;
@@ -121,23 +120,23 @@ export const SocialLinkStyled = styled.a`
   ${'' /* padding: 8px; */}
 `;
 
-export const CatalogList = styled.ul`
+export const FooterList = styled.ul`
   display: flex;
   flex-direction: column;
   gap: ${props => props.theme.spacing.step * 2}px;
-  margin-top: ${props => props.theme.spacing.step * 6}px;
+  margin-top: ${props => props.theme.spacing.step * 5}px;
 `;
 
-export const UsersList = styled.ul`
-  display: flex;
-  flex-direction: column;
-  gap: ${props => props.theme.spacing.step * 3}px;
-  margin-top: ${props => props.theme.spacing.step * 6}px;
-`;
+// export const UsersList = styled.ul`
+//   display: flex;
+//   flex-direction: column;
+//   gap: ${props => props.theme.spacing.step * 2}px;
+//   margin-top: ${props => props.theme.spacing.step * 5}px;
+// `;
 
-export const ContactsList = styled.ul`
-  display: flex;
-  flex-direction: column;
-  gap: ${props => props.theme.spacing.step * 3}px;
-  margin-top: ${props => props.theme.spacing.step * 6}px;
-`;
+// export const ContactsList = styled.ul`
+//   display: flex;
+//   flex-direction: column;
+//   gap: ${props => props.theme.spacing.step * 3}px;
+//   margin-top: ${props => props.theme.spacing.step * 6}px;
+// `;

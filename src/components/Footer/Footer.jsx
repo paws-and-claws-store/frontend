@@ -2,9 +2,11 @@ import {
   CatalogList,
   ContactsList,
   FooterAStyled,
+  FooterBox,
   FooterContainer,
   FooterH2Styled,
   FooterLinkStyled,
+  FooterList,
   FooterStyled,
   SocialLinkStyled,
   SocialListStyled,
@@ -20,9 +22,12 @@ export const Footer = () => {
   return (
     <FooterStyled>
       <FooterContainer>
-        <div>
+        <FooterBox>
           <FooterH2Styled>Каталог</FooterH2Styled>
-          <CatalogList>
+          <FooterList>
+            <li>
+              <FooterLinkStyled to="/brands">Бренди</FooterLinkStyled>
+            </li>
             <li>
               <FooterLinkStyled to="/pageUnderConstruction">
                 Корм для собак
@@ -33,15 +38,17 @@ export const Footer = () => {
                 Корм для котів
               </FooterLinkStyled>
             </li>
-            <li>
-              <FooterLinkStyled to="/brands">Бренди</FooterLinkStyled>
-            </li>
-          </CatalogList>
-        </div>
-        <div>
+          </FooterList>
+        </FooterBox>
+        <FooterBox>
           <FooterH2Styled>Покупцям</FooterH2Styled>
 
-          <UsersList>
+          <FooterList>
+            <li>
+              <FooterLinkStyled to="/pageUnderConstruction">
+                Політика конфіденційності
+              </FooterLinkStyled>
+            </li>
             <li>
               <FooterLinkStyled to="/pageUnderConstruction">
                 Доставка
@@ -62,45 +69,47 @@ export const Footer = () => {
                 Договір публічної оферти
               </FooterLinkStyled>
             </li>
+          </FooterList>
+        </FooterBox>
+        <FooterBox>
+          <FooterH2Styled>Контакти</FooterH2Styled>
+          <FooterList id="contacts">
             <li>
-              <FooterLinkStyled to="/pageUnderConstruction">
-                Політика конфіденційності
+              <FooterLinkStyled href="tel:+380486752312">
+                +380486752312
               </FooterLinkStyled>
             </li>
-          </UsersList>
-        </div>
-        <div>
-          <FooterH2Styled>Контакти</FooterH2Styled>
-          <ContactsList id="contacts">
             <li>
-              <FooterAStyled href="tel:+380486752312">
-                +380486752312
-              </FooterAStyled>
-            </li>
-            <li>
-              <FooterAStyled href="mailto:clawspaws@gmail.com" target="_blank">
+              <FooterLinkStyled
+                href="mailto:clawspaws@gmail.com"
+                target="_blank"
+              >
                 clawspaws@gmail.com
-              </FooterAStyled>
+              </FooterLinkStyled>
             </li>
-            <SocialListStyled>
-              <li>
-                <SocialLinkStyled href="http://instagram.com" target="_blank">
-                  <InstagramIcon />
-                </SocialLinkStyled>
-              </li>
-              <li>
-                <SocialLinkStyled href="http://facebook.com" target="_blank">
-                  <FacebookIcon />
-                </SocialLinkStyled>
-              </li>
-              <li>
-                <SocialLinkStyled href="http://t.me" target="_blank">
-                  <TelegramIcon />
-                </SocialLinkStyled>
-              </li>
-            </SocialListStyled>
-          </ContactsList>
-        </div>
+          </FooterList>
+        </FooterBox>
+
+        <FooterBox>
+          <FooterH2Styled>Соціальні мережі</FooterH2Styled>
+          <SocialListStyled>
+            <li>
+              <SocialLinkStyled href="http://instagram.com" target="_blank">
+                <InstagramIcon />
+              </SocialLinkStyled>
+            </li>
+            <li>
+              <SocialLinkStyled href="http://facebook.com" target="_blank">
+                <FacebookIcon />
+              </SocialLinkStyled>
+            </li>
+            <li>
+              <SocialLinkStyled href="http://t.me" target="_blank">
+                <TelegramIcon />
+              </SocialLinkStyled>
+            </li>
+          </SocialListStyled>
+        </FooterBox>
       </FooterContainer>
     </FooterStyled>
   );
