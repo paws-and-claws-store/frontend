@@ -6,3 +6,4 @@ export * from './Profile';
 export * from './Heart';
 export * from './SocialIcons';
 export * from './ClearButton';
+export * from './Stars';

@@ -1,11 +1,47 @@
 import styled from '@emotion/styled';
+import { Link } from 'react-router-dom';
 
 export const BoxCard = styled.div`
+  position: relative;
   width: ${props => props.theme.spacing.step * 76}px;
   height: ${props => props.theme.spacing.step * 128}px;
   border: 1px solid ${props => props.theme.colors.green};
   padding: ${props => props.theme.spacing.step * 5}px;
+
+  .heartIcon {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+  }
 `;
+
+export const WeightList = styled.ul`
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: ${props => props.theme.spacing.step * 1}px;
+
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: 16px;
+`;
+
+export const WidthLink = styled(Link)`
+  display: inline-block;
+  border-radius: ${props => props.theme.spacing.step * 2 + 2}px;
+  border: 1px solid ${props => props.theme.colors.green};
+  padding: 2px 12px;
+
+  &.active {
+    border-color: ${props => props.theme.colors.orange};
+    color: ${props => props.theme.colors.orange};
+  }
+`;
+
+export const WeightListItem = styled.li``;
 
 export const BrandNameSt = styled.h3`
   margin-top: ${props => props.theme.spacing.step * 5}px;
@@ -44,9 +80,9 @@ export const ShortDiscriptionSt = styled.p`
   line-height: ${props => props.theme.lineHeight.l};
 `;
 
-export const SizeSt = styled.p`
+export const Reiting = styled.p`
   display: flex;
-  justify-content: center;
+
   gap: ${props => props.theme.spacing.step * 1}px;
 
   height: ${props => props.theme.spacing.step * 5}px;
@@ -109,3 +145,5 @@ export const Image = styled.img`
   height: ${props => props.theme.spacing.step * 66}px;
   object-fit: cover;
 `;
+
+export const HeartBox = styled.div``;
