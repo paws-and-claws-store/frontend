@@ -10,7 +10,11 @@ import {
   SocialListStyled,
   UsersList,
 } from './Footer.styled';
-import { FacebookIcon, InstagramIcon, TelegramIcon } from 'components/Icons/SocialIcons';
+import {
+  FacebookIcon,
+  InstagramIcon,
+  TelegramIcon,
+} from 'components/Icons/SocialIcons';
 
 export const Footer = () => {
   return (
@@ -20,10 +24,14 @@ export const Footer = () => {
           <FooterH2Styled>Каталог</FooterH2Styled>
           <CatalogList>
             <li>
-              <FooterLinkStyled to="/pageUnderConstruction">Корм для собак</FooterLinkStyled>
+              <FooterLinkStyled to="/pageUnderConstruction">
+                Корм для собак
+              </FooterLinkStyled>
             </li>
             <li>
-              <FooterLinkStyled to="/pageUnderConstruction">Корм для котів</FooterLinkStyled>
+              <FooterLinkStyled to="/pageUnderConstruction">
+                Корм для котів
+              </FooterLinkStyled>
             </li>
             <li>
               <FooterLinkStyled to="/brands">Бренди</FooterLinkStyled>
@@ -35,13 +43,19 @@ export const Footer = () => {
 
           <UsersList>
             <li>
-              <FooterLinkStyled to="/pageUnderConstruction">Доставка</FooterLinkStyled>
+              <FooterLinkStyled to="/pageUnderConstruction">
+                Доставка
+              </FooterLinkStyled>
             </li>
             <li>
-              <FooterLinkStyled to="/pageUnderConstruction">Повернення й обмін</FooterLinkStyled>
+              <FooterLinkStyled to="/pageUnderConstruction">
+                Повернення й обмін
+              </FooterLinkStyled>
             </li>
             <li>
-              <FooterLinkStyled to="/pageUnderConstruction">Про компанію</FooterLinkStyled>
+              <FooterLinkStyled to="/pageUnderConstruction">
+                Про компанію
+              </FooterLinkStyled>
             </li>
             <li>
               <FooterLinkStyled to="/pageUnderConstruction">
@@ -57,9 +71,11 @@ export const Footer = () => {
         </div>
         <div>
           <FooterH2Styled>Контакти</FooterH2Styled>
-          <ContactsList>
+          <ContactsList id="contacts">
             <li>
-              <FooterAStyled href="tel:+380486752312">+380486752312</FooterAStyled>
+              <FooterAStyled href="tel:+380486752312">
+                +380486752312
+              </FooterAStyled>
             </li>
             <li>
               <FooterAStyled href="mailto:clawspaws@gmail.com" target="_blank">

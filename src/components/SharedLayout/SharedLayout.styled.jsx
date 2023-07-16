@@ -2,10 +2,8 @@ import styled from 'styled-components';
 // import { NavLink } from 'react-router-dom';
 // import { theme } from 'styles';
 
-export const Content = styled.div`
-  flex-grow: 1;
-  flex-shrink: 0;
-  flex-basis: auto;
+export const BoxMT = styled.div`
+  margin-top: 88px;
 `;
 
 // export const Header = styled.header`
