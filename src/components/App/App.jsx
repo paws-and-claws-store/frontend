@@ -11,6 +11,7 @@ import {
   PricesDrop,
   ProductCard,
 } from 'pages';
+import { Search } from 'pages/Search';
 import { Route, Routes } from 'react-router-dom';
 
 export const App = () => {
@@ -24,6 +25,7 @@ export const App = () => {
           <Route path="cart" element={<Cart />} />
           <Route path="productCard" element={<ProductCard />} />
           <Route path="prices-drop" element={<PricesDrop />} />
+          <Route path="search" element={<Search />} />
 
           <Route path="aboutUs" element={<AboutUs />} />
           <Route path="contacts" element={<Contacts />} />

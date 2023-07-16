@@ -1,7 +1,7 @@
 import React from 'react';
 import { SvgStyled } from './SvgStyled.styled';
 
-const SignInIcon = () => {
+export const SignInIcon = () => {
   return (
     <SvgStyled
       xmlns="http://www.w3.org/2000/svg"
@@ -17,5 +17,3 @@ const SignInIcon = () => {
     </SvgStyled>
   );
 };
-
-export default SignInIcon;

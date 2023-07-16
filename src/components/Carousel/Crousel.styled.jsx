@@ -16,7 +16,7 @@ export const CarouselStyle = styled(Carousel)`
   .carousel-indicators {
     gap: 16px;
     margin-bottom: 0;
-    bottom: ${props => props.theme.spacing.step * 9}px;
+    bottom: ${props => props.theme.spacing.step * 5}px;
     /* transform: translateY(100%); */
   }
 

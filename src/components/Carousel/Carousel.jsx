@@ -20,10 +20,10 @@ const banner = [
   {
     id: nanoid(3),
     img: image2,
-    title: 'Подбай про мяу-комфорт',
+    title: `Подбай про мяу-комфорт`,
     discription:
       'Освіжи свого котика з ніжністю. Шампунь для котів - здорова шкіра, шовкова шерсть. Доглянутість, яку вони заслуговують.',
-    linkName: 'Перейти в каталог',
+    linkName: 'Купити зараз',
     link: '/catalog',
   },
   {
@@ -66,7 +66,7 @@ function ControlledCarousel() {
     <CarouselStyle activeIndex={index} onSelect={handleSelect}>
       {banner.map(item => {
         return (
-          <Carousel.Item key={item.id}>
+          <Carousel.Item key={item.id} interval={10000000}>
             <img className="d-block w-100" src={item.img} alt={item} />
             <Carousel.Caption>
               <div className="captionDescription">

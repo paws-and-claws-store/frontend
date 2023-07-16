@@ -94,7 +94,7 @@ export const Footer = () => {
                 </SocialLinkStyled>
               </li>
               <li>
-                <SocialLinkStyled href="http://telegram.com" target="_blank">
+                <SocialLinkStyled href="http://t.me" target="_blank">
                   <TelegramIcon />
                 </SocialLinkStyled>
               </li>

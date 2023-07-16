@@ -1,52 +1,67 @@
 import { Link } from 'react-router-dom';
 
 import {
+  HeaderContainer,
+  HeaderStyled,
   HeaderWrapper,
   Leng,
   LengLinkStyled,
   LinkWrapper,
-  NavBar,
-  NavLinkStyled,
+  SearchBox,
 } from './Header.styled';
-import LogoIcon from 'components/Icons/Logo';
-import SerachIcon from 'components/Icons/Search';
-import SignInIcon from 'components/Icons/SignIn';
-import CartIcon from 'components/Icons/Cart';
+import {
+  CartIcon,
+  ClearButton,
+  HeartIcon,
+  LogoIcon,
+  ProfileIcon,
+  SearchIcon,
+} from 'components/Icons';
+
 // import { Search } from './Search';
 
 export const Header = () => {
   return (
-    <>
-      <NavBar>
-        <>
-          <HeaderWrapper>
-            <Link to="/">
-              <LogoIcon />
-            </Link>
+    <HeaderStyled>
+      <HeaderContainer>
+        <HeaderWrapper>
+          <Link to="/" className="logo">
+            <LogoIcon />
+          </Link>
 
-            <LinkWrapper>
+          {/* <LinkWrapper>
               <NavLinkStyled to="/catalog">Каталог</NavLinkStyled>
               <NavLinkStyled to="/brands">Бренди</NavLinkStyled>
-            </LinkWrapper>
+            </LinkWrapper> */}
+          <SearchBox>
+            <form action="/frontend/search">
+              <input type="search" placeholder="Введіть назву товару" />
+              <button>
+                <ClearButton />
+              </button>
+              <button type="submit">
+                <SearchIcon />
+              </button>
+            </form>
+          </SearchBox>
 
-            <LinkWrapper>
-              <Leng>
-                <LengLinkStyled>Eng</LengLinkStyled>
-                <LengLinkStyled className="accent">Укр</LengLinkStyled>
-              </Leng>
-              <button>
-                <SerachIcon />
-              </button>
-              <Link to={'/cart'}>
-                <CartIcon />
-              </Link>
-              <button>
-                <SignInIcon />
-              </button>
-            </LinkWrapper>
-          </HeaderWrapper>
-        </>
-      </NavBar>
-    </>
+          <LinkWrapper>
+            <button>
+              <ProfileIcon />
+            </button>
+            <button>
+              <HeartIcon />
+            </button>
+            <Link to={'/cart'}>
+              <CartIcon />
+            </Link>
+            <Leng>
+              <LengLinkStyled>Eng</LengLinkStyled>
+              <LengLinkStyled className="accent">Укр</LengLinkStyled>
+            </Leng>
+          </LinkWrapper>
+        </HeaderWrapper>
+      </HeaderContainer>
+    </HeaderStyled>
   );
 };
