@@ -13,7 +13,7 @@ export const theme = Object.freeze({
     secGrey: '#ECECEC',
   },
   fontSizes: {
-    xs: '14px',
+    xs: '12px',
     s: '16px',
     m: '18px',
     l: '20px',

@@ -1,5 +1,4 @@
-import { Link, Outlet } from 'react-router-dom';
-// import { useTheme } from '@emotion/react';
+import { Link } from 'react-router-dom';
 
 import {
   HeaderWrapper,
@@ -16,14 +15,11 @@ import CartIcon from 'components/Icons/Cart';
 // import { Search } from './Search';
 
 export const Header = () => {
-  // const theme = useTheme();
-
   return (
     <>
       <NavBar>
         <>
           <HeaderWrapper>
-            {/* <FaFlagUsa size="40px" color={theme.colors.light} /> */}
             <Link to="/">
               <LogoIcon />
             </Link>
@@ -51,9 +47,6 @@ export const Header = () => {
           </HeaderWrapper>
         </>
       </NavBar>
-
-      <Outlet />
-      {/* <Footer /> */}
     </>
   );
 };
