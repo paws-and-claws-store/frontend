@@ -22,7 +22,7 @@ export const CarouselStyle = styled(Carousel)`
 
   .carousel-control-prev,
   .carousel-control-next {
-    display: none;
+    /* display: none; */
   }
 
   .carousel-indicators [data-bs-target] {
