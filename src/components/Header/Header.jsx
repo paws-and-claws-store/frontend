@@ -17,12 +17,25 @@ import {
   ProfileIcon,
   SearchIcon,
 } from 'components/Icons';
+import { useEffect, useState } from 'react';
 
 // import { Search } from './Search';
 
 export const Header = () => {
+  const [scroll, setScroll] = useState('');
+
+  useEffect(() => {
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 20) {
+        setScroll('scroll');
+      } else {
+        setScroll('');
+      }
+    });
+  }, []);
+
   return (
-    <HeaderStyled>
+    <HeaderStyled className={scroll}>
       <HeaderContainer>
         <HeaderWrapper>
           <Link to="/" className="logo">

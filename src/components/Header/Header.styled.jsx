@@ -15,7 +15,9 @@ export const HeaderStyled = styled.header`
 
   background-color: ${props => props.theme.colors.mainBackground};
 
-  box-shadow: 0px 0px 4px 0px #b2ab73;
+  &.scroll {
+    box-shadow: 0px 0px 4px 0px #b2ab73;
+  }
   /* outline: 1px solid red; */
   /* display: flex; */
   /* justify-content: space-between; */
@@ -120,8 +122,8 @@ export const LinkItemWrapper = styled.div`
 export const Leng = styled.div`
   display: flex;
   align-items: center;
-  justify-content: space-around;
-  width: ${props => props.theme.spacing.step * 18}px;
+  justify-content: space-between;
+  width: ${props => props.theme.spacing.step * 17}px;
   gap: ${props => props.theme.spacing.step * 2}px;
 
   font-weight: ${props => props.theme.fontWeight.Regular};
@@ -169,6 +171,9 @@ export const SearchBox = styled.div`
     border: 1px solid ${props => props.theme.colors.green}; */
 
     &::placeholder {
+      font-size: ${props => props.theme.fontSizes.s};
+      font-weight: ${props => props.theme.fontWeight.Light};
+      line-height: 1.25; /* 125% */
       color: ${props => props.theme.colors.secGreen};
     }
   }
