@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 import { Link } from 'react-router-dom';
+import { theme } from 'styles';
 
 export const BoxCard = styled.div`
   position: relative;
@@ -12,6 +13,11 @@ export const BoxCard = styled.div`
     position: absolute;
     top: 20px;
     right: 20px;
+    fill: ${theme.colors.green};
+
+    & .active {
+      fill: ${theme.colors.orange};
+    }
   }
 `;
 
