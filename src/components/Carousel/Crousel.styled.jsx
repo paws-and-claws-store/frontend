@@ -20,9 +20,15 @@ export const CarouselStyle = styled(Carousel)`
     /* transform: translateY(100%); */
   }
 
-  .carousel-control-prev,
+  .carousel-control-prev {
+    justify-content: flex-start;
+    padding-left: 11px;
+  }
+
   .carousel-control-next {
-    display: none;
+    justify-content: flex-end;
+    padding-right: 11px;
+    /* display: none; */
   }
 
   .carousel-indicators [data-bs-target] {
