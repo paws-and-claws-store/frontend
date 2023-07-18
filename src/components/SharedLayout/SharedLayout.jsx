@@ -11,6 +11,7 @@ import {
   NavStyle,
   Link,
 } from 'components';
+import ScrollToTop from 'components/ScrollToTop/ScrollToTop';
 
 const SharedLayout = () => {
   return (
@@ -30,6 +31,7 @@ const SharedLayout = () => {
               <Suspense fallback={<Loader />}>
                 <Outlet />
               </Suspense>
+              <ScrollToTop />
             </main>
           </BoxMT>
         </Container>
