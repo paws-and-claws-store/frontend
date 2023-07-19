@@ -122,9 +122,9 @@ export const LinkItemWrapper = styled.div`
 export const Leng = styled.div`
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-evenly;
   width: ${props => props.theme.spacing.step * 17}px;
-  gap: ${props => props.theme.spacing.step * 2}px;
+  gap: ${props => props.theme.spacing.step * 1}px;
 
   font-weight: ${props => props.theme.fontWeight.Regular};
   font-size: ${props => props.theme.fontSizes.s};
