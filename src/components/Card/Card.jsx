@@ -18,7 +18,9 @@ import {
 import { Link } from 'react-router-dom';
 // import { HeartIcon } from 'components/Icons';
 
-export const Card = ({ el }) => {
+export const Card = ({ el, groupItems }) => {
+  console.log('groupItems:', groupItems);
+  // console.log('groupBy:', groupBy);
   // console.log(el);
   const [favourite, setFavourite] = useState(el.favourite);
   const [heartIconClassname, setHeartIconClassname] = useState('');
@@ -42,18 +44,13 @@ export const Card = ({ el }) => {
   return (
     <BoxCard>
       <WeightList>
-        <WeightListItem>
-          <WidthLink className="active">100 г</WidthLink>
-        </WeightListItem>
-        <WeightListItem>
-          <WidthLink>10 кг</WidthLink>
-        </WeightListItem>
-        <WeightListItem>
-          <WidthLink>20 кг</WidthLink>
-        </WeightListItem>
-        <WeightListItem>
-          <WidthLink>25кг</WidthLink>
-        </WeightListItem>
+        {groupItems.map(({ id, weight }) => {
+          return (
+            <WeightListItem key={id}>
+              <WidthLink>{weight}</WidthLink>
+            </WeightListItem>
+          );
+        })}
       </WeightList>
 
       <Link className="heartIcon" onClick={changeFavourite}>
