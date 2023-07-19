@@ -86,7 +86,7 @@ export const ShortDiscriptionSt = styled.p`
   line-height: ${props => props.theme.lineHeight.l};
 `;
 
-export const Reiting = styled.p`
+export const Rating = styled.p`
   display: flex;
 
   gap: ${props => props.theme.spacing.step * 1}px;
@@ -100,7 +100,23 @@ export const Reiting = styled.p`
   line-height: ${props => props.theme.lineHeight.l};
 `;
 
-export const PriceSt = styled.p`
+export const PriceBox = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+
+  & .line-through-text {
+    font-size: ${theme.fontSizes.s};
+    font-weight: ${theme.fontWeight.Medium};
+    line-height: 1;
+
+    text-decoration-line: line-through;
+    text-transform: uppercase;
+    color: ${theme.colors.grey};
+  }
+`;
+
+export const PriceSt = styled.span`
   color: ${props => props.theme.colors.orange};
   /* text-transform: uppercase; */
   /* font-family: 'rawline', sans-serif; */

@@ -4,9 +4,10 @@ import {
   BrandNameSt,
   Button,
   Image,
+  PriceBox,
   PriceSt,
   ProductNameSt,
-  Reiting,
+  Rating,
   ShortDiscriptionSt,
   SymbolCurrency,
   WeightList,
@@ -15,15 +16,13 @@ import {
   Wrapper,
 } from './Card.styled';
 import { Link } from 'react-router-dom';
-import { HeartIcon } from 'components/Icons';
+// import { HeartIcon } from 'components/Icons';
 
 export const Card = ({ el }) => {
   // console.log(el);
-  const [favourite, setFavourite] = useState(false);
-  const [heartIconClassname, setHeartIconClassname] = useState(el.favourite);
-  console.log(el.favourite);
+  const [favourite, setFavourite] = useState(el.favourite);
+  const [heartIconClassname, setHeartIconClassname] = useState('');
   const changeFavourite = () => {
-    console.log(favourite);
     return setFavourite(!favourite);
   };
 
@@ -90,7 +89,7 @@ export const Card = ({ el }) => {
               <ShortDiscriptionSt>{el.shortDescription}</ShortDiscriptionSt>
             </Link>
           </div>
-          <Reiting className="111111">
+          <Rating className="reiting">
             <span>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -109,13 +108,28 @@ export const Card = ({ el }) => {
                 ></path>
               </svg>
             </span>
-          </Reiting>
+          </Rating>
         </div>
         <Wrapper>
-          <PriceSt>
-            {el.price.toFixed(2)}
-            <SymbolCurrency>₴</SymbolCurrency>
-          </PriceSt>
+          {el.sale ? (
+            <PriceBox>
+              <PriceSt>
+                {el.sale.toFixed(2)}
+                <SymbolCurrency>₴</SymbolCurrency>
+              </PriceSt>
+              <PriceSt className="line-through-text">
+                {el.price.toFixed(2)}
+                <SymbolCurrency>₴</SymbolCurrency>
+              </PriceSt>
+            </PriceBox>
+          ) : (
+            <PriceBox>
+              <PriceSt>
+                {el.price.toFixed(2)}
+                <SymbolCurrency>₴</SymbolCurrency>
+              </PriceSt>
+            </PriceBox>
+          )}
           {!count ? (
             <Button>Обрати</Button>
           ) : (
