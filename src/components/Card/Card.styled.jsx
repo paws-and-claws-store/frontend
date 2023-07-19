@@ -101,9 +101,10 @@ export const Rating = styled.p`
 `;
 
 export const PriceBox = styled.div`
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  /* flex-wrap: wrap; */
   align-items: center;
+  /* width: 94px; */
 
   & .line-through-text {
     font-size: ${theme.fontSizes.s};
