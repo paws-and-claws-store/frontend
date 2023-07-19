@@ -15,18 +15,13 @@ export const CardList = () => {
     el => el.sale && (el.count !== 0 || el.count !== null),
   );
 
-  // const groupByFoodName = groupBy(catalog, 'foodName');
-
-  // console.log(groupBy(catalog, 'foodName'));
+  const uniqueObjArray = [
+    ...new Map(filterItems.map(item => [item['foodName'], item])).values(),
+  ];
 
   return (
     <List>
-      {filterItems.slice(0, 12).map(el => {
-        // console.log(el.foodName);
-        // console.log(
-        //   'groupByFoodName:',
-        //   groupBy(catalog, 'foodName')[el.foodName],
-        // );
+      {uniqueObjArray.slice(0, 12).map(el => {
         return (
           <ListItem key={el.id}>
             <Card

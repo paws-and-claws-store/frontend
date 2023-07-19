@@ -19,7 +19,7 @@ import { Link } from 'react-router-dom';
 // import { HeartIcon } from 'components/Icons';
 
 export const Card = ({ el, groupItems }) => {
-  console.log('groupItems:', groupItems);
+  // console.log('groupItems:', groupItems);
   // console.log('groupBy:', groupBy);
   // console.log(el);
   const [favourite, setFavourite] = useState(el.favourite);
