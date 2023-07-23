@@ -37,9 +37,11 @@ export const WeightList = styled.ul`
 
 export const WidthLink = styled(Link)`
   display: inline-block;
+  background-color: ${theme.colors.beige};
   border-radius: ${props => props.theme.spacing.step * 2 + 2}px;
   border: 1px solid ${props => props.theme.colors.green};
   padding: 2px 12px;
+  color: ${theme.colors.green};
 
   &.active {
     border-color: ${props => props.theme.colors.orange};
@@ -138,7 +140,7 @@ export const Wrapper = styled.div`
   align-items: center;
   justify-content: space-between;
   margin-top: ${props => props.theme.spacing.step * 2}px;
-  gap: ${props => props.theme.spacing.step * 4 - 2}px;
+  /* gap: ${props => props.theme.spacing.step * 4 - 2}px; */
 `;
 
 export const Button = styled.button`

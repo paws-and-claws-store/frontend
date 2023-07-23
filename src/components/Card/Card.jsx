@@ -19,13 +19,28 @@ import { Link } from 'react-router-dom';
 // import { HeartIcon } from 'components/Icons';
 
 export const Card = ({ el, groupItems }) => {
-  // console.log('groupItems:', groupItems);
-  // console.log('groupBy:', groupBy);
-  // console.log(el);
-  const [favourite, setFavourite] = useState(el.favourite);
+  const arr = groupItems.sort((a, b) => {
+    if (a.weight < b.weight) {
+      return 1;
+    }
+    if (a.weight > b.weight) {
+      return -1;
+    }
+    return 0;
+  });
+
+  const [Card, setCard] = useState(el);
+
+  const [favourite, setFavourite] = useState(Card.favourite);
   const [heartIconClassname, setHeartIconClassname] = useState('');
+
   const changeFavourite = () => {
-    return setFavourite(!favourite);
+    setFavourite(!favourite);
+  };
+
+  const changeCard = id => {
+    const newCard = arr.find(el => el.id === id);
+    setCard(newCard);
   };
 
   useEffect(() => {
@@ -44,10 +59,15 @@ export const Card = ({ el, groupItems }) => {
   return (
     <BoxCard>
       <WeightList>
-        {groupItems.map(({ id, weight }) => {
+        {arr.map(({ id, weight }) => {
           return (
             <WeightListItem key={id}>
-              <WidthLink>{weight}</WidthLink>
+              <WidthLink
+                className={id === Card.id ? 'active' : undefined}
+                onClick={() => changeCard(id)}
+              >
+                {weight}
+              </WidthLink>
             </WeightListItem>
           );
         })}
@@ -71,19 +91,19 @@ export const Card = ({ el, groupItems }) => {
       </Link>
 
       <Link to={'/productCard'}>
-        <Image src={el.image} alt={el.foodName} />
+        <Image src={Card.image} alt={Card.foodName} />
       </Link>
       <div>
         <div>
           <div>
             <Link to={'/brands'}>
-              <BrandNameSt>{el.brand}</BrandNameSt>
+              <BrandNameSt>{Card.brand}</BrandNameSt>
             </Link>
             <Link to={'/productCard'}>
               <div>
-                <ProductNameSt>{el.foodName}</ProductNameSt>
+                <ProductNameSt>{Card.foodName}</ProductNameSt>
               </div>
-              <ShortDiscriptionSt>{el.shortDescription}</ShortDiscriptionSt>
+              <ShortDiscriptionSt>{Card.shortDescription}</ShortDiscriptionSt>
             </Link>
           </div>
           <Rating className="reiting">
@@ -108,21 +128,21 @@ export const Card = ({ el, groupItems }) => {
           </Rating>
         </div>
         <Wrapper>
-          {el.sale ? (
+          {Card.sale ? (
             <PriceBox>
               <PriceSt>
-                {el.sale.toFixed(2)}
+                {Card.sale.toFixed(2)}
                 <SymbolCurrency>₴</SymbolCurrency>
               </PriceSt>
               <PriceSt className="line-through-text">
-                {el.price.toFixed(2)}
+                {Card.price.toFixed(2)}
                 <SymbolCurrency>₴</SymbolCurrency>
               </PriceSt>
             </PriceBox>
           ) : (
             <PriceBox>
               <PriceSt>
-                {el.price.toFixed(2)}
+                {Card.price.toFixed(2)}
                 <SymbolCurrency>₴</SymbolCurrency>
               </PriceSt>
             </PriceBox>

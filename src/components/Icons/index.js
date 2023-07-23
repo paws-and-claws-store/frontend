@@ -7,3 +7,6 @@ export * from './Heart';
 export * from './SocialIcons';
 export * from './ClearButton';
 export * from './Stars';
+export * from './RightArrow';
+export * from './Cat';
+export * from './Dog';

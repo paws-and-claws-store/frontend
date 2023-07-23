@@ -1,27 +1,21 @@
 import { Card } from 'components/Card/Card';
-import catalog from '../DB/catalog.json';
+import catalog from '../../DB/catalog.json';
 import React from 'react';
 import { List, ListItem } from './CardList.styled';
+import { groupBy } from 'helpers';
 
-export const CardList = () => {
-  const groupBy = function (arr, key) {
-    return arr.reduce(function (acc, x) {
-      (acc[x[key]] = acc[x[key]] || []).push(x);
-      return acc;
-    }, {});
-  };
+export const CardList = ({ uniqueObjArray }) => {
+  // const filterItems = catalog.filter(
+  //   el => el.sale && (el.count !== 0 || el.count !== null),
+  // );
 
-  const filterItems = catalog.filter(
-    el => el.sale && (el.count !== 0 || el.count !== null),
-  );
-
-  const uniqueObjArray = [
-    ...new Map(filterItems.map(item => [item['foodName'], item])).values(),
-  ];
+  // const uniqueObjArray = [
+  //   ...new Map(filterItems.map(item => [item['foodName'], item])).values(),
+  // ];
 
   return (
     <List>
-      {uniqueObjArray.slice(0, 12).map(el => {
+      {uniqueObjArray.map(el => {
         return (
           <ListItem key={el.id}>
             <Card
