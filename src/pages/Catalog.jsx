@@ -25,8 +25,10 @@ export const Catalog = () => {
   const handleClick = e => {
     if (active === e.target.id) {
       setActive('');
+      document.getElementById('hidden').style.visibility = 'hidden';
     } else {
       setActive(e.target.id);
+      document.getElementById('hidden').style.visibility = 'visible';
     }
   };
 

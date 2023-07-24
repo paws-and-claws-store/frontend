@@ -13,6 +13,7 @@ import {
 } from 'pages';
 import { Search } from 'pages/Search';
 import { Route, Routes } from 'react-router-dom';
+import { Hidden } from './App.styled';
 
 export const App = () => {
   return (
@@ -39,6 +40,7 @@ export const App = () => {
         </Route>
         <Route path="*" element={<PageNotFound />} />
       </Routes>
+      <Hidden className="" id="hidden"></Hidden>
     </>
   );
 };
