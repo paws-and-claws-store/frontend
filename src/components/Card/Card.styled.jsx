@@ -9,15 +9,15 @@ export const BoxCard = styled.div`
   border: 1px solid ${props => props.theme.colors.green};
   padding: ${props => props.theme.spacing.step * 5}px;
 
-  .heartIcon {
+  .heartIcon svg {
     position: absolute;
     top: 20px;
     right: 20px;
-    fill: ${theme.colors.green};
+    fill: ${theme.colors.orange};
 
-    & .active {
+    /* & .active {
       fill: ${theme.colors.orange};
-    }
+    } */
   }
 `;
 

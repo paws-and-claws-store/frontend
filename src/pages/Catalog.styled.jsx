@@ -43,7 +43,7 @@ export const AsideCatalog = styled.aside`
 
 export const PetButton = styled.button`
   position: relative;
-  z-index: 1;
+  z-index: 10;
   padding: 6px 8px;
   display: flex;
   justify-content: space-between;
@@ -71,7 +71,8 @@ export const BoxHiden = styled.div`
   background-color: ${theme.colors.beige};
   border: 1px solid ${theme.colors.green};
 
-  width: 304px;
+  /* width: 304px; */
+  width: 100%;
   padding: 20px;
 
   &.active {
