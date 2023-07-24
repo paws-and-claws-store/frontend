@@ -23,11 +23,11 @@ export const Catalog = () => {
   console.log('catCatalog:', catCatalog);
 
   const handleClick = e => {
-    if (active === e.target.id) {
+    if (active === e.currentTarget.id) {
       setActive('');
       document.getElementById('hidden').style.visibility = 'hidden';
     } else {
-      setActive(e.target.id);
+      setActive(e.currentTarget.id);
       document.getElementById('hidden').style.visibility = 'visible';
     }
   };

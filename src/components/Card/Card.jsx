@@ -143,7 +143,7 @@ export const Card = ({ el, groupItems }) => {
             </PriceBox>
           )}
           {!count ? (
-            <Button>Обрати</Button>
+            <Button>Купити</Button>
           ) : (
             <div>
               <button>
