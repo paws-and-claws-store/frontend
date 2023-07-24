@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useState } from 'react';
 import {
   BoxCard,
   BrandNameSt,
@@ -16,7 +16,7 @@ import {
   Wrapper,
 } from './Card.styled';
 import { Link } from 'react-router-dom';
-import { HeartIcon, HeartIconFill } from 'components/Icons';
+import { HeartIcon } from 'components/Icons';
 
 // import { HeartIcon } from 'components/Icons';
 
@@ -34,7 +34,6 @@ export const Card = ({ el, groupItems }) => {
   const [Card, setCard] = useState(el);
 
   const [favourite, setFavourite] = useState(Card.favourite);
-  const [heartIconClassname, setHeartIconClassname] = useState('');
 
   const changeFavourite = () => {
     setFavourite(!favourite);
@@ -44,14 +43,6 @@ export const Card = ({ el, groupItems }) => {
     const newCard = arr.find(el => el.id === id);
     setCard(newCard);
   };
-
-  useEffect(() => {
-    if (favourite) {
-      setHeartIconClassname('active');
-    } else {
-      setHeartIconClassname('');
-    }
-  }, [favourite]);
 
   const [
     count,
