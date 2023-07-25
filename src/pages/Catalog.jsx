@@ -4,7 +4,9 @@ import {
   AsideCatalog,
   BoxHiden,
   CatalogContainer,
+  Category,
   CategoryList,
+  FoodType,
   PetButton,
   WrapperCatalog,
 } from './Catalog.styled';
@@ -14,6 +16,7 @@ import { uniqueObjArray } from 'helpers';
 import { useState } from 'react';
 
 import { Cat, Dog, RightArrow } from 'components/Icons';
+import { Outlet } from 'react-router-dom';
 
 export const Catalog = () => {
   const [active, setActive] = useState('');
@@ -76,13 +79,17 @@ export const Catalog = () => {
                   return (
                     <>
                       <li key={i}>
-                        <span>{el.category}</span>
+                        <Category to={`${el.category}`}>{el.category}</Category>
                       </li>
                       <li>
                         <ul>
                           {uniqueObjArray(catCatalog, 'foodType').map(
                             (el, i) => {
-                              return <li key={i}>{el.foodType}</li>;
+                              return (
+                                <li key={i}>
+                                  <FoodType>{el.foodType}</FoodType>
+                                </li>
+                              );
                             },
                           )}
                         </ul>
@@ -100,13 +107,17 @@ export const Catalog = () => {
                     return (
                       <>
                         <li key={i}>
-                          <span>{el.category}</span>
+                          <Category>{el.category}</Category>
                         </li>
                         <li>
                           <ul>
                             {uniqueObjArray(dogCatalog, 'foodType').map(
                               (el, i) => {
-                                return <li key={i}>{el.foodType}</li>;
+                                return (
+                                  <li key={i}>
+                                    <FoodType>{el.foodType}</FoodType>
+                                  </li>
+                                );
                               },
                             )}
                           </ul>
@@ -117,6 +128,9 @@ export const Catalog = () => {
                 </ul>
               </BoxHiden>
             ))}
+
+          <Outlet />
+
           <CardList uniqueObjArray={uniqueObjArray(catalog, 'foodName')} />
         </WrapperCatalog>
       </CatalogContainer>

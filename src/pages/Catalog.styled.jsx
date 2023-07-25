@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { Link } from 'react-router-dom';
 import { theme } from 'styles';
 
 export const CatalogContainer = styled.div`
@@ -11,11 +12,6 @@ export const CatalogContainer = styled.div`
     align-items: center;
     gap: 8px;
     text-align: center;
-
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: 20px; /* 125% */
   }
 `;
 
@@ -78,4 +74,37 @@ export const BoxHiden = styled.div`
   &.active {
     display: block;
   }
+
+  & > ul {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  a:hover,
+  a:focus {
+    color: ${theme.colors.green};
+  }
+
+  a:active {
+    color: ${theme.colors.orange};
+  }
+`;
+
+export const Category = styled(Link)`
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 20px; /* 125% */
+`;
+
+export const FoodTypeList = styled.ul`
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+`;
+
+export const FoodType = styled(Link)`
+  font-size: 16px;
+  font-weight: 300;
+  line-height: 20px; /* 125% */
 `;

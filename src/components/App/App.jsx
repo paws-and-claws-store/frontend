@@ -4,6 +4,7 @@ import {
   Brands,
   Cart,
   Catalog,
+  Category,
   Contacts,
   Home,
   PageNotFound,
@@ -22,7 +23,7 @@ export const App = () => {
         <Route path="/" element={<SharedLayout />}>
           <Route index element={<Home />} />
           <Route path="catalog" element={<Catalog />}>
-            <Route path="dog" element={<div>Dog</div>} />
+            <Route path=":category" element={<Category />} />
           </Route>
 
           <Route path="brands" element={<Brands />} />
