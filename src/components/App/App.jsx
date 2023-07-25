@@ -25,10 +25,10 @@ export const App = () => {
           <Route path="catalog" element={<Catalog />}>
             <Route path=":category" element={<Category />} />
           </Route>
+          <Route path=":id" element={<ProductCard />} />
 
           <Route path="brands" element={<Brands />} />
           <Route path="cart" element={<Cart />} />
-          <Route path="productCard" element={<ProductCard />} />
           <Route path="prices-drop" element={<PricesDrop />} />
           <Route path="search" element={<Search />} />
 
