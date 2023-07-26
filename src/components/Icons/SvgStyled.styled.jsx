@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { theme } from 'styles';
 
 export const SvgStyled = styled.svg`
   fill: ${props => props.theme.colors.black};
@@ -10,6 +11,10 @@ export const SvgStyled = styled.svg`
 
   &:active {
     fill: ${props => props.theme.colors.orange};
+  }
+
+  &.notEmpty {
+    fill: ${theme.colors.orange};
   }
 `;
 
@@ -24,7 +29,7 @@ export const SvgFooterStyled = styled.svg`
 
   &:active {
     transform: scale(0.95);
-    fill: ${props => props.theme.colors.secGreen};
+    fill: ${theme.colors.secGreen};
     cursor: pointer;
   }
 `;

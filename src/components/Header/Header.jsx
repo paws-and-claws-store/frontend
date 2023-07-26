@@ -1,6 +1,8 @@
 import { Link } from 'react-router-dom';
 
 import {
+  Count,
+  CountContainer,
   HeaderContainer,
   HeaderStyled,
   HeaderWrapper,
@@ -11,6 +13,7 @@ import {
 } from './Header.styled';
 import {
   CartIcon,
+  CartNotEmptyIcon,
   ClearButton,
   HeartIcon,
   LogoIcon,
@@ -23,6 +26,17 @@ import { useEffect, useState } from 'react';
 
 export const Header = () => {
   const [scroll, setScroll] = useState('');
+  const [countOfCart, setCountOfCart] = useState(100);
+
+  useEffect(() => {
+    if (countOfCart) {
+      console.log('visible');
+      // document.getElementById('cartIcon').classList.add('notEmpty');
+    } else {
+      console.log('Hidden');
+      // document.getElementById('cartIcon').style.visibility = 'hidden';
+    }
+  }, [countOfCart]);
 
   useEffect(() => {
     window.addEventListener('scroll', () => {
@@ -65,8 +79,17 @@ export const Header = () => {
             <button>
               <HeartIcon />
             </button>
+
             <Link to={'/cart'}>
-              <CartIcon />
+              {countOfCart > 0 ? (
+                <CountContainer>
+                  <CartNotEmptyIcon />
+
+                  <Count>{countOfCart}</Count>
+                </CountContainer>
+              ) : (
+                <CartIcon />
+              )}
             </Link>
             <Leng>
               <LengLinkStyled>Eng</LengLinkStyled>

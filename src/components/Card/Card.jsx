@@ -2,7 +2,7 @@ import { useState } from 'react';
 import {
   BoxCard,
   BrandNameSt,
-  Button,
+  // Button,
   Image,
   PriceBox,
   PriceSt,
@@ -17,6 +17,7 @@ import {
 } from './Card.styled';
 import { Link } from 'react-router-dom';
 import { HeartIcon } from 'components/Icons';
+import { Button } from 'react-bootstrap';
 
 // import { HeartIcon } from 'components/Icons';
 
@@ -143,8 +144,12 @@ export const Card = ({ el, groupItems }) => {
             </PriceBox>
           )}
           {!count ? (
-            <Button>Купити</Button>
+            <Button variant="primary" size="lg">
+              Купити
+            </Button>
           ) : (
+            // <Button disabled={true}> Купити</Button>
+            // <button disabled>Купити</button>
             <div>
               <button>
                 <span>-</span>
