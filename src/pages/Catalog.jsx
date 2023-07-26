@@ -22,10 +22,12 @@ export const Catalog = () => {
   const [active, setActive] = useState('');
   const catCatalog = catalog.filter(el => el.pet === 'Коти');
   const dogCatalog = catalog.filter(el => el.pet === 'Собаки');
-  console.log('dogCatalog:', dogCatalog);
-  console.log('catCatalog:', catCatalog);
+  // console.log('dogCatalog:', dogCatalog);
+  // console.log('catCatalog:', catCatalog);
 
   const handleClick = e => {
+    // document.addEventListener('click', e => console.log(e.target));
+    console.log(e.currentTarget);
     if (active === e.currentTarget.id) {
       setActive('');
       document.getElementById('hidden').style.visibility = 'hidden';
@@ -46,6 +48,10 @@ export const Catalog = () => {
               id={'dog'}
               className={active === 'dog' ? 'active' : undefined}
               onClick={handleClick}
+              onBlur={() => {
+                setActive('');
+                document.getElementById('hidden').style.visibility = 'hidden';
+              }}
             >
               <span>
                 <Dog />
@@ -60,6 +66,10 @@ export const Catalog = () => {
               id={'cat'}
               className={active === 'cat' ? 'active' : undefined}
               onClick={handleClick}
+              onBlur={() => {
+                setActive('');
+                document.getElementById('hidden').style.visibility = 'hidden';
+              }}
             >
               <span>
                 <Cat />
