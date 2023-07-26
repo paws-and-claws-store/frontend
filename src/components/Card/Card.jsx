@@ -2,7 +2,7 @@ import { useState } from 'react';
 import {
   BoxCard,
   BrandNameSt,
-  // Button,
+  Button,
   Image,
   PriceBox,
   PriceSt,
@@ -17,7 +17,6 @@ import {
 } from './Card.styled';
 import { Link } from 'react-router-dom';
 import { HeartIcon } from 'components/Icons';
-import { Button } from 'react-bootstrap';
 
 // import { HeartIcon } from 'components/Icons';
 
@@ -32,7 +31,7 @@ export const Card = ({ el, groupItems }) => {
     return 0;
   });
 
-  const [Card, setCard] = useState(el);
+  const [card, setCard] = useState(el);
 
   const [favourite, setFavourite] = useState(Card.favourite);
 
@@ -45,10 +44,12 @@ export const Card = ({ el, groupItems }) => {
     setCard(newCard);
   };
 
-  const [
-    count,
-    // setCount
-  ] = useState(null);
+  const [count, setCount] = useState(null);
+
+  const handleChange = value => {
+    console.log(count);
+    setCount(value);
+  };
 
   return (
     <BoxCard>
@@ -57,7 +58,7 @@ export const Card = ({ el, groupItems }) => {
           return (
             <WeightListItem key={id}>
               <WidthLink
-                className={id === Card.id ? 'active' : undefined}
+                className={id === card.id ? 'active' : undefined}
                 onClick={() => changeCard(id)}
               >
                 {weight}
@@ -86,20 +87,20 @@ export const Card = ({ el, groupItems }) => {
         )}
       </Link>
 
-      <Link to={`${Card.id}`}>
-        <Image src={Card.image} alt={Card.foodName} />
+      <Link to={`${card.id}`}>
+        <Image src={card.image} alt={card.foodName} />
       </Link>
       <div>
         <div>
           <div>
             <Link to={'/brands'}>
-              <BrandNameSt>{Card.brand}</BrandNameSt>
+              <BrandNameSt>{card.brand}</BrandNameSt>
             </Link>
-            <Link to={`${Card.id}`}>
+            <Link to={`${card.id}`}>
               <div>
-                <ProductNameSt>{Card.foodName}</ProductNameSt>
+                <ProductNameSt>{card.foodName}</ProductNameSt>
               </div>
-              <ShortDiscriptionSt>{Card.shortDescription}</ShortDiscriptionSt>
+              <ShortDiscriptionSt>{card.shortDescription}</ShortDiscriptionSt>
             </Link>
           </div>
           <Rating className="reiting">
@@ -124,38 +125,36 @@ export const Card = ({ el, groupItems }) => {
           </Rating>
         </div>
         <Wrapper>
-          {Card.sale ? (
+          {card.sale ? (
             <PriceBox>
               <PriceSt>
-                {Card.sale.toFixed(2)}
+                {card.sale.toFixed(2)}
                 <SymbolCurrency>₴</SymbolCurrency>
               </PriceSt>
               <PriceSt className="line-through-text">
-                {Card.price.toFixed(2)}
+                {card.price.toFixed(2)}
                 <SymbolCurrency>₴</SymbolCurrency>
               </PriceSt>
             </PriceBox>
           ) : (
             <PriceBox>
               <PriceSt>
-                {Card.price.toFixed(2)}
+                {card.price.toFixed(2)}
                 <SymbolCurrency>₴</SymbolCurrency>
               </PriceSt>
             </PriceBox>
           )}
           {!count ? (
-            <Button variant="primary" size="lg">
+            <Button disabled={false} onClick={handleChange}>
               Купити
             </Button>
           ) : (
-            // <Button disabled={true}> Купити</Button>
-            // <button disabled>Купити</button>
             <div>
-              <button>
+              <button onClick={() => console.log('increment')}>
                 <span>-</span>
               </button>
-              <input type="text" value={1} />
-              <button>
+              <input type="text" onChange={e => console.log(e.target.value)} />
+              <button onClick={() => console.log('decrement')}>
                 <span>+</span>
               </button>
             </div>

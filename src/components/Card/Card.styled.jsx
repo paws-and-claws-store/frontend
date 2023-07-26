@@ -163,6 +163,13 @@ export const Button = styled.button`
   &:active {
     transform: scale(0.98);
   }
+
+  &:disabled {
+    background-color: ${theme.colors.grey};
+    color: ${theme.colors.beige};
+    cursor: auto;
+    transform: scale(1);
+  }
 `;
 
 export const Image = styled.img`
