@@ -172,6 +172,61 @@ export const Button = styled.button`
   }
 `;
 
+export const QTYBox = styled.div`
+  display: flex;
+  gap: 2px;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 24px; /* 120% */
+
+  & input {
+    width: 50px;
+    background-color: ${theme.colors.orange};
+    color: ${theme.colors.white};
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 24px; /* 120% */
+    text-align: center;
+    outline: none;
+    border: none;
+  }
+  & input:focus,
+  & input:active {
+    outline: none;
+    border: none;
+  }
+
+  & button {
+    display: flex;
+    width: 52px;
+    height: 40px;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    gap: 10px;
+    flex-shrink: 0;
+    background-color: ${theme.colors.orange};
+    color: ${theme.colors.white};
+  }
+  & button:hover,
+  & button:focus {
+    background-color: ${theme.colors.green};
+  }
+
+  & button:active {
+    background-color: ${theme.colors.secGreen};
+  }
+`;
+
+export const BTNDec = styled.button`
+  border-radius: 20px 0px 0px 20px;
+`;
+export const BTNInc = styled.button`
+  border-radius: 0px 20px 20px 0px;
+`;
+
 export const Image = styled.img`
   width: ${props => props.theme.spacing.step * 66}px;
   height: ${props => props.theme.spacing.step * 66}px;

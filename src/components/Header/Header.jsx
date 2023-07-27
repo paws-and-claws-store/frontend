@@ -30,10 +30,10 @@ export const Header = () => {
 
   useEffect(() => {
     if (countOfCart) {
-      console.log('visible');
+      // console.log('visible');
       // document.getElementById('cartIcon').classList.add('notEmpty');
     } else {
-      console.log('Hidden');
+      // console.log('Hidden');
       // document.getElementById('cartIcon').style.visibility = 'hidden';
     }
   }, [countOfCart]);

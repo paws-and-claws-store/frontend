@@ -1,5 +1,7 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
+  BTNDec,
+  BTNInc,
   BoxCard,
   BrandNameSt,
   Button,
@@ -7,6 +9,7 @@ import {
   PriceBox,
   PriceSt,
   ProductNameSt,
+  QTYBox,
   Rating,
   ShortDiscriptionSt,
   SymbolCurrency,
@@ -21,6 +24,12 @@ import { HeartIcon } from 'components/Icons';
 // import { HeartIcon } from 'components/Icons';
 
 export const Card = ({ el, groupItems }) => {
+  const [card, setCard] = useState(el);
+  const [favourite, setFavourite] = useState(Card.favourite);
+
+  const [cartList, setCartList] = useState([]);
+  const [count, setCount] = useState(0);
+
   const arr = groupItems.sort((a, b) => {
     if (a.weight < b.weight) {
       return 1;
@@ -31,10 +40,6 @@ export const Card = ({ el, groupItems }) => {
     return 0;
   });
 
-  const [card, setCard] = useState(el);
-
-  const [favourite, setFavourite] = useState(Card.favourite);
-
   const changeFavourite = () => {
     setFavourite(!favourite);
   };
@@ -44,11 +49,31 @@ export const Card = ({ el, groupItems }) => {
     setCard(newCard);
   };
 
-  const [count, setCount] = useState(null);
+  useEffect(() => {
+    if (count !== 0) {
+      console.log('count:', count);
+      document.getElementById('count').value = count;
+    }
+  }, [count]);
 
-  const handleChange = value => {
-    console.log(count);
-    setCount(value);
+  const handleClick = e => {
+    if (e.currentTarget.name === 'increment') setCount(count + 1);
+    if (e.currentTarget.name === 'decrement') setCount(count - 1);
+    if (e.currentTarget.name === 'buy') {
+      setCartList(current => {
+        console.log(el.id);
+        if (!current.length) {
+          return [{ product: el, count: 1 }];
+        }
+        if (current.product.id !== el.id) {
+          return [...current, { product: el, count: 1 }];
+        }
+      });
+    }
+  };
+
+  const handleChange = e => {
+    setCount(Number(e.currentTarget.value));
   };
 
   return (
@@ -145,19 +170,27 @@ export const Card = ({ el, groupItems }) => {
             </PriceBox>
           )}
           {!count ? (
-            <Button disabled={false} onClick={handleChange}>
+            <Button name="buy" disabled={false} onClick={handleClick}>
               Купити
             </Button>
           ) : (
-            <div>
-              <button onClick={() => console.log('increment')}>
+            <QTYBox>
+              <BTNDec name="decrement" onClick={handleClick}>
                 <span>-</span>
-              </button>
-              <input type="text" onChange={e => console.log(e.target.value)} />
-              <button onClick={() => console.log('decrement')}>
+              </BTNDec>
+              <input
+                id="count"
+                type="text"
+                defaultValue={1}
+                minLength={1}
+                maxLength={3}
+                size={3}
+                onChange={handleChange}
+              />
+              <BTNInc name="increment" onClick={handleClick}>
                 <span>+</span>
-              </button>
-            </div>
+              </BTNInc>
+            </QTYBox>
           )}
         </Wrapper>
       </div>
