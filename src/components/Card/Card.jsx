@@ -28,6 +28,7 @@ export const Card = ({ el, groupItems }) => {
   const [favourite, setFavourite] = useState(Card.favourite);
 
   const [cartList, setCartList] = useState([]);
+
   const [count, setCount] = useState(0);
 
   const arr = groupItems.sort((a, b) => {
@@ -88,8 +89,17 @@ export const Card = ({ el, groupItems }) => {
       setCartList([{ product: el, count: 1 }]);
     }
   };
+
+  useEffect(() => {
+    const items = JSON.parse(localStorage.getItem('cartList'));
+    if (items) {
+      setCartList(items);
+    }
+  }, []);
+
   useEffect(() => {
     console.log('cartList:', cartList);
+    localStorage.setItem('cartList', JSON.stringify(cartList));
   }, [cartList]);
 
   const handleChange = e => {
