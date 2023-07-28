@@ -60,17 +60,37 @@ export const Card = ({ el, groupItems }) => {
     if (e.currentTarget.name === 'increment') setCount(count + 1);
     if (e.currentTarget.name === 'decrement') setCount(count - 1);
     if (e.currentTarget.name === 'buy') {
-      setCartList(current => {
-        console.log(el.id);
-        if (!current.length) {
-          return [{ product: el, count: 1 }];
-        }
-        if (current.product.id !== el.id) {
-          return [...current, { product: el, count: 1 }];
-        }
-      });
+      console.log('Click buy', 'cartList:', cartList);
+      if (cartList.length) {
+        const currentId = cartList
+          .map(prod => {
+            console.log(prod.product.id);
+            return prod.product.id;
+          })
+          .includes(el.id);
+        return setCartList(current => {
+          console.log('current:', current);
+          console.log(el.id);
+
+          console.log('currentId:', currentId);
+
+          if (!currentId) {
+            console.log('!currentId:', currentId);
+
+            return [...current, { product: el, count: 1 }];
+          }
+
+          return current;
+        });
+      }
+
+      console.log('Empty');
+      setCartList([{ product: el, count: 1 }]);
     }
   };
+  useEffect(() => {
+    console.log('cartList:', cartList);
+  }, [cartList]);
 
   const handleChange = e => {
     setCount(Number(e.currentTarget.value));
