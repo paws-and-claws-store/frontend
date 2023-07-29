@@ -28,3 +28,10 @@ export const SvgFooterStyled = styled.svg`
     cursor: pointer;
   }
 `;
+
+export const SvgVectorStyled = styled.svg`
+  fill: ${props => props.theme.colors.green};
+  display: block;
+  height: 100%;
+  width: 100%;
+`;
