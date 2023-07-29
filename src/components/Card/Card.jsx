@@ -23,13 +23,16 @@ import { HeartIcon } from 'components/Icons';
 
 // import { HeartIcon } from 'components/Icons';
 
-export const Card = ({ el, groupItems }) => {
+export const Card = ({ el, groupItems, onClick }) => {
+  const [cartList, setCartList] = useState(() => {
+    return JSON.parse(window.localStorage.getItem('cartList')) || [];
+  });
+
+  // let cartList = JSON.parse(localStorage.getItem('cartList'));
   const [card, setCard] = useState(el);
   const [favourite, setFavourite] = useState(Card.favourite);
 
-  const [cartList, setCartList] = useState([]);
-
-  const [count, setCount] = useState(0);
+  const [count, setCount] = useState(null);
 
   const arr = groupItems.sort((a, b) => {
     if (a.weight < b.weight) {
@@ -51,56 +54,66 @@ export const Card = ({ el, groupItems }) => {
   };
 
   useEffect(() => {
-    if (count !== 0) {
-      console.log('count:', count);
-      document.getElementById('count').value = count;
-    }
-  }, [count]);
-
-  const handleClick = e => {
-    if (e.currentTarget.name === 'increment') setCount(count + 1);
-    if (e.currentTarget.name === 'decrement') setCount(count - 1);
-    if (e.currentTarget.name === 'buy') {
-      console.log('Click buy', 'cartList:', cartList);
-      if (cartList.length) {
-        const currentId = cartList
-          .map(prod => {
-            console.log(prod.product.id);
-            return prod.product.id;
-          })
-          .includes(el.id);
-        return setCartList(current => {
-          console.log('current:', current);
-          console.log(el.id);
-
-          console.log('currentId:', currentId);
-
-          if (!currentId) {
-            console.log('!currentId:', currentId);
-
-            return [...current, { product: el, count: 1 }];
-          }
-
-          return current;
-        });
-      }
-
-      console.log('Empty');
-      setCartList([{ product: el, count: 1 }]);
-    }
-  };
-
-  useEffect(() => {
     const items = JSON.parse(localStorage.getItem('cartList'));
+
     if (items) {
       setCartList(items);
     }
-  }, []);
+
+    const currentItem = items?.map(el => el.product.id).indexOf(el.id);
+    const countItem = items?.filter(({ id }) => id === el.id);
+
+    // const countItem = itemsId?.filter(({ id }) => id === el.id);
+
+    if (countItem && countItem.length) {
+      setCount(countItem[0].count);
+    }
+
+    // console.log('itemsId:', itemsId);
+
+    console.log('---------------------');
+    // localStorage.setItem('cartList', JSON.stringify(cartList));
+  }, [el.id]);
 
   useEffect(() => {
-    console.log('cartList:', cartList);
-    localStorage.setItem('cartList', JSON.stringify(cartList));
+    if (count !== 0 && count !== null) {
+      console.log('count:', count);
+      document.getElementById(`${card.id}`).value = count;
+    }
+  }, [card.id, count]);
+
+  useEffect(() => {
+    window.localStorage.setItem('cartList', JSON.stringify(cartList));
   }, [cartList]);
+
+  const handleClick = e => {
+    if (e.currentTarget.name === 'increment') {
+      setCount(count + 1);
+    }
+    if (e.currentTarget.name === 'decrement') setCount(count - 1);
+    if (e.currentTarget.name === 'buy') {
+      console.log('handleClick cartList:', cartList);
+      if (cartList) {
+        const presentId = cartList.map(cart => cart.id).includes(el.id);
+        // console.log('presentId:', presentId);
+        if (!presentId) {
+          // cartList.push({ id: el.id, product: el, count: 1 });
+          setCartList(prev => {
+            console.log('prev:', prev);
+            return [{ id: el.id, product: el, count: 1 }, ...prev];
+          });
+          setCount(1);
+          // localStorage.setItem('cartList', JSON.stringify(cartList));
+        }
+      }
+
+      if (cartList === null) {
+        setCartList(prev => [{ id: el.id, product: el, count: 1 }, ...prev]);
+        setCount(1);
+      }
+    }
+    // localStorage.setItem('cartList', JSON.stringify(cartList));
+  };
 
   const handleChange = e => {
     setCount(Number(e.currentTarget.value));
@@ -209,7 +222,7 @@ export const Card = ({ el, groupItems }) => {
                 <span>-</span>
               </BTNDec>
               <input
-                id="count"
+                id={card.id}
                 type="text"
                 defaultValue={1}
                 minLength={1}
