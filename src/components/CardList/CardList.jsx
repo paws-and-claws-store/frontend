@@ -1,5 +1,5 @@
 import { Card } from 'components/Card/Card';
-import catalog from '../DB/catalog.json';
+import catalog from '../../DB/catalog.json';
 import React from 'react';
 import { List, ListItem } from './CardList.styled';
 
