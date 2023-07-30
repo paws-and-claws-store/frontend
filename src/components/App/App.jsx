@@ -4,6 +4,7 @@ import {
   Brands,
   Cart,
   Catalog,
+  Category,
   Contacts,
   Home,
   PageNotFound,
@@ -13,6 +14,7 @@ import {
 } from 'pages';
 import { Search } from 'pages/Search';
 import { Route, Routes } from 'react-router-dom';
+import { Hidden } from './App.styled';
 
 export const App = () => {
   return (
@@ -20,10 +22,13 @@ export const App = () => {
       <Routes>
         <Route path="/" element={<SharedLayout />}>
           <Route index element={<Home />} />
-          <Route path="catalog" element={<Catalog />} />
+          <Route path="catalog" element={<Catalog />}>
+            <Route path=":category" element={<Category />} />
+          </Route>
+          <Route path=":id" element={<ProductCard />} />
+
           <Route path="brands" element={<Brands />} />
           <Route path="cart" element={<Cart />} />
-          <Route path="productCard" element={<ProductCard />} />
           <Route path="prices-drop" element={<PricesDrop />} />
           <Route path="search" element={<Search />} />
 
@@ -36,6 +41,7 @@ export const App = () => {
         </Route>
         <Route path="*" element={<PageNotFound />} />
       </Routes>
+      <Hidden className="" id="hidden"></Hidden>
     </>
   );
 };

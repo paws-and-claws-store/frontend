@@ -4,8 +4,8 @@
   "private": true,
   "homepage": "https://paws-and-claws-store.github.io/frontend/",
   "dependencies": {
-    "@emotion/react": "^11.9.0",
-    "@emotion/styled": "^11.8.1",
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
     "@fontsource-variable/raleway": "^5.0.5",
     "@fontsource/raleway": "^5.0.4",
     "axios": "^0.27.2",

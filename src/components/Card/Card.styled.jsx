@@ -9,15 +9,15 @@ export const BoxCard = styled.div`
   border: 1px solid ${props => props.theme.colors.green};
   padding: ${props => props.theme.spacing.step * 5}px;
 
-  .heartIcon {
+  .heartIcon svg {
     position: absolute;
     top: 20px;
     right: 20px;
-    fill: ${theme.colors.green};
+    fill: ${theme.colors.orange};
 
-    & .active {
+    /* & .active {
       fill: ${theme.colors.orange};
-    }
+    } */
   }
 `;
 
@@ -37,9 +37,11 @@ export const WeightList = styled.ul`
 
 export const WidthLink = styled(Link)`
   display: inline-block;
+  background-color: ${theme.colors.beige};
   border-radius: ${props => props.theme.spacing.step * 2 + 2}px;
   border: 1px solid ${props => props.theme.colors.green};
   padding: 2px 12px;
+  color: ${theme.colors.green};
 
   &.active {
     border-color: ${props => props.theme.colors.orange};
@@ -138,7 +140,7 @@ export const Wrapper = styled.div`
   align-items: center;
   justify-content: space-between;
   margin-top: ${props => props.theme.spacing.step * 2}px;
-  gap: ${props => props.theme.spacing.step * 4 - 2}px;
+  /* gap: ${props => props.theme.spacing.step * 4 - 2}px; */
 `;
 
 export const Button = styled.button`
