@@ -1,5 +1,7 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
+  BTNDec,
+  BTNInc,
   BoxCard,
   BrandNameSt,
   Button,
@@ -7,6 +9,7 @@ import {
   PriceBox,
   PriceSt,
   ProductNameSt,
+  QTYBox,
   Rating,
   ShortDiscriptionSt,
   SymbolCurrency,
@@ -20,7 +23,17 @@ import { HeartIcon } from 'components/Icons';
 
 // import { HeartIcon } from 'components/Icons';
 
-export const Card = ({ el, groupItems }) => {
+export const Card = ({ el, groupItems, onClick }) => {
+  const [cartList, setCartList] = useState(() => {
+    return JSON.parse(window.localStorage.getItem('cartList')) || [];
+  });
+
+  // let cartList = JSON.parse(localStorage.getItem('cartList'));
+  const [card, setCard] = useState(el);
+  const [favourite, setFavourite] = useState(Card.favourite);
+
+  const [count, setCount] = useState(null);
+
   const arr = groupItems.sort((a, b) => {
     if (a.weight < b.weight) {
       return 1;
@@ -31,10 +44,6 @@ export const Card = ({ el, groupItems }) => {
     return 0;
   });
 
-  const [Card, setCard] = useState(el);
-
-  const [favourite, setFavourite] = useState(Card.favourite);
-
   const changeFavourite = () => {
     setFavourite(!favourite);
   };
@@ -44,10 +53,71 @@ export const Card = ({ el, groupItems }) => {
     setCard(newCard);
   };
 
-  const [
-    count,
-    // setCount
-  ] = useState(null);
+  useEffect(() => {
+    const items = JSON.parse(localStorage.getItem('cartList'));
+
+    if (items) {
+      setCartList(items);
+    }
+
+    const currentItem = items?.map(el => el.product.id).indexOf(el.id);
+    const countItem = items?.filter(({ id }) => id === el.id);
+
+    // const countItem = itemsId?.filter(({ id }) => id === el.id);
+
+    if (countItem && countItem.length) {
+      setCount(countItem[0].count);
+    }
+
+    // console.log('itemsId:', itemsId);
+
+    console.log('---------------------');
+    // localStorage.setItem('cartList', JSON.stringify(cartList));
+  }, [el.id]);
+
+  useEffect(() => {
+    if (count !== 0 && count !== null) {
+      console.log('count:', count);
+      document.getElementById(`${card.id}`).value = count;
+    }
+  }, [card.id, count]);
+
+  useEffect(() => {
+    window.localStorage.setItem('cartList', JSON.stringify(cartList));
+  }, [cartList]);
+
+  const handleClick = e => {
+    if (e.currentTarget.name === 'increment') {
+      setCount(count + 1);
+    }
+    if (e.currentTarget.name === 'decrement') setCount(count - 1);
+    if (e.currentTarget.name === 'buy') {
+      console.log('handleClick cartList:', cartList);
+      if (cartList) {
+        const presentId = cartList.map(cart => cart.id).includes(el.id);
+        // console.log('presentId:', presentId);
+        if (!presentId) {
+          // cartList.push({ id: el.id, product: el, count: 1 });
+          setCartList(prev => {
+            console.log('prev:', prev);
+            return [{ id: el.id, product: el, count: 1 }, ...prev];
+          });
+          setCount(1);
+          // localStorage.setItem('cartList', JSON.stringify(cartList));
+        }
+      }
+
+      if (cartList === null) {
+        setCartList(prev => [{ id: el.id, product: el, count: 1 }, ...prev]);
+        setCount(1);
+      }
+    }
+    // localStorage.setItem('cartList', JSON.stringify(cartList));
+  };
+
+  const handleChange = e => {
+    setCount(Number(e.currentTarget.value));
+  };
 
   return (
     <BoxCard>
@@ -56,7 +126,7 @@ export const Card = ({ el, groupItems }) => {
           return (
             <WeightListItem key={id}>
               <WidthLink
-                className={id === Card.id ? 'active' : undefined}
+                className={id === card.id ? 'active' : undefined}
                 onClick={() => changeCard(id)}
               >
                 {weight}
@@ -85,20 +155,20 @@ export const Card = ({ el, groupItems }) => {
         )}
       </Link>
 
-      <Link to={`${Card.id}`}>
-        <Image src={Card.image} alt={Card.foodName} />
+      <Link to={`${card.id}`}>
+        <Image src={card.image} alt={card.foodName} />
       </Link>
       <div>
         <div>
           <div>
             <Link to={'/brands'}>
-              <BrandNameSt>{Card.brand}</BrandNameSt>
+              <BrandNameSt>{card.brand}</BrandNameSt>
             </Link>
-            <Link to={`${Card.id}`}>
+            <Link to={`${card.id}`}>
               <div>
-                <ProductNameSt>{Card.foodName}</ProductNameSt>
+                <ProductNameSt>{card.foodName}</ProductNameSt>
               </div>
-              <ShortDiscriptionSt>{Card.shortDescription}</ShortDiscriptionSt>
+              <ShortDiscriptionSt>{card.shortDescription}</ShortDiscriptionSt>
             </Link>
           </div>
           <Rating className="reiting">
@@ -123,37 +193,47 @@ export const Card = ({ el, groupItems }) => {
           </Rating>
         </div>
         <Wrapper>
-          {Card.sale ? (
+          {card.sale ? (
             <PriceBox>
               <PriceSt>
-                {Card.sale.toFixed(2)}
+                {card.sale.toFixed(2)}
                 <SymbolCurrency>₴</SymbolCurrency>
               </PriceSt>
               <PriceSt className="line-through-text">
-                {Card.price.toFixed(2)}
+                {card.price.toFixed(2)}
                 <SymbolCurrency>₴</SymbolCurrency>
               </PriceSt>
             </PriceBox>
           ) : (
             <PriceBox>
               <PriceSt>
-                {Card.price.toFixed(2)}
+                {card.price.toFixed(2)}
                 <SymbolCurrency>₴</SymbolCurrency>
               </PriceSt>
             </PriceBox>
           )}
           {!count ? (
-            <Button>Купити</Button>
+            <Button name="buy" disabled={false} onClick={handleClick}>
+              Купити
+            </Button>
           ) : (
-            <div>
-              <button>
+            <QTYBox>
+              <BTNDec name="decrement" onClick={handleClick}>
                 <span>-</span>
-              </button>
-              <input type="text" value={1} />
-              <button>
+              </BTNDec>
+              <input
+                id={card.id}
+                type="text"
+                defaultValue={1}
+                minLength={1}
+                maxLength={3}
+                size={3}
+                onChange={handleChange}
+              />
+              <BTNInc name="increment" onClick={handleClick}>
                 <span>+</span>
-              </button>
-            </div>
+              </BTNInc>
+            </QTYBox>
           )}
         </Wrapper>
       </div>
