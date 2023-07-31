@@ -12,6 +12,7 @@ import {
   Link,
 } from 'components';
 import ScrollToTop from 'components/ScrollToTop/ScrollToTop';
+import Breadcrumbs from 'components/Breadcrumbs/BreadCrumbs';
 
 const SharedLayout = () => {
   return (
@@ -29,6 +30,7 @@ const SharedLayout = () => {
             </NavStyle>
             <main>
               <Suspense fallback={<Loader />}>
+                <Breadcrumbs />
                 <Outlet />
               </Suspense>
               <ScrollToTop />
