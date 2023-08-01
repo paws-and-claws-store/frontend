@@ -23,12 +23,7 @@ import { HeartIcon } from 'components/Icons';
 
 // import { HeartIcon } from 'components/Icons';
 
-export const Card = ({ el, groupItems, onClick }) => {
-  const [cartList, setCartList] = useState(() => {
-    return JSON.parse(window.localStorage.getItem('cartList')) || [];
-  });
-
-  // let cartList = JSON.parse(localStorage.getItem('cartList'));
+export const Card = ({ el, groupItems, onClick, cartList, setCartList }) => {
   const [card, setCard] = useState(el);
   const [favourite, setFavourite] = useState(Card.favourite);
 
@@ -60,27 +55,19 @@ export const Card = ({ el, groupItems, onClick }) => {
       setCartList(items);
     }
 
-    const currentItem = items?.map(el => el.product.id).indexOf(el.id);
     const countItem = items?.filter(({ id }) => id === el.id);
-
-    // const countItem = itemsId?.filter(({ id }) => id === el.id);
 
     if (countItem && countItem.length) {
       setCount(countItem[0].count);
     }
-
-    // console.log('itemsId:', itemsId);
-
-    console.log('---------------------');
-    // localStorage.setItem('cartList', JSON.stringify(cartList));
-  }, [el.id]);
+  }, [el.id, setCartList]);
 
   useEffect(() => {
     if (count !== 0 && count !== null) {
-      console.log('count:', count);
       document.getElementById(`${card.id}`).value = count;
     }
-  }, [card.id, count]);
+    localStorage.setItem('cartList', JSON.stringify(cartList));
+  }, [card.id, cartList, count]);
 
   useEffect(() => {
     window.localStorage.setItem('cartList', JSON.stringify(cartList));
@@ -88,37 +75,85 @@ export const Card = ({ el, groupItems, onClick }) => {
 
   const handleClick = e => {
     if (e.currentTarget.name === 'increment') {
-      setCount(count + 1);
-    }
-    if (e.currentTarget.name === 'decrement') setCount(count - 1);
-    if (e.currentTarget.name === 'buy') {
-      console.log('handleClick cartList:', cartList);
-      if (cartList) {
-        const presentId = cartList.map(cart => cart.id).includes(el.id);
-        // console.log('presentId:', presentId);
-        if (!presentId) {
-          // cartList.push({ id: el.id, product: el, count: 1 });
-          setCartList(prev => {
-            console.log('prev:', prev);
-            return [{ id: el.id, product: el, count: 1 }, ...prev];
-          });
-          setCount(1);
-          // localStorage.setItem('cartList', JSON.stringify(cartList));
-        }
-      }
+      setCount(prevState => prevState + 1);
 
-      if (cartList === null) {
-        setCartList(prev => [{ id: el.id, product: el, count: 1 }, ...prev]);
+      const presentId = cartList.map(cart => cart.id).includes(el.id);
+      if (presentId) {
+        setCartList(prev => {
+          return prev.map(item => {
+            if (item.id === el.id) {
+              return { ...item, count: count + 1 };
+            }
+
+            return item;
+          });
+        });
+      }
+    }
+    if (e.currentTarget.name === 'decrement') {
+      setCount(prevState => prevState - 1);
+      const countState = document.getElementById(`${card.id}`).value;
+      const countCard = Number(countState) - 1;
+      const presentId = cartList.map(cart => cart.id).includes(el.id);
+
+      if (countCard === 0) {
+        setCartList(prev => prev.filter(item => item.id !== el.id));
+        return;
+      }
+      if (presentId) {
+        setCartList(prev => {
+          return prev.map(item => {
+            if (item.id === el.id) {
+              return { ...item, count: count - 1 };
+            }
+
+            return item;
+          });
+        });
+      }
+    }
+    if (e.currentTarget.name === 'buy') {
+      const presentId = cartList.map(cart => cart.id).includes(el.id);
+
+      if (!presentId) {
+        const cartLocalStorageItems = JSON.parse(localStorage.getItem('cartList'));
+        const cartArray = [...cartLocalStorageItems, { id: el.id, product: el, count: 1 }];
+        localStorage.setItem('cartList', JSON.stringify(cartArray));
+
+        setCartList(prevState => {
+          return [...(JSON.parse(window.localStorage.getItem('cartList')) || [])];
+        });
+
         setCount(1);
       }
     }
-    // localStorage.setItem('cartList', JSON.stringify(cartList));
   };
 
   const handleChange = e => {
-    setCount(Number(e.currentTarget.value));
-  };
+    console.log('count :>> ', count);
 
+    if (!e.target.validity.valid) {
+      return;
+    }
+
+    if (e.target.validity.valid) {
+      setCount(Number(e.target.value));
+    }
+
+    const presentId = cartList.map(cart => cart.id).includes(el.id);
+    console.log('presentId :>> ', presentId);
+    if (presentId) {
+      setCartList(prev => {
+        return prev.map(item => {
+          if (item.id === el.id) {
+            return { ...item, count: Number(e.target.value) };
+          }
+
+          return item;
+        });
+      });
+    }
+  };
   return (
     <BoxCard>
       <WeightList>
@@ -224,11 +259,13 @@ export const Card = ({ el, groupItems, onClick }) => {
               <input
                 id={card.id}
                 type="text"
-                defaultValue={1}
+                // defaultValue={1}
                 minLength={1}
                 maxLength={3}
                 size={3}
+                pattern="[0-9]*"
                 onChange={handleChange}
+                value={count}
               />
               <BTNInc name="increment" onClick={handleClick}>
                 <span>+</span>
