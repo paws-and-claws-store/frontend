@@ -1,10 +1,10 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
 
-export const Pet = () => {
+export const ProductType = () => {
   return (
     <div>
-      Pet
+      ProductType
       <Outlet />
     </div>
   );
