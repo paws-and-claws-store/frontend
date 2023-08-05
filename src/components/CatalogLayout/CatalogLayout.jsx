@@ -16,15 +16,16 @@ import {
 import { Title } from 'pages/Home.styled';
 import React, { useEffect, useState } from 'react';
 import { Outlet } from 'react-router-dom';
-import { fetchProducts } from 'services/api';
+import { fetchAllProducts, fetchProducts } from 'services/api';
 
 export const CatalogLayout = () => {
   const [active, setActive] = useState('');
   const [activPage, setActivPage] = useState(1);
   const [catalogList, setCatalogList] = useState([]);
+  const [petCollection, setPetCollection] = useState([]);
   //   const catCatalog = catalogList.filter(el => el.pet.code === 'for_cats');
+  const petArr = ['Собаки', 'Коти', 'Гризуни', 'Акваріумістика', 'Птахи'];
   const catCatalog = catalog.filter(el => el.pet === 'Коти');
-
   //   const dogCatalog = catalogList.filter(el => el.pet.code === 'for_dogs');
   const dogCatalog = catalog.filter(el => el.pet === 'Собаки');
 
@@ -40,10 +41,11 @@ export const CatalogLayout = () => {
     }
   };
   useEffect(() => {
-    fetchProducts(activPage).then(({ docs }) =>
-      setCatalogList(prev => [...prev, ...docs]),
-    );
-  }, [activPage]);
+    fetchAllProducts().then(res => {
+      console.log(res);
+      //   setPetCollection(prev => [...prev, ...res]);
+    });
+  }, []);
   return (
     <>
       <Title>Каталог товарів</Title>
@@ -51,11 +53,12 @@ export const CatalogLayout = () => {
       <CatalogContainer>
         <AsideCatalog>
           <CategoryList>
-            <ul>
-              {uniqueObjArray(catalog, 'pet').map((el, i) => {
+            {/* <ul
+              style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}
+            >
+              {petArr.map((el, i) => {
                 return (
                   <li key={i}>
-                    {el.pet}
                     <PetButton
                       id={'dog'}
                       className={active === 'dog' ? 'active' : undefined}
@@ -68,7 +71,7 @@ export const CatalogLayout = () => {
                     >
                       <span>
                         <Dog />
-                        <span>Собаки</span>
+                        <span>{el}</span>
                       </span>
                       <span>
                         <RightArrow />
@@ -77,9 +80,9 @@ export const CatalogLayout = () => {
                   </li>
                 );
               })}
-            </ul>
+            </ul> */}
 
-            {/* <PetButton
+            <PetButton
               id={'dog'}
               className={active === 'dog' ? 'active' : undefined}
               onClick={handleClick}
@@ -113,7 +116,7 @@ export const CatalogLayout = () => {
               <span>
                 <RightArrow />
               </span>
-            </PetButton> */}
+            </PetButton>
           </CategoryList>
         </AsideCatalog>
         <WrapperCatalog>
