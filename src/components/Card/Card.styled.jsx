@@ -172,7 +172,7 @@ export const Button = styled.button`
   }
 `;
 
-export const QTYBox = styled.div`
+export const QTYBox = styled.form`
   display: flex;
   gap: 2px;
   font-size: 20px;

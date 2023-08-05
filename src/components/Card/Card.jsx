@@ -20,6 +20,7 @@ import {
 } from './Card.styled';
 import { Link } from 'react-router-dom';
 import { HeartIcon } from 'components/Icons';
+import { Catalog } from 'pages';
 
 // import { HeartIcon } from 'components/Icons';
 
@@ -46,6 +47,7 @@ export const Card = ({ el, groupItems, onClick, cartList, setCartList }) => {
   const changeCard = id => {
     const newCard = arr.find(el => el.id === id);
     setCard(newCard);
+    setCount(null);
   };
 
   useEffect(() => {
@@ -55,33 +57,35 @@ export const Card = ({ el, groupItems, onClick, cartList, setCartList }) => {
       setCartList(items);
     }
 
-    const countItem = items?.filter(({ id }) => id === el.id);
+    const countItem = items?.filter(({ id }) => id === card.id);
 
     if (countItem && countItem.length) {
       setCount(countItem[0].count);
     }
-  }, [el.id, setCartList]);
+  }, [card.id, setCartList]);
+
+  // useEffect(() => {
+  //   if (count !== 0 && count !== null) {
+  //     document.getElementById(`${card.id}`).value = count;
+  //   }
+  //   localStorage.setItem('cartList', JSON.stringify(cartList));
+  // }, [card.id, cartList, count]);
 
   useEffect(() => {
-    if (count !== 0 && count !== null) {
-      document.getElementById(`${card.id}`).value = count;
-    }
-    localStorage.setItem('cartList', JSON.stringify(cartList));
-  }, [card.id, cartList, count]);
-
-  useEffect(() => {
+    const cardId = card.id;
+    const countUseEffect = count;
     window.localStorage.setItem('cartList', JSON.stringify(cartList));
-  }, [cartList]);
+  }, [card.id, cartList, count]);
 
   const handleClick = e => {
     if (e.currentTarget.name === 'increment') {
       setCount(prevState => prevState + 1);
 
-      const presentId = cartList.map(cart => cart.id).includes(el.id);
+      const presentId = cartList.map(cart => cart.id).includes(card.id);
       if (presentId) {
         setCartList(prev => {
           return prev.map(item => {
-            if (item.id === el.id) {
+            if (item.id === card.id) {
               return { ...item, count: count + 1 };
             }
 
@@ -94,16 +98,16 @@ export const Card = ({ el, groupItems, onClick, cartList, setCartList }) => {
       setCount(prevState => prevState - 1);
       const countState = document.getElementById(`${card.id}`).value;
       const countCard = Number(countState) - 1;
-      const presentId = cartList.map(cart => cart.id).includes(el.id);
+      const presentId = cartList.map(cart => cart.id).includes(card.id);
 
       if (countCard === 0) {
-        setCartList(prev => prev.filter(item => item.id !== el.id));
+        setCartList(prev => prev.filter(item => item.id !== card.id));
         return;
       }
       if (presentId) {
         setCartList(prev => {
           return prev.map(item => {
-            if (item.id === el.id) {
+            if (item.id === card.id) {
               return { ...item, count: count - 1 };
             }
 
@@ -113,11 +117,20 @@ export const Card = ({ el, groupItems, onClick, cartList, setCartList }) => {
       }
     }
     if (e.currentTarget.name === 'buy') {
-      const presentId = cartList.map(cart => cart.id).includes(el.id);
+      const presentId = cartList.map(cart => cart.id).includes(card.id);
+
+      if (presentId) {
+        const setCountToSpecialItem = cartList.map(item => {
+          if (item.id === card.id) {
+            setCount(1);
+          }
+          return item;
+        });
+      }
 
       if (!presentId) {
         const cartLocalStorageItems = JSON.parse(localStorage.getItem('cartList'));
-        const cartArray = [...cartLocalStorageItems, { id: el.id, product: el, count: 1 }];
+        const cartArray = [...cartLocalStorageItems, { id: card.id, product: card, count: 1 }];
         localStorage.setItem('cartList', JSON.stringify(cartArray));
 
         setCartList(prevState => {
@@ -125,28 +138,35 @@ export const Card = ({ el, groupItems, onClick, cartList, setCartList }) => {
         });
 
         setCount(1);
+        return;
       }
     }
   };
 
   const handleChange = e => {
-    console.log('count :>> ', count);
-
     if (!e.target.validity.valid) {
       return;
     }
 
     if (e.target.validity.valid) {
+      if (e.target.value === '') {
+        setCount('');
+        return;
+      }
+
       setCount(Number(e.target.value));
     }
+  };
 
-    const presentId = cartList.map(cart => cart.id).includes(el.id);
-    console.log('presentId :>> ', presentId);
+  const onSubmitCardHandler = e => {
+    e.preventDefault();
+
+    const presentId = cartList.map(cart => cart.id).includes(card.id);
     if (presentId) {
       setCartList(prev => {
         return prev.map(item => {
-          if (item.id === el.id) {
-            return { ...item, count: Number(e.target.value) };
+          if (item.id === card.id) {
+            return { ...item, count: count };
           }
 
           return item;
@@ -154,6 +174,7 @@ export const Card = ({ el, groupItems, onClick, cartList, setCartList }) => {
       });
     }
   };
+
   return (
     <BoxCard>
       <WeightList>
@@ -247,19 +268,19 @@ export const Card = ({ el, groupItems, onClick, cartList, setCartList }) => {
               </PriceSt>
             </PriceBox>
           )}
-          {!count ? (
+          {!count && count !== '' ? (
             <Button name="buy" disabled={false} onClick={handleClick}>
               Купити
             </Button>
           ) : (
-            <QTYBox>
-              <BTNDec name="decrement" onClick={handleClick}>
+            <QTYBox onSubmit={onSubmitCardHandler}>
+              <BTNDec name="decrement" onClick={handleClick} type="button">
                 <span>-</span>
               </BTNDec>
               <input
                 id={card.id}
                 type="text"
-                // defaultValue={1}
+                // defaultValue={count}
                 minLength={1}
                 maxLength={3}
                 size={3}
@@ -267,9 +288,10 @@ export const Card = ({ el, groupItems, onClick, cartList, setCartList }) => {
                 onChange={handleChange}
                 value={count}
               />
-              <BTNInc name="increment" onClick={handleClick}>
+              <BTNInc name="increment" onClick={handleClick} type="button">
                 <span>+</span>
               </BTNInc>
+              <button type="submit" style={{ display: 'none' }}></button>
             </QTYBox>
           )}
         </Wrapper>
