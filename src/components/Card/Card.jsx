@@ -85,7 +85,7 @@ export const Card = ({ el, groupItems }) => {
         )}
       </Link>
 
-      <Link to={`${Card.id}`}>
+      <Link to={`/${Card.id}`}>
         <Image src={Card.image} alt={Card.foodName} />
       </Link>
       <div>
@@ -94,7 +94,7 @@ export const Card = ({ el, groupItems }) => {
             <Link to={'/brands'}>
               <BrandNameSt>{Card.brand}</BrandNameSt>
             </Link>
-            <Link to={`${Card.id}`}>
+            <Link to={`/${Card.id}`}>
               <div>
                 <ProductNameSt>{Card.foodName}</ProductNameSt>
               </div>
