@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { List, ListItem } from './CardList.styled';
 import { groupBy } from 'helpers';
 
-export const CardList = ({ uniqueObjArray }) => {
+export const CardList = ({ productsList }) => {
   // const filterItems = catalog.filter(
   //   el => el.sale && (el.count !== 0 || el.count !== null),
   // );
@@ -19,12 +19,12 @@ export const CardList = ({ uniqueObjArray }) => {
 
   return (
     <List>
-      {uniqueObjArray.map(el => {
+      {productsList.map((el, index) => {
         return (
-          <ListItem key={el.id}>
+          <ListItem key={index}>
             <Card
               el={el}
-              groupItems={groupBy(catalog, 'foodName')[el.foodName]}
+              // groupItems={groupBy(catalog, 'foodName')[el.foodName]}
               // cartList={cartList}
               // setCartList={setCartList}
             />

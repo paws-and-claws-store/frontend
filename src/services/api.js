@@ -21,7 +21,7 @@ export async function fetchProducts(page = 1) {
   try {
     const response = await axios.get(`/products`, config);
 
-    // console.log('response:', response);
+    console.log('response:', response);
     return response.data;
   } catch (error) {
     Notify.failure(error.message);
