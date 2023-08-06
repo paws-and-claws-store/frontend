@@ -13,17 +13,27 @@ import {
 
 import catalog from '../DB/catalog.json';
 import { uniqueObjArray } from 'helpers';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { Cat, Dog, RightArrow } from 'components/Icons';
 import { Outlet } from 'react-router-dom';
+import { fetchAllProducts } from 'services/api';
 
 export const Catalog = () => {
   const [active, setActive] = useState('');
+
+  const [productsList, setProductsList] = useState([]);
+
   const catCatalog = catalog.filter(el => el.pet === 'Коти');
   const dogCatalog = catalog.filter(el => el.pet === 'Собаки');
   // console.log('dogCatalog:', dogCatalog);
   // console.log('catCatalog:', catCatalog);
+
+  useEffect(() => {
+    fetchAllProducts().then(res => {
+      setProductsList(prev => [...prev, ...res]);
+    });
+  }, []);
 
   const handleClick = e => {
     // document.addEventListener('click', e => console.log(e.target));
@@ -39,7 +49,7 @@ export const Catalog = () => {
 
   return (
     <>
-      <CardList uniqueObjArray={uniqueObjArray(catalog, 'foodName')} />
+      <CardList productsList={productsList} />
     </>
   );
 };

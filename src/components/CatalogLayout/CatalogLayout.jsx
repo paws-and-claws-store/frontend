@@ -19,10 +19,24 @@ import { Outlet } from 'react-router-dom';
 import { fetchAllProducts, fetchProducts } from 'services/api';
 
 export const CatalogLayout = () => {
-  const [active, setActive] = useState('');
+  const [active, setActive] = useState('dog');
+  const [petCollection, setPetCollection] = useState([
+    {
+      _id: '64cef53b53f2bc3e1c80705e',
+      ua: 'Товари для собак',
+      en: 'For Dogs',
+      code: 'for_dogs',
+    },
+    {
+      _id: '64cef53b53f2bc3e1c80705f',
+      ua: 'Товари для котів',
+      en: 'For Cats',
+      code: 'for_cats',
+    },
+  ]);
+
   const [activPage, setActivPage] = useState(1);
   const [catalogList, setCatalogList] = useState([]);
-  const [petCollection, setPetCollection] = useState([]);
   //   const catCatalog = catalogList.filter(el => el.pet.code === 'for_cats');
   const petArr = ['Собаки', 'Коти', 'Гризуни', 'Акваріумістика', 'Птахи'];
   const catCatalog = catalog.filter(el => el.pet === 'Коти');
@@ -40,12 +54,7 @@ export const CatalogLayout = () => {
       document.getElementById('hidden').style.visibility = 'visible';
     }
   };
-  useEffect(() => {
-    fetchAllProducts().then(res => {
-      console.log(res);
-      //   setPetCollection(prev => [...prev, ...res]);
-    });
-  }, []);
+
   return (
     <>
       <Title>Каталог товарів</Title>
@@ -53,36 +62,66 @@ export const CatalogLayout = () => {
       <CatalogContainer>
         <AsideCatalog>
           <CategoryList>
-            {/* <ul
+            <ul
               style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}
             >
-              {petArr.map((el, i) => {
-                return (
-                  <li key={i}>
-                    <PetButton
-                      id={'dog'}
-                      className={active === 'dog' ? 'active' : undefined}
-                      onClick={handleClick}
-                      onBlur={() => {
-                        setActive('');
-                        document.getElementById('hidden').style.visibility =
-                          'hidden';
-                      }}
-                    >
-                      <span>
-                        <Dog />
-                        <span>{el}</span>
-                      </span>
-                      <span>
-                        <RightArrow />
-                      </span>
-                    </PetButton>
-                  </li>
-                );
-              })}
-            </ul> */}
+              {petCollection.map((el, i) => {
+                console.log(el);
+                switch (el.code) {
+                  case 'for_dogs':
+                    return (
+                      <li key={i}>
+                        <PetButton
+                          id={'dog'}
+                          className={active === 'dog' ? 'active' : undefined}
+                          onClick={handleClick}
+                          onBlur={() => {
+                            setActive('');
+                            document.getElementById('hidden').style.visibility =
+                              'hidden';
+                          }}
+                        >
+                          <span>
+                            <Dog />
+                            <span>Собаки</span>
+                          </span>
+                          <span>
+                            <RightArrow />
+                          </span>
+                        </PetButton>
+                      </li>
+                    );
+                  case 'for_cats':
+                    return (
+                      <li key={i}>
+                        <PetButton
+                          id={'cat'}
+                          className={active === 'cat' ? 'active' : undefined}
+                          onClick={handleClick}
+                          onBlur={() => {
+                            setActive('');
+                            document.getElementById('hidden').style.visibility =
+                              'hidden';
+                          }}
+                        >
+                          <span>
+                            <Cat />
+                            <span>Коти</span>
+                          </span>
+                          <span>
+                            <RightArrow />
+                          </span>
+                        </PetButton>
+                      </li>
+                    );
 
-            <PetButton
+                  default:
+                    break;
+                }
+              })}
+            </ul>
+
+            {/* <PetButton
               id={'dog'}
               className={active === 'dog' ? 'active' : undefined}
               onClick={handleClick}
@@ -98,9 +137,9 @@ export const CatalogLayout = () => {
               <span>
                 <RightArrow />
               </span>
-            </PetButton>
+            </PetButton> */}
 
-            <PetButton
+            {/* <PetButton
               id={'cat'}
               className={active === 'cat' ? 'active' : undefined}
               onClick={handleClick}
@@ -116,7 +155,7 @@ export const CatalogLayout = () => {
               <span>
                 <RightArrow />
               </span>
-            </PetButton>
+            </PetButton> */}
           </CategoryList>
         </AsideCatalog>
         <WrapperCatalog>
@@ -177,7 +216,6 @@ export const CatalogLayout = () => {
                 </ul>
               </BoxHiden>
             ))}
-
           <Outlet />
         </WrapperCatalog>
       </CatalogContainer>
