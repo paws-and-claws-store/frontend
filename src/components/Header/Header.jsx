@@ -21,12 +21,15 @@ import {
   SearchIcon,
 } from 'components/Icons';
 import { useEffect, useState } from 'react';
+import { useStateContext } from 'context/StateContext';
 
 // import { Search } from './Search';
 
 export const Header = () => {
   const [scroll, setScroll] = useState('');
-  const [countOfCart, setCountOfCart] = useState(100);
+  const { cartList } = useStateContext();
+
+  const [countOfCart, setCountOfCart] = useState(null);
 
   useEffect(() => {
     if (countOfCart) {
@@ -37,6 +40,15 @@ export const Header = () => {
       // document.getElementById('cartIcon').style.visibility = 'hidden';
     }
   }, [countOfCart]);
+
+  useEffect(() => {
+    setCountOfCart(() => {
+      if (cartList) {
+        return cartList.length;
+      }
+      return null;
+    });
+  }, [cartList]);
 
   useEffect(() => {
     window.addEventListener('scroll', () => {

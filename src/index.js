@@ -8,6 +8,7 @@ import { Global, ThemeProvider } from '@emotion/react';
 import { App } from 'components';
 import { GlobalStyles, theme } from 'styles';
 import './index.css';
+import { StateContext } from 'context/StateContext';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
@@ -16,7 +17,9 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       {/* <BrowserRouter basename="/"> */}
       <ThemeProvider theme={theme}>
         <Global styles={GlobalStyles} />
-        <App />
+        <StateContext>
+          <App />
+        </StateContext>
       </ThemeProvider>
     </BrowserRouter>
   </React.StrictMode>,

@@ -20,10 +20,12 @@ import {
 } from './Card.styled';
 import { Link } from 'react-router-dom';
 import { HeartIcon } from 'components/Icons';
+import { useStateContext } from 'context/StateContext';
 
 // import { HeartIcon } from 'components/Icons';
 
-export const Card = ({ el, groupItems, onClick, cartList, setCartList }) => {
+export const Card = ({ el, groupItems, onClick }) => {
+  const { cartList, setCartList } = useStateContext();
   const [card, setCard] = useState(el);
   const [favourite, setFavourite] = useState(Card.favourite);
 

@@ -13,9 +13,9 @@ export const CardList = ({ uniqueObjArray }) => {
   //   ...new Map(filterItems.map(item => [item['foodName'], item])).values(),
   // ];
 
-  const [cartList, setCartList] = useState(() => {
-    return JSON.parse(window.localStorage.getItem('cartList')) || [];
-  });
+  // const [cartList, setCartList] = useState(() => {
+  //   return JSON.parse(window.localStorage.getItem('cartList')) || [];
+  // });
 
   return (
     <List>
@@ -25,8 +25,8 @@ export const CardList = ({ uniqueObjArray }) => {
             <Card
               el={el}
               groupItems={groupBy(catalog, 'foodName')[el.foodName]}
-              cartList={cartList}
-              setCartList={setCartList}
+              // cartList={cartList}
+              // setCartList={setCartList}
             />
           </ListItem>
         );
