@@ -122,12 +122,19 @@ export const Card = ({ el, groupItems, onClick }) => {
       }
 
       if (!presentId) {
-        const cartLocalStorageItems = JSON.parse(localStorage.getItem('cartList'));
-        const cartArray = [...cartLocalStorageItems, { id: card.id, product: card, count: 1 }];
+        const cartLocalStorageItems = JSON.parse(
+          localStorage.getItem('cartList'),
+        );
+        const cartArray = [
+          ...cartLocalStorageItems,
+          { id: card.id, product: card, count: 1 },
+        ];
         localStorage.setItem('cartList', JSON.stringify(cartArray));
 
         setCartList(prevState => {
-          return [...(JSON.parse(window.localStorage.getItem('cartList')) || [])];
+          return [
+            ...(JSON.parse(window.localStorage.getItem('cartList')) || []),
+          ];
         });
 
         setCount(1);

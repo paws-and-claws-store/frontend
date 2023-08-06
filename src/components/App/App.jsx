@@ -9,12 +9,15 @@ import {
   Home,
   PageNotFound,
   PageUnderConstruction,
+  Pet,
   PricesDrop,
   ProductCard,
 } from 'pages';
 import { Search } from 'pages/Search';
 import { Route, Routes } from 'react-router-dom';
 import { Hidden } from './App.styled';
+import { CatalogLayout } from 'components/CatalogLayout/CatalogLayout';
+import { ProductType } from 'pages/ProductType';
 
 export const App = () => {
   return (
@@ -22,10 +25,13 @@ export const App = () => {
       <Routes>
         <Route path="/" element={<SharedLayout />}>
           <Route index element={<Home />} />
-          <Route path="catalog" element={<Catalog />}>
-            <Route path=":category" element={<Category />} />
+          <Route path="catalog" element={<CatalogLayout />}>
+            <Route path=":pet" element={<Pet />}></Route>
+            <Route path=":category" element={<Category />}></Route>
+            <Route path=":productType" element={<ProductType />}></Route>
+            <Route index element={<Catalog />} />
           </Route>
-          <Route path=":id" element={<ProductCard />} />
+          <Route path="/:id" element={<ProductCard />} />
 
           <Route path="brands" element={<Brands />} />
           <Route path="cart" element={<Cart />} />
