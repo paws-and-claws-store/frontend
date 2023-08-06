@@ -20,11 +20,12 @@ import {
 } from './Card.styled';
 import { Link } from 'react-router-dom';
 import { HeartIcon } from 'components/Icons';
-import { Catalog } from 'pages';
+import { useStateContext } from 'context/StateContext';
 
 // import { HeartIcon } from 'components/Icons';
 
-export const Card = ({ el, groupItems, onClick, cartList, setCartList }) => {
+export const Card = ({ el, groupItems, onClick }) => {
+  const { cartList, setCartList } = useStateContext();
   const [card, setCard] = useState(el);
   const [favourite, setFavourite] = useState(Card.favourite);
 
@@ -64,16 +65,8 @@ export const Card = ({ el, groupItems, onClick, cartList, setCartList }) => {
     }
   }, [card.id, setCartList]);
 
-  // useEffect(() => {
-  //   if (count !== 0 && count !== null) {
-  //     document.getElementById(`${card.id}`).value = count;
-  //   }
-  //   localStorage.setItem('cartList', JSON.stringify(cartList));
-  // }, [card.id, cartList, count]);
-
   useEffect(() => {
-    const cardId = card.id;
-    const countUseEffect = count;
+    // card and card.id needs in dependencies section to initialize useffect when card and card.id have changes
     window.localStorage.setItem('cartList', JSON.stringify(cartList));
   }, [card.id, cartList, count]);
 
@@ -120,7 +113,7 @@ export const Card = ({ el, groupItems, onClick, cartList, setCartList }) => {
       const presentId = cartList.map(cart => cart.id).includes(card.id);
 
       if (presentId) {
-        const setCountToSpecialItem = cartList.map(item => {
+        cartList.map(item => {
           if (item.id === card.id) {
             setCount(1);
           }
@@ -280,7 +273,6 @@ export const Card = ({ el, groupItems, onClick, cartList, setCartList }) => {
               <input
                 id={card.id}
                 type="text"
-                // defaultValue={count}
                 minLength={1}
                 maxLength={3}
                 size={3}
