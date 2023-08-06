@@ -35,6 +35,7 @@ export const App = () => {
 
           <Route path="brands" element={<Brands />} />
           <Route path="cart" element={<Cart />} />
+
           <Route path="prices-drop" element={<PricesDrop />} />
           <Route path="search" element={<Search />} />
 
