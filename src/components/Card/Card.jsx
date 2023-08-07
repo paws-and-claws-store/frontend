@@ -26,9 +26,10 @@ import { displaySize } from 'helpers';
 // import { HeartIcon } from 'components/Icons';
 
 export const Card = ({ el, onClick }) => {
+  console.table('el:', el);
   const { cartList, setCartList } = useStateContext();
   const [card, setCard] = useState(el);
-  const [elType, setElType] = useState(el.types[0]);
+  const [elType, setElType] = useState(el.items[0] || []);
   // console.log('card:', card);
   // console.log('elType:', elType);
 
@@ -41,7 +42,7 @@ export const Card = ({ el, onClick }) => {
   };
 
   const changeElType = productCode => {
-    const newElType = card.types.find(el => el.productCode === productCode);
+    const newElType = card.items.find(el => el.productCode === productCode);
     setElType(newElType);
     setCount(null);
   };
@@ -94,7 +95,7 @@ export const Card = ({ el, onClick }) => {
       }
       if (presentId) {
         setCartList(prev => {
-          return prev.map(item => {
+          return prev?.map(item => {
             if (item.id === card.id) {
               return { ...item, count: count - 1 };
             }
@@ -173,7 +174,7 @@ export const Card = ({ el, onClick }) => {
   return (
     <BoxCard>
       <WeightList>
-        {el.types.map(({ size, productCode }) => {
+        {el.items.map(({ size, productCode }) => {
           // console.log('el.types', el.types[0]);
           return (
             <WeightListItem key={productCode}>

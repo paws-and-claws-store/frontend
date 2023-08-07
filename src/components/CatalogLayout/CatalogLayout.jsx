@@ -19,7 +19,7 @@ import { Outlet } from 'react-router-dom';
 import { fetchAllProducts, fetchProducts } from 'services/api';
 
 export const CatalogLayout = () => {
-  const [active, setActive] = useState('dog');
+  const [active, setActive] = useState('');
   const [petCollection, setPetCollection] = useState([
     {
       _id: '64cef53b53f2bc3e1c80705e',
