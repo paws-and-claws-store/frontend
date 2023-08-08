@@ -26,14 +26,14 @@ import { displaySize } from 'helpers';
 // import { HeartIcon } from 'components/Icons';
 
 export const Card = ({ el, onClick }) => {
-  console.table('el:', el);
   const { cartList, setCartList } = useStateContext();
-  const [card, setCard] = useState(el);
-  const [elType, setElType] = useState(el.items[0] || []);
-  // console.log('card:', card);
-  // console.log('elType:', elType);
+  const [
+    card,
+    // setCard
+  ] = useState(el);
+  const [elType, setElType] = useState(el.items[0]);
 
-  const [favourite, setFavourite] = useState(Card.favourite);
+  const [favourite, setFavourite] = useState(el.favourite || false);
 
   const [count, setCount] = useState(null);
 
@@ -174,22 +174,23 @@ export const Card = ({ el, onClick }) => {
   return (
     <BoxCard>
       <WeightList>
-        {el.items.map(({ size, productCode }) => {
-          // console.log('el.types', el.types[0]);
-          return (
-            <WeightListItem key={productCode}>
-              <WidthLink
-                className={
-                  productCode === elType.productCode ? 'active' : undefined
-                }
-                // onClick={() => changeCard(id)}
-                onClick={() => changeElType(productCode)}
-              >
-                {displaySize(size)}
-              </WidthLink>
-            </WeightListItem>
-          );
-        })}
+        {el.items.length > 0 &&
+          el.items.map(({ size, productCode }) => {
+            // console.log('el.types', el.types[0]);
+            return (
+              <WeightListItem key={productCode}>
+                <WidthLink
+                  className={
+                    productCode === elType.productCode ? 'active' : undefined
+                  }
+                  // onClick={() => changeCard(id)}
+                  onClick={() => changeElType(productCode)}
+                >
+                  {displaySize(size)}
+                </WidthLink>
+              </WeightListItem>
+            );
+          })}
       </WeightList>
 
       <Link className="heartIcon" onClick={changeFavourite}>
@@ -212,7 +213,7 @@ export const Card = ({ el, onClick }) => {
       </Link>
 
       <Link
-        to={`${card._id}`}
+        to={`/${card._id}`}
         // to={`${elType.productCode}`}
       >
         <Image src={card.mainImage} alt={card.productName} />
@@ -224,7 +225,7 @@ export const Card = ({ el, onClick }) => {
               <BrandNameSt>{card.brand}</BrandNameSt>
             </Link>
             <Link
-              to={`${card._id}`}
+              to={`/${card._id}`}
               // to={`${elType.productCode}`}
             >
               <div>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 // import { Box } from './Home.styled';
 import { Link, useParams } from 'react-router-dom';
@@ -14,51 +14,53 @@ import {
 import { HeartIcon, HeartIconFill } from 'components/Icons';
 import { Rating, WeightList, WeightListItem, WidthLink } from 'components';
 import { displaySize, groupBy } from 'helpers';
+import { fetchOneProduct } from 'services/api';
 
 export const ProductCard = () => {
   const { id } = useParams();
-  const obj = catalog.find(el => Number(el.id) === Number(id));
+  console.log('id:', id);
+  const [product, setProduct] = useState({});
+  const [item, setItem] = useState({});
+  const [favorite, setFavorite] = useState(false);
+
+  useEffect(() => {
+    fetchOneProduct(id).then(res => {
+      console.log('res:', res.items[0]);
+
+      setProduct({ ...res });
+      setItem({ ...res.items[0] });
+    });
+  }, [id]);
+  // const obj = catalog.find(el => Number(el.id) === Number(id));
 
   // const prodObj = products.find(el => Number(el.id) === Number(id));
-  const prodObj = products[0];
-
-  const [favorite, setFavorite] = useState(false);
-  const arr = products.sort((a, b) => {
-    if (a.weight < b.weight) {
-      return 1;
-    }
-    if (a.weight > b.weight) {
-      return -1;
-    }
-    return 0;
-  });
-  console.log('arr:', arr);
+  // const prodObj = products[0];
 
   // console.log('prodObj:', Object.keys(prodObj));
 
   // console.table(obj);
-  const {
-    _id,
-    productName,
-    pet,
-    category,
-    brand,
-    size,
-    price,
-    sale,
-    count,
-    productType,
-    shortDescription,
-    fullDescription,
-    ingredients,
-    additions,
-    components,
-    mainImage,
-    images,
-    reviews,
-    productCode,
-    producingCountry,
-  } = prodObj;
+  // const {
+  //   _id,
+  //   productName,
+  //   pet,
+  //   category,
+  //   brand,
+  //   size,
+  //   price,
+  //   sale,
+  //   count,
+  //   productType,
+  //   shortDescription,
+  //   fullDescription,
+  //   ingredients,
+  //   additions,
+  //   components,
+  //   mainImage,
+  //   images,
+  //   reviews,
+  //   productCode,
+  //   producingCountry,
+  // } = prodObj;
 
   // const {
   //   pet,
@@ -79,13 +81,13 @@ export const ProductCard = () => {
   return (
     <ProductContainer>
       <ImageContainer>
-        <ProductDetailsCarousel id={id} />
+        {/* <ProductDetailsCarousel id={id} /> */}
       </ImageContainer>
 
       <CardContainer>
         <div className="prodName">
           <FlexBox>
-            <span>{brand}</span>
+            <span>{product.brand}</span>
             <span>
               <Link
                 className="heartIcon"
@@ -111,8 +113,8 @@ export const ProductCard = () => {
             </span>
           </FlexBox>
 
-          <h1>{productName}</h1>
-          <p>{shortDescription}</p>
+          <h1>{product.productName}</h1>
+          <p>{product.shortDescription}</p>
           <FlexBox>
             <Rating className="reiting">
               <span>
@@ -134,14 +136,14 @@ export const ProductCard = () => {
                 </svg>
               </span>
             </Rating>
-            <span>Код товару:{productCode}</span>
+            <span>Код товару:{product.productCode}</span>
           </FlexBox>
           <span>
             Країна-виробник: Франція
             {/* {producingCountry} */}
           </span>
         </div>
-        {count > 0 ? (
+        {/* {product.count > 0 ? (
           <span>
             <span>В наявності</span>
             <svg
@@ -159,7 +161,7 @@ export const ProductCard = () => {
           </span>
         ) : (
           <span>відсутній</span>
-        )}
+        )} */}
 
         <div
           style={{
@@ -169,7 +171,7 @@ export const ProductCard = () => {
           }}
         >
           <span>Обрати вагу</span>
-          <ul style={{ display: 'flex' }}>
+          {/* <ul style={{ display: 'flex' }}>
             {arr.map(({ _id, size }) => {
               return (
                 <WeightListItem key={_id}>
@@ -183,7 +185,7 @@ export const ProductCard = () => {
                 </WeightListItem>
               );
             })}
-          </ul>
+          </ul> */}
         </div>
         <span>Змінити кількість</span>
       </CardContainer>
