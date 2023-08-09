@@ -20,6 +20,7 @@ export const CatalogLayout = () => {
   const [structure, setStructure] = useState([]);
   const [productsList, setProductsList] = useState([]);
   const [petCollection, setPetCollection] = useState([]);
+
   // for pagination
   // const [activPage, setActivPage] = useState(1);
   const [catalogList, setCatalogList] = useState([]);
@@ -37,10 +38,25 @@ export const CatalogLayout = () => {
   };
 
   useEffect(() => {
-    fetchAllStructure().then(res => setStructure([...res]));
+    // fetchAllStructure().then(res => {
+    //   setStructure([...res]);
+    // });
     // fetchAllPets().then(res => setPetCollection([...res]));
     //fetchAllProsucts()
     fetchProducts().then(res => setProductsList([...res]));
+  }, []);
+
+  useEffect(() => {
+    async function fetchData() {
+      // You can await here
+      const structure = await fetchAllStructure();
+      setStructure([...structure]);
+      console.log('structure:', structure);
+
+      // const filter = structure;
+      // ...
+    }
+    fetchData();
   }, []);
 
   // useEffect(() => {
@@ -124,36 +140,34 @@ export const CatalogLayout = () => {
         </AsideCatalog>
         <WrapperCatalog>
           <BoxHiden className={active ? 'active' : undefined}>
-            {structure
-              .filter(it => it.code === active)
-              .map(({ _categories, _id }) => {
-                console.log(' _categories:', _categories);
+            <ul className="_categories">
+              {active &&
+                structure
+                  .filter(({ code }) => code === active)
+                  .map(el => console.log(el))}
+              {/* {structure.map(({ code, ua, _id, _variants }) => {
                 return (
-                  <ul key={_id}>
-                    {_categories.map(({ code, ua, _id, _variants }) => {
-                      return (
-                        <>
-                          <p>{ua}</p>
-                          <li key={_id}>
-                            <ul>
-                              {_variants.map(({ _id, ua }) => {
-                                return <li key={_id}>{ua}</li>;
-                              })}
-                            </ul>
-                          </li>
-                        </>
-                      );
-                    })}
-                  </ul>
+                  <>
+                    <li>
+                      <Category to={`pet/${code}`}>{ua}</Category>
+                    </li>
+                    <li key={_id} className=" _categories-item">
+                      <ul className="_variants">
+                        {_variants.map(({ _id, ua, code }) => {
+                          return (
+                            <li key={_id} className="_variants-item">
+                              <FoodType to={`pet/category/${code}`}>
+                                {ua}
+                              </FoodType>
+                            </li>
+                          );
+                        })}
+                      </ul>
+                    </li>
+                  </>
                 );
-
-                // console.log(_categories);
-                // return (
-                //   <li key={_id}>
-                //     <span>{_categories.ua}</span>
-                //   </li>
-                // );
-              })}
+              })} */}
+            </ul>
 
             {/* <ul>
                 {uniqueObjArray(catCatalog, 'category').map((el, i) => {
