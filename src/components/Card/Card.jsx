@@ -21,33 +21,29 @@ import {
 import { Link } from 'react-router-dom';
 import { HeartIcon } from 'components/Icons';
 import { useStateContext } from 'context/StateContext';
+import { displaySize } from 'helpers';
 
 // import { HeartIcon } from 'components/Icons';
 
-export const Card = ({ el, groupItems, onClick }) => {
+export const Card = ({ el, onClick }) => {
   const { cartList, setCartList } = useStateContext();
-  const [card, setCard] = useState(el);
-  const [favourite, setFavourite] = useState(Card.favourite);
+  const [
+    card,
+    // setCard
+  ] = useState(el);
+  const [elType, setElType] = useState(el.items[0]);
+
+  const [favourite, setFavourite] = useState(el.favourite || false);
 
   const [count, setCount] = useState(null);
-
-  const arr = groupItems.sort((a, b) => {
-    if (a.weight < b.weight) {
-      return 1;
-    }
-    if (a.weight > b.weight) {
-      return -1;
-    }
-    return 0;
-  });
 
   const changeFavourite = () => {
     setFavourite(!favourite);
   };
 
-  const changeCard = id => {
-    const newCard = arr.find(el => el.id === id);
-    setCard(newCard);
+  const changeElType = productCode => {
+    const newElType = card.items.find(el => el.productCode === productCode);
+    setElType(newElType);
     setCount(null);
   };
 
@@ -99,7 +95,7 @@ export const Card = ({ el, groupItems, onClick }) => {
       }
       if (presentId) {
         setCartList(prev => {
-          return prev.map(item => {
+          return prev?.map(item => {
             if (item.id === card.id) {
               return { ...item, count: count - 1 };
             }
@@ -178,18 +174,23 @@ export const Card = ({ el, groupItems, onClick }) => {
   return (
     <BoxCard>
       <WeightList>
-        {arr.map(({ id, weight }) => {
-          return (
-            <WeightListItem key={id}>
-              <WidthLink
-                className={id === card.id ? 'active' : undefined}
-                onClick={() => changeCard(id)}
-              >
-                {weight}
-              </WidthLink>
-            </WeightListItem>
-          );
-        })}
+        {el.items.length > 0 &&
+          el.items.map(({ size, productCode }) => {
+            // console.log('el.types', el.types[0]);
+            return (
+              <WeightListItem key={productCode}>
+                <WidthLink
+                  className={
+                    productCode === elType.productCode ? 'active' : undefined
+                  }
+                  // onClick={() => changeCard(id)}
+                  onClick={() => changeElType(productCode)}
+                >
+                  {displaySize(size)}
+                </WidthLink>
+              </WeightListItem>
+            );
+          })}
       </WeightList>
 
       <Link className="heartIcon" onClick={changeFavourite}>
@@ -211,8 +212,11 @@ export const Card = ({ el, groupItems, onClick }) => {
         )}
       </Link>
 
-      <Link to={`${card.id}`}>
-        <Image src={card.image} alt={card.foodName} />
+      <Link
+        to={`/${card._id}`}
+        // to={`${elType.productCode}`}
+      >
+        <Image src={card.mainImage} alt={card.productName} />
       </Link>
       <div>
         <div>
@@ -220,9 +224,12 @@ export const Card = ({ el, groupItems, onClick }) => {
             <Link to={'/brands'}>
               <BrandNameSt>{card.brand}</BrandNameSt>
             </Link>
-            <Link to={`${card.id}`}>
+            <Link
+              to={`/${card._id}`}
+              // to={`${elType.productCode}`}
+            >
               <div>
-                <ProductNameSt>{card.foodName}</ProductNameSt>
+                <ProductNameSt>{card.productName}</ProductNameSt>
               </div>
               <ShortDiscriptionSt>{card.shortDescription}</ShortDiscriptionSt>
             </Link>
@@ -249,21 +256,21 @@ export const Card = ({ el, groupItems, onClick }) => {
           </Rating>
         </div>
         <Wrapper>
-          {card.sale ? (
+          {elType.sale ? (
             <PriceBox>
               <PriceSt>
-                {card.sale.toFixed(2)}
+                {elType.sale.toFixed(2)}
                 <SymbolCurrency>₴</SymbolCurrency>
               </PriceSt>
               <PriceSt className="line-through-text">
-                {card.price.toFixed(2)}
+                {elType.price.toFixed(2)}
                 <SymbolCurrency>₴</SymbolCurrency>
               </PriceSt>
             </PriceBox>
           ) : (
             <PriceBox>
               <PriceSt>
-                {card.price.toFixed(2)}
+                {elType.price.toFixed(2)}
                 <SymbolCurrency>₴</SymbolCurrency>
               </PriceSt>
             </PriceBox>

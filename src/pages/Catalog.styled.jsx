@@ -67,8 +67,8 @@ export const BoxHiden = styled.div`
   background-color: ${theme.colors.beige};
   border: 1px solid ${theme.colors.green};
 
-  /* width: 304px; */
-  width: 100%;
+  width: 304px;
+  /* width: 100%; */
   padding: 20px;
 
   &.active {
