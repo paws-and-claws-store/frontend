@@ -13,21 +13,19 @@ import {
 import { Title } from 'pages/Home.styled';
 import React, { useEffect, useState } from 'react';
 import { Outlet } from 'react-router-dom';
-import { fetchAllPets, fetchAllStructure, fetchProducts } from 'services/api';
+import { fetchAllStructure } from 'services/api';
 
 export const CatalogLayout = () => {
-  const [active, setActive] = useState('for_dogs');
+  const [active, setActive] = useState('');
   const [structure, setStructure] = useState([]);
-  const [productsList, setProductsList] = useState([]);
-  const [petCollection, setPetCollection] = useState([]);
+  const [categories, setCategories] = useState([]);
 
   // for pagination
   // const [activPage, setActivPage] = useState(1);
-  const [catalogList, setCatalogList] = useState([]);
 
   const handleClick = e => {
     // document.addEventListener('click', e => console.log(e.target));
-    console.log(e.currentTarget);
+    // console.log(e.currentTarget);
     if (active === e.currentTarget.id) {
       setActive('');
       document.getElementById('hidden').style.visibility = 'hidden';
@@ -38,30 +36,21 @@ export const CatalogLayout = () => {
   };
 
   useEffect(() => {
-    // fetchAllStructure().then(res => {
-    //   setStructure([...res]);
-    // });
-    // fetchAllPets().then(res => setPetCollection([...res]));
-    //fetchAllProsucts()
-    fetchProducts().then(res => setProductsList([...res]));
-  }, []);
-
-  useEffect(() => {
     async function fetchData() {
       // You can await here
       const structure = await fetchAllStructure();
       setStructure([...structure]);
-      console.log('structure:', structure);
 
-      // const filter = structure;
+      if (active) {
+        const filter = structure
+          .filter(el => el.code === active)
+          .map(({ _categories }) => _categories);
+        setCategories(...filter);
+      }
       // ...
     }
     fetchData();
-  }, []);
-
-  // useEffect(() => {
-  //   console.log('structure:', structure);
-  // }, [structure]);
+  }, [active]);
 
   return (
     <>
@@ -69,7 +58,7 @@ export const CatalogLayout = () => {
 
       <CatalogContainer>
         <AsideCatalog>
-          {structure.length && (
+          {structure.length !== 0 && (
             <CategoryList>
               <ul
                 style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}
@@ -131,7 +120,7 @@ export const CatalogLayout = () => {
                       );
 
                     default:
-                      break;
+                      return <></>;
                   }
                 })}
               </ul>
@@ -142,86 +131,29 @@ export const CatalogLayout = () => {
           <BoxHiden className={active ? 'active' : undefined}>
             <ul className="_categories">
               {active &&
-                structure
-                  .filter(({ code }) => code === active)
-                  .map(el => console.log(el))}
-              {/* {structure.map(({ code, ua, _id, _variants }) => {
-                return (
-                  <>
-                    <li>
-                      <Category to={`pet/${code}`}>{ua}</Category>
-                    </li>
-                    <li key={_id} className=" _categories-item">
-                      <ul className="_variants">
-                        {_variants.map(({ _id, ua, code }) => {
-                          return (
-                            <li key={_id} className="_variants-item">
-                              <FoodType to={`pet/category/${code}`}>
-                                {ua}
-                              </FoodType>
-                            </li>
-                          );
-                        })}
-                      </ul>
-                    </li>
-                  </>
-                );
-              })} */}
-            </ul>
+                categories.map(({ code, ua, _id, _variants, _pet }) => {
+                  console.log('categories:', categories);
 
-            {/* <ul>
-                {uniqueObjArray(catCatalog, 'category').map((el, i) => {
-                  console.log('Cat category', el);
                   return (
                     <>
-                      <li key={i}>
-                        <Category to={`${el.category}`}>{el.category}</Category>
-                      </li>
                       <li>
-                        <ul>
-                          {uniqueObjArray(catCatalog, 'foodType').map(
-                            (el, i) => {
-                              return (
-                                <li key={i}>
-                                  <FoodType>{el.foodType}</FoodType>
-                                </li>
-                              );
-                            },
-                          )}
+                        <Category to={`${_pet}/${code}`}>{ua}</Category>
+                      </li>
+                      <li key={_id} className=" _categories-item">
+                        <ul className="_variants">
+                          {_variants.map(({ _id, ua, code }) => {
+                            return (
+                              <li key={_id} className="_variants-item">
+                                <FoodType to={`pet/${code}`}>{ua}</FoodType>
+                              </li>
+                            );
+                          })}
                         </ul>
                       </li>
                     </>
                   );
                 })}
-              </ul>
-            </BoxHiden>
-          )) ||
-            (active === 'dog' && (
-              <BoxHiden className={active ? 'active' : undefined}>
-                <ul>
-                  {uniqueObjArray(dogCatalog, 'category').map((el, i) => {
-                    return (
-                      <>
-                        <li key={i}>
-                          <Category>{el.category}</Category>
-                        </li>
-                        <li>
-                          <ul>
-                            {uniqueObjArray(dogCatalog, 'foodType').map(
-                              (el, i) => {
-                                return (
-                                  <li key={i}>
-                                    <FoodType>{el.foodType}</FoodType>
-                                  </li>
-                                );
-                              },
-                            )}
-                          </ul>
-                        </li>
-                      </>
-                    );
-                  })}
-                </ul> */}
+            </ul>
           </BoxHiden>
 
           <Outlet />
