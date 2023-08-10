@@ -75,12 +75,12 @@ export const CatalogLayout = () => {
                               active === 'for_dogs' ? 'active' : undefined
                             }
                             onClick={handleClick}
-                            onBlur={() => {
-                              setActive('');
-                              document.getElementById(
-                                'hidden',
-                              ).style.visibility = 'hidden';
-                            }}
+                            // onBlur={() => {
+                            //   setActive('');
+                            //   document.getElementById(
+                            //     'hidden',
+                            //   ).style.visibility = 'hidden';
+                            // }}
                           >
                             <span>
                               <Dog />
@@ -101,12 +101,12 @@ export const CatalogLayout = () => {
                               active === 'for_cats' ? 'active' : undefined
                             }
                             onClick={handleClick}
-                            onBlur={() => {
-                              setActive('');
-                              document.getElementById(
-                                'hidden',
-                              ).style.visibility = 'hidden';
-                            }}
+                            // onBlur={() => {
+                            //   setActive('');
+                            //   document.getElementById(
+                            //     'hidden',
+                            //   ).style.visibility = 'hidden';
+                            // }}
                           >
                             <span>
                               <Cat />
@@ -137,17 +137,39 @@ export const CatalogLayout = () => {
                   return (
                     <>
                       <li>
-                        <Category to={`${_pet}/${code}`}>{ua}</Category>
+                        <Category
+                          to={`${_pet}/${_id}`}
+                          onClick={() => {
+                            setActive('');
+                            document.getElementById('hidden').style.visibility =
+                              'hidden';
+                          }}
+                        >
+                          {ua}
+                        </Category>
                       </li>
                       <li key={_id} className=" _categories-item">
                         <ul className="_variants">
-                          {_variants.map(({ _id, ua, code }) => {
-                            return (
-                              <li key={_id} className="_variants-item">
-                                <FoodType to={`pet/${code}`}>{ua}</FoodType>
-                              </li>
-                            );
-                          })}
+                          {_variants.map(
+                            ({ _id, ua, code, _pet, _category }) => {
+                              console.log('_variants:', _variants);
+                              return (
+                                <li key={_id} className="_variants-item">
+                                  <FoodType
+                                    to={`${_pet}/${_category}/${_id}`}
+                                    onClick={() => {
+                                      setActive('');
+                                      document.getElementById(
+                                        'hidden',
+                                      ).style.visibility = 'hidden';
+                                    }}
+                                  >
+                                    {ua}
+                                  </FoodType>
+                                </li>
+                              );
+                            },
+                          )}
                         </ul>
                       </li>
                     </>
