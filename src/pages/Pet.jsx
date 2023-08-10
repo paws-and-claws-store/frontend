@@ -1,7 +1,9 @@
 import React from 'react';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useParams } from 'react-router-dom';
 
 export const Pet = () => {
+  const data = useParams();
+  console.log('data:', data);
   return (
     <div>
       Pet
