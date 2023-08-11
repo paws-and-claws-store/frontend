@@ -1,31 +1,33 @@
 import { CardList } from 'components';
 import React, { useEffect, useState } from 'react';
-import { Outlet, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { fetchProductsByOneCategory } from 'services/api';
 
 export const Category = () => {
   const { pet, category } = useParams();
-  console.log('pet', pet, 'category:', category);
-  const [currentCategory, setCurrentCategory] = useState(category);
+  // console.log('pet', pet, 'category:', category);
+  // const [currentCategory, setCurrentCategory] = useState(category);
   const [productsList, setProductsList] = useState([]);
 
-  useEffect(() => {
-    setCurrentCategory(category);
-    console.log('category:', category);
-  }, [category]);
+  // useEffect(() => {
+  //   setCurrentCategory(category);
+  // }, [category]);
 
   useEffect(() => {
     // fetchProductsByOneCategory(category).then(res => {
-    //   setProductsList(prev => [...prev, ...res]);
+    //   setProductsList( [ ...res]);
     // });
     async function fetchData() {
       // You can await here
-      const response = await fetchProductsByOneCategory(currentCategory);
-      console.log('response:', response);
-      setProductsList(prev => [...prev, ...response.docs]);
+      const res = await fetchProductsByOneCategory(category);
+
+      if (res) {
+        setProductsList([...res.docs]);
+      }
+      // console.log('response:', res);
     }
     fetchData();
-  }, [currentCategory, category]);
+  }, [category]);
 
   return (
     <>

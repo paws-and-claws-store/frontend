@@ -52,6 +52,7 @@ export async function fetchProductsByOnePet(onePet) {
   try {
     const response = await axios.get(`/api/poducts/pets/${onePet}`);
 
+    console.log('response Pet:', response);
     return response.data;
   } catch (error) {
     Notify.failure(error.message);

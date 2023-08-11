@@ -5,7 +5,7 @@ import { fetchProductsByOneProductType } from 'services/api';
 
 export const ProductType = () => {
   const data = useParams();
-  console.log('data:', data);
+  // console.log('data:', data);
   const [productsList, setProductsList] = useState([]);
   useEffect(() => {
     // fetchProductsByOneCategory(category).then(res => {
@@ -14,7 +14,7 @@ export const ProductType = () => {
     async function fetchData() {
       // You can await here
       const response = await fetchProductsByOneProductType(data.productType);
-      console.log('response:', response);
+      // console.log('response:', response);
       setProductsList(prev => [...prev, ...response.docs]);
     }
     fetchData();
