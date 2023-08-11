@@ -50,7 +50,7 @@ export async function fetchAllProducts() {
 //by onePet
 export async function fetchProductsByOnePet(onePet) {
   try {
-    const response = await axios.get(`/api/poducts/pets/${onePet}`);
+    const response = await axios.get(`/api/products/pets/${onePet}`);
 
     console.log('response Pet:', response);
     return response.data;
