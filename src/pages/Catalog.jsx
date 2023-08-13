@@ -1,6 +1,6 @@
 import { CardList } from 'components';
 import { useEffect, useState } from 'react';
-import { fetchProducts } from 'services/api';
+import { fetchAllProducts } from 'services/api';
 
 export const Catalog = () => {
   // const [active, setActive] = useState('');
@@ -8,10 +8,13 @@ export const Catalog = () => {
   const [productsList, setProductsList] = useState([]);
 
   useEffect(() => {
-    // fetchAllProducts().
-    fetchProducts().then(res => {
-      setProductsList(prev => [...prev, ...res]);
-    });
+    async function fetchData() {
+      // You can await here
+      const response = await fetchAllProducts();
+      // console.log('response:', response);
+      setProductsList([...response.docs]);
+    }
+    fetchData();
   }, []);
 
   // const handleClick = e => {
