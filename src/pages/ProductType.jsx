@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import { fetchProductsByOneProductType } from 'services/api';
 
 export const ProductType = () => {
-  const data = useParams();
+  const { productType } = useParams();
   // console.log('data:', data);
   const [productsList, setProductsList] = useState([]);
   useEffect(() => {
@@ -13,12 +13,12 @@ export const ProductType = () => {
     // });
     async function fetchData() {
       // You can await here
-      const response = await fetchProductsByOneProductType(data.productType);
+      const response = await fetchProductsByOneProductType(productType);
       // console.log('response:', response);
-      setProductsList(prev => [...prev, ...response.docs]);
+      setProductsList([...response.docs]);
     }
     fetchData();
-  }, [data.productType]);
+  }, [productType]);
 
   return (
     <>

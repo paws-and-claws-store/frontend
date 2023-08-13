@@ -58,6 +58,18 @@ export const PetButton = styled.button`
 
 export const WrapperCatalog = styled.div`
   position: relative;
+
+  ._categories-item {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  ._variants {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
 `;
 
 export const BoxHiden = styled.div`

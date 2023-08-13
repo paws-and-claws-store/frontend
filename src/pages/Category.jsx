@@ -4,8 +4,8 @@ import { useParams } from 'react-router-dom';
 import { fetchProductsByOneCategory } from 'services/api';
 
 export const Category = () => {
-  const { pet, category } = useParams();
-  // console.log('pet', pet, 'category:', category);
+  const { category } = useParams();
+
   // const [currentCategory, setCurrentCategory] = useState(category);
   const [productsList, setProductsList] = useState([]);
 

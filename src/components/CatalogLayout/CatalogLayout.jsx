@@ -39,6 +39,7 @@ export const CatalogLayout = () => {
     async function fetchData() {
       // You can await here
       const structure = await fetchAllStructure();
+      // console.log('structure:', structure);
       setStructure([...structure]);
 
       if (active) {
@@ -131,12 +132,12 @@ export const CatalogLayout = () => {
           <BoxHiden className={active ? 'active' : undefined}>
             <ul className="_categories">
               {active &&
-                categories.map(({ code, ua, _id, _variants, _pet }) => {
-                  console.log('categories:', categories);
+                categories.map(({ code, ua, _id, _variants, _pet }, index) => {
+                  // console.log('categories:', categories);
 
                   return (
                     <>
-                      <li>
+                      <li key={index} className=" _categories-item">
                         <Category
                           to={`${_pet}/${_id}`}
                           onClick={() => {
@@ -147,12 +148,10 @@ export const CatalogLayout = () => {
                         >
                           {ua}
                         </Category>
-                      </li>
-                      <li key={_id} className=" _categories-item">
                         <ul className="_variants">
                           {_variants.map(
                             ({ _id, ua, code, _pet, _category }) => {
-                              console.log('_variants:', _variants);
+                              // console.log('_variants:', _variants);
                               return (
                                 <li key={_id} className="_variants-item">
                                   <FoodType

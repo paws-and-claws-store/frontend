@@ -76,6 +76,7 @@ export async function fetchProductsByOneProductType(oneProductType) {
       `/api/products/product_types/${oneProductType}`,
     );
 
+    console.log('response.data:', response.data);
     return response.data;
   } catch (error) {
     Notify.failure(error.message);
