@@ -22,8 +22,11 @@ import { Link } from 'react-router-dom';
 import { HeartIcon } from 'components/Icons';
 import { useStateContext } from 'context/StateContext';
 import { displaySize } from 'helpers';
+import { CardList } from 'components';
 
 // import { HeartIcon } from 'components/Icons';
+
+const LS_KEY = 'cartList';
 
 export const Card = ({ el, onClick }) => {
   const { cartList, setCartList } = useStateContext();
@@ -31,6 +34,7 @@ export const Card = ({ el, onClick }) => {
     card,
     // setCard
   ] = useState(el);
+
   const [elType, setElType] = useState(el.items[0]);
 
   const [favourite, setFavourite] = useState(el.favourite || false);
@@ -48,93 +52,166 @@ export const Card = ({ el, onClick }) => {
   };
 
   useEffect(() => {
-    const items = JSON.parse(localStorage.getItem('cartList'));
+    const items = getCartLocalStorageItems();
 
     if (items) {
       setCartList(items);
     }
-
-    const countItem = items?.filter(({ id }) => id === card.id);
-
-    if (countItem && countItem.length) {
-      setCount(countItem[0].count);
-    }
-  }, [card.id, setCartList]);
+  }, [card._id, setCartList]);
 
   useEffect(() => {
     // card and card.id needs in dependencies section to initialize useffect when card and card.id have changes
-    window.localStorage.setItem('cartList', JSON.stringify(cartList));
-  }, [card.id, cartList, count]);
+    setCartLocalStorageItems(cartList);
+  }, [card._id, cartList, count]);
+
+  useEffect(() => {
+    const productCode = elType.productCode;
+
+    const getCountProduct = data => {
+      const cartLocalStorageItems = getCartLocalStorageItems();
+
+      const indexProductLocalStorage = cartLocalStorageItems.findIndex(
+        item => item._id === card._id,
+      );
+      if (indexProductLocalStorage === -1) {
+        return;
+      }
+
+      const productCodetoUpdate = data;
+      const indexProductToUpd = cartLocalStorageItems[indexProductLocalStorage].items.findIndex(
+        item => item.productCode === productCodetoUpdate,
+      );
+      const cardItems = cartLocalStorageItems[indexProductLocalStorage].items;
+      const countOfProduct = cardItems[indexProductToUpd];
+      return countOfProduct.count;
+    };
+
+    const countProductCode = getCountProduct(productCode);
+    setCount(countProductCode);
+  }, [card._id, elType.productCode]);
+
+  const getCartLocalStorageItems = () => {
+    return JSON.parse(localStorage.getItem(LS_KEY));
+  };
+
+  const setCartLocalStorageItems = data => {
+    window.localStorage.setItem(LS_KEY, JSON.stringify(data));
+  };
+
+  const getPresentProductCode = () => {
+    return cartList
+      .flatMap(cart => cart.items)
+      .map(item => item.productCode)
+      .includes(elType.productCode);
+  };
+
+  const setCountToProduct = (countLSItems, data) => {
+    const productCodetoUpdate = elType.productCode;
+    const indexProductLocalStorageToUpdate = data.findIndex(item => item._id === card._id);
+    const indexProductToUpd = data[indexProductLocalStorageToUpdate].items.findIndex(
+      item => item.productCode === productCodetoUpdate,
+    );
+
+    const cardItems = data[indexProductLocalStorageToUpdate].items;
+
+    cardItems[indexProductToUpd] = { ...cardItems[indexProductToUpd], count: countLSItems };
+
+    return cardItems;
+  };
+
+  const changeCountInLocalStorageDecrementIncrementAndSet = (countLSItems, data) => {
+    const cardItems = setCountToProduct(countLSItems, data);
+    setCartList(prev => {
+      return prev.map(item => {
+        if (item._id === card._id) {
+          return { ...item, items: cardItems };
+        }
+
+        return item;
+      });
+    });
+  };
+
+  const changeCountBuyLocalStorageTrueCode = data => {
+    const countLSItems = 1;
+    const indexCard = data.findIndex(item => item._id === card._id);
+    const cardItems = setCountToProduct(countLSItems, data);
+
+    if (indexCard) {
+      data[indexCard] = {
+        ...data[indexCard],
+        items: cardItems,
+      };
+    }
+
+    setCartLocalStorageItems(data);
+
+    setCartList(prevState => {
+      return [...(getCartLocalStorageItems() || [])];
+    });
+    setCount(1);
+  };
+
+  const changeCountBuyLocalStorageFalseCode = data => {
+    const productCodetoUpdate = elType.productCode;
+    const indexProductToUpd = card.items.findIndex(
+      item => item.productCode === productCodetoUpdate,
+    );
+
+    const cardItems = card.items;
+    cardItems[indexProductToUpd] = { ...cardItems[indexProductToUpd], count: 1 };
+
+    const indexCard = data.findIndex(item => item._id === card._id);
+
+    if (indexCard !== -1) {
+      data[indexCard] = {
+        ...data[indexCard],
+        items: cardItems,
+      };
+    }
+
+    const cartArray = [...data, { ...card }];
+
+    setCartLocalStorageItems(cartArray);
+
+    setCartList(prevState => {
+      return [...(getCartLocalStorageItems() || [])];
+    });
+
+    setCount(1);
+    return;
+  };
 
   const handleClick = e => {
+    const presentProductCode = getPresentProductCode();
+
     if (e.currentTarget.name === 'increment') {
       setCount(prevState => prevState + 1);
+      let countIncrement = count + 1;
 
-      const presentId = cartList.map(cart => cart.id).includes(card.id);
-      if (presentId) {
-        setCartList(prev => {
-          return prev.map(item => {
-            if (item.id === card.id) {
-              return { ...item, count: count + 1 };
-            }
-
-            return item;
-          });
-        });
+      if (presentProductCode) {
+        const cartLocalStorageItems = getCartLocalStorageItems();
+        changeCountInLocalStorageDecrementIncrementAndSet(countIncrement, cartLocalStorageItems);
       }
     }
     if (e.currentTarget.name === 'decrement') {
+      let countDecrement = count - 1;
       setCount(prevState => prevState - 1);
-      const countState = document.getElementById(`${card.id}`).value;
-      const countCard = Number(countState) - 1;
-      const presentId = cartList.map(cart => cart.id).includes(card.id);
+      if (presentProductCode) {
+        const cartLocalStorageItems = getCartLocalStorageItems();
 
-      if (countCard === 0) {
-        setCartList(prev => prev.filter(item => item.id !== card.id));
-        return;
-      }
-      if (presentId) {
-        setCartList(prev => {
-          return prev?.map(item => {
-            if (item.id === card.id) {
-              return { ...item, count: count - 1 };
-            }
-
-            return item;
-          });
-        });
+        changeCountInLocalStorageDecrementIncrementAndSet(countDecrement, cartLocalStorageItems);
       }
     }
     if (e.currentTarget.name === 'buy') {
-      const presentId = cartList.map(cart => cart.id).includes(card.id);
-
-      if (presentId) {
-        cartList.map(item => {
-          if (item.id === card.id) {
-            setCount(1);
-          }
-          return item;
-        });
+      if (presentProductCode) {
+        const cartLocalStorageItems = getCartLocalStorageItems();
+        changeCountBuyLocalStorageTrueCode(cartLocalStorageItems);
       }
 
-      if (!presentId) {
-        const cartLocalStorageItems = JSON.parse(
-          localStorage.getItem('cartList'),
-        );
-        const cartArray = [
-          ...cartLocalStorageItems,
-          { id: card.id, product: card, count: 1 },
-        ];
-        localStorage.setItem('cartList', JSON.stringify(cartArray));
-
-        setCartList(prevState => {
-          return [
-            ...(JSON.parse(window.localStorage.getItem('cartList')) || []),
-          ];
-        });
-
-        setCount(1);
-        return;
+      if (!presentProductCode) {
+        const cartLocalStorageItems = getCartLocalStorageItems();
+        changeCountBuyLocalStorageFalseCode(cartLocalStorageItems);
       }
     }
   };
@@ -156,18 +233,12 @@ export const Card = ({ el, onClick }) => {
 
   const onSubmitCardHandler = e => {
     e.preventDefault();
+    const presentProductCode = getPresentProductCode();
 
-    const presentId = cartList.map(cart => cart.id).includes(card.id);
-    if (presentId) {
-      setCartList(prev => {
-        return prev.map(item => {
-          if (item.id === card.id) {
-            return { ...item, count: count };
-          }
+    if (presentProductCode) {
+      const cartLocalStorageItems = getCartLocalStorageItems();
 
-          return item;
-        });
-      });
+      changeCountInLocalStorageDecrementIncrementAndSet(count, cartLocalStorageItems);
     }
   };
 
@@ -180,9 +251,7 @@ export const Card = ({ el, onClick }) => {
             return (
               <WeightListItem key={productCode}>
                 <WidthLink
-                  className={
-                    productCode === elType.productCode ? 'active' : undefined
-                  }
+                  className={productCode === elType.productCode ? 'active' : undefined}
                   // onClick={() => changeCard(id)}
                   onClick={() => changeElType(productCode)}
                 >
@@ -285,7 +354,7 @@ export const Card = ({ el, onClick }) => {
                 <span>-</span>
               </BTNDec>
               <input
-                id={card.id}
+                id={card._id}
                 type="text"
                 minLength={1}
                 maxLength={3}
