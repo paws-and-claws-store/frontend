@@ -44,7 +44,11 @@ export const Header = () => {
   useEffect(() => {
     setCountOfCart(() => {
       if (cartList) {
-        return cartList.length;
+        const countItems = cartList
+          .flatMap(cart => cart.items)
+          .reduce((totalCount, item) => totalCount + item.count, 0);
+        return countItems;
+        // return cartList.length;
       }
       return null;
     });
