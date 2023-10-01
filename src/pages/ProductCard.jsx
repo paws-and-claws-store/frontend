@@ -1,17 +1,39 @@
 import React, { useState } from 'react';
-
-// import { Box } from './Home.styled';
-import { Link, useParams } from 'react-router-dom';
+import { Link, Outlet, useParams } from 'react-router-dom';
 import catalog from '../DB/catalog.json';
 import products from '../DB/products.json';
+
 import { ProductDetailsCarousel } from 'components/ProductDetailsCarousel/ProductDetailsCarousel';
 import {
   CardContainer,
   FlexBox,
   ImageContainer,
   ProductContainer,
+  BrandTitle,
+  ProductName,
+  ShortDescription,
+  CardCodeList,
+  CardCodeListItem,
+  InavAilability,
+  AilabilityWrapper,
+  RadioBtnList,
+  RadioLabel,
+  RadioInput,
+  RadioText,
+  QuintityInput,
+  BtnDecrement,
+  QuintityInputWrapper,
+  BtnIncrement,
+  QuntityContainer,
+  CarCodeWrapper,
+  CountContainer,
+  CountSum,
+  SubmitButton,
+  HeartIcon,
+  InfoLinkList,
+  CustomNavLink,
 } from './ProductCard.styled';
-import { HeartIcon, HeartIconFill } from 'components/Icons';
+
 import { Rating, WeightList, WeightListItem, WidthLink } from 'components';
 import { displaySize, groupBy } from 'helpers';
 
@@ -19,8 +41,14 @@ export const ProductCard = () => {
   const { id } = useParams();
   const obj = catalog.find(el => Number(el.id) === Number(id));
 
+  const [quintity, setQuintity] = useState(0);
+
+  const increment = () => setQuintity(prev => (prev += 1));
+  const decrement = () => setQuintity(prev => (prev -= 1));
+
   // const prodObj = products.find(el => Number(el.id) === Number(id));
   const prodObj = products[0];
+  console.log('prodObj:', prodObj);
 
   const [favorite, setFavorite] = useState(false);
   const arr = products.sort((a, b) => {
@@ -32,11 +60,14 @@ export const ProductCard = () => {
     }
     return 0;
   });
-  console.log('arr:', arr);
 
-  // console.log('prodObj:', Object.keys(prodObj));
+  const [selectedValue, setSelectedValue] = useState(null);
+  console.log('selectedValue:', selectedValue);
 
-  // console.table(obj);
+  const handleRadioChange = value => {
+    setSelectedValue(value);
+  };
+
   const {
     _id,
     productName,
@@ -76,44 +107,47 @@ export const ProductCard = () => {
   //   productId,
   //   country,
   // } = obj;
+
   return (
     <ProductContainer>
-      <ImageContainer>
-        <ProductDetailsCarousel id={id} />
-      </ImageContainer>
+      <div style={{ maxWidth: '736px' }}>
+        <ImageContainer>
+          <ProductDetailsCarousel id={id} />
+        </ImageContainer>
+        <div>
+          <InfoLinkList>
+            <li>
+              <CustomNavLink to="description">Опис товару</CustomNavLink>
+            </li>
+            <li>
+              <CustomNavLink to="composition">Відгуки</CustomNavLink>
+            </li>
+            <li>
+              <CustomNavLink to="comments">Опис товару</CustomNavLink>
+            </li>
+          </InfoLinkList>
+
+          <Outlet />
+        </div>
+      </div>
 
       <CardContainer>
         <div className="prodName">
           <FlexBox>
-            <span>{brand}</span>
+            <BrandTitle>{brand}</BrandTitle>
             <span>
               <Link
                 className="heartIcon"
                 onClick={() => setFavorite(!favorite)}
               >
-                {favorite ? (
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="32"
-                    height="32"
-                    viewBox="0 0 32 32"
-                    fill="none"
-                  >
-                    <path
-                      d="M28 11.9322C28.0018 12.7484 27.8418 13.5569 27.5292 14.3108C27.2166 15.0648 26.7575 15.7493 26.1787 16.3247L16.6116 26.0332C16.5319 26.1142 16.4368 26.1785 16.332 26.2224C16.2271 26.2663 16.1146 26.2889 16.001 26.2889C15.8873 26.2889 15.7748 26.2663 15.6699 26.2224C15.5651 26.1785 15.47 26.1142 15.3903 26.0332L5.82322 16.3247C4.65684 15.1597 4.00101 13.5791 4 11.9306C3.999 10.2821 4.6529 8.70073 5.81786 7.53434C6.98283 6.36796 8.56342 5.71213 10.2119 5.71112C11.8604 5.71012 13.4418 6.36402 14.6082 7.52899L16.001 8.83067L17.4033 7.5247C18.2738 6.65862 19.3812 6.06982 20.586 5.83266C21.7908 5.59549 23.0388 5.72058 24.1725 6.19214C25.3063 6.66369 26.2749 7.46058 26.9561 8.48218C27.6373 9.50378 28.0005 10.7043 28 11.9322Z"
-                      fill="#E68314"
-                    />
-                  </svg>
-                ) : (
-                  <HeartIcon />
-                )}
+                <HeartIcon />
               </Link>
             </span>
           </FlexBox>
 
-          <h1>{productName}</h1>
-          <p>{shortDescription}</p>
-          <FlexBox>
+          <ProductName>{productName}</ProductName>
+          <ShortDescription>{shortDescription}</ShortDescription>
+          <CarCodeWrapper>
             <Rating className="reiting">
               <span>
                 <svg
@@ -134,16 +168,16 @@ export const ProductCard = () => {
                 </svg>
               </span>
             </Rating>
-            <span>Код товару:{productCode}</span>
-          </FlexBox>
-          <span>
-            Країна-виробник: Франція
-            {/* {producingCountry} */}
-          </span>
+
+            <CardCodeList>
+              <CardCodeListItem>Код товару:{productCode}</CardCodeListItem>
+              <CardCodeListItem>Країна-виробник: Франція</CardCodeListItem>
+            </CardCodeList>
+          </CarCodeWrapper>
         </div>
         {count > 0 ? (
-          <span>
-            <span>В наявності</span>
+          <AilabilityWrapper>
+            <InavAilability>В наявності</InavAilability>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"
@@ -156,36 +190,67 @@ export const ProductCard = () => {
                 fill="#B2AB73"
               />
             </svg>
-          </span>
+          </AilabilityWrapper>
         ) : (
           <span>відсутній</span>
         )}
 
-        <div
-          style={{
-            position: 'relative',
-            display: 'flex',
-            flexDirection: 'column',
-          }}
-        >
-          <span>Обрати вагу</span>
-          <ul style={{ display: 'flex' }}>
-            {arr.map(({ _id, size }) => {
-              return (
-                <WeightListItem key={_id}>
-                  <WidthLink
-                    style={{ flexDirection: 'row' }}
-                    // className={id === Card.id ? 'active' : undefined}
-                    // onClick={() => changeCard(id)}
+        <form>
+          <p>Обрати вагу</p>
+          <RadioBtnList>
+            {arr.map(({ _id, size }) => (
+              <li key={_id}>
+                <RadioLabel
+                  style={
+                    selectedValue === size ? { borderColor: '#E68314' } : {}
+                  }
+                >
+                  <RadioInput
+                    type="radio"
+                    name="size"
+                    onChange={() => handleRadioChange(size)}
+                    value={size}
+                  />
+                  <RadioText
+                    style={selectedValue === size ? { color: '#E68314' } : {}}
                   >
-                    <span> {displaySize(size)} </span>
-                  </WidthLink>
-                </WeightListItem>
-              );
-            })}
-          </ul>
-        </div>
-        <span>Змінити кількість</span>
+                    {size} кг
+                  </RadioText>
+                </RadioLabel>
+              </li>
+            ))}
+          </RadioBtnList>
+          <QuntityContainer>
+            <label htmlFor="calc"> Змінити кількість</label>
+            <QuintityInputWrapper>
+              <QuintityInput
+                readOnly
+                value={quintity === 0 ? '000' : quintity}
+                type="text"
+                id="calc"
+              />
+              <BtnDecrement
+                onClick={decrement}
+                type="button"
+                aria-label="decrement"
+                disabled={quintity < 1}
+              >
+                -
+              </BtnDecrement>
+              <BtnIncrement
+                onClick={increment}
+                type="button"
+                aria-label="increment"
+              >
+                +
+              </BtnIncrement>
+            </QuintityInputWrapper>
+          </QuntityContainer>
+          <CountContainer>
+            <CountSum>146.00₴</CountSum>
+            <SubmitButton type="button">Купити</SubmitButton>
+          </CountContainer>
+        </form>
       </CardContainer>
     </ProductContainer>
   );
