@@ -1,15 +1,9 @@
-
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, Outlet, useParams } from 'react-router-dom';
-
-import React, { useEffect, useState } from 'react';
-
-// import { Box } from './Home.styled';
-
 import catalog from '../DB/catalog.json';
 import products from '../DB/products.json';
 import Reviews from 'components/ProductDetailsCarousel/Reviews/Reviews';
-
+import { fetchOneProduct } from 'services/api';
 import { ProductDetailsCarousel } from 'components/ProductDetailsCarousel/ProductDetailsCarousel';
 import {
   CardContainer,
@@ -43,15 +37,21 @@ import {
 
 import { Rating, WeightList, WeightListItem, WidthLink } from 'components';
 import { displaySize, groupBy } from 'helpers';
-import { fetchOneProduct } from 'services/api';
 
 export const ProductCard = () => {
-  const { id } = useParams();
-  console.log('id:', id);
-  const [product, setProduct] = useState({});
-  const [item, setItem] = useState({});
-  const [favorite, setFavorite] = useState(false);
+  useEffect(() => {
+    fetchOneProduct(id).then(res => {
+      console.log('res:', res.items[0]);
 
+      setProduct({ ...res });
+      setItem({ ...res.items[0] });
+    });
+  }, [id]);
+
+  const { id } = useParams();
+  const [item, setItem] = useState({});
+  const [product, setProduct] = useState({});
+  const obj = catalog.find(el => Number(el.id) === Number(id));
 
   const [quintity, setQuintity] = useState(0);
 
@@ -62,6 +62,7 @@ export const ProductCard = () => {
   const prodObj = products[0];
   console.log('prodObj:', prodObj);
 
+  const [favorite, setFavorite] = useState(false);
   const arr = products.sort((a, b) => {
     if (a.weight < b.weight) {
       return 1;
@@ -72,27 +73,12 @@ export const ProductCard = () => {
     return 0;
   });
 
-  useEffect(() => {
-    fetchOneProduct(id).then(res => {
-      console.log('res:', res.items[0]);
-
-      setProduct({ ...res });
-      setItem({ ...res.items[0] });
-    });
-  }, [id]);
-  // const obj = catalog.find(el => Number(el.id) === Number(id));
-
-  // const prodObj = products.find(el => Number(el.id) === Number(id));
-  // const prodObj = products[0];
-
-
   const [selectedValue, setSelectedValue] = useState(null);
   console.log('selectedValue:', selectedValue);
 
   const handleRadioChange = value => {
     setSelectedValue(value);
   };
-
 
   const {
     _id,
@@ -117,30 +103,6 @@ export const ProductCard = () => {
     producingCountry,
   } = prodObj;
 
-  // console.table(obj);
-  // const {
-  //   _id,
-  //   productName,
-  //   pet,
-  //   category,
-  //   brand,
-  //   size,
-  //   price,
-  //   sale,
-  //   count,
-  //   productType,
-  //   shortDescription,
-  //   fullDescription,
-  //   ingredients,
-  //   additions,
-  //   components,
-  //   mainImage,
-  //   images,
-  //   reviews,
-  //   productCode,
-  //   producingCountry,
-  // } = prodObj;
-
   // const {
   //   pet,
   //   category,
@@ -160,7 +122,6 @@ export const ProductCard = () => {
 
   return (
     <ProductContainer>
-
       <div style={{ maxWidth: '736px' }}>
         <ImageContainer>
           <ProductDetailsCarousel id={id} />
@@ -182,19 +143,11 @@ export const ProductCard = () => {
         </div>
         <Reviews />
       </div>
-      <ImageContainer>
-        {/* <ProductDetailsCarousel id={id} /> */}
-      </ImageContainer>
-
 
       <CardContainer>
         <div className="prodName">
           <FlexBox>
-
             <BrandTitle>{brand}</BrandTitle>
-
-            <span>{product.brand}</span>
-
             <span>
               <Link
                 className="heartIcon"
@@ -205,15 +158,9 @@ export const ProductCard = () => {
             </span>
           </FlexBox>
 
-
           <ProductName>{productName}</ProductName>
           <ShortDescription>{shortDescription}</ShortDescription>
           <CarCodeWrapper>
-
-          <h1>{product.productName}</h1>
-          <p>{product.shortDescription}</p>
-          <FlexBox>
-
             <Rating className="reiting">
               <span>
                 <svg
@@ -235,7 +182,6 @@ export const ProductCard = () => {
               </span>
             </Rating>
 
-
             <CardCodeList>
               <CardCodeListItem>Код товару:{productCode}</CardCodeListItem>
               <CardCodeListItem>Країна-виробник: Франція</CardCodeListItem>
@@ -245,37 +191,22 @@ export const ProductCard = () => {
         {count > 0 ? (
           <AilabilityWrapper>
             <InavAilability>В наявності</InavAilability>
-
-            <span>Код товару:{product.productCode}</span>
-          </FlexBox>
-          <span>
-            Країна-виробник: Франція
-            {producingCountry}
-          </span>
-
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              viewBox="0 0 16 16"
+              fill="none"
+            >
+              <path
+                d="M11.4698 5.7851C11.5579 5.87333 11.6074 5.99294 11.6074 6.11765C11.6074 6.24235 11.5579 6.36196 11.4698 6.45019L7.07765 10.8424C6.98941 10.9305 6.86981 10.98 6.7451 10.98C6.62039 10.98 6.50079 10.9305 6.41255 10.8424L4.5302 8.96C4.44707 8.87079 4.40182 8.7528 4.40397 8.63089C4.40612 8.50897 4.45551 8.39265 4.54173 8.30643C4.62795 8.22021 4.74427 8.17082 4.86618 8.16867C4.9881 8.16652 5.10609 8.21177 5.1953 8.2949L6.7451 9.84392L10.8047 5.7851C10.8929 5.69697 11.0125 5.64747 11.1373 5.64747C11.262 5.64747 11.3816 5.69697 11.4698 5.7851ZM16 8C16 9.58225 15.5308 11.129 14.6518 12.4446C13.7727 13.7602 12.5233 14.7855 11.0615 15.391C9.59966 15.9965 7.99113 16.155 6.43928 15.8463C4.88743 15.5376 3.46197 14.7757 2.34315 13.6569C1.22433 12.538 0.462403 11.1126 0.153721 9.56072C-0.15496 8.00887 0.00346614 6.40034 0.608967 4.93853C1.21447 3.47672 2.23985 2.22729 3.55544 1.34824C4.87103 0.469192 6.41775 0 8 0C10.121 0.00249086 12.1544 0.846145 13.6541 2.3459C15.1539 3.84565 15.9975 5.87903 16 8ZM15.0588 8C15.0588 6.6039 14.6448 5.23914 13.8692 4.07833C13.0936 2.91751 11.9911 2.01276 10.7013 1.4785C9.41146 0.944232 7.99217 0.804443 6.62289 1.07681C5.25362 1.34918 3.99585 2.02146 3.00866 3.00866C2.02147 3.99585 1.34918 5.25361 1.07681 6.62289C0.804447 7.99217 0.944235 9.41146 1.4785 10.7013C2.01277 11.9911 2.91751 13.0936 4.07833 13.8692C5.23915 14.6448 6.6039 15.0588 8 15.0588C9.87148 15.0567 11.6657 14.3124 12.989 12.989C14.3124 11.6657 15.0567 9.87148 15.0588 8Z"
+                fill="#B2AB73"
+              />
+            </svg>
+          </AilabilityWrapper>
+        ) : (
+          <span>відсутній</span>
         )}
-        
-        // {/* {product.count > 0 ? (
-        //   <span>
-        //     <span>В наявності</span>
-
-        //     <svg
-        //       xmlns="http://www.w3.org/2000/svg"
-        //       width="16"
-        //       height="16"
-        //       viewBox="0 0 16 16"
-        //       fill="none"
-        //     >
-        //       <path
-        //         d="M11.4698 5.7851C11.5579 5.87333 11.6074 5.99294 11.6074 6.11765C11.6074 6.24235 11.5579 6.36196 11.4698 6.45019L7.07765 10.8424C6.98941 10.9305 6.86981 10.98 6.7451 10.98C6.62039 10.98 6.50079 10.9305 6.41255 10.8424L4.5302 8.96C4.44707 8.87079 4.40182 8.7528 4.40397 8.63089C4.40612 8.50897 4.45551 8.39265 4.54173 8.30643C4.62795 8.22021 4.74427 8.17082 4.86618 8.16867C4.9881 8.16652 5.10609 8.21177 5.1953 8.2949L6.7451 9.84392L10.8047 5.7851C10.8929 5.69697 11.0125 5.64747 11.1373 5.64747C11.262 5.64747 11.3816 5.69697 11.4698 5.7851ZM16 8C16 9.58225 15.5308 11.129 14.6518 12.4446C13.7727 13.7602 12.5233 14.7855 11.0615 15.391C9.59966 15.9965 7.99113 16.155 6.43928 15.8463C4.88743 15.5376 3.46197 14.7757 2.34315 13.6569C1.22433 12.538 0.462403 11.1126 0.153721 9.56072C-0.15496 8.00887 0.00346614 6.40034 0.608967 4.93853C1.21447 3.47672 2.23985 2.22729 3.55544 1.34824C4.87103 0.469192 6.41775 0 8 0C10.121 0.00249086 12.1544 0.846145 13.6541 2.3459C15.1539 3.84565 15.9975 5.87903 16 8ZM15.0588 8C15.0588 6.6039 14.6448 5.23914 13.8692 4.07833C13.0936 2.91751 11.9911 2.01276 10.7013 1.4785C9.41146 0.944232 7.99217 0.804443 6.62289 1.07681C5.25362 1.34918 3.99585 2.02146 3.00866 3.00866C2.02147 3.99585 1.34918 5.25361 1.07681 6.62289C0.804447 7.99217 0.944235 9.41146 1.4785 10.7013C2.01277 11.9911 2.91751 13.0936 4.07833 13.8692C5.23915 14.6448 6.6039 15.0588 8 15.0588C9.87148 15.0567 11.6657 14.3124 12.989 12.989C14.3124 11.6657 15.0567 9.87148 15.0588 8Z"
-        //         fill="#B2AB73"
-        //       />
-        //     </svg>
-        //   </AilabilityWrapper>
-        // ) : (
-        //   <span>відсутній</span>
-        // )} */}
-
 
         <form>
           <p>Обрати вагу</p>
@@ -333,33 +264,6 @@ export const ProductCard = () => {
             <SubmitButton type="button">Купити</SubmitButton>
           </CountContainer>
         </form>
-
-        <div
-          style={{
-            position: 'relative',
-            display: 'flex',
-            flexDirection: 'column',
-          }}
-        >
-          <span>Обрати вагу</span>
-          {/* <ul style={{ display: 'flex' }}>
-            {arr.map(({ _id, size }) => {
-              return (
-                <WeightListItem key={_id}>
-                  <WidthLink
-                    style={{ flexDirection: 'row' }}
-                    // className={id === Card.id ? 'active' : undefined}
-                    // onClick={() => changeCard(id)}
-                  >
-                    <span> {displaySize(size)} </span>
-                  </WidthLink>
-                </WeightListItem>
-              );
-            })}
-          </ul> */}
-        </div>
-        <span>Змінити кількість</span>
-
       </CardContainer>
     </ProductContainer>
   );
