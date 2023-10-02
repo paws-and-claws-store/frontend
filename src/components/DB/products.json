@@ -71,7 +71,11 @@
       "безазотисті екстрактивні речовини – 33,8%"
     ],
     "mainImage": "https://i.ibb.co/bX3cV2s/card2.png",
-    "images": [],
+    "images": [
+      "https://i.ibb.co/bX3cV2s/card2.png",
+      "https://i.ibb.co/bX3cV2s/card2.png",
+      "https://i.ibb.co/bX3cV2s/card2.png"
+    ],
     "favorite": false,
     "reviews": [],
     "productCode": "0048273517",
