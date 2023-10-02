@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link, Outlet, useParams } from 'react-router-dom';
 import catalog from '../DB/catalog.json';
 import products from '../DB/products.json';
+import Reviews from 'components/ProductDetailsCarousel/Reviews/Reviews';
 
 import { ProductDetailsCarousel } from 'components/ProductDetailsCarousel/ProductDetailsCarousel';
 import {
@@ -129,6 +130,7 @@ export const ProductCard = () => {
 
           <Outlet />
         </div>
+        <Reviews />
       </div>
 
       <CardContainer>
