@@ -1,5 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
+  BTNDec,
+  BTNInc,
   BoxCard,
   BrandNameSt,
   Button,
@@ -7,6 +9,7 @@ import {
   PriceBox,
   PriceSt,
   ProductNameSt,
+  QTYBox,
   Rating,
   ShortDiscriptionSt,
   SymbolCurrency,
@@ -16,74 +19,288 @@ import {
   Wrapper,
 } from './Card.styled';
 import { Link } from 'react-router-dom';
+import { HeartIcon } from 'components/Icons';
+import { useStateContext } from 'context/StateContext';
+import { displaySize } from 'helpers';
+import { CardList } from 'components';
+
 // import { HeartIcon } from 'components/Icons';
 
-export const Card = ({ el, groupItems }) => {
-  // console.log('groupItems:', groupItems);
-  // console.log('groupBy:', groupBy);
-  // console.log(el);
-  const [favourite, setFavourite] = useState(el.favourite);
-  const [heartIconClassname, setHeartIconClassname] = useState('');
+const LS_KEY = 'cartList';
+
+export const Card = ({ el, onClick }) => {
+  const { cartList, setCartList } = useStateContext();
+  const [
+    card,
+    // setCard
+  ] = useState(el);
+
+  const [elType, setElType] = useState(el.items[0]);
+
+  const [favourite, setFavourite] = useState(el.favourite || false);
+
+  const [count, setCount] = useState(null);
+
   const changeFavourite = () => {
-    return setFavourite(!favourite);
+    setFavourite(!favourite);
+  };
+
+  const changeElType = productCode => {
+    const newElType = card.items.find(el => el.productCode === productCode);
+    setElType(newElType);
+    setCount(null);
   };
 
   useEffect(() => {
-    if (favourite) {
-      setHeartIconClassname('active');
-    } else {
-      setHeartIconClassname('');
-    }
-  }, [favourite]);
+    const items = getCartLocalStorageItems();
 
-  const [
-    count,
-    // setCount
-  ] = useState(null);
+    if (items) {
+      setCartList(items);
+    }
+  }, [card._id, setCartList]);
+
+  useEffect(() => {
+    // card and card.id needs in dependencies section to initialize useffect when card and card.id have changes
+    setCartLocalStorageItems(cartList);
+  }, [card._id, cartList, count]);
+
+  useEffect(() => {
+    const productCode = elType.productCode;
+
+    const getCountProduct = data => {
+      const cartLocalStorageItems = getCartLocalStorageItems();
+
+      const indexProductLocalStorage = cartLocalStorageItems.findIndex(
+        item => item._id === card._id,
+      );
+      if (indexProductLocalStorage === -1) {
+        return;
+      }
+
+      const productCodetoUpdate = data;
+      const indexProductToUpd = cartLocalStorageItems[indexProductLocalStorage].items.findIndex(
+        item => item.productCode === productCodetoUpdate,
+      );
+      const cardItems = cartLocalStorageItems[indexProductLocalStorage].items;
+      const countOfProduct = cardItems[indexProductToUpd];
+      return countOfProduct.count;
+    };
+
+    const countProductCode = getCountProduct(productCode);
+    setCount(countProductCode);
+  }, [card._id, elType.productCode]);
+
+  const getCartLocalStorageItems = () => {
+    return JSON.parse(localStorage.getItem(LS_KEY));
+  };
+
+  const setCartLocalStorageItems = data => {
+    window.localStorage.setItem(LS_KEY, JSON.stringify(data));
+  };
+
+  const getPresentProductCode = () => {
+    return cartList
+      .flatMap(cart => cart.items)
+      .map(item => item.productCode)
+      .includes(elType.productCode);
+  };
+
+  const setCountToProduct = (countLSItems, data) => {
+    const productCodetoUpdate = elType.productCode;
+    const indexProductLocalStorageToUpdate = data.findIndex(item => item._id === card._id);
+    const indexProductToUpd = data[indexProductLocalStorageToUpdate].items.findIndex(
+      item => item.productCode === productCodetoUpdate,
+    );
+
+    const cardItems = data[indexProductLocalStorageToUpdate].items;
+
+    cardItems[indexProductToUpd] = { ...cardItems[indexProductToUpd], count: countLSItems };
+
+    return cardItems;
+  };
+
+  const changeCountInLocalStorageDecrementIncrementAndSet = (countLSItems, data) => {
+    const cardItems = setCountToProduct(countLSItems, data);
+    setCartList(prev => {
+      return prev.map(item => {
+        if (item._id === card._id) {
+          return { ...item, items: cardItems };
+        }
+
+        return item;
+      });
+    });
+  };
+
+  const changeCountBuyLocalStorageTrueCode = data => {
+    const countLSItems = 1;
+    const indexCard = data.findIndex(item => item._id === card._id);
+    const cardItems = setCountToProduct(countLSItems, data);
+
+    if (indexCard) {
+      data[indexCard] = {
+        ...data[indexCard],
+        items: cardItems,
+      };
+    }
+
+    setCartLocalStorageItems(data);
+
+    setCartList(prevState => {
+      return [...(getCartLocalStorageItems() || [])];
+    });
+    setCount(1);
+  };
+
+  const changeCountBuyLocalStorageFalseCode = data => {
+    const productCodetoUpdate = elType.productCode;
+    const indexProductToUpd = card.items.findIndex(
+      item => item.productCode === productCodetoUpdate,
+    );
+
+    const cardItems = card.items;
+    cardItems[indexProductToUpd] = { ...cardItems[indexProductToUpd], count: 1 };
+
+    const indexCard = data.findIndex(item => item._id === card._id);
+
+    if (indexCard !== -1) {
+      data[indexCard] = {
+        ...data[indexCard],
+        items: cardItems,
+      };
+    }
+
+    const cartArray = [...data, { ...card }];
+
+    setCartLocalStorageItems(cartArray);
+
+    setCartList(prevState => {
+      return [...(getCartLocalStorageItems() || [])];
+    });
+
+    setCount(1);
+    return;
+  };
+
+  const handleClick = e => {
+    const presentProductCode = getPresentProductCode();
+
+    if (e.currentTarget.name === 'increment') {
+      setCount(prevState => prevState + 1);
+      let countIncrement = count + 1;
+
+      if (presentProductCode) {
+        const cartLocalStorageItems = getCartLocalStorageItems();
+        changeCountInLocalStorageDecrementIncrementAndSet(countIncrement, cartLocalStorageItems);
+      }
+    }
+    if (e.currentTarget.name === 'decrement') {
+      let countDecrement = count - 1;
+      setCount(prevState => prevState - 1);
+      if (presentProductCode) {
+        const cartLocalStorageItems = getCartLocalStorageItems();
+
+        changeCountInLocalStorageDecrementIncrementAndSet(countDecrement, cartLocalStorageItems);
+      }
+    }
+    if (e.currentTarget.name === 'buy') {
+      if (presentProductCode) {
+        const cartLocalStorageItems = getCartLocalStorageItems();
+        changeCountBuyLocalStorageTrueCode(cartLocalStorageItems);
+      }
+
+      if (!presentProductCode) {
+        const cartLocalStorageItems = getCartLocalStorageItems();
+        changeCountBuyLocalStorageFalseCode(cartLocalStorageItems);
+      }
+    }
+  };
+
+  const handleChange = e => {
+    if (!e.target.validity.valid) {
+      return;
+    }
+
+    if (e.target.validity.valid) {
+      if (e.target.value === '') {
+        setCount('');
+        return;
+      }
+
+      setCount(Number(e.target.value));
+    }
+  };
+
+  const onSubmitCardHandler = e => {
+    e.preventDefault();
+    const presentProductCode = getPresentProductCode();
+
+    if (presentProductCode) {
+      const cartLocalStorageItems = getCartLocalStorageItems();
+
+      changeCountInLocalStorageDecrementIncrementAndSet(count, cartLocalStorageItems);
+    }
+  };
 
   return (
     <BoxCard>
       <WeightList>
-        {groupItems.map(({ id, weight }) => {
-          return (
-            <WeightListItem key={id}>
-              <WidthLink>{weight}</WidthLink>
-            </WeightListItem>
-          );
-        })}
+        {el.items.length > 0 &&
+          el.items.map(({ size, productCode }) => {
+            // console.log('el.types', el.types[0]);
+            return (
+              <WeightListItem key={productCode}>
+                <WidthLink
+                  className={productCode === elType.productCode ? 'active' : undefined}
+                  // onClick={() => changeCard(id)}
+                  onClick={() => changeElType(productCode)}
+                >
+                  {displaySize(size)}
+                </WidthLink>
+              </WeightListItem>
+            );
+          })}
       </WeightList>
 
       <Link className="heartIcon" onClick={changeFavourite}>
-        {/* <HeartIcon isActive={favourite} /> */}
-        <svg
-          className={heartIconClassname}
-          xmlns="http://www.w3.org/2000/svg"
-          width="32"
-          height="32"
-          viewBox="0 0 32 32"
-          fill="current"
-        >
-          <path
-            d="M26.2105 7.53949C25.0658 6.39713 23.5151 5.75483 21.8979 5.75319C20.2808 5.75156 18.7288 6.39072 17.5818 7.53076L16.0027 9.00086L14.4235 7.53076C13.2774 6.3861 11.7235 5.74361 10.1037 5.74463C8.48387 5.74565 6.9308 6.39011 5.78613 7.53622C4.64147 8.68233 3.99898 10.2362 4 11.856C4.00102 13.4759 4.64548 15.0289 5.79159 16.1736L15.537 26.0608C15.5979 26.1224 15.6704 26.1714 15.7503 26.2048C15.8302 26.2382 15.916 26.2554 16.0027 26.2554C16.0893 26.2554 16.1751 26.2382 16.255 26.2048C16.335 26.1714 16.4075 26.1224 16.4683 26.0608L26.2105 16.1779C26.7778 15.6108 27.2279 14.9375 27.5349 14.1964C27.842 13.4553 28 12.6609 28 11.8587C28 11.0565 27.842 10.2622 27.5349 9.52108C27.2279 8.77998 26.7778 8.10662 26.2105 7.53949ZM25.2813 15.2553L16.0027 24.6692L6.72076 15.2521C5.82609 14.3511 5.32496 13.1323 5.32713 11.8627C5.32929 10.593 5.83458 9.3759 6.73231 8.47802C7.63004 7.58015 8.84703 7.07467 10.1167 7.0723C11.3864 7.06993 12.6053 7.57087 13.5063 8.46539C13.5116 8.47104 13.5175 8.47616 13.5238 8.48066L15.5566 10.3739C15.6777 10.4867 15.8371 10.5495 16.0027 10.5495C16.1682 10.5495 16.3276 10.4867 16.4487 10.3739L18.4815 8.47956C18.4879 8.47507 18.4937 8.46995 18.499 8.4643C18.9443 8.01638 19.4736 7.66077 20.0566 7.41787C20.6396 7.17496 21.2648 7.04953 21.8964 7.04877C22.5279 7.04801 23.1534 7.17194 23.737 7.41345C24.3206 7.65495 24.8508 8.00929 25.2971 8.45613C25.7434 8.90298 26.0972 9.43354 26.338 10.0174C26.5789 10.6012 26.7021 11.2269 26.7006 11.8585C26.6992 12.49 26.573 13.1151 26.3295 13.6978C26.0859 14.2806 25.7297 14.8095 25.2813 15.2542V15.2553Z"
-            fill=""
-          />
-        </svg>
+        {favourite ? (
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="32"
+            height="32"
+            viewBox="0 0 32 32"
+            fill="none"
+          >
+            <path
+              d="M28 11.9322C28.0018 12.7484 27.8418 13.5569 27.5292 14.3108C27.2166 15.0648 26.7575 15.7493 26.1787 16.3247L16.6116 26.0332C16.5319 26.1142 16.4368 26.1785 16.332 26.2224C16.2271 26.2663 16.1146 26.2889 16.001 26.2889C15.8873 26.2889 15.7748 26.2663 15.6699 26.2224C15.5651 26.1785 15.47 26.1142 15.3903 26.0332L5.82322 16.3247C4.65684 15.1597 4.00101 13.5791 4 11.9306C3.999 10.2821 4.6529 8.70073 5.81786 7.53434C6.98283 6.36796 8.56342 5.71213 10.2119 5.71112C11.8604 5.71012 13.4418 6.36402 14.6082 7.52899L16.001 8.83067L17.4033 7.5247C18.2738 6.65862 19.3812 6.06982 20.586 5.83266C21.7908 5.59549 23.0388 5.72058 24.1725 6.19214C25.3063 6.66369 26.2749 7.46058 26.9561 8.48218C27.6373 9.50378 28.0005 10.7043 28 11.9322Z"
+              fill="#E68314"
+            />
+          </svg>
+        ) : (
+          <HeartIcon />
+        )}
       </Link>
 
-      <Link to={'/productCard'}>
-        <Image src={el.image} alt={el.foodName} />
+      <Link
+        to={`/${card._id}`}
+        // to={`${elType.productCode}`}
+      >
+        <Image src={card.mainImage} alt={card.productName} />
       </Link>
       <div>
         <div>
           <div>
             <Link to={'/brands'}>
-              <BrandNameSt>{el.brand}</BrandNameSt>
+              <BrandNameSt>{card.brand}</BrandNameSt>
             </Link>
-            <Link to={'/productCard'}>
+            <Link
+              to={`/${card._id}`}
+              // to={`${elType.productCode}`}
+            >
               <div>
-                <ProductNameSt>{el.foodName}</ProductNameSt>
+                <ProductNameSt>{card.productName}</ProductNameSt>
               </div>
-              <ShortDiscriptionSt>{el.shortDescription}</ShortDiscriptionSt>
+              <ShortDiscriptionSt>{card.shortDescription}</ShortDiscriptionSt>
             </Link>
           </div>
           <Rating className="reiting">
@@ -108,37 +325,49 @@ export const Card = ({ el, groupItems }) => {
           </Rating>
         </div>
         <Wrapper>
-          {el.sale ? (
+          {elType.sale ? (
             <PriceBox>
               <PriceSt>
-                {el.sale.toFixed(2)}
+                {elType.sale.toFixed(2)}
                 <SymbolCurrency>₴</SymbolCurrency>
               </PriceSt>
               <PriceSt className="line-through-text">
-                {el.price.toFixed(2)}
+                {elType.price.toFixed(2)}
                 <SymbolCurrency>₴</SymbolCurrency>
               </PriceSt>
             </PriceBox>
           ) : (
             <PriceBox>
               <PriceSt>
-                {el.price.toFixed(2)}
+                {elType.price.toFixed(2)}
                 <SymbolCurrency>₴</SymbolCurrency>
               </PriceSt>
             </PriceBox>
           )}
-          {!count ? (
-            <Button>Обрати</Button>
+          {!count && count !== '' ? (
+            <Button name="buy" disabled={false} onClick={handleClick}>
+              Купити
+            </Button>
           ) : (
-            <div>
-              <button>
+            <QTYBox onSubmit={onSubmitCardHandler}>
+              <BTNDec name="decrement" onClick={handleClick} type="button">
                 <span>-</span>
-              </button>
-              <input type="text" value={1} />
-              <button>
+              </BTNDec>
+              <input
+                id={card._id}
+                type="text"
+                minLength={1}
+                maxLength={3}
+                size={3}
+                pattern="[0-9]*"
+                onChange={handleChange}
+                value={count}
+              />
+              <BTNInc name="increment" onClick={handleClick} type="button">
                 <span>+</span>
-              </button>
-            </div>
+              </BTNInc>
+              <button type="submit" style={{ display: 'none' }}></button>
+            </QTYBox>
           )}
         </Wrapper>
       </div>

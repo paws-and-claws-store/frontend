@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 import { Link, NavLink } from 'react-router-dom';
+import { theme } from 'styles';
 
 export const HeaderStyled = styled.header`
   /* outline: 1px solid black; */
@@ -11,7 +12,7 @@ export const HeaderStyled = styled.header`
   top: 0;
   left: 50%;
   transform: translateX(-50%);
-  z-index: 100;
+  z-index: 5;
 
   background-color: ${props => props.theme.colors.mainBackground};
 
@@ -102,12 +103,28 @@ export const LogoWrapper = styled.div`
 
 export const LinkWrapper = styled.div`
   display: flex;
-  gap: ${props => props.theme.spacing.step * 3}px;
+  gap: ${theme.spacing.step * 3}px;
   /* align-items: center; */
   /* justify-content: flex-end; */
   /* gap: ${props => props.theme.spacing.step * 5}px; */
 
   /* margin-left: ${props => props.theme.spacing.step * 7}px; */
+`;
+
+export const CountContainer = styled.div`
+  position: relative;
+`;
+
+export const Count = styled.span`
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 100%; /* 12px */
+
+  position: absolute;
+  top: 4px;
+  right: 7px;
+  color: ${theme.colors.orange};
 `;
 
 export const LinkItemWrapper = styled.div`

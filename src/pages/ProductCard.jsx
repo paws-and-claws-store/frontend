@@ -1,5 +1,11 @@
+
 import React, { useState } from 'react';
 import { Link, Outlet, useParams } from 'react-router-dom';
+
+import React, { useEffect, useState } from 'react';
+
+// import { Box } from './Home.styled';
+
 import catalog from '../DB/catalog.json';
 import products from '../DB/products.json';
 import Reviews from 'components/ProductDetailsCarousel/Reviews/Reviews';
@@ -37,10 +43,15 @@ import {
 
 import { Rating, WeightList, WeightListItem, WidthLink } from 'components';
 import { displaySize, groupBy } from 'helpers';
+import { fetchOneProduct } from 'services/api';
 
 export const ProductCard = () => {
   const { id } = useParams();
-  const obj = catalog.find(el => Number(el.id) === Number(id));
+  console.log('id:', id);
+  const [product, setProduct] = useState({});
+  const [item, setItem] = useState({});
+  const [favorite, setFavorite] = useState(false);
+
 
   const [quintity, setQuintity] = useState(0);
 
@@ -62,12 +73,27 @@ export const ProductCard = () => {
     return 0;
   });
 
+  useEffect(() => {
+    fetchOneProduct(id).then(res => {
+      console.log('res:', res.items[0]);
+
+      setProduct({ ...res });
+      setItem({ ...res.items[0] });
+    });
+  }, [id]);
+  // const obj = catalog.find(el => Number(el.id) === Number(id));
+
+  // const prodObj = products.find(el => Number(el.id) === Number(id));
+  // const prodObj = products[0];
+
+
   const [selectedValue, setSelectedValue] = useState(null);
   console.log('selectedValue:', selectedValue);
 
   const handleRadioChange = value => {
     setSelectedValue(value);
   };
+
 
   const {
     _id,
@@ -92,6 +118,30 @@ export const ProductCard = () => {
     producingCountry,
   } = prodObj;
 
+  // console.table(obj);
+  // const {
+  //   _id,
+  //   productName,
+  //   pet,
+  //   category,
+  //   brand,
+  //   size,
+  //   price,
+  //   sale,
+  //   count,
+  //   productType,
+  //   shortDescription,
+  //   fullDescription,
+  //   ingredients,
+  //   additions,
+  //   components,
+  //   mainImage,
+  //   images,
+  //   reviews,
+  //   productCode,
+  //   producingCountry,
+  // } = prodObj;
+
   // const {
   //   pet,
   //   category,
@@ -111,6 +161,7 @@ export const ProductCard = () => {
 
   return (
     <ProductContainer>
+
       <div style={{ maxWidth: '736px' }}>
         <ImageContainer>
           <ProductDetailsCarousel id={id} />
@@ -132,11 +183,19 @@ export const ProductCard = () => {
         </div>
         <Reviews />
       </div>
+      <ImageContainer>
+        {/* <ProductDetailsCarousel id={id} /> */}
+      </ImageContainer>
+
 
       <CardContainer>
         <div className="prodName">
           <FlexBox>
+
             <BrandTitle>{brand}</BrandTitle>
+
+            <span>{product.brand}</span>
+
             <span>
               <Link
                 className="heartIcon"
@@ -147,9 +206,15 @@ export const ProductCard = () => {
             </span>
           </FlexBox>
 
+
           <ProductName>{productName}</ProductName>
           <ShortDescription>{shortDescription}</ShortDescription>
           <CarCodeWrapper>
+
+          <h1>{product.productName}</h1>
+          <p>{product.shortDescription}</p>
+          <FlexBox>
+
             <Rating className="reiting">
               <span>
                 <svg
@@ -171,6 +236,7 @@ export const ProductCard = () => {
               </span>
             </Rating>
 
+
             <CardCodeList>
               <CardCodeListItem>Код товару:{productCode}</CardCodeListItem>
               <CardCodeListItem>Країна-виробник: Франція</CardCodeListItem>
@@ -180,6 +246,18 @@ export const ProductCard = () => {
         {count > 0 ? (
           <AilabilityWrapper>
             <InavAilability>В наявності</InavAilability>
+
+            <span>Код товару:{product.productCode}</span>
+          </FlexBox>
+          <span>
+            Країна-виробник: Франція
+            {/* {producingCountry} */}
+          </span>
+        </div>
+        {/* {product.count > 0 ? (
+          <span>
+            <span>В наявності</span>
+
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"
@@ -195,7 +273,8 @@ export const ProductCard = () => {
           </AilabilityWrapper>
         ) : (
           <span>відсутній</span>
-        )}
+        )} */}
+
 
         <form>
           <p>Обрати вагу</p>
@@ -253,6 +332,33 @@ export const ProductCard = () => {
             <SubmitButton type="button">Купити</SubmitButton>
           </CountContainer>
         </form>
+
+        <div
+          style={{
+            position: 'relative',
+            display: 'flex',
+            flexDirection: 'column',
+          }}
+        >
+          <span>Обрати вагу</span>
+          {/* <ul style={{ display: 'flex' }}>
+            {arr.map(({ _id, size }) => {
+              return (
+                <WeightListItem key={_id}>
+                  <WidthLink
+                    style={{ flexDirection: 'row' }}
+                    // className={id === Card.id ? 'active' : undefined}
+                    // onClick={() => changeCard(id)}
+                  >
+                    <span> {displaySize(size)} </span>
+                  </WidthLink>
+                </WeightListItem>
+              );
+            })}
+          </ul> */}
+        </div>
+        <span>Змінити кількість</span>
+
       </CardContainer>
     </ProductContainer>
   );
