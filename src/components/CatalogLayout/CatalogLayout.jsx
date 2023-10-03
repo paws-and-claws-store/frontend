@@ -128,50 +128,45 @@ export const CatalogLayout = () => {
             </CategoryList>
           )}
         </AsideCatalog>
-        <WrapperCatalog>
+
+        <WrapperCatalog className="WrapperCatalog">
           <BoxHiden className={active ? 'active' : undefined}>
             <ul className="_categories">
               {active &&
                 categories.map(({ code, ua, _id, _variants, _pet }, index) => {
-                  // console.log('categories:', categories);
-
                   return (
-                    <>
-                      <li key={index} className=" _categories-item">
-                        <Category
-                          to={`${_pet}/${_id}`}
-                          onClick={() => {
-                            setActive('');
-                            document.getElementById('hidden').style.visibility =
-                              'hidden';
-                          }}
-                        >
-                          {ua}
-                        </Category>
-                        <ul className="_variants">
-                          {_variants.map(
-                            ({ _id, ua, code, _pet, _category }) => {
-                              // console.log('_variants:', _variants);
-                              return (
-                                <li key={_id} className="_variants-item">
-                                  <FoodType
-                                    to={`${_pet}/${_category}/${_id}`}
-                                    onClick={() => {
-                                      setActive('');
-                                      document.getElementById(
-                                        'hidden',
-                                      ).style.visibility = 'hidden';
-                                    }}
-                                  >
-                                    {ua}
-                                  </FoodType>
-                                </li>
-                              );
-                            },
-                          )}
-                        </ul>
-                      </li>
-                    </>
+                    <li key={_id} className="_categories-item">
+                      <Category
+                        className="Category"
+                        to={`${_pet}/${_id}`}
+                        onClick={() => {
+                          setActive('');
+                          document.getElementById('hidden').style.visibility =
+                            'hidden';
+                        }}
+                      >
+                        {ua}
+                      </Category>
+                      <ul className="_variants">
+                        {_variants.map(({ _id, ua, code, _pet, _category }) => {
+                          return (
+                            <li key={_id} className="_variants-item">
+                              <FoodType
+                                to={`${_pet}/${_category}/${_id}`}
+                                onClick={() => {
+                                  setActive('');
+                                  document.getElementById(
+                                    'hidden',
+                                  ).style.visibility = 'hidden';
+                                }}
+                              >
+                                {ua}
+                              </FoodType>
+                            </li>
+                          );
+                        })}
+                      </ul>
+                    </li>
                   );
                 })}
             </ul>

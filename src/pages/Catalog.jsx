@@ -11,7 +11,6 @@ export const Catalog = () => {
     async function fetchData() {
       // You can await here
       const response = await fetchAllProducts();
-      // console.log('response:', response);
       setProductsList([...response.docs]);
     }
     fetchData();

@@ -14,8 +14,7 @@ export const ProductType = () => {
     async function fetchData() {
       // You can await here
       const response = await fetchProductsByOneProductType(productType);
-      // console.log('response:', response);
-      setProductsList([...response.docs]);
+      setProductsList(response.docs);
     }
     fetchData();
   }, [productType]);
