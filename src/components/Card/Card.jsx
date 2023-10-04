@@ -22,7 +22,7 @@ import { Link } from 'react-router-dom';
 import { HeartIcon } from 'components/Icons';
 import { useStateContext } from 'context/StateContext';
 import { displaySize } from 'helpers';
-import { CardList } from 'components';
+// import { CardList } from 'components';
 
 // import { HeartIcon } from 'components/Icons';
 
@@ -78,9 +78,9 @@ export const Card = ({ el, onClick }) => {
       }
 
       const productCodetoUpdate = data;
-      const indexProductToUpd = cartLocalStorageItems[indexProductLocalStorage].items.findIndex(
-        item => item.productCode === productCodetoUpdate,
-      );
+      const indexProductToUpd = cartLocalStorageItems[
+        indexProductLocalStorage
+      ].items.findIndex(item => item.productCode === productCodetoUpdate);
       const cardItems = cartLocalStorageItems[indexProductLocalStorage].items;
       const countOfProduct = cardItems[indexProductToUpd];
       return countOfProduct.count;
@@ -107,19 +107,27 @@ export const Card = ({ el, onClick }) => {
 
   const setCountToProduct = (countLSItems, data) => {
     const productCodetoUpdate = elType.productCode;
-    const indexProductLocalStorageToUpdate = data.findIndex(item => item._id === card._id);
-    const indexProductToUpd = data[indexProductLocalStorageToUpdate].items.findIndex(
-      item => item.productCode === productCodetoUpdate,
+    const indexProductLocalStorageToUpdate = data.findIndex(
+      item => item._id === card._id,
     );
+    const indexProductToUpd = data[
+      indexProductLocalStorageToUpdate
+    ].items.findIndex(item => item.productCode === productCodetoUpdate);
 
     const cardItems = data[indexProductLocalStorageToUpdate].items;
 
-    cardItems[indexProductToUpd] = { ...cardItems[indexProductToUpd], count: countLSItems };
+    cardItems[indexProductToUpd] = {
+      ...cardItems[indexProductToUpd],
+      count: countLSItems,
+    };
 
     return cardItems;
   };
 
-  const changeCountInLocalStorageDecrementIncrementAndSet = (countLSItems, data) => {
+  const changeCountInLocalStorageDecrementIncrementAndSet = (
+    countLSItems,
+    data,
+  ) => {
     const cardItems = setCountToProduct(countLSItems, data);
     setCartList(prev => {
       return prev.map(item => {
@@ -159,7 +167,10 @@ export const Card = ({ el, onClick }) => {
     );
 
     const cardItems = card.items;
-    cardItems[indexProductToUpd] = { ...cardItems[indexProductToUpd], count: 1 };
+    cardItems[indexProductToUpd] = {
+      ...cardItems[indexProductToUpd],
+      count: 1,
+    };
 
     const indexCard = data.findIndex(item => item._id === card._id);
 
@@ -191,7 +202,10 @@ export const Card = ({ el, onClick }) => {
 
       if (presentProductCode) {
         const cartLocalStorageItems = getCartLocalStorageItems();
-        changeCountInLocalStorageDecrementIncrementAndSet(countIncrement, cartLocalStorageItems);
+        changeCountInLocalStorageDecrementIncrementAndSet(
+          countIncrement,
+          cartLocalStorageItems,
+        );
       }
     }
     if (e.currentTarget.name === 'decrement') {
@@ -200,7 +214,10 @@ export const Card = ({ el, onClick }) => {
       if (presentProductCode) {
         const cartLocalStorageItems = getCartLocalStorageItems();
 
-        changeCountInLocalStorageDecrementIncrementAndSet(countDecrement, cartLocalStorageItems);
+        changeCountInLocalStorageDecrementIncrementAndSet(
+          countDecrement,
+          cartLocalStorageItems,
+        );
       }
     }
     if (e.currentTarget.name === 'buy') {
@@ -238,7 +255,10 @@ export const Card = ({ el, onClick }) => {
     if (presentProductCode) {
       const cartLocalStorageItems = getCartLocalStorageItems();
 
-      changeCountInLocalStorageDecrementIncrementAndSet(count, cartLocalStorageItems);
+      changeCountInLocalStorageDecrementIncrementAndSet(
+        count,
+        cartLocalStorageItems,
+      );
     }
   };
 
@@ -251,7 +271,9 @@ export const Card = ({ el, onClick }) => {
             return (
               <WeightListItem key={productCode}>
                 <WidthLink
-                  className={productCode === elType.productCode ? 'active' : undefined}
+                  className={
+                    productCode === elType.productCode ? 'active' : undefined
+                  }
                   // onClick={() => changeCard(id)}
                   onClick={() => changeElType(productCode)}
                 >

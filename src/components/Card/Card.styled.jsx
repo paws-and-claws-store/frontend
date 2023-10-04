@@ -119,13 +119,15 @@ export const PriceBox = styled.div`
   }
 `;
 
-export const PriceSt = styled.span`
+export const PriceSt = styled.p`
+  display: flex;
   color: ${props => props.theme.colors.orange};
   /* text-transform: uppercase; */
   /* font-family: 'rawline', sans-serif; */
   font-weight: ${props => props.theme.fontWeight.SemiBold};
   font-size: ${props => props.theme.fontSizes.l};
   line-height: ${props => props.theme.lineHeight.l};
+  gap: 0;
 `;
 
 export const SymbolCurrency = styled.span`
