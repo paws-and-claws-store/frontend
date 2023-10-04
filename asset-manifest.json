@@ -1,18 +1,19 @@
 {
   "files": {
-    "main.css": "/frontend/static/css/main.26377fa9.css",
-    "main.js": "/frontend/static/js/main.27223670.js",
+    "main.css": "/frontend/static/css/main.8496298e.css",
+    "main.js": "/frontend/static/js/main.79df2804.js",
     "static/media/banner4.jpg": "/frontend/static/media/banner4.7a876d5aa186f46b1feb.jpg",
     "static/media/banner2.jpg": "/frontend/static/media/banner2.3a5675a42a7b51b2f40a.jpg",
     "static/media/banner1.jpg": "/frontend/static/media/banner1.65871deedd2d4b6441fb.jpg",
     "static/media/banner5.jpg": "/frontend/static/media/banner5.d8668b1acde71afbcae7.jpg",
     "static/media/banner3.jpg": "/frontend/static/media/banner3.4aa0285657808a8c443c.jpg",
+    "static/media/HeartStraight.svg": "/frontend/static/media/HeartStraight.cd67c445adf94d3691f02e9637f8d002.svg",
     "index.html": "/frontend/index.html",
-    "main.26377fa9.css.map": "/frontend/static/css/main.26377fa9.css.map",
-    "main.27223670.js.map": "/frontend/static/js/main.27223670.js.map"
+    "main.8496298e.css.map": "/frontend/static/css/main.8496298e.css.map",
+    "main.79df2804.js.map": "/frontend/static/js/main.79df2804.js.map"
   },
   "entrypoints": [
-    "static/css/main.26377fa9.css",
-    "static/js/main.27223670.js"
+    "static/css/main.8496298e.css",
+    "static/js/main.79df2804.js"
   ]
 }
