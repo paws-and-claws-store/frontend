@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Link, Outlet, useParams } from 'react-router-dom';
-import catalog from '../DB/catalog.json';
-import products from '../DB/products.json';
 import Reviews from 'components/ProductDetailsCarousel/Reviews/Reviews';
 import { fetchOneProduct } from 'services/api';
 import { ProductDetailsCarousel } from 'components/ProductDetailsCarousel/ProductDetailsCarousel';
@@ -35,96 +33,43 @@ import {
   CustomNavLink,
 } from './ProductCard.styled';
 
-import { Rating, WeightList, WeightListItem, WidthLink } from 'components';
-import { displaySize, groupBy } from 'helpers';
+import { Rating } from 'components';
 
 export const ProductCard = () => {
+  const { id } = useParams();
+  const [product, setProduct] = useState({});
+  console.log('product:', product);
+
   useEffect(() => {
     fetchOneProduct(id).then(res => {
-      console.log('res:', res.items[0]);
-
       setProduct({ ...res });
-      setItem({ ...res.items[0] });
     });
   }, [id]);
-
-  const { id } = useParams();
-  const [item, setItem] = useState({});
-  const [product, setProduct] = useState({});
-  const obj = catalog.find(el => Number(el.id) === Number(id));
 
   const [quintity, setQuintity] = useState(0);
 
   const increment = () => setQuintity(prev => (prev += 1));
   const decrement = () => setQuintity(prev => (prev -= 1));
 
-  // const prodObj = products.find(el => Number(el.id) === Number(id));
-  const prodObj = products[0];
-  console.log('prodObj:', prodObj);
-
   const [favorite, setFavorite] = useState(false);
-  const arr = products.sort((a, b) => {
-    if (a.weight < b.weight) {
-      return 1;
-    }
-    if (a.weight > b.weight) {
-      return -1;
-    }
-    return 0;
-  });
 
   const [selectedValue, setSelectedValue] = useState(null);
-  console.log('selectedValue:', selectedValue);
 
   const handleRadioChange = value => {
     setSelectedValue(value);
   };
 
-  const {
-    _id,
-    productName,
-    pet,
-    category,
-    brand,
-    size,
-    price,
-    sale,
-    count,
-    productType,
-    shortDescription,
-    fullDescription,
-    ingredients,
-    additions,
-    components,
-    mainImage,
-    images,
-    reviews,
-    productCode,
-    producingCountry,
-  } = prodObj;
+  const { brand, productName, shortDescription, _country, items } = product;
 
-  // const {
-  //   pet,
-  //   category,
-  //   foodType,
-  //   favourite,
-  //   image,
-  //   brand,
-  //   foodName,
-  //   shortDescription,
-  //   weight,
-  //   price,
-  //   sale,
-  //   fullDescription,
-  //   productId,
-  //   country,
-  // } = obj;
+  const inStock = items && items.some(el => el.count > 0);
+
+  const arr = items && items.sort();
 
   return (
     <ProductContainer>
       <div style={{ maxWidth: '736px' }}>
         <ImageContainer>
-          <ProductDetailsCarousel id={id} />
+          <ProductDetailsCarousel id={id} image={product.mainImage} />
         </ImageContainer>
         <div>
           <InfoLinkList>
@@ -183,12 +128,14 @@ export const ProductCard = () => {
             </Rating>
 
             <CardCodeList>
-              <CardCodeListItem>Код товару:{productCode}</CardCodeListItem>
-              <CardCodeListItem>Країна-виробник: Франція</CardCodeListItem>
+              <CardCodeListItem>Код товару:</CardCodeListItem>
+              <CardCodeListItem>
+                Країна-виробник: {_country && _country.ua}
+              </CardCodeListItem>
             </CardCodeList>
           </CarCodeWrapper>
         </div>
-        {count > 0 ? (
+        {inStock > 0 ? (
           <AilabilityWrapper>
             <InavAilability>В наявності</InavAilability>
             <svg
@@ -211,7 +158,7 @@ export const ProductCard = () => {
         <form>
           <p>Обрати вагу</p>
           <RadioBtnList>
-            {arr.map(({ _id, size }) => (
+            {arr?.map(({ _id, size }) => (
               <li key={_id}>
                 <RadioLabel
                   style={

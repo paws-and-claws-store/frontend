@@ -6,24 +6,7 @@ import product from '../../DB/products.json';
 import { useParams } from 'react-router-dom';
 import ImageGallery from 'react-image-gallery';
 
-export const ProductDetailsCarousel = ({ id }) => {
-  const obj = product.find(el => el._id === id);
-
-  const images = [
-    {
-      original: 'https://picsum.photos/id/1018/1000/600/',
-      thumbnail: 'https://picsum.photos/id/1018/250/150/',
-    },
-    {
-      original: 'https://picsum.photos/id/1015/1000/600/',
-      thumbnail: 'https://picsum.photos/id/1015/250/150/',
-    },
-    {
-      original: 'https://picsum.photos/id/1019/1000/600/',
-      thumbnail: 'https://picsum.photos/id/1019/250/150/',
-    },
-  ];
-
+export const ProductDetailsCarousel = ({ id, image }) => {
   return (
     <div className="text-white text-[20px] w-full max-w-[300px] mx-auto sticky top-[50px]">
       <Carousel
@@ -35,12 +18,12 @@ export const ProductDetailsCarousel = ({ id }) => {
         verticalSwipe="standart"
         axis="horizontal"
       >
-        <img src={obj.mainImage} />
-        <img src={obj.mainImage} />
-        <img src={obj.mainImage} />
-        <img src={obj.mainImage} />
-        <img src={obj.mainImage} />
-        <img src={obj.mainImage} />
+        <img src={image} />
+        <img src={image} />
+        <img src={image} />
+        <img src={image} />
+        <img src={image} />
+        <img src={image} />
       </Carousel>
     </div>
   );
