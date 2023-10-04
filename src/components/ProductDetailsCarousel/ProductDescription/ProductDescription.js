@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import products from '../../DB/products.json';
+// import products from '../../DB/products.json';
 import { DescriptionContainer, ReadAllBtn } from './ProductDescription.styled';
 
 const ProductDescription = () => {
