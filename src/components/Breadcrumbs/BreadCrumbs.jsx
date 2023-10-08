@@ -31,20 +31,21 @@ export default function Breadcrumbs() {
     currentLink += `/${crumb}`;
 
     const localNameCrumb = pathNameLocalization.find(name => name.code === crumb);
-
-    // const fetch = fetchAllPets().then(data => {
-    //   console.log('data :>> ', data);
-    // });
-
-    // console.log('stateBreadcrumb :>> ', stateBreadcrumb);
     let renderToPage;
     const stateBreadCrumbNameCrumb = stateBreadcrumb.find(name => name._id === crumb);
     // console.log('stateBreadCrumbNameCrumb :>> ', stateBreadCrumbNameCrumb);
+    // console.log('stateBreadcrumb :>> ', stateBreadcrumb);
 
-    if (stateBreadCrumbNameCrumb) {
+    if (stateBreadCrumbNameCrumb === undefined) {
+      return null;
+    }
+
+    if (stateBreadCrumbNameCrumb && stateBreadCrumbNameCrumb[languageSite]) {
       renderToPage = localNameCrumb
         ? localNameCrumb[languageSite]
         : stateBreadCrumbNameCrumb[languageSite];
+    } else if (stateBreadCrumbNameCrumb?._id === crumb) {
+      renderToPage = stateBreadCrumbNameCrumb['productName'];
     } else {
       renderToPage = localNameCrumb ? localNameCrumb[languageSite] : crumb;
     }

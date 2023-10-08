@@ -34,17 +34,27 @@ import {
 } from './ProductCard.styled';
 
 import { Rating } from 'components';
+import { useStateContext } from 'context/StateContext';
+import Loader from 'components/Loader/Loader';
 
 export const ProductCard = () => {
   const { id } = useParams();
   const [product, setProduct] = useState({});
   console.log('product:', product);
+  const { setStateBreadcrumb } = useStateContext();
 
   useEffect(() => {
     fetchOneProduct(id).then(res => {
       setProduct({ ...res });
+
+      setStateBreadcrumb(prevState => {
+        const dirtyArray = [...prevState, res];
+        const uniqueObjArray = [...new Map(dirtyArray.map(item => [item['_id'], item])).values()];
+        // console.log('uniqueObjArray :>> ', uniqueObjArray);
+        return uniqueObjArray;
+      });
     });
-  }, [id]);
+  }, [id, setStateBreadcrumb]);
 
   const [quintity, setQuintity] = useState(0);
 
@@ -64,6 +74,10 @@ export const ProductCard = () => {
   const inStock = items && items.some(el => el.count > 0);
 
   const arr = items && items.sort();
+
+  if (product._id === undefined) {
+    return <Loader />;
+  }
 
   return (
     <ProductContainer>
@@ -94,10 +108,7 @@ export const ProductCard = () => {
           <FlexBox>
             <BrandTitle>{brand}</BrandTitle>
             <span>
-              <Link
-                className="heartIcon"
-                onClick={() => setFavorite(!favorite)}
-              >
+              <Link className="heartIcon" onClick={() => setFavorite(!favorite)}>
                 <HeartIcon />
               </Link>
             </span>
@@ -129,9 +140,7 @@ export const ProductCard = () => {
 
             <CardCodeList>
               <CardCodeListItem>Код товару:</CardCodeListItem>
-              <CardCodeListItem>
-                Країна-виробник: {_country && _country.ua}
-              </CardCodeListItem>
+              <CardCodeListItem>Країна-виробник: {_country && _country.ua}</CardCodeListItem>
             </CardCodeList>
           </CarCodeWrapper>
         </div>
@@ -160,20 +169,14 @@ export const ProductCard = () => {
           <RadioBtnList>
             {arr?.map(({ _id, size }) => (
               <li key={_id}>
-                <RadioLabel
-                  style={
-                    selectedValue === size ? { borderColor: '#E68314' } : {}
-                  }
-                >
+                <RadioLabel style={selectedValue === size ? { borderColor: '#E68314' } : {}}>
                   <RadioInput
                     type="radio"
                     name="size"
                     onChange={() => handleRadioChange(size)}
                     value={size}
                   />
-                  <RadioText
-                    style={selectedValue === size ? { color: '#E68314' } : {}}
-                  >
+                  <RadioText style={selectedValue === size ? { color: '#E68314' } : {}}>
                     {size} кг
                   </RadioText>
                 </RadioLabel>
@@ -197,11 +200,7 @@ export const ProductCard = () => {
               >
                 -
               </BtnDecrement>
-              <BtnIncrement
-                onClick={increment}
-                type="button"
-                aria-label="increment"
-              >
+              <BtnIncrement onClick={increment} type="button" aria-label="increment">
                 +
               </BtnIncrement>
             </QuintityInputWrapper>

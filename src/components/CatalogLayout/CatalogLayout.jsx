@@ -40,10 +40,10 @@ export const CatalogLayout = () => {
     async function fetchData() {
       // You can await here
       const structure = await fetchAllStructure();
-      // console.log('structure:', structure);
       setStructure([...structure]);
 
-      const subCategory = structure.map(item => item._categories[0]);
+      const subCategory = structure.flatMap(item => item._categories);
+      const variants = subCategory.flatMap(item => item._variants);
 
       if (active) {
         const filter = structure
@@ -54,7 +54,7 @@ export const CatalogLayout = () => {
       // ...
 
       setStateBreadcrumb(prevState => {
-        const dirtyArray = [...prevState, ...structure, ...subCategory];
+        const dirtyArray = [...prevState, ...structure, ...subCategory, ...variants];
         const uniqueObjArray = [...new Map(dirtyArray.map(item => [item['_id'], item])).values()];
         // console.log('uniqueObjArray :>> ', uniqueObjArray);
         return uniqueObjArray;
