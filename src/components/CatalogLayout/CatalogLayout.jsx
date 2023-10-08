@@ -1,4 +1,5 @@
 import { Cat, Dog, RightArrow } from 'components/Icons';
+import { useStateContext } from 'context/StateContext';
 
 import {
   AsideCatalog,
@@ -20,6 +21,8 @@ export const CatalogLayout = () => {
   const [structure, setStructure] = useState([]);
   const [categories, setCategories] = useState([]);
 
+  const { setStateBreadcrumb } = useStateContext();
+
   // for pagination
   // const [activPage, setActivPage] = useState(1);
 
@@ -38,9 +41,11 @@ export const CatalogLayout = () => {
   useEffect(() => {
     async function fetchData() {
       // You can await here
-      const structure = await fetchAllStructure();
+      const structureFetch = await fetchAllStructure();
       // console.log('structure:', structure);
-      setStructure([...structure]);
+      setStructure([...structureFetch]);
+
+      const subCategory = structureFetch.map(item => item._categories[0]);
 
       if (active) {
         const filter = structure
@@ -49,9 +54,16 @@ export const CatalogLayout = () => {
         setCategories(...filter);
       }
       // ...
+
+      setStateBreadcrumb(prevState => {
+        const dirtyArray = [...prevState, ...structureFetch, ...subCategory];
+        const uniqueObjArray = [...new Map(dirtyArray.map(item => [item['_id'], item])).values()];
+        // console.log('uniqueObjArray :>> ', uniqueObjArray);
+        return uniqueObjArray;
+      });
     }
     fetchData();
-  }, [active]);
+  }, [active, setStateBreadcrumb, structure]);
 
   return (
     <>
@@ -61,9 +73,7 @@ export const CatalogLayout = () => {
         <AsideCatalog>
           {structure.length !== 0 && (
             <CategoryList>
-              <ul
-                style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}
-              >
+              <ul style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
                 {structure.map((el, i) => {
                   // console.log('el:', el);
                   switch (el.code) {
@@ -72,9 +82,7 @@ export const CatalogLayout = () => {
                         <li key={i}>
                           <PetButton
                             id={el.code}
-                            className={
-                              active === 'for_dogs' ? 'active' : undefined
-                            }
+                            className={active === 'for_dogs' ? 'active' : undefined}
                             onClick={handleClick}
                             // onBlur={() => {
                             //   setActive('');
@@ -98,9 +106,7 @@ export const CatalogLayout = () => {
                         <li key={i}>
                           <PetButton
                             id={el.code}
-                            className={
-                              active === 'for_cats' ? 'active' : undefined
-                            }
+                            className={active === 'for_cats' ? 'active' : undefined}
                             onClick={handleClick}
                             // onBlur={() => {
                             //   setActive('');
@@ -141,8 +147,7 @@ export const CatalogLayout = () => {
                         to={`${_pet}/${_id}`}
                         onClick={() => {
                           setActive('');
-                          document.getElementById('hidden').style.visibility =
-                            'hidden';
+                          document.getElementById('hidden').style.visibility = 'hidden';
                         }}
                       >
                         {ua}
@@ -155,9 +160,7 @@ export const CatalogLayout = () => {
                                 to={`${_pet}/${_category}/${_id}`}
                                 onClick={() => {
                                   setActive('');
-                                  document.getElementById(
-                                    'hidden',
-                                  ).style.visibility = 'hidden';
+                                  document.getElementById('hidden').style.visibility = 'hidden';
                                 }}
                               >
                                 {ua}

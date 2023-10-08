@@ -4,6 +4,7 @@ const Context = createContext();
 
 export const StateContext = ({ children }) => {
   const [cartList, setCartList] = useState([]);
+  const [stateBreadcrumb, setStateBreadcrumb] = useState([]);
 
   useEffect(() => {
     const cartLS = JSON.parse(window.localStorage.getItem('cartList'));
@@ -19,6 +20,8 @@ export const StateContext = ({ children }) => {
       value={{
         cartList,
         setCartList,
+        stateBreadcrumb,
+        setStateBreadcrumb,
       }}
     >
       {children}
