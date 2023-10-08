@@ -15,7 +15,6 @@ import { Title } from 'pages/Home.styled';
 import React, { useEffect, useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import { fetchAllStructure } from 'services/api';
-
 export const CatalogLayout = () => {
   const [active, setActive] = useState('');
   const [structure, setStructure] = useState([]);
@@ -37,15 +36,14 @@ export const CatalogLayout = () => {
       document.getElementById('hidden').style.visibility = 'visible';
     }
   };
-
   useEffect(() => {
     async function fetchData() {
       // You can await here
-      const structureFetch = await fetchAllStructure();
+      const structure = await fetchAllStructure();
       // console.log('structure:', structure);
-      setStructure([...structureFetch]);
+      setStructure([...structure]);
 
-      const subCategory = structureFetch.map(item => item._categories[0]);
+      const subCategory = structure.map(item => item._categories[0]);
 
       if (active) {
         const filter = structure
@@ -56,19 +54,19 @@ export const CatalogLayout = () => {
       // ...
 
       setStateBreadcrumb(prevState => {
-        const dirtyArray = [...prevState, ...structureFetch, ...subCategory];
+        const dirtyArray = [...prevState, ...structure, ...subCategory];
         const uniqueObjArray = [...new Map(dirtyArray.map(item => [item['_id'], item])).values()];
         // console.log('uniqueObjArray :>> ', uniqueObjArray);
         return uniqueObjArray;
       });
     }
+
     fetchData();
-  }, [active, setStateBreadcrumb, structure]);
+  }, [active, setStateBreadcrumb]);
 
   return (
     <>
       <Title>Каталог товарів</Title>
-
       <CatalogContainer>
         <AsideCatalog>
           {structure.length !== 0 && (
@@ -125,7 +123,6 @@ export const CatalogLayout = () => {
                           </PetButton>
                         </li>
                       );
-
                     default:
                       return <></>;
                   }
@@ -134,7 +131,6 @@ export const CatalogLayout = () => {
             </CategoryList>
           )}
         </AsideCatalog>
-
         <WrapperCatalog className="WrapperCatalog">
           <BoxHiden className={active ? 'active' : undefined}>
             <ul className="_categories">
@@ -174,7 +170,6 @@ export const CatalogLayout = () => {
                 })}
             </ul>
           </BoxHiden>
-
           <Outlet />
         </WrapperCatalog>
       </CatalogContainer>
