@@ -50,7 +50,7 @@ export const App = () => {
               </Route> 
               </Route>
           </Route> */}
-          {/* <Route path=":id" element={<ProductCard />} /> */}
+          <Route path=":id" element={<ProductCard />} />
 
           <Route path="brands" element={<Brands />} />
           <Route path="cart" element={<Cart />} />
