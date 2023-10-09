@@ -17,6 +17,7 @@ export const Category = () => {
     // fetchProductsByOneCategory(category).then(res => {
     //   setProductsList( [ ...res]);
     // });
+
     async function fetchData() {
       // You can await here
       const res = await fetchProductsByOneCategory(category);

@@ -1,4 +1,5 @@
 import { Cat, Dog, RightArrow } from 'components/Icons';
+import { useStateContext } from 'context/StateContext';
 
 import {
   AsideCatalog,
@@ -14,11 +15,12 @@ import { Title } from 'pages/Home.styled';
 import React, { useEffect, useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import { fetchAllStructure } from 'services/api';
-
 export const CatalogLayout = () => {
   const [active, setActive] = useState('');
   const [structure, setStructure] = useState([]);
   const [categories, setCategories] = useState([]);
+
+  const { setStateBreadcrumb } = useStateContext();
 
   // for pagination
   // const [activPage, setActivPage] = useState(1);
@@ -34,13 +36,14 @@ export const CatalogLayout = () => {
       document.getElementById('hidden').style.visibility = 'visible';
     }
   };
-
   useEffect(() => {
     async function fetchData() {
       // You can await here
       const structure = await fetchAllStructure();
-      // console.log('structure:', structure);
       setStructure([...structure]);
+
+      const subCategory = structure.flatMap(item => item._categories);
+      const variants = subCategory.flatMap(item => item._variants);
 
       if (active) {
         const filter = structure
@@ -49,21 +52,26 @@ export const CatalogLayout = () => {
         setCategories(...filter);
       }
       // ...
+
+      setStateBreadcrumb(prevState => {
+        const dirtyArray = [...prevState, ...structure, ...subCategory, ...variants];
+        const uniqueObjArray = [...new Map(dirtyArray.map(item => [item['_id'], item])).values()];
+        // console.log('uniqueObjArray :>> ', uniqueObjArray);
+        return uniqueObjArray;
+      });
     }
+
     fetchData();
-  }, [active]);
+  }, [active, setStateBreadcrumb]);
 
   return (
     <>
       <Title>Каталог товарів</Title>
-
       <CatalogContainer>
         <AsideCatalog>
           {structure.length !== 0 && (
             <CategoryList>
-              <ul
-                style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}
-              >
+              <ul style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
                 {structure.map((el, i) => {
                   // console.log('el:', el);
                   switch (el.code) {
@@ -72,9 +80,7 @@ export const CatalogLayout = () => {
                         <li key={i}>
                           <PetButton
                             id={el.code}
-                            className={
-                              active === 'for_dogs' ? 'active' : undefined
-                            }
+                            className={active === 'for_dogs' ? 'active' : undefined}
                             onClick={handleClick}
                             // onBlur={() => {
                             //   setActive('');
@@ -98,9 +104,7 @@ export const CatalogLayout = () => {
                         <li key={i}>
                           <PetButton
                             id={el.code}
-                            className={
-                              active === 'for_cats' ? 'active' : undefined
-                            }
+                            className={active === 'for_cats' ? 'active' : undefined}
                             onClick={handleClick}
                             // onBlur={() => {
                             //   setActive('');
@@ -119,7 +123,6 @@ export const CatalogLayout = () => {
                           </PetButton>
                         </li>
                       );
-
                     default:
                       return <></>;
                   }
@@ -128,7 +131,6 @@ export const CatalogLayout = () => {
             </CategoryList>
           )}
         </AsideCatalog>
-
         <WrapperCatalog className="WrapperCatalog">
           <BoxHiden className={active ? 'active' : undefined}>
             <ul className="_categories">
@@ -141,8 +143,7 @@ export const CatalogLayout = () => {
                         to={`${_pet}/${_id}`}
                         onClick={() => {
                           setActive('');
-                          document.getElementById('hidden').style.visibility =
-                            'hidden';
+                          document.getElementById('hidden').style.visibility = 'hidden';
                         }}
                       >
                         {ua}
@@ -155,9 +156,7 @@ export const CatalogLayout = () => {
                                 to={`${_pet}/${_category}/${_id}`}
                                 onClick={() => {
                                   setActive('');
-                                  document.getElementById(
-                                    'hidden',
-                                  ).style.visibility = 'hidden';
+                                  document.getElementById('hidden').style.visibility = 'hidden';
                                 }}
                               >
                                 {ua}
@@ -171,7 +170,6 @@ export const CatalogLayout = () => {
                 })}
             </ul>
           </BoxHiden>
-
           <Outlet />
         </WrapperCatalog>
       </CatalogContainer>
