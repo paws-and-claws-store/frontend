@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import {
   BTNDec,
   BTNInc,
@@ -288,7 +288,7 @@ export const Card = ({ el, onClick }) => {
       </Link>
 
       <Link
-        to={`/${card._id}`}
+        to={`${card._id}`}
         // to={`${elType.productCode}`}
       >
         <Image src={card.mainImage} alt={card.productName} />
@@ -300,7 +300,7 @@ export const Card = ({ el, onClick }) => {
               <BrandNameSt>{card.brand}</BrandNameSt>
             </Link>
             <Link
-              to={`/${card._id}`}
+              to={`${card._id}`}
               // to={`${elType.productCode}`}
             >
               <div>

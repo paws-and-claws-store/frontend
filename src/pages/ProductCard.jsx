@@ -41,7 +41,13 @@ export const ProductCard = () => {
   const { id } = useParams();
   const [product, setProduct] = useState({});
   console.log('product:', product);
-  const { setStateBreadcrumb } = useStateContext();
+  const { setStateBreadcrumb, setStateAside } = useStateContext();
+  useEffect(() => {
+    setStateAside(true);
+    return () => {
+      setStateAside(false);
+    };
+  }, [setStateAside]);
 
   useEffect(() => {
     fetchOneProduct(id).then(res => {

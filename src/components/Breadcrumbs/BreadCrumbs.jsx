@@ -8,7 +8,6 @@ import {
 } from './BreadCrumbs.styled';
 import { Vector } from 'components/Icons/Vector';
 import { nanoid } from 'nanoid';
-import { useContext } from 'react';
 import { useStateContext } from 'context/StateContext';
 import { fetchAllPets, fetchAllStructure } from 'services/api';
 

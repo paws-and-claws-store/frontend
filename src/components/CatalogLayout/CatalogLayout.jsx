@@ -20,7 +20,9 @@ export const CatalogLayout = () => {
   const [structure, setStructure] = useState([]);
   const [categories, setCategories] = useState([]);
 
-  const { setStateBreadcrumb } = useStateContext();
+  const { setStateBreadcrumb, stateAside } = useStateContext();
+
+  console.log('stateAside :>> ', stateAside);
 
   // for pagination
   // const [activPage, setActivPage] = useState(1);
@@ -63,6 +65,120 @@ export const CatalogLayout = () => {
 
     fetchData();
   }, [active, setStateBreadcrumb]);
+
+  if (stateAside) {
+    return (
+      <>
+        <Title>Каталог товарів</Title>
+        <CatalogContainer>
+          {/* <AsideCatalog>
+              {structure.length !== 0 && (
+                <CategoryList>
+                  <ul style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                    {structure.map((el, i) => {
+                      // console.log('el:', el);
+                      switch (el.code) {
+                        case 'for_dogs':
+                          return (
+                            <li key={i}>
+                              <PetButton
+                                id={el.code}
+                                className={active === 'for_dogs' ? 'active' : undefined}
+                                onClick={handleClick}
+                                // onBlur={() => {
+                                //   setActive('');
+                                //   document.getElementById(
+                                //     'hidden',
+                                //   ).style.visibility = 'hidden';
+                                // }}
+                              >
+                                <span>
+                                  <Dog />
+                                  <span>Собаки</span>
+                                </span>
+                                <span>
+                                  <RightArrow />
+                                </span>
+                              </PetButton>
+                            </li>
+                          );
+                        case 'for_cats':
+                          return (
+                            <li key={i}>
+                              <PetButton
+                                id={el.code}
+                                className={active === 'for_cats' ? 'active' : undefined}
+                                onClick={handleClick}
+                                // onBlur={() => {
+                                //   setActive('');
+                                //   document.getElementById(
+                                //     'hidden',
+                                //   ).style.visibility = 'hidden';
+                                // }}
+                              >
+                                <span>
+                                  <Cat />
+                                  <span>Коти</span>
+                                </span>
+                                <span>
+                                  <RightArrow />
+                                </span>
+                              </PetButton>
+                            </li>
+                          );
+                        default:
+                          return <></>;
+                      }
+                    })}
+                  </ul>
+                </CategoryList>
+              )}
+            </AsideCatalog> */}
+          <WrapperCatalog className="WrapperCatalog">
+            <BoxHiden className={active ? 'active' : undefined}>
+              <ul className="_categories">
+                {active &&
+                  categories.map(({ code, ua, _id, _variants, _pet }, index) => {
+                    return (
+                      <li key={_id} className="_categories-item">
+                        <Category
+                          className="Category"
+                          to={`${_pet}/${_id}`}
+                          onClick={() => {
+                            setActive('');
+                            document.getElementById('hidden').style.visibility = 'hidden';
+                          }}
+                        >
+                          {ua}
+                        </Category>
+                        <ul className="_variants">
+                          {_variants.map(({ _id, ua, code, _pet, _category }) => {
+                            return (
+                              <li key={_id} className="_variants-item">
+                                <FoodType
+                                  to={`${_pet}/${_category}/${_id}`}
+                                  onClick={() => {
+                                    setActive('');
+                                    document.getElementById('hidden').style.visibility = 'hidden';
+                                  }}
+                                >
+                                  {ua}
+                                </FoodType>
+                              </li>
+                            );
+                          })}
+                        </ul>
+                      </li>
+                    );
+                  })}
+              </ul>
+            </BoxHiden>
+            <Outlet />
+          </WrapperCatalog>
+        </CatalogContainer>
+      </>
+    );
+  }
 
   return (
     <>

@@ -32,10 +32,13 @@ export const App = () => {
             <Route index element={<Catalog />} />
             <Route path=":pet" element={<Pet />} />
             <Route path=":pet/:category" element={<Category />} />
-            <Route
-              path=":pet/:category/:productType"
-              element={<ProductType />}
-            />
+            <Route path=":pet/:category/:productType" element={<ProductType />} />
+
+            <Route path=":pet/:category/:productType/:id" element={<ProductCard />}>
+              <Route path="description" element={<ProductDescription />} />
+              <Route path="composition" element={<ProductComposition />} />
+              <Route path="comments" element={<ProductComments />} />
+            </Route>
           </Route>
 
           {/*  <Route path="catalog/:pet" element={<Pet />}>
@@ -47,26 +50,17 @@ export const App = () => {
               </Route> 
               </Route>
           </Route> */}
-          <Route path=":id" element={<ProductCard />} />
+          {/* <Route path=":id" element={<ProductCard />} /> */}
 
           <Route path="brands" element={<Brands />} />
           <Route path="cart" element={<Cart />} />
-
-          <Route path=":id" element={<ProductCard />}>
-            <Route path="description" element={<ProductDescription />} />
-            <Route path="composition" element={<ProductComposition />} />
-            <Route path="comments" element={<ProductComments />} />
-          </Route>
 
           <Route path="prices-drop" element={<PricesDrop />} />
           <Route path="search" element={<Search />} />
 
           <Route path="aboutUs" element={<AboutUs />} />
           <Route path="contacts" element={<Contacts />} />
-          <Route
-            path="/pageUnderConstruction"
-            element={<PageUnderConstruction />}
-          />
+          <Route path="/pageUnderConstruction" element={<PageUnderConstruction />} />
         </Route>
         <Route path="*" element={<PageNotFound />} />
       </Routes>
