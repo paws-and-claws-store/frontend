@@ -53,7 +53,7 @@ export const App = () => {
           <Route path="cart" element={<Cart />} />
 
           <Route
-            path=":pet/:category/:productType/:id"
+            path="catalog/:pet/:category/:productType/:id"
             element={<ProductCard />}
           >
             <Route path="description" element={<ProductDescription />} />

@@ -305,7 +305,7 @@ export const Card = ({ el, onClick }) => {
       </Link>
 
       <Link
-        to={`/${card._pet._id}/${card._category._id}/${card._variant._id}/${card._id}`}
+        to={`/catalog/${card._pet._id}/${card._category._id}/${card._variant._id}/${card._id}`}
         // to={`${elType.productCode}`}
       >
         <Image src={card.mainImage} alt={card.productName} />
@@ -317,7 +317,7 @@ export const Card = ({ el, onClick }) => {
               <BrandNameSt>{card.brand}</BrandNameSt>
             </Link>
             <Link
-              to={`/${card._pet._id}/${card._category._id}/${card._variant._id}/${card._id}`}
+              to={`/catalog/${card._pet._id}/${card._category._id}/${card._variant._id}/${card._id}`}
               // to={`${elType.productCode}`}
             >
               <div>
