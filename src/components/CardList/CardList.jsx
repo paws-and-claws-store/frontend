@@ -2,6 +2,7 @@ import { Card } from 'components/Card/Card';
 
 import React from 'react';
 import { List, ListItem } from './CardList.styled';
+import Pagination from 'components/Pagination/Pagination';
 
 export const CardList = ({ productsList }) => {
   return (
@@ -17,6 +18,7 @@ export const CardList = ({ productsList }) => {
           })}
         </List>
       )}
+      <Pagination />
     </>
   );
 };
