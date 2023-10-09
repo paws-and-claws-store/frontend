@@ -1,47 +1,30 @@
 import React, { useState, useEffect } from 'react';
-import { Link, Outlet, useParams } from 'react-router-dom';
+import { Outlet, useParams } from 'react-router-dom';
 import Reviews from 'components/ProductDetailsCarousel/Reviews/Reviews';
 import { fetchOneProduct } from 'services/api';
 import { ProductDetailsCarousel } from 'components/ProductDetailsCarousel/ProductDetailsCarousel';
 import {
   CardContainer,
-  FlexBox,
   ImageContainer,
   ProductContainer,
-  BrandTitle,
-  ProductName,
-  ShortDescription,
-  CardCodeList,
-  CardCodeListItem,
-  InavAilability,
-  AilabilityWrapper,
-  RadioBtnList,
-  RadioLabel,
-  RadioInput,
-  RadioText,
-  QuintityInput,
-  BtnDecrement,
-  QuintityInputWrapper,
-  BtnIncrement,
-  QuntityContainer,
-  CarCodeWrapper,
-  CountContainer,
-  CountSum,
-  SubmitButton,
-  HeartIcon,
-  InfoLinkList,
-  CustomNavLink,
 } from './ProductCard.styled';
 
+
+import MainInfo from 'components/ProductCard/MainInfo/MainInfo';
+import DetailsList from 'components/ProductCard/DetailsList/DetailsList';
+=======
 import { Rating } from 'components';
 import { useStateContext } from 'context/StateContext';
 import Loader from 'components/Loader/Loader';
 
+
 export const ProductCard = () => {
   const { id } = useParams();
   const [product, setProduct] = useState({});
+
   console.log('product:', product);
   const { setStateBreadcrumb } = useStateContext();
+
 
   useEffect(() => {
     fetchOneProduct(id).then(res => {
@@ -55,6 +38,8 @@ export const ProductCard = () => {
       });
     });
   }, [id, setStateBreadcrumb]);
+
+
 
   const [quintity, setQuintity] = useState(0);
 
@@ -79,6 +64,7 @@ export const ProductCard = () => {
     return <Loader />;
   }
 
+
   return (
     <ProductContainer>
       <div style={{ maxWidth: '736px' }}>
@@ -86,24 +72,16 @@ export const ProductCard = () => {
           <ProductDetailsCarousel id={id} image={product.mainImage} />
         </ImageContainer>
         <div>
-          <InfoLinkList>
-            <li>
-              <CustomNavLink to="description">Опис товару</CustomNavLink>
-            </li>
-            <li>
-              <CustomNavLink to="composition">Відгуки</CustomNavLink>
-            </li>
-            <li>
-              <CustomNavLink to="comments">Опис товару</CustomNavLink>
-            </li>
-          </InfoLinkList>
-
+          <DetailsList />
           <Outlet />
         </div>
         <Reviews />
       </div>
 
       <CardContainer>
+
+        <MainInfo product={product} />
+
         <div className="prodName">
           <FlexBox>
             <BrandTitle>{brand}</BrandTitle>
@@ -210,6 +188,7 @@ export const ProductCard = () => {
             <SubmitButton type="button">Купити</SubmitButton>
           </CountContainer>
         </form>
+
       </CardContainer>
     </ProductContainer>
   );
