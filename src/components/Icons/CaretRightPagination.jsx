@@ -1,9 +1,9 @@
 import React from 'react';
-import { SvgStyled } from './SvgStyled.styled';
+import { SvgFirstGreen } from './SvgStyled.styled';
 
 export const CaretRightPagination = () => {
   return (
-    <SvgStyled
+    <SvgFirstGreen
       xmlns="http://www.w3.org/2000/svg"
       width="32"
       height="32"
@@ -14,7 +14,7 @@ export const CaretRightPagination = () => {
         d="M22.1737 16.5927L10.9915 27.7749C10.8325 27.9231 10.6222 28.0037 10.4049 27.9999C10.1877 27.996 9.98035 27.908 9.8267 27.7544C9.67304 27.6007 9.58502 27.3934 9.58119 27.1761C9.57735 26.9589 9.658 26.7486 9.80615 26.5896L20.3943 16L9.80615 5.41041C9.658 5.25142 9.57735 5.04115 9.58119 4.82387C9.58502 4.6066 9.67304 4.3993 9.8267 4.24564C9.98035 4.09198 10.1877 4.00396 10.4049 4.00013C10.6222 3.9963 10.8325 4.07695 10.9915 4.22509L22.1737 15.4073C22.3308 15.5646 22.419 15.7778 22.419 16C22.419 16.2222 22.3308 16.4354 22.1737 16.5927Z"
         fill=""
       />
-    </SvgStyled>
+    </SvgFirstGreen>
   );
 };
 
