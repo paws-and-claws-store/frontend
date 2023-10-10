@@ -1,5 +1,4 @@
-import { CardList } from 'components';
-import Pagination from 'components/Pagination/Pagination';
+import { CardList, Pagination } from 'components';
 import { useEffect, useState } from 'react';
 import { fetchAllProducts } from 'services/api';
 

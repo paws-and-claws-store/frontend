@@ -1,128 +1,106 @@
-import React, { useState } from 'react';
-import { BoxPagination, BtnLoadMore } from './Pagination.styled';
+import React from 'react';
+import {
+  BoxPagination,
+  BtnLoadMore,
+  BtnPagination,
+  PaginationList,
+  PaginationListItem,
+} from './Pagination.styled';
 import { CaretLeftPagination, CaretRightPagination } from 'components/Icons';
 
-const Pagination = ({ paginationData, onPageChange, onAddPage }) => {
-  console.log('paginationData:', paginationData);
+export const Pagination = ({ paginationData, onPageChange, onAddPage }) => {
   const {
     hasNextPage,
     hasPrevPage,
-    limit = 12,
+    // limit,
     nextPage,
     page,
     prevPage,
-    totalPages = 10,
+    totalPages,
   } = paginationData;
+  // const hasNextPage = true;
+  // const hasPrevPage = true;
+  // const totalPages = 10;
 
-  console.log('hasNextPage:', hasNextPage);
+  const displayedPages = [];
+
+  const maxPagesToShow = 3; // Максимальна кількість сторінок для відображення
+
+  let startPage = 1;
+  let endPage = totalPages;
+
+  if (totalPages > maxPagesToShow) {
+    const halfPagesToShow = Math.floor(maxPagesToShow / 2);
+
+    if (page <= halfPagesToShow) {
+      startPage = 1;
+      endPage = maxPagesToShow;
+    } else if (page + halfPagesToShow >= totalPages) {
+      startPage = totalPages - maxPagesToShow + 1;
+      endPage = totalPages;
+    } else {
+      startPage = page - halfPagesToShow;
+      endPage = page + halfPagesToShow;
+    }
+  }
+
+  if (startPage > 1) {
+    displayedPages.push(1);
+    if (startPage > 2) {
+      displayedPages.push('...');
+    }
+  }
+
+  for (let i = startPage; i <= endPage; i++) {
+    displayedPages.push(i);
+  }
+
+  if (endPage < totalPages) {
+    if (endPage < totalPages - 1) {
+      displayedPages.push('...');
+    }
+    displayedPages.push(totalPages);
+  }
+
   return (
     <BoxPagination>
       {hasNextPage && (
         <BtnLoadMore onClick={onAddPage}>Завантажити ще</BtnLoadMore>
       )}
       <nav>
-        <ul className="pagination">
+        <PaginationList>
           {hasPrevPage && (
-            <li className="page-item">
-              <button
-              // className="page-link"
-              // onClick={() => onPageChange(prevPage)}
-              >
+            <li>
+              <button onClick={() => onPageChange(prevPage)}>
                 <CaretLeftPagination />
               </button>
             </li>
           )}
 
-          {Array.from({ length: totalPages }).map((_, index) => (
-            <li
+          {displayedPages.map((item, index) => (
+            <PaginationListItem
               key={index}
-              className={`page-item ${index + 1 === page ? 'active' : ''}`}
+              className={`${item === page ? 'active' : ''}`}
             >
-              <button
-                className="page-link"
-                onClick={() => onPageChange(index + 1)}
-              >
-                {index + 1}
-              </button>
-            </li>
+              {item === '...' ? (
+                <span>...</span>
+              ) : (
+                <BtnPagination onClick={() => onPageChange(item)}>
+                  {item}
+                </BtnPagination>
+              )}
+            </PaginationListItem>
           ))}
 
           {hasNextPage && (
-            <li className="page-item">
-              <button
-              // className="page-link"
-              // onClick={() => onPageChange(nextPage)}
-              >
+            <li>
+              <button onClick={() => onPageChange(nextPage)}>
                 <CaretRightPagination />
               </button>
             </li>
           )}
-        </ul>
+        </PaginationList>
       </nav>
     </BoxPagination>
   );
 };
-
-export default Pagination;
-
-// import React, { useState } from 'react';
-
-// const Pagination = ({ hasNextPage, hasPrevPage, limit, nextPage, page, prevPage, totalPages, onPageChange }) => {
-//   return (
-//     <nav>
-//       <ul className="pagination">
-//         {hasPrevPage && (
-//           <li className="page-item">
-//             <button className="page-link" onClick={() => onPageChange(prevPage)}>Попередня</button>
-//           </li>
-//         )}
-
-//         {Array.from({ length: totalPages }).map((_, index) => (
-//           <li key={index} className={`page-item ${index + 1 === page ? 'active' : ''}`}>
-//             <button className="page-link" onClick={() => onPageChange(index + 1)}>{index + 1}</button>
-//           </li>
-//         ))}
-
-//         {hasNextPage && (
-//           <li className="page-item">
-//             <button className="page-link" onClick={() => onPageChange(nextPage)}>Наступна</button>
-//           </li>
-//         )}
-//       </ul>
-//     </nav>
-//   );
-// };
-
-// export default Pagination;
-
-// import React, { useState } from 'react';
-// import Pagination from './Pagination';
-
-// const App = () => {
-//   const [currentPage, setCurrentPage] = useState(1);
-//   const itemsPerPage = 12; // Кількість елементів на сторінці
-//   const totalDocs = 20; // Загальна кількість документів
-//   const totalPages = Math.ceil(totalDocs / itemsPerPage);
-
-//   const onPageChange = (pageNumber) => {
-//     setCurrentPage(pageNumber);
-//   };
-
-//   return (
-//     <div>
-//       {/* Рендер вашого списку документів для поточної сторінки currentPage */}
-//       <Pagination
-//         hasNextPage={currentPage < totalPages}
-//         hasPrevPage={currentPage > 1}
-//         limit={itemsPerPage}
-//         nextPage={currentPage + 1}
-//         page={currentPage}
-//         prevPage={currentPage - 1}
-//         totalPages={totalPages}
-//         onPageChange={onPageChange}
-//       />
-//     </div>
-//   );
-// };
-
-// export default App;

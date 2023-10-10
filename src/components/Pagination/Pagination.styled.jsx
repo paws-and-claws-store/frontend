@@ -3,7 +3,6 @@ import { theme } from 'styles';
 
 export const BoxPagination = styled.div`
   margin: ${theme.spacing.step * 7}px auto 0;
-  outline: 1px solid green;
 
   display: flex;
   justify-content: center;
@@ -12,7 +11,6 @@ export const BoxPagination = styled.div`
   gap: ${theme.spacing.step * 7}px;
 
   & svg {
-    color: red;
     width: 32px;
     height: 32px;
   }
@@ -45,4 +43,49 @@ export const NavPagination = styled.nav`
   display: flex;
   align-items: center;
   justify-content: center;
+`;
+
+export const PaginationList = styled.ul`
+  display: flex;
+  gap: ${theme.spacing.step * 2}px;
+
+  span {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 20px;
+  }
+`;
+
+export const PaginationListItem = styled.li`
+  width: ${theme.spacing.step * 8}px;
+  height: ${theme.spacing.step * 8}px;
+  color: ${theme.colors.green};
+`;
+
+export const BtnPagination = styled.button`
+  display: block;
+  width: 100%;
+  height: 100%;
+
+  text-align: center;
+
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 20px;
+
+  &:hover,
+  &:focus {
+    color: ${theme.colors.orange};
+  }
+
+  li.active & {
+    color: ${theme.colors.orange};
+  }
 `;
