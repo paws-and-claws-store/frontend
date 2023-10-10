@@ -34,7 +34,7 @@ export const Card = ({ el, onClick }) => {
     card,
     // setCard
   ] = useState(el);
-  console.log('card:', card);
+  // console.log('card:', card);
 
   const [elType, setElType] = useState(el.items[0]);
 
@@ -318,7 +318,6 @@ export const Card = ({ el, onClick }) => {
             </Link>
             <Link
               to={`/catalog/${card._pet._id}/${card._category._id}/${card._variant._id}/${card._id}`}
-              // to={`${elType.productCode}`}
             >
               <div>
                 <ProductNameSt>{card.productName}</ProductNameSt>

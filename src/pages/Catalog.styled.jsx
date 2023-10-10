@@ -39,7 +39,7 @@ export const AsideCatalog = styled.aside`
 
 export const PetButton = styled.button`
   position: relative;
-  z-index: 10;
+  /* z-index: 10; */
   padding: 6px 8px;
   display: flex;
   justify-content: space-between;
