@@ -15,6 +15,7 @@ import DetailsList from 'components/ProductCard/DetailsList/DetailsList';
 export const ProductCard = () => {
   const { id } = useParams();
   const [product, setProduct] = useState({});
+  console.log(product);
 
   useEffect(() => {
     fetchOneProduct(id).then(res => {

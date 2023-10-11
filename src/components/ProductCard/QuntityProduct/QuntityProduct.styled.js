@@ -70,16 +70,30 @@ export const CountSum = styled.p`
   font-size: 40px;
   font-weight: ${theme.fontWeight.SemiBold};
   line-height: 48px;
-  color: ${theme.colors.orange};
+  color: ${props =>
+    props.inStock ? `${theme.colors.orange}` : `${theme.colors.black}`};
 `;
 
 export const SubmitButton = styled.button`
   padding: 16px 58px;
   background-color: ${theme.colors.orange};
   border-radius: 40px;
-
   font-size: ${theme.fontSizes.xl};
   font-weight: ${theme.fontWeight.Medium};
   line-height: ${theme.lineHeight.xl};
   color: ${theme.colors.white};
+  transition: background-color 0.3s;
+
+  &:hover,
+  &:focus {
+    background-color: ${theme.colors.green};
+  }
+
+  &:active {
+    background-color: ${theme.colors.secGreen};
+  }
+
+  &:disabled {
+    background-color: ${theme.colors.grey};
+  }
 `;
