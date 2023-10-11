@@ -14,6 +14,8 @@ export const GlobalStyles = css`
     background: ${theme.colors.mainBackground};
     min-height: 100vh;
 
+    overflow-x: hidden;
+
     font-style: normal;
   }
 
