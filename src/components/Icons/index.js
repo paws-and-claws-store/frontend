@@ -12,3 +12,5 @@ export * from './RightArrow';
 export * from './Cat';
 export * from './Dog';
 export * from './cartNotEmpty';
+export * from './CaretLeftPagination';
+export * from './CaretRightPagination';

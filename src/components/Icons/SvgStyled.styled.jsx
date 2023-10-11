@@ -18,6 +18,23 @@ export const SvgStyled = styled.svg`
   }
 `;
 
+export const SvgFirstGreen = styled.svg`
+  fill: ${props => props.theme.colors.green};
+
+  &:hover,
+  &:focus {
+    fill: ${props => props.theme.colors.orange};
+  }
+
+  &:active {
+    fill: ${props => props.theme.colors.orange};
+  }
+
+  &.notEmpty {
+    fill: ${theme.colors.orange};
+  }
+`;
+
 export const SvgFooterStyled = styled.svg`
   fill: ${props => props.theme.colors.white};
 
