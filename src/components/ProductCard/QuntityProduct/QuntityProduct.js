@@ -11,10 +11,11 @@ import {
   ChangeQuntityLabel,
 } from './QuntityProduct.styled';
 
-const QuntityProduct = () => {
+const QuntityProduct = ({ inStock }) => {
   const [quintity, setQuintity] = useState(0);
   const increment = () => setQuintity(prev => (prev += 1));
   const decrement = () => setQuintity(prev => (prev -= 1));
+  console.log(inStock);
 
   return (
     <form>
@@ -42,8 +43,10 @@ const QuntityProduct = () => {
         </QuintityInputWrapper>
       </QuntityContainer>
       <CountContainer>
-        <CountSum></CountSum>
-        <SubmitButton type="button">Купити</SubmitButton>
+        <CountSum inStock>{inStock ? 0 : 'Товар відсутній'}</CountSum>
+        <SubmitButton disabled={inStock ? false : true} type="button">
+          Купити
+        </SubmitButton>
       </CountContainer>
     </form>
   );

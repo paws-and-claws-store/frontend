@@ -21,6 +21,7 @@ import Loader from 'components/Loader/Loader';
 export const ProductCard = () => {
   const { id } = useParams();
   const [product, setProduct] = useState({});
+  console.log(product);
 
   console.log('product:', product);
   const { setStateBreadcrumb } = useStateContext();

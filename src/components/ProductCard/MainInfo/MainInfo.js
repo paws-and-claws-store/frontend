@@ -21,7 +21,7 @@ import QuntityProduct from '../QuntityProduct/QuntityProduct';
 const MainInfo = ({ product }) => {
   const { brand, productName, shortDescription, _country, items } = product;
 
-  const inStock = items && items.some(el => el.count > 0);
+  const inStock = items && items.every(el => el.count > 0);
 
   return (
     <>
@@ -77,7 +77,7 @@ const MainInfo = ({ product }) => {
       )}
 
       <SizeListLink items={items} />
-      <QuntityProduct />
+      <QuntityProduct inStock={inStock} />
     </>
   );
 };
