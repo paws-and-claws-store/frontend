@@ -96,7 +96,7 @@ export const Rating = styled.p`
   height: ${props => props.theme.spacing.step * 5}px;
   margin-top: ${props => props.theme.spacing.step * 2}px;
 
-  color: ${props => props.theme.colors.green};
+  color: ${props => props.theme.colors.grey};
   font-weight: ${props => props.theme.fontWeight.Regular};
   font-size: ${props => props.theme.fontSizes.s};
   line-height: ${props => props.theme.lineHeight.l};

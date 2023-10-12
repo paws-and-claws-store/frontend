@@ -15,6 +15,7 @@ export const Catalog = () => {
     totalPages: null,
   });
   const [loadMoreProducts, setLoadMoreProducts] = useState([]); // Окремий стан для продуктів, завантажених через "Load More"
+  console.log('loadMoreProducts:', loadMoreProducts);
   const [loadMoreClicked, setLoadMoreClicked] = useState(false); // Окремий стан для слідкування за натисканням кнопки "Load More"
 
   useEffect(() => {
