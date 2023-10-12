@@ -84,6 +84,14 @@ export const AilabilityWrapper = styled.div`
   align-items: center;
 `;
 
+export const InStockText = styled.p`
+  font-size: ${theme.fontSizes.s};
+  font-weight: ${theme.fontWeight.Medium};
+  line-height: ${theme.lineHeight.l};
+
+  color: ${theme.colors.grey};
+`;
+
 export const HeartIcon = styled(Heart)`
   &hover,
 &focus: {

@@ -11,6 +11,7 @@ import {
 
 import MainInfo from 'components/ProductCard/MainInfo/MainInfo';
 import DetailsList from 'components/ProductCard/DetailsList/DetailsList';
+import ViewedProducts from 'components/ProductCard/ViewedProducts/ViewedProducts';
 
 export const ProductCard = () => {
   const { id } = useParams();
@@ -24,21 +25,25 @@ export const ProductCard = () => {
   }, [id]);
 
   return (
-    <ProductContainer>
-      <div style={{ maxWidth: '736px' }}>
-        <ImageContainer>
-          <ProductDetailsCarousel id={id} image={product.mainImage} />
-        </ImageContainer>
-        <div>
-          <DetailsList />
-          <Outlet />
+    <>
+      <ProductContainer>
+        <div style={{ maxWidth: '736px' }}>
+          <ImageContainer>
+            <ProductDetailsCarousel id={id} image={product.mainImage} />
+          </ImageContainer>
+          <div>
+            <DetailsList />
+            <Outlet />
+          </div>
+          <Reviews />
         </div>
-        <Reviews />
-      </div>
 
-      <CardContainer>
-        <MainInfo product={product} />
-      </CardContainer>
-    </ProductContainer>
+        <CardContainer style={{ position: 'relative' }}>
+          <MainInfo product={product} />
+        </CardContainer>
+      </ProductContainer>
+      <ViewedProducts />
+      {/* <CardList productsList={product.slice(0, 4)} /> */}
+    </>
   );
 };

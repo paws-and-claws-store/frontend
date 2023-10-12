@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 import { displaySize } from 'helpers';
 
 const SizeListLink = ({ items }) => {
+  console.log(items);
+
   return (
     <>
       <ChooseSize>Обрати вагу</ChooseSize>

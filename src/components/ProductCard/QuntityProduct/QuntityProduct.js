@@ -43,7 +43,7 @@ const QuntityProduct = ({ inStock }) => {
         </QuintityInputWrapper>
       </QuntityContainer>
       <CountContainer>
-        <CountSum inStock>{inStock ? 0 : 'Товар відсутній'}</CountSum>
+        <CountSum inStock={inStock}>{inStock ? 0 : 'Товар відсутній'}</CountSum>
         <SubmitButton disabled={inStock ? false : true} type="button">
           Купити
         </SubmitButton>
