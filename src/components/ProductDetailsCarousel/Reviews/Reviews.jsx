@@ -5,7 +5,7 @@ import { ReviewsTitle } from './Reviews.styled';
 
 const Reviews = () => {
   return (
-    <div>
+    <div id="sect2">
       <ReviewsTitle>Відгуки</ReviewsTitle>
       <List />
     </div>

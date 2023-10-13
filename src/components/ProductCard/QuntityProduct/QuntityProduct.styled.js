@@ -67,11 +67,11 @@ export const CountContainer = styled.div`
 `;
 
 export const CountSum = styled.p`
-  font-size: 40px;
+  font-size: ${props => (props.inStock ? '40px' : `${theme.fontSizes.xl}`)};
   font-weight: ${theme.fontWeight.SemiBold};
-  line-height: 48px;
+  line-height: ${props => (props.inStock ? '48px' : `${theme.lineHeight.xl}`)};
   color: ${props =>
-    props.inStock ? `${theme.colors.orange}` : `${theme.colors.black}`};
+    props.inStock ? `${theme.colors.orange}` : `${theme.colors.grey}`};
 `;
 
 export const SubmitButton = styled.button`

@@ -15,17 +15,19 @@ import {
   AilabilityWrapper,
   CarCodeWrapper,
   HeartIcon,
+  InStockText,
 } from './MainInfo.styled';
 import QuntityProduct from '../QuntityProduct/QuntityProduct';
 
 const MainInfo = ({ product }) => {
   const { brand, productName, shortDescription, _country, items } = product;
+  console.log(product);
 
   const inStock = items && items.every(el => el.count > 0);
 
   return (
     <>
-      <div className="prodName">
+      <div className="prodName" style={{ position: 'sticky', top: '10px' }}>
         <FlexBox>
           <BrandTitle>{brand}</BrandTitle>
           <span>
@@ -73,7 +75,9 @@ const MainInfo = ({ product }) => {
           <Icon />
         </AilabilityWrapper>
       ) : (
-        <span>відсутній</span>
+        <AilabilityWrapper>
+          <InStockText>Немає в наявності</InStockText>
+        </AilabilityWrapper>
       )}
 
       <SizeListLink items={items} />
