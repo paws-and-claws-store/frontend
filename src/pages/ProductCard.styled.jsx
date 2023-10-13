@@ -20,7 +20,6 @@ export const ImageContainer = styled.div`
 
 export const CardContainer = styled.div`
   width: 520px;
-  height: 628px;
 `;
 
 export const InfoLinkList = styled.ul`

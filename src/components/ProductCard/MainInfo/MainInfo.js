@@ -26,8 +26,8 @@ const MainInfo = ({ product }) => {
   const inStock = items && items.every(el => el.count > 0);
 
   return (
-    <>
-      <div className="prodName" style={{ position: 'sticky', top: '10px' }}>
+    <div style={{ position: 'sticky', top: '100px' }}>
+      <div className="prodName">
         <FlexBox>
           <BrandTitle>{brand}</BrandTitle>
           <span>
@@ -82,7 +82,7 @@ const MainInfo = ({ product }) => {
 
       <SizeListLink items={items} />
       <QuntityProduct inStock={inStock} />
-    </>
+    </div>
   );
 };
 
