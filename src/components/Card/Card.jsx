@@ -279,7 +279,9 @@ export const Card = ({ el, onClick }) => {
               <WeightListItem key={productCode}>
                 <WidthLink
                   className={
-                    productCode === elType.productCode
+                    productCode === elType.productCode && count === 0
+                      ? 'active unavailable'
+                      : productCode === elType.productCode
                       ? 'active'
                       : count === 0
                       ? 'unavailable'
