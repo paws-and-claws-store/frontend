@@ -38,8 +38,8 @@ export const Card = ({ el, onClick }) => {
   // console.log('card:', card);
 
   const [elType, setElType] = useState(el.items[0]);
-  const { size, productCode, price, sale, count } = elType;
-  console.log('count:', count);
+  const { count } = elType;
+
   const [favourite, setFavourite] = useState(el.favourite || false);
 
   const [cardCount, setCardCount] = useState(null);
@@ -48,6 +48,7 @@ export const Card = ({ el, onClick }) => {
     setFavourite(!favourite);
   };
 
+  // change item size
   const changeElType = productCode => {
     const newElType = card.items.find(el => el.productCode === productCode);
     setElType(newElType);
@@ -197,11 +198,14 @@ export const Card = ({ el, onClick }) => {
   };
 
   const handleClick = e => {
+    setCardCount(1);
+    console.log('cardCount:', cardCount);
     const presentProductCode = getPresentProductCode();
 
     if (e.currentTarget.name === 'increment') {
       setCardCount(prevState => prevState + 1);
       let countIncrement = cardCount + 1;
+      console.log('cardCount:', cardCount);
 
       if (presentProductCode) {
         const cartLocalStorageItems = getCartLocalStorageItems();
@@ -275,9 +279,12 @@ export const Card = ({ el, onClick }) => {
               <WeightListItem key={productCode}>
                 <WidthLink
                   className={
-                    productCode === elType.productCode ? 'active' : undefined
+                    productCode === elType.productCode
+                      ? 'active'
+                      : count === 0
+                      ? 'unavailable'
+                      : undefined
                   }
-                  // onClick={() => changeCard(id)}
                   onClick={() => changeElType(productCode)}
                 >
                   {displaySize(size)}
@@ -328,18 +335,34 @@ export const Card = ({ el, onClick }) => {
             </Link>
           </div>
 
-          <Rating className="rating">
-            <StarIcon />
-            <StarIcon />
-            <StarIcon />
-            <StarIcon />
-            <StarIcon />
+          {count > 0 ? (
+            <Rating className="rating">
+              <StarIcon />
+              <StarIcon />
+              <StarIcon />
+              <StarIcon />
+              <StarIcon />
 
-            <span>({card.reviews.length})</span>
-          </Rating>
+              <span>({card.reviews.length})</span>
+            </Rating>
+          ) : (
+            <Rating style={{ visibility: 'hidden' }} className="rating">
+              <StarIcon />
+              <StarIcon />
+              <StarIcon />
+              <StarIcon />
+              <StarIcon />
+
+              <span>({card.reviews.length})</span>
+            </Rating>
+          )}
         </div>
         <Wrapper>
-          {elType.sale ? (
+          {count === 0 ? (
+            <span style={{ fontWeight: 600, fontSize: '12px', color: 'grey' }}>
+              Товар відсутній
+            </span>
+          ) : elType.sale ? (
             <PriceBox>
               <PriceSt>
                 {elType.sale.toFixed(2)}
@@ -359,14 +382,34 @@ export const Card = ({ el, onClick }) => {
             </PriceBox>
           )}
 
-          {count !== 0 ? (
+          {count === 0 ? (
+            <Button name="buy" disabled={true}>
+              Купити
+            </Button>
+          ) : !cardCount && cardCount !== '' ? (
             <Button name="buy" disabled={false} onClick={handleClick}>
               Купити
             </Button>
           ) : (
-            <Button name="buy" disabled={true} onClick={handleClick}>
-              Купити
-            </Button>
+            <QTYBox onSubmit={onSubmitCardHandler}>
+              <BTNDec name="decrement" onClick={handleClick} type="button">
+                <span>-</span>
+              </BTNDec>
+              <input
+                id={card._id}
+                type="text"
+                minLength={1}
+                maxLength={3}
+                size={3}
+                pattern="[0-9]*"
+                onChange={handleChange}
+                value={cardCount}
+              />
+              <BTNInc name="increment" onClick={handleClick} type="button">
+                <span>+</span>
+              </BTNInc>
+              <button type="submit" style={{ display: 'none' }}></button>
+            </QTYBox>
           )}
           {/* {!cardCount || cardCount !== '' ? (
             <Button name="buy" disabled={false} onClick={handleClick}>
