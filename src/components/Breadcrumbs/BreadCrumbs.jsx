@@ -8,17 +8,13 @@ import {
 } from './BreadCrumbs.styled';
 import { Vector } from 'components/Icons/Vector';
 import { nanoid } from 'nanoid';
-// import { useContext } from 'react';
 import { useStateContext } from 'context/StateContext';
-// import { fetchAllPets, fetchAllStructure } from 'services/api';
 
 export default function Breadcrumbs() {
   let languageSite = 'ua';
   const location = useLocation();
   let currentLink = '';
-  const crumbsFilter = location.pathname
-    .split('/')
-    .filter(crumb => crumb !== '');
+  const crumbsFilter = location.pathname.split('/').filter(crumb => crumb !== '');
 
   const pathNameLocalization = [
     { code: 'catalog', ua: 'Каталог', en: 'Catalog' },
@@ -32,19 +28,9 @@ export default function Breadcrumbs() {
   const crumbs = crumbsFilter.map(crumb => {
     currentLink += `/${crumb}`;
 
-    const localNameCrumb = pathNameLocalization.find(
-      name => name.code === crumb,
-    );
+    const localNameCrumb = pathNameLocalization.find(name => name.code === crumb);
     let renderToPage;
-    const stateBreadCrumbNameCrumb = stateBreadcrumb.find(
-      name => name._id === crumb,
-    );
-    // console.log('stateBreadCrumbNameCrumb :>> ', stateBreadCrumbNameCrumb);
-    // console.log('stateBreadcrumb :>> ', stateBreadcrumb);
-
-    if (stateBreadCrumbNameCrumb === undefined) {
-      return null;
-    }
+    const stateBreadCrumbNameCrumb = stateBreadcrumb.find(name => name._id === crumb);
 
     if (stateBreadCrumbNameCrumb && stateBreadCrumbNameCrumb[languageSite]) {
       renderToPage = localNameCrumb
@@ -55,8 +41,6 @@ export default function Breadcrumbs() {
     } else {
       renderToPage = localNameCrumb ? localNameCrumb[languageSite] : crumb;
     }
-
-    // const renderToPage = localNameCrumb ? localNameCrumb.pathNameUa : crumb;
 
     return (
       <BreadcrumbsDivStyled key={nanoid()}>
@@ -74,8 +58,6 @@ export default function Breadcrumbs() {
     return (
       <BreadcrumbsContainerStyled>
         <BreadcrumbsMainPageLinkStyled to={'/'} key={'main'}>
-          {/* {'Головна'} */}
-
           {languageSite === 'ua' ? 'Головна' : 'Main'}
         </BreadcrumbsMainPageLinkStyled>
         {crumbs}
