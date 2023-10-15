@@ -37,8 +37,8 @@ const ProductDescription = () => {
           перейти на сухий корм. Сприяє здоровій шкірі та красивій шерсті.
         </p>
       </div>
-      <ReadAllBtn type="button" onClick={() => setReadAll(true)}>
-        Читати повністю
+      <ReadAllBtn type="button" onClick={() => setReadAll(prev => !prev)}>
+        {readAll ? 'Згорнути' : 'Читати повністю'}
       </ReadAllBtn>
     </DescriptionContainer>
   );

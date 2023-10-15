@@ -5,7 +5,6 @@ import { fetchProductsByOnePet } from 'services/api';
 
 export const Pet = () => {
   const { pet } = useParams();
-  // console.log('data:', data.pet);
   const [productsList, setProductsList] = useState([]);
 
   useEffect(() => {

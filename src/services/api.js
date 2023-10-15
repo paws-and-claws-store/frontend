@@ -50,7 +50,6 @@ export async function fetchProductsByOnePet(onePet, pageNumber) {
   try {
     const response = await axios.get(`/api/products/pets/${onePet}`, config);
 
-    console.log('response Pet:', response);
     return response.data;
   } catch (error) {
     Notify.failure(error.message);
