@@ -18,7 +18,12 @@ export const Catalog = () => {
   const [loadMoreProducts, setLoadMoreProducts] = useState([]); // Окремий стан для продуктів, завантажених через "Load More"
   // console.log('loadMoreProducts:', loadMoreProducts);
   const [loadMoreClicked, setLoadMoreClicked] = useState(false); // Окремий стан для слідкування за натисканням кнопки "Load More"
-  const { data: response, error, isLoading, isFetching } = useFetchAllProductsQuery(currentPage);
+  const {
+    data: response,
+    error,
+    isLoading,
+    isFetching,
+  } = useFetchAllProductsQuery(currentPage);
 
   useEffect(() => {
     async function fetchInitialData() {
@@ -119,7 +124,11 @@ export const Catalog = () => {
         <>
           <CardList
             productsList={
-              currentPage === 1 ? productsList : loadMoreClicked ? loadMoreProducts : productsList
+              currentPage === 1
+                ? productsList
+                : loadMoreClicked
+                ? loadMoreProducts
+                : productsList
             }
           />
           <Pagination

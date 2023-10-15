@@ -1,16 +1,28 @@
 import React from 'react';
-import { SizeList, ChooseSize } from './SizeList.styled';
-import { Link } from 'react-router-dom';
+import { SizeList, ChooseSize, WidthBtn } from './SizeList.styled';
 import { displaySize } from 'helpers';
 
-const SizeListLink = ({ items }) => {
+const SizeListLink = ({ items, prodType, changePropType }) => {
   return (
     <>
       <ChooseSize>Обрати вагу</ChooseSize>
       <SizeList>
-        {items?.map(el => (
-          <li key={el._id}>
-            <Link>{displaySize(el.size)}</Link>
+        {items?.map(({ productCode, count, size }) => (
+          <li key={productCode}>
+            <WidthBtn
+              className={
+                productCode === prodType.productCode && count === 0
+                  ? 'active unavailable'
+                  : productCode === prodType.productCode
+                  ? 'active'
+                  : count === 0
+                  ? 'unavailable'
+                  : undefined
+              }
+              onClick={() => changePropType(productCode)}
+            >
+              {displaySize(size)}
+            </WidthBtn>
           </li>
         ))}
       </SizeList>

@@ -15,7 +15,6 @@ import { persistor, store } from 'redux/store';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    {/* basename */}
     <Provider store={store}>
       <BrowserRouter basename="/frontend">
         <ThemeProvider theme={theme}>
