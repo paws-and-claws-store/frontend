@@ -34,6 +34,7 @@ export const Card = ({ el, onClick }) => {
     card,
     // setCard
   ] = useState(el);
+  // console.log('card:', card);
 
   const [elType, setElType] = useState(el.items[0]);
 
@@ -78,9 +79,9 @@ export const Card = ({ el, onClick }) => {
       }
 
       const productCodetoUpdate = data;
-      const indexProductToUpd = cartLocalStorageItems[indexProductLocalStorage].items.findIndex(
-        item => item.productCode === productCodetoUpdate,
-      );
+      const indexProductToUpd = cartLocalStorageItems[
+        indexProductLocalStorage
+      ].items.findIndex(item => item.productCode === productCodetoUpdate);
       const cardItems = cartLocalStorageItems[indexProductLocalStorage].items;
       const countOfProduct = cardItems[indexProductToUpd];
       return countOfProduct.count;
@@ -107,10 +108,12 @@ export const Card = ({ el, onClick }) => {
 
   const setCountToProduct = (countLSItems, data) => {
     const productCodetoUpdate = elType.productCode;
-    const indexProductLocalStorageToUpdate = data.findIndex(item => item._id === card._id);
-    const indexProductToUpd = data[indexProductLocalStorageToUpdate].items.findIndex(
-      item => item.productCode === productCodetoUpdate,
+    const indexProductLocalStorageToUpdate = data.findIndex(
+      item => item._id === card._id,
     );
+    const indexProductToUpd = data[
+      indexProductLocalStorageToUpdate
+    ].items.findIndex(item => item.productCode === productCodetoUpdate);
 
     const cardItems = data[indexProductLocalStorageToUpdate].items;
 
@@ -122,7 +125,10 @@ export const Card = ({ el, onClick }) => {
     return cardItems;
   };
 
-  const changeCountInLocalStorageDecrementIncrementAndSet = (countLSItems, data) => {
+  const changeCountInLocalStorageDecrementIncrementAndSet = (
+    countLSItems,
+    data,
+  ) => {
     const cardItems = setCountToProduct(countLSItems, data);
     setCartList(prev => {
       return prev.map(item => {
@@ -197,7 +203,10 @@ export const Card = ({ el, onClick }) => {
 
       if (presentProductCode) {
         const cartLocalStorageItems = getCartLocalStorageItems();
-        changeCountInLocalStorageDecrementIncrementAndSet(countIncrement, cartLocalStorageItems);
+        changeCountInLocalStorageDecrementIncrementAndSet(
+          countIncrement,
+          cartLocalStorageItems,
+        );
       }
     }
     if (e.currentTarget.name === 'decrement') {
@@ -206,7 +215,10 @@ export const Card = ({ el, onClick }) => {
       if (presentProductCode) {
         const cartLocalStorageItems = getCartLocalStorageItems();
 
-        changeCountInLocalStorageDecrementIncrementAndSet(countDecrement, cartLocalStorageItems);
+        changeCountInLocalStorageDecrementIncrementAndSet(
+          countDecrement,
+          cartLocalStorageItems,
+        );
       }
     }
     if (e.currentTarget.name === 'buy') {
@@ -244,7 +256,10 @@ export const Card = ({ el, onClick }) => {
     if (presentProductCode) {
       const cartLocalStorageItems = getCartLocalStorageItems();
 
-      changeCountInLocalStorageDecrementIncrementAndSet(count, cartLocalStorageItems);
+      changeCountInLocalStorageDecrementIncrementAndSet(
+        count,
+        cartLocalStorageItems,
+      );
     }
   };
 
@@ -257,7 +272,9 @@ export const Card = ({ el, onClick }) => {
             return (
               <WeightListItem key={productCode}>
                 <WidthLink
-                  className={productCode === elType.productCode ? 'active' : undefined}
+                  className={
+                    productCode === elType.productCode ? 'active' : undefined
+                  }
                   // onClick={() => changeCard(id)}
                   onClick={() => changeElType(productCode)}
                 >
@@ -288,7 +305,7 @@ export const Card = ({ el, onClick }) => {
       </Link>
 
       <Link
-        to={`/${card._id}`}
+        to={`/catalog/${card._pet._id}/${card._category._id}/${card._variant._id}/${card._id}`}
         // to={`${elType.productCode}`}
       >
         <Image src={card.mainImage} alt={card.productName} />
@@ -300,8 +317,7 @@ export const Card = ({ el, onClick }) => {
               <BrandNameSt>{card.brand}</BrandNameSt>
             </Link>
             <Link
-              to={`/${card._id}`}
-              // to={`${elType.productCode}`}
+              to={`/catalog/${card._pet._id}/${card._category._id}/${card._variant._id}/${card._id}`}
             >
               <div>
                 <ProductNameSt>{card.productName}</ProductNameSt>

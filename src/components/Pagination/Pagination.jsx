@@ -1,0 +1,106 @@
+import React from 'react';
+import {
+  BoxPagination,
+  BtnLoadMore,
+  BtnPagination,
+  PaginationList,
+  PaginationListItem,
+} from './Pagination.styled';
+import { CaretLeftPagination, CaretRightPagination } from 'components/Icons';
+
+export const Pagination = ({ paginationData, onPageChange, onAddPage }) => {
+  const {
+    hasNextPage,
+    hasPrevPage,
+    // limit,
+    nextPage,
+    page,
+    prevPage,
+    totalPages,
+  } = paginationData;
+  // const hasNextPage = true;
+  // const hasPrevPage = true;
+  // const totalPages = 10;
+
+  const displayedPages = [];
+
+  const maxPagesToShow = 3; // Максимальна кількість сторінок для відображення
+
+  let startPage = 1;
+  let endPage = totalPages;
+
+  if (totalPages > maxPagesToShow) {
+    const halfPagesToShow = Math.floor(maxPagesToShow / 2);
+
+    if (page <= halfPagesToShow) {
+      startPage = 1;
+      endPage = maxPagesToShow;
+    } else if (page + halfPagesToShow >= totalPages) {
+      startPage = totalPages - maxPagesToShow + 1;
+      endPage = totalPages;
+    } else {
+      startPage = page - halfPagesToShow;
+      endPage = page + halfPagesToShow;
+    }
+  }
+
+  if (startPage > 1) {
+    displayedPages.push(1);
+    if (startPage > 2) {
+      displayedPages.push('...');
+    }
+  }
+
+  for (let i = startPage; i <= endPage; i++) {
+    displayedPages.push(i);
+  }
+
+  if (endPage < totalPages) {
+    if (endPage < totalPages - 1) {
+      displayedPages.push('...');
+    }
+    displayedPages.push(totalPages);
+  }
+
+  return (
+    <BoxPagination>
+      {hasNextPage && (
+        <BtnLoadMore onClick={onAddPage}>Завантажити ще</BtnLoadMore>
+      )}
+      <nav>
+        <PaginationList>
+          {hasPrevPage && (
+            <li>
+              <button onClick={() => onPageChange(prevPage)}>
+                <CaretLeftPagination />
+              </button>
+            </li>
+          )}
+
+          {displayedPages.map((item, index) => (
+            <PaginationListItem
+              key={index}
+              className={`${item === page ? 'active' : ''}`}
+            >
+              {item === '...' ? (
+                <span>...</span>
+              ) : (
+                <BtnPagination onClick={() => onPageChange(item)}>
+                  {item}
+                </BtnPagination>
+              )}
+            </PaginationListItem>
+          ))}
+
+          {hasNextPage && (
+            <li>
+              <button onClick={() => onPageChange(nextPage)}>
+                <CaretRightPagination />
+              </button>
+            </li>
+          )}
+        </PaginationList>
+      </nav>
+    </BoxPagination>
+  );
+};

@@ -6,6 +6,7 @@ const BASE_URL = 'https://paws-and-claws-store-backend.onrender.com';
 
 axios.defaults.baseURL = BASE_URL;
 axios.defaults.params = {
+  page: 1,
   // api_key: API_KEY,
   // include_adult: 'false',
   // language: 'en-US',
@@ -20,10 +21,86 @@ export async function fetchProducts() {
     Notify.failure(error.message);
   }
 }
+
 //all products
-export async function fetchAllProducts() {
+export async function fetchAllProducts(pageNumber) {
+  const config = {
+    params: {
+      page: pageNumber,
+    },
+  };
+
   try {
-    const response = await axios.get(`/api/products/allItems`);
+    const response = await axios.get(`/api/products/allItems`, config);
+
+    return response.data;
+  } catch (error) {
+    Notify.failure(error.message);
+  }
+}
+
+//by onePet
+export async function fetchProductsByOnePet(onePet, pageNumber) {
+  const config = {
+    params: {
+      page: pageNumber,
+    },
+  };
+
+  try {
+    const response = await axios.get(`/api/products/pets/${onePet}`, config);
+
+    console.log('response Pet:', response);
+    return response.data;
+  } catch (error) {
+    Notify.failure(error.message);
+  }
+}
+
+//by oneCategory
+export async function fetchProductsByOneCategory(oneCategory, pageNumber) {
+  try {
+    const response = await axios.get(
+      `/api/products/categories/${oneCategory}`,
+      {
+        params: {
+          page: pageNumber,
+        },
+      },
+    );
+
+    return response.data;
+  } catch (error) {
+    Notify.failure(error.message);
+  }
+}
+
+//by oneProductType
+export async function fetchProductsByOneProductType(
+  oneProductType,
+  pageNumber,
+) {
+  try {
+    const response = await axios.get(
+      `/api/products/product_types/${oneProductType}`,
+      {
+        params: {
+          page: pageNumber,
+        },
+      },
+    );
+
+    // console.log('response.data:', response.data);
+    return response.data;
+  } catch (error) {
+    Notify.failure(error.message);
+  }
+}
+
+// by oneProduct
+export async function fetchOneProduct(oneProduct) {
+  try {
+    const response = await axios.get(`/api/products/${oneProduct}`);
 
     return response.data;
   } catch (error) {
@@ -46,53 +123,6 @@ export async function fetchAllProducts() {
 //     Notify.failure(error.message);
 //   }
 // }
-
-//by onePet
-export async function fetchProductsByOnePet(onePet) {
-  try {
-    const response = await axios.get(`/api/products/pets/${onePet}`);
-
-    console.log('response Pet:', response);
-    return response.data;
-  } catch (error) {
-    Notify.failure(error.message);
-  }
-}
-
-//by oneCategory
-export async function fetchProductsByOneCategory(oneCategory) {
-  try {
-    const response = await axios.get(`/api/products/categories/${oneCategory}`);
-
-    return response.data;
-  } catch (error) {
-    Notify.failure(error.message);
-  }
-}
-//by oneProductType
-export async function fetchProductsByOneProductType(oneProductType) {
-  try {
-    const response = await axios.get(
-      `/api/products/product_types/${oneProductType}`,
-    );
-
-    // console.log('response.data:', response.data);
-    return response.data;
-  } catch (error) {
-    Notify.failure(error.message);
-  }
-}
-
-// by oneProduct
-export async function fetchOneProduct(oneProduct) {
-  try {
-    const response = await axios.get(`/api/products/${oneProduct}`);
-
-    return response.data;
-  } catch (error) {
-    Notify.failure(error.message);
-  }
-}
 
 //not working yet
 // export async function getproductReviews(product_id) {
