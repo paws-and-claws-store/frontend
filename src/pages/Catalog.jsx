@@ -20,7 +20,6 @@ export const Catalog = () => {
   useEffect(() => {
     async function fetchInitialData() {
       const response = await fetchAllProducts();
-      console.log('response:', response);
 
       setProductsList([...response.docs]);
       setLoadMoreProducts([...response.docs]);
@@ -35,7 +34,6 @@ export const Catalog = () => {
         totalPages: response.totalPages,
       };
       setPaginationData(pagination);
-      console.log('pagination:', pagination);
     }
 
     fetchInitialData();
@@ -45,7 +43,6 @@ export const Catalog = () => {
     async function fetchMoreData() {
       if (loadMoreClicked) {
         const response = await fetchAllProducts(currentPage);
-        console.log('response:', response);
 
         setLoadMoreProducts(prevLoadMoreProducts => [
           ...prevLoadMoreProducts,
@@ -62,7 +59,6 @@ export const Catalog = () => {
           totalPages: response.totalPages,
         };
         setPaginationData(pagination);
-        console.log('pagination:', pagination);
       } else {
         const response = await fetchAllProducts(currentPage);
 
@@ -80,7 +76,6 @@ export const Catalog = () => {
           totalPages: response.totalPages,
         };
         setPaginationData(pagination);
-        console.log('pagination:', pagination);
       }
     }
 
