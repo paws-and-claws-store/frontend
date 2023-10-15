@@ -59,6 +59,10 @@ export const WidthLink = styled.button`
     background-color: ${theme.colors.grey};
     color: ${theme.colors.beige};
   }
+  &.active.unavailable {
+    border-color: ${theme.colors.orange};
+    /* color: ${theme.colors.orange}; */
+  }
 `;
 
 export const WeightListItem = styled.li``;
