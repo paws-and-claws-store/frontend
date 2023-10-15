@@ -20,7 +20,6 @@ import {
 } from './Card.styled';
 import { Link } from 'react-router-dom';
 import { HeartIcon, StarIcon } from 'components/Icons';
-import { useStateContext } from 'context/StateContext';
 import { displaySize } from 'helpers';
 import { useDispatch, useSelector } from 'react-redux';
 import { setCartItems } from 'redux/cartSlice';
@@ -30,14 +29,10 @@ import { selectCartStore } from 'redux/selectors';
 
 // import { HeartIcon } from 'components/Icons';
 
-const LS_KEY = 'cartList';
-
 export const Card = ({ el, onClick }) => {
   const dispatch = useDispatch();
   const cardCountRedux = useSelector(selectCartStore);
   // console.log('cardCountRedux :>> ', cardCountRedux);
-
-  const { cartList, setCartList } = useStateContext();
   const [
     card,
     // setCard
