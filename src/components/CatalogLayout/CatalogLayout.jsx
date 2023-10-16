@@ -1,5 +1,4 @@
 import { Cat, Dog, RightArrow } from 'components/Icons';
-import { useStateContext } from 'context/StateContext';
 
 import {
   AsideCatalog,
@@ -14,13 +13,18 @@ import {
 import { Title } from 'pages/Home.styled';
 import React, { useEffect, useState } from 'react';
 import { Outlet } from 'react-router-dom';
-import { fetchAllStructure } from 'services/api';
+import { setBreadCrumbs } from 'redux/breadCrumbsSlice';
+import { useFetchAllStructureQuery } from 'redux/operations';
+import { useDispatch } from 'react-redux';
+// import { fetchAllStructure } from 'services/api';
 export const CatalogLayout = () => {
   const [active, setActive] = useState('');
   const [structure, setStructure] = useState([]);
   const [categories, setCategories] = useState([]);
 
-  const { setStateBreadcrumb } = useStateContext();
+  const { data, isLoading } = useFetchAllStructureQuery();
+
+  const dispatch = useDispatch();
 
   // for pagination
   // const [activPage, setActivPage] = useState(1);
@@ -37,10 +41,14 @@ export const CatalogLayout = () => {
     }
   };
   useEffect(() => {
+    if (isLoading) {
+      return;
+    }
     async function fetchData() {
       // You can await here
-      const structure = await fetchAllStructure();
-      setStructure([...structure]);
+      // const structure = await fetchAllStructure();
+
+      setStructure(data);
 
       const subCategory = structure.flatMap(item => item._categories);
       const variants = subCategory.flatMap(item => item._variants);
@@ -51,18 +59,12 @@ export const CatalogLayout = () => {
           .map(({ _categories }) => _categories);
         setCategories(...filter);
       }
-      // ...
 
-      setStateBreadcrumb(prevState => {
-        const dirtyArray = [...prevState, ...structure, ...subCategory, ...variants];
-        const uniqueObjArray = [...new Map(dirtyArray.map(item => [item['_id'], item])).values()];
-        // console.log('uniqueObjArray :>> ', uniqueObjArray);
-        return uniqueObjArray;
-      });
+      dispatch(setBreadCrumbs([...structure, ...subCategory, ...variants]));
     }
 
     fetchData();
-  }, [active, setStateBreadcrumb]);
+  }, [active, data, dispatch, isLoading, structure]);
 
   return (
     <>

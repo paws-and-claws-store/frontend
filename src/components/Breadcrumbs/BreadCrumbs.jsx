@@ -8,7 +8,8 @@ import {
 } from './BreadCrumbs.styled';
 import { Vector } from 'components/Icons/Vector';
 import { nanoid } from 'nanoid';
-import { useStateContext } from 'context/StateContext';
+import { useSelector } from 'react-redux';
+import { selectBreadCrumbsStore } from 'redux/selectors';
 
 export default function Breadcrumbs() {
   let languageSite = 'ua';
@@ -23,7 +24,9 @@ export default function Breadcrumbs() {
     { code: 'aboutUs', ua: 'Про компанію', en: 'About Us' },
     { code: 'contacts', ua: 'Контакти', en: 'Contacts' },
   ];
-  const { stateBreadcrumb } = useStateContext();
+  // const { stateBreadcrumb } = useStateContext();
+
+  const stateBreadcrumb = useSelector(selectBreadCrumbsStore);
 
   const crumbs = crumbsFilter.map(crumb => {
     currentLink += `/${crumb}`;
@@ -31,6 +34,12 @@ export default function Breadcrumbs() {
     const localNameCrumb = pathNameLocalization.find(name => name.code === crumb);
     let renderToPage;
     const stateBreadCrumbNameCrumb = stateBreadcrumb.find(name => name._id === crumb);
+    // console.log('stateBreadCrumbNameCrumb :>> ', stateBreadCrumbNameCrumb);
+    // console.log('stateBreadcrumb :>> ', stateBreadcrumb);
+
+    // if (stateBreadCrumbNameCrumb === undefined) {
+    //   return null;
+    // }
 
     if (stateBreadCrumbNameCrumb && stateBreadCrumbNameCrumb[languageSite]) {
       renderToPage = localNameCrumb

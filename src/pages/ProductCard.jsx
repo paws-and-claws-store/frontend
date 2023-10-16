@@ -1,31 +1,33 @@
 import React, { useState, useEffect } from 'react';
 import { Outlet, useParams } from 'react-router-dom';
 import Reviews from 'components/ProductDetailsCarousel/Reviews/Reviews';
-import { fetchOneProduct, fetchProducts } from 'services/api';
+import { fetchOneProduct } from 'services/api';
 import { ProductDetailsCarousel } from 'components/ProductDetailsCarousel/ProductDetailsCarousel';
-import {
-  CardContainer,
-  ImageContainer,
-  ProductContainer,
-} from './ProductCard.styled';
+import { CardContainer, ImageContainer, ProductContainer } from './ProductCard.styled';
 
 import MainInfo from 'components/ProductCard/MainInfo/MainInfo';
 import DetailsList from 'components/ProductCard/DetailsList/DetailsList';
+
 import ViewedProducts from 'components/ProductCard/ViewedProducts/ViewedProducts';
 import { CardList } from 'components';
+import { setBreadCrumbs } from 'redux/breadCrumbsSlice';
+import { useDispatch } from 'react-redux';
 
 export const ProductCard = () => {
   const { id } = useParams();
   const [product, setProduct] = useState({});
+
+  // eslint-disable-next-line no-unused-vars
   const [productsList, setProductsList] = useState([]);
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     fetchOneProduct(id).then(res => {
       setProduct({ ...res });
+      dispatch(setBreadCrumbs([res]));
     });
-
-    fetchProducts().then(res => setProductsList(res));
-  }, [id]);
+  }, [dispatch, id]);
 
   return (
     <>
