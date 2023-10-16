@@ -47,11 +47,8 @@ export const CatalogLayout = () => {
     async function fetchData() {
       // You can await here
       // const structure = await fetchAllStructure();
-
+      //using query by redux api for cached queryies
       setStructure(data);
-
-      const subCategory = structure.flatMap(item => item._categories);
-      const variants = subCategory.flatMap(item => item._variants);
 
       if (active) {
         const filter = structure
@@ -60,6 +57,9 @@ export const CatalogLayout = () => {
         setCategories(...filter);
       }
 
+      //loading structure for breadcrumbs
+      const subCategory = structure.flatMap(item => item._categories);
+      const variants = subCategory.flatMap(item => item._variants);
       dispatch(setBreadCrumbs([...structure, ...subCategory, ...variants]));
     }
 

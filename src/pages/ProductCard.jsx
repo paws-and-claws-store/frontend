@@ -12,6 +12,7 @@ import ViewedProducts from 'components/ProductCard/ViewedProducts/ViewedProducts
 import { CardList } from 'components';
 import { setBreadCrumbs } from 'redux/breadCrumbsSlice';
 import { useDispatch } from 'react-redux';
+import { useFetchAllStructureQuery } from 'redux/operations';
 
 export const ProductCard = () => {
   const { id } = useParams();
@@ -25,9 +26,22 @@ export const ProductCard = () => {
   useEffect(() => {
     fetchOneProduct(id).then(res => {
       setProduct({ ...res });
+      //set data ro breadcrumbs by one product
       dispatch(setBreadCrumbs([res]));
     });
   }, [dispatch, id]);
+
+  const { data: structure, isLoading } = useFetchAllStructureQuery();
+
+  useEffect(() => {
+    //loading structure for breadcrumbs when we going directly by link to the product card
+    if (isLoading) {
+      return;
+    }
+    const subCategory = structure.flatMap(item => item._categories);
+    const variants = subCategory.flatMap(item => item._variants);
+    dispatch(setBreadCrumbs([...structure, ...subCategory, ...variants]));
+  }, [dispatch, isLoading, structure]);
 
   return (
     <>

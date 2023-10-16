@@ -1,7 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const breadCrumbsInitialState = {
-  breadcrumbs: [],
+  breadcrumbs: [
+    { _id: 'catalog', ua: 'Каталог', en: 'Catalog' },
+    { _id: 'prices-drop', ua: 'Акції', en: 'Promotion' },
+    { _id: 'brands', ua: 'Бренди', en: 'Brands' },
+    { _id: 'aboutUs', ua: 'Про компанію', en: 'About Us' },
+    { _id: 'contacts', ua: 'Контакти', en: 'Contacts' },
+  ],
 };
 
 const breadCrumbsSlice = createSlice({
