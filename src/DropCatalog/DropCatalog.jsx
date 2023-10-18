@@ -8,7 +8,6 @@ function DropDirectioExample() {
     <>
       <div className="mb-2">
         {['end'].map(direction => {
-          console.log(direction);
           return (
             <DropdownButton
               as={ButtonGroup}

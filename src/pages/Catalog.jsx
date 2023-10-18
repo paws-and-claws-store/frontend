@@ -1,6 +1,7 @@
 import { CardList, Pagination } from 'components';
+import Loader from 'components/Loader/Loader';
 import { useEffect, useState } from 'react';
-import { fetchAllProducts } from 'services/api';
+import { useFetchAllProductsQuery } from 'redux/operations';
 
 export const Catalog = () => {
   const [productsList, setProductsList] = useState([]);
@@ -15,12 +16,20 @@ export const Catalog = () => {
     totalPages: null,
   });
   const [loadMoreProducts, setLoadMoreProducts] = useState([]); // Окремий стан для продуктів, завантажених через "Load More"
+  // console.log('loadMoreProducts:', loadMoreProducts);
   const [loadMoreClicked, setLoadMoreClicked] = useState(false); // Окремий стан для слідкування за натисканням кнопки "Load More"
+  const {
+    data: response,
+    error,
+    isLoading,
+    isFetching,
+  } = useFetchAllProductsQuery(currentPage);
 
   useEffect(() => {
     async function fetchInitialData() {
-      const response = await fetchAllProducts();
-      console.log('response:', response);
+      // const response = await fetchAllProducts();
+      // await response;
+      // console.log('response:', response);
 
       setProductsList([...response.docs]);
       setLoadMoreProducts([...response.docs]);
@@ -35,58 +44,62 @@ export const Catalog = () => {
         totalPages: response.totalPages,
       };
       setPaginationData(pagination);
-      console.log('pagination:', pagination);
+      // console.log('pagination:', pagination);
     }
 
-    fetchInitialData();
-  }, []);
-
-  useEffect(() => {
-    async function fetchMoreData() {
-      if (loadMoreClicked) {
-        const response = await fetchAllProducts(currentPage);
-        console.log('response:', response);
-
-        setLoadMoreProducts(prevLoadMoreProducts => [
-          ...prevLoadMoreProducts,
-          ...response.docs,
-        ]);
-
-        const pagination = {
-          hasNextPage: response.hasNextPage,
-          hasPrevPage: response.hasPrevPage,
-          limit: response.limit,
-          nextPage: response.nextPage,
-          page: response.page,
-          prevPage: response.prevPage,
-          totalPages: response.totalPages,
-        };
-        setPaginationData(pagination);
-        console.log('pagination:', pagination);
-      } else {
-        const response = await fetchAllProducts(currentPage);
-
-        setProductsList([...response.docs]);
-        setLoadMoreProducts([...response.docs]);
-        setLoadMoreClicked(false);
-
-        const pagination = {
-          hasNextPage: response.hasNextPage,
-          hasPrevPage: response.hasPrevPage,
-          limit: response.limit,
-          nextPage: response.nextPage,
-          page: response.page,
-          prevPage: response.prevPage,
-          totalPages: response.totalPages,
-        };
-        setPaginationData(pagination);
-        console.log('pagination:', pagination);
-      }
+    if (!isLoading || !isFetching) {
+      fetchInitialData();
     }
+    // console.log('isFetching Catalog :>> ', isFetching);
+    // console.log('isLoading :>> ', isLoading);
+  }, [isFetching, isLoading, response]);
 
-    // Виконайте запит при натисканні "Load More"
-    fetchMoreData();
-  }, [currentPage, loadMoreClicked]);
+  // useEffect(() => {
+  //   async function fetchMoreData() {
+  //     if (loadMoreClicked) {
+  //       // const response = await fetchAllProducts(currentPage);
+  //       console.log('response:', response);
+  //       console.log('isLoading :>> ', isLoading);
+
+  //       setLoadMoreProducts(prevLoadMoreProducts => [...prevLoadMoreProducts, ...response.docs]);
+
+  //       const pagination = {
+  //         hasNextPage: response.hasNextPage,
+  //         hasPrevPage: response.hasPrevPage,
+  //         limit: response.limit,
+  //         nextPage: response.nextPage,
+  //         page: response.page,
+  //         prevPage: response.prevPage,
+  //         totalPages: response.totalPages,
+  //       };
+  //       setPaginationData(pagination);
+  //       console.log('pagination:', pagination);
+  //     }
+  //     // if (!isLoading) {
+  //     //   // const response = await fetchAllProducts(currentPage);
+
+  //     //   setProductsList([...response.docs]);
+  //     //   setLoadMoreProducts([...response.docs]);
+  //     //   setLoadMoreClicked(false);
+
+  //     //   const pagination = {
+  //     //     hasNextPage: response.hasNextPage,
+  //     //     hasPrevPage: response.hasPrevPage,
+  //     //     limit: response.limit,
+  //     //     nextPage: response.nextPage,
+  //     //     page: response.page,
+  //     //     prevPage: response.prevPage,
+  //     //     totalPages: response.totalPages,
+  //     //   };
+
+  //     //   setPaginationData(pagination);
+  //     //   console.log('pagination:', pagination);
+  //     // }
+  //   }
+
+  //   // Виконайте запит при натисканні "Load More"
+  //   fetchMoreData();
+  // }, [currentPage, isLoading, loadMoreClicked, response]);
 
   const onPageChange = pageNumber => {
     // При кліку на номер сторінки через пагінацію, змініть стан
@@ -103,20 +116,28 @@ export const Catalog = () => {
 
   return (
     <>
-      <CardList
-        productsList={
-          currentPage === 1
-            ? productsList
-            : loadMoreClicked
-            ? loadMoreProducts
-            : productsList
-        }
-      />
-      <Pagination
-        paginationData={paginationData}
-        onPageChange={onPageChange}
-        onAddPage={onAddPage}
-      />
+      {error ? (
+        <>Oops, there was an error ...</>
+      ) : isLoading ? (
+        <Loader />
+      ) : response.docs.length > 0 ? (
+        <>
+          <CardList
+            productsList={
+              currentPage === 1
+                ? productsList
+                : loadMoreClicked
+                ? loadMoreProducts
+                : productsList
+            }
+          />
+          <Pagination
+            paginationData={paginationData}
+            onPageChange={onPageChange}
+            onAddPage={onAddPage}
+          />
+        </>
+      ) : null}
     </>
   );
 };

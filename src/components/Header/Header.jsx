@@ -21,38 +21,19 @@ import {
   SearchIcon,
 } from 'components/Icons';
 import { useEffect, useState } from 'react';
-import { useStateContext } from 'context/StateContext';
+import { useSelector } from 'react-redux';
+import { selectCartStore } from 'redux/selectors';
 
 // import { Search } from './Search';
 
 export const Header = () => {
   const [scroll, setScroll] = useState('');
-  const { cartList } = useStateContext();
 
-  const [countOfCart, setCountOfCart] = useState(null);
-
-  useEffect(() => {
-    if (countOfCart) {
-      // console.log('visible');
-      // document.getElementById('cartIcon').classList.add('notEmpty');
-    } else {
-      // console.log('Hidden');
-      // document.getElementById('cartIcon').style.visibility = 'hidden';
-    }
-  }, [countOfCart]);
-
-  useEffect(() => {
-    setCountOfCart(() => {
-      if (cartList) {
-        const countItems = cartList
-          .flatMap(cart => cart.items)
-          .reduce((totalCount, item) => totalCount + item.count, 0);
-        return countItems;
-        // return cartList.length;
-      }
-      return null;
-    });
-  }, [cartList]);
+  const cartStore = useSelector(selectCartStore);
+  const countOfObject = Object.values(cartStore);
+  const totalCount = countOfObject.reduce((previousValue, item) => {
+    return previousValue + item;
+  }, 0);
 
   useEffect(() => {
     window.addEventListener('scroll', () => {
@@ -97,11 +78,11 @@ export const Header = () => {
             </button>
 
             <Link to={'/cart'}>
-              {countOfCart > 0 ? (
+              {totalCount > 0 ? (
                 <CountContainer>
                   <CartNotEmptyIcon />
 
-                  <Count>{countOfCart}</Count>
+                  <Count>{totalCount}</Count>
                 </CountContainer>
               ) : (
                 <CartIcon />
