@@ -14,18 +14,20 @@ import {
 import { cartReducer } from './cartSlice';
 import { api } from './operations';
 import { breadCrumbsReducer } from './breadCrumbsSlice';
+import { searchSliceReducer } from './searchSlice';
 
 const reducers = combineReducers({
   [api.reducerPath]: api.reducer,
   cart: cartReducer,
   breadcrumbs: breadCrumbsReducer,
+  search: searchSliceReducer,
 });
 
 const persistConfig = {
   key: 'root',
   version: 1,
   storage,
-  whitelist: ['cart', 'breadcrumbs'],
+  whitelist: ['cart', 'breadcrumbs', 'search'],
 };
 
 const persistedReducer = persistReducer(persistConfig, reducers);

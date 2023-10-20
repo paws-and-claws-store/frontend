@@ -1,15 +1,21 @@
 import { ClearButton, SearchIcon } from 'components/Icons';
-import React, { memo, useCallback, useState } from 'react';
-import { SearchBox } from './Search.styled';
+import React, { useState } from 'react';
+import { SearchBox } from './SearchBar.styled';
 import { Notify } from 'notiflix';
 import { searchSchema } from './searchValidationSchema';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { setValueSearch } from 'redux/searchSlice';
 
-export const Search = ({ onSubmit, queryLink }) => {
+export const Search = ({ queryLink }) => {
   const [searchValue, setSearchValue] = useState(queryLink ? { query: queryLink } : { query: '' });
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const handleChage = e => {
     setSearchValue({ query: e.currentTarget.value });
   };
-
+  console.log('searchValue :>> ', searchValue);
   const handleSubmit = async e => {
     e.preventDefault();
     // Check the schema if form is valid:
@@ -20,7 +26,7 @@ export const Search = ({ onSubmit, queryLink }) => {
     if (isQueryValid) {
       //If form is valid, continue submission
       console.log('Query is legit');
-      return;
+      navigate('/search', { replace: false });
     }
 
     // If form is not valid, send error to UI:
@@ -29,7 +35,10 @@ export const Search = ({ onSubmit, queryLink }) => {
         console.log('err :>> ', err.inner);
         Notify.failure(`${err.message}`);
       }, {});
+      return;
     }
+
+    dispatch(setValueSearch(searchValue.query.toLowerCase()));
   };
   return (
     <>

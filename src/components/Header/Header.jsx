@@ -23,7 +23,7 @@ import {
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { selectCartStore } from 'redux/selectors';
-import { Search } from 'components/Search/Search';
+import { Search } from 'components/SearchBar/SearchBar';
 
 // import { Search } from './Search';
 
