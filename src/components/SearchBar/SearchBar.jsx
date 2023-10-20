@@ -5,7 +5,7 @@ import { Notify } from 'notiflix';
 import { searchSchema } from './searchValidationSchema';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { setValueSearch } from 'redux/searchSlice';
+import { resetValueSearch, setValueSearch } from 'redux/searchSlice';
 
 export const Search = ({ queryLink }) => {
   const [searchValue, setSearchValue] = useState(queryLink ? { query: queryLink } : { query: '' });
@@ -15,7 +15,7 @@ export const Search = ({ queryLink }) => {
   const handleChage = e => {
     setSearchValue({ query: e.currentTarget.value });
   };
-  console.log('searchValue :>> ', searchValue);
+
   const handleSubmit = async e => {
     e.preventDefault();
     // Check the schema if form is valid:
@@ -45,13 +45,20 @@ export const Search = ({ queryLink }) => {
       <SearchBox>
         <form action="/frontend/search" onSubmit={handleSubmit}>
           <input
-            type="search"
+            type="text"
             placeholder="Введіть назву товару"
             autoFocus
             value={searchValue.query}
             onChange={handleChage}
           />
-          <button type="submit">
+          <button
+            type="reset"
+            onClick={() => {
+              console.log('click');
+              dispatch(resetValueSearch());
+              setSearchValue({ query: '' });
+            }}
+          >
             <ClearButton />
           </button>
           <button type="submit">

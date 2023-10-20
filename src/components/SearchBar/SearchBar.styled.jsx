@@ -61,7 +61,7 @@ export const SearchBox = styled.div`
   } */
 
   .clearButton {
-    display: none;
+    /* display: none; */
     position: absolute;
     right: ${props => props.theme.spacing.step * 5}px;
     top: 50%;

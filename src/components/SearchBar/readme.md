@@ -2,7 +2,6 @@
 
 1. Validation (can send query with range from 3 to 255 characters) if message too short display
    message (Занадто короткий запит) if message to long show message (Занадто довгий запит)
-2. Debounce 500 ms
-3. Save state query
-4. query case-insensitive (toLowerCase)
-5. clear button clear query state
+2. Save state query
+3. query case-insensitive (toLowerCase)
+4. clear button clear query state
