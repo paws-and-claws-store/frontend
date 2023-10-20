@@ -4,8 +4,9 @@ import { SearchBox } from './SearchBar.styled';
 import { Notify } from 'notiflix';
 import { searchSchema } from './searchValidationSchema';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { resetValueSearch, setValueSearch } from 'redux/searchSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { resetValueSearch, setResetBoolean, setValueSearch } from 'redux/searchSlice';
+import { selectSearchResetBoolean } from 'redux/selectors';
 
 export const Search = ({ queryLink }) => {
   const [searchValue, setSearchValue] = useState(queryLink ? { query: queryLink } : { query: '' });
@@ -14,10 +15,12 @@ export const Search = ({ queryLink }) => {
 
   const handleChage = e => {
     setSearchValue({ query: e.currentTarget.value });
+    dispatch(setResetBoolean(true));
   };
 
   const handleSubmit = async e => {
     e.preventDefault();
+    console.log('e :>> ', e);
     // Check the schema if form is valid:
     const isQueryValid = await searchSchema.isValid(searchValue, {
       abortEarly: false, // Prevent aborting validation after first error
@@ -40,9 +43,10 @@ export const Search = ({ queryLink }) => {
 
     dispatch(setValueSearch(searchValue.query.toLowerCase()));
   };
+
   return (
     <>
-      <SearchBox>
+      <SearchBox resetBoolean={useSelector(selectSearchResetBoolean)}>
         <form action="/frontend/search" onSubmit={handleSubmit}>
           <input
             type="text"
@@ -54,7 +58,6 @@ export const Search = ({ queryLink }) => {
           <button
             type="reset"
             onClick={() => {
-              console.log('click');
               dispatch(resetValueSearch());
               setSearchValue({ query: '' });
             }}
