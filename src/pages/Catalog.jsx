@@ -27,79 +27,45 @@ export const Catalog = () => {
 
   useEffect(() => {
     async function fetchInitialData() {
-      // const response = await fetchAllProducts();
-      // await response;
-      // console.log('response:', response);
+      if (loadMoreClicked) {
+        setLoadMoreProducts(prevLoadMoreProducts => [
+          ...prevLoadMoreProducts,
+          ...response.docs,
+        ]);
+        const pagination = {
+          hasNextPage: response.hasNextPage,
+          hasPrevPage: response.hasPrevPage,
+          limit: response.limit,
+          nextPage: response.nextPage,
+          page: response.page,
+          prevPage: response.prevPage,
+          totalPages: response.totalPages,
+        };
+        setPaginationData(pagination);
+      } else {
+        setProductsList([...response.docs]);
+        setLoadMoreProducts([...response.docs]);
+        setLoadMoreClicked(false);
 
-      setProductsList([...response.docs]);
-      setLoadMoreProducts([...response.docs]);
-
-      const pagination = {
-        hasNextPage: response.hasNextPage,
-        hasPrevPage: response.hasPrevPage,
-        limit: response.limit,
-        nextPage: response.nextPage,
-        page: response.page,
-        prevPage: response.prevPage,
-        totalPages: response.totalPages,
-      };
-      setPaginationData(pagination);
-      // console.log('pagination:', pagination);
+        const pagination = {
+          hasNextPage: response.hasNextPage,
+          hasPrevPage: response.hasPrevPage,
+          limit: response.limit,
+          nextPage: response.nextPage,
+          page: response.page,
+          prevPage: response.prevPage,
+          totalPages: response.totalPages,
+        };
+        setPaginationData(pagination);
+      }
     }
 
-    if (!isLoading || !isFetching) {
+    if (!isFetching) {
       fetchInitialData();
     }
     // console.log('isFetching Catalog :>> ', isFetching);
     // console.log('isLoading :>> ', isLoading);
-  }, [isFetching, isLoading, response]);
-
-  // useEffect(() => {
-  //   async function fetchMoreData() {
-  //     if (loadMoreClicked) {
-  //       // const response = await fetchAllProducts(currentPage);
-  //       console.log('response:', response);
-  //       console.log('isLoading :>> ', isLoading);
-
-  //       setLoadMoreProducts(prevLoadMoreProducts => [...prevLoadMoreProducts, ...response.docs]);
-
-  //       const pagination = {
-  //         hasNextPage: response.hasNextPage,
-  //         hasPrevPage: response.hasPrevPage,
-  //         limit: response.limit,
-  //         nextPage: response.nextPage,
-  //         page: response.page,
-  //         prevPage: response.prevPage,
-  //         totalPages: response.totalPages,
-  //       };
-  //       setPaginationData(pagination);
-  //       console.log('pagination:', pagination);
-  //     }
-  //     // if (!isLoading) {
-  //     //   // const response = await fetchAllProducts(currentPage);
-
-  //     //   setProductsList([...response.docs]);
-  //     //   setLoadMoreProducts([...response.docs]);
-  //     //   setLoadMoreClicked(false);
-
-  //     //   const pagination = {
-  //     //     hasNextPage: response.hasNextPage,
-  //     //     hasPrevPage: response.hasPrevPage,
-  //     //     limit: response.limit,
-  //     //     nextPage: response.nextPage,
-  //     //     page: response.page,
-  //     //     prevPage: response.prevPage,
-  //     //     totalPages: response.totalPages,
-  //     //   };
-
-  //     //   setPaginationData(pagination);
-  //     //   console.log('pagination:', pagination);
-  //     // }
-  //   }
-
-  //   // Виконайте запит при натисканні "Load More"
-  //   fetchMoreData();
-  // }, [currentPage, isLoading, loadMoreClicked, response]);
+  }, [isFetching, loadMoreClicked, response]);
 
   const onPageChange = pageNumber => {
     // При кліку на номер сторінки через пагінацію, змініть стан

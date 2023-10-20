@@ -15,7 +15,9 @@ export default function Breadcrumbs() {
   let languageSite = 'ua';
   const location = useLocation();
   let currentLink = '';
-  const crumbsFilter = location.pathname.split('/').filter(crumb => crumb !== '');
+  const crumbsFilter = location.pathname
+    .split('/')
+    .filter(crumb => crumb !== '');
 
   // const pathNameLocalization = [
   //   { code: 'catalog', ua: 'Каталог', en: 'Catalog' },
@@ -33,12 +35,15 @@ export default function Breadcrumbs() {
 
     // const localNameCrumb = pathNameLocalization.find(name => name.code === crumb);
 
-    const stateBreadCrumbNameCrumb = stateBreadcrumb.find(name => name._id === crumb);
+    const stateBreadCrumbNameCrumb = stateBreadcrumb.find(
+      name => name._id === crumb,
+    );
 
-    console.log('stateBreadCrumbNameCrumb :>> ', stateBreadCrumbNameCrumb);
+    // console.log('stateBreadCrumbNameCrumb :>> ', stateBreadCrumbNameCrumb);
 
     const renderToPage = stateBreadCrumbNameCrumb
-      ? stateBreadCrumbNameCrumb[languageSite] || stateBreadCrumbNameCrumb['productName']
+      ? stateBreadCrumbNameCrumb[languageSite] ||
+        stateBreadCrumbNameCrumb['productName']
       : null;
 
     // if (stateBreadCrumbNameCrumb && stateBreadCrumbNameCrumb[languageSite]) {
