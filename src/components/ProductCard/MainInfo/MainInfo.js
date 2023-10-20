@@ -99,17 +99,18 @@ const MainInfo = ({ product }) => {
             <CardCodeListItem>
               <span>Країна-виробник:</span>
               <span>{_country && _country.ua}</span>
+              <span>
               <ReactCountryFlag
                 countryCode={_country.code}
                 svg
                 style={{
                     width: '20px',
                     height: '14px',
-                    marginLeft: '4px',
+                    borderRadius: '2px',
                 }}
-                title="US"
+                title={_country.code}
             />
-              <span></span>
+              </span>
             </CardCodeListItem>
           </CardCodeList>
         </CarCodeWrapper>
