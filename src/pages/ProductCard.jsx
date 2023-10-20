@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Outlet, useParams } from 'react-router-dom';
 import Reviews from 'components/ProductDetailsCarousel/Reviews/Reviews';
+
 import { fetchOneProduct, fetchProducts } from 'services/api';
 import { ProductDetailsCarousel } from 'components/ProductDetailsCarousel/ProductCarousel';
 import {
@@ -11,21 +12,41 @@ import {
 
 import MainInfo from 'components/ProductCard/MainInfo/MainInfo';
 import DetailsList from 'components/ProductCard/DetailsList/DetailsList';
+
 import ViewedProducts from 'components/ProductCard/ViewedProducts/ViewedProducts';
 import { CardList } from 'components';
+import { setBreadCrumbs } from 'redux/breadCrumbsSlice';
+import { useDispatch } from 'react-redux';
+import { useFetchAllStructureQuery } from 'redux/operations';
 
 export const ProductCard = () => {
   const { id } = useParams();
   const [product, setProduct] = useState({});
+
+  // eslint-disable-next-line no-unused-vars
   const [productsList, setProductsList] = useState([]);
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     fetchOneProduct(id).then(res => {
       setProduct({ ...res });
+      //set data ro breadcrumbs by one product
+      dispatch(setBreadCrumbs([res]));
     });
+  }, [dispatch, id]);
 
-    fetchProducts().then(res => setProductsList(res));
-  }, [id]);
+  const { data: structure, isLoading } = useFetchAllStructureQuery();
+
+  useEffect(() => {
+    //loading structure for breadcrumbs when we going directly by link to the product card
+    if (isLoading) {
+      return;
+    }
+    const subCategory = structure.flatMap(item => item._categories);
+    const variants = subCategory.flatMap(item => item._variants);
+    dispatch(setBreadCrumbs([...structure, ...subCategory, ...variants]));
+  }, [dispatch, isLoading, structure]);
 
   return (
     <>

@@ -54,6 +54,6 @@ export const SvgFooterStyled = styled.svg`
 export const SvgVectorStyled = styled.svg`
   fill: ${props => props.theme.colors.green};
   display: block;
-  height: 100%;
-  width: 100%;
+  height: 12px;
+  width: 8px;
 `;

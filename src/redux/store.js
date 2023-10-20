@@ -13,17 +13,19 @@ import {
 
 import { cartReducer } from './cartSlice';
 import { api } from './operations';
+import { breadCrumbsReducer } from './breadCrumbsSlice';
 
 const reducers = combineReducers({
   [api.reducerPath]: api.reducer,
   cart: cartReducer,
+  breadcrumbs: breadCrumbsReducer,
 });
 
 const persistConfig = {
   key: 'root',
   version: 1,
   storage,
-  whitelist: ['cart'],
+  whitelist: ['cart', 'breadcrumbs'],
 };
 
 const persistedReducer = persistReducer(persistConfig, reducers);

@@ -10,7 +10,10 @@ export const api = createApi({
     fetchAllProducts: builder.query({
       query: (page = 1) => `/api/products/allItems?page=${page}`,
     }),
+    fetchAllStructure: builder.query({
+      query: () => `/api/structure/all`,
+    }),
   }),
 });
 
-export const { useFetchAllProductsQuery, useLazyFetchAllProductsQuery } = api;
+export const { useFetchAllProductsQuery, useFetchAllStructureQuery } = api;
