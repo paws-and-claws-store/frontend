@@ -39,7 +39,7 @@ export default function Breadcrumbs() {
       name => name._id === crumb,
     );
 
-    // console.log('stateBreadCrumbNameCrumb :>> ', stateBreadCrumbNameCrumb);
+
 
     const renderToPage = stateBreadCrumbNameCrumb
       ? stateBreadCrumbNameCrumb[languageSite] ||
