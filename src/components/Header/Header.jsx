@@ -23,6 +23,7 @@ import {
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { selectCartStore } from 'redux/selectors';
+import { Search } from 'components/SearchBar/SearchBar';
 
 // import { Search } from './Search';
 
@@ -57,7 +58,7 @@ export const Header = () => {
               <NavLinkStyled to="/catalog">Каталог</NavLinkStyled>
               <NavLinkStyled to="/brands">Бренди</NavLinkStyled>
             </LinkWrapper> */}
-          <SearchBox>
+          {/* <SearchBox>
             <form action="/frontend/search">
               <input type="search" placeholder="Введіть назву товару" />
               <button>
@@ -67,8 +68,8 @@ export const Header = () => {
                 <SearchIcon />
               </button>
             </form>
-          </SearchBox>
-
+          </SearchBox> */}
+          <Search />
           <LinkWrapper>
             <button>
               <ProfileIcon />

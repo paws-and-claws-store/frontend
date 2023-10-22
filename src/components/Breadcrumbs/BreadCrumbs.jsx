@@ -35,8 +35,6 @@ export default function Breadcrumbs() {
 
     const stateBreadCrumbNameCrumb = stateBreadcrumb.find(name => name._id === crumb);
 
-    console.log('stateBreadCrumbNameCrumb :>> ', stateBreadCrumbNameCrumb);
-
     const renderToPage = stateBreadCrumbNameCrumb
       ? stateBreadCrumbNameCrumb[languageSite] || stateBreadCrumbNameCrumb['productName']
       : null;
