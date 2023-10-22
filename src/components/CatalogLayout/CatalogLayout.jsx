@@ -23,23 +23,44 @@ export const CatalogLayout = () => {
   const [categories, setCategories] = useState([]);
 
   const { data, isLoading } = useFetchAllStructureQuery();
-
   const dispatch = useDispatch();
+
+  const hiddenElement = document.getElementById('hidden');
 
   // for pagination
   // const [activPage, setActivPage] = useState(1);
 
   const handleClick = e => {
-    // document.addEventListener('click', e => console.log(e.target));
-    // console.log(e.currentTarget);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    if (!active) {
+      document.addEventListener('click', handleClickOutsideMenu);
+      document.body.classList.remove('scroll-lock');
+    }
+
     if (active === e.currentTarget.id) {
       setActive('');
-      document.getElementById('hidden').style.visibility = 'hidden';
+      hiddenElement.style.display = 'none';
+      document.body.classList.remove('scroll-lock');
+      document.removeEventListener('click', handleClickOutsideMenu);
     } else {
       setActive(e.currentTarget.id);
-      document.getElementById('hidden').style.visibility = 'visible';
+      hiddenElement.style.display = 'block';
+      document.body.classList.add('scroll-lock');
     }
   };
+
+  const handleClickOutsideMenu = e => {
+    if (hiddenElement.contains(e.target)) {
+      // Клік відбувся поза межами елемента, закриваємо меню
+      setActive('');
+      hiddenElement.style.display = 'none';
+
+      // Видаляємо слухача події кліку після закриття меню
+      document.removeEventListener('click', handleClickOutsideMenu);
+      document.body.classList.remove('scroll-lock');
+    }
+  };
+
   useEffect(() => {
     if (isLoading) {
       return;
@@ -73,7 +94,9 @@ export const CatalogLayout = () => {
         <AsideCatalog>
           {structure.length !== 0 && (
             <CategoryList>
-              <ul style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+              <ul
+                style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}
+              >
                 {structure.map((el, i) => {
                   // console.log('el:', el);
                   switch (el.code) {
@@ -81,15 +104,12 @@ export const CatalogLayout = () => {
                       return (
                         <li key={i}>
                           <PetButton
+                            active={active}
                             id={el.code}
-                            className={active === 'for_dogs' ? 'active' : undefined}
+                            className={
+                              active === 'for_dogs' ? 'active' : undefined
+                            }
                             onClick={handleClick}
-                            // onBlur={() => {
-                            //   setActive('');
-                            //   document.getElementById(
-                            //     'hidden',
-                            //   ).style.visibility = 'hidden';
-                            // }}
                           >
                             <span>
                               <Dog />
@@ -105,8 +125,11 @@ export const CatalogLayout = () => {
                       return (
                         <li key={i}>
                           <PetButton
+                            active={active}
                             id={el.code}
-                            className={active === 'for_cats' ? 'active' : undefined}
+                            className={
+                              active === 'for_cats' ? 'active' : undefined
+                            }
                             onClick={handleClick}
                             // onBlur={() => {
                             //   setActive('');
@@ -145,7 +168,8 @@ export const CatalogLayout = () => {
                         to={`${_pet}/${_id}`}
                         onClick={() => {
                           setActive('');
-                          document.getElementById('hidden').style.visibility = 'hidden';
+                          hiddenElement.style.display = 'none';
+                          document.body.classList.remove('scroll-lock');
                         }}
                       >
                         {ua}
@@ -158,7 +182,8 @@ export const CatalogLayout = () => {
                                 to={`${_pet}/${_category}/${_id}`}
                                 onClick={() => {
                                   setActive('');
-                                  document.getElementById('hidden').style.visibility = 'hidden';
+                                  hiddenElement.style.display = 'none';
+                                  document.body.classList.remove('scroll-lock');
                                 }}
                               >
                                 {ua}

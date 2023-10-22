@@ -14,7 +14,6 @@ import {
 import ScrollToTop from 'components/ScrollToTop/ScrollToTop';
 import Breadcrumbs from 'components/Breadcrumbs/BreadCrumbs';
 
-
 const SharedLayout = () => {
   return (
     <SharedLayoutBox className="SharedLayoutBox">
@@ -29,11 +28,10 @@ const SharedLayout = () => {
               <Link to={'aboutUs'}>Про компанію</Link>
               <Link to={'contacts'}>Контакти</Link>
             </NavStyle>
-            <main>
+            <main style={{ minHeight: '56vh' }}>
               <Suspense fallback={<Loader />}>
                 <Breadcrumbs />
                 <Outlet />
-               
               </Suspense>
               <ScrollToTop />
             </main>

@@ -11,9 +11,10 @@ export const BreadcrumbsLinkStyled = styled(Link)`
 export const BreadcrumbsDivStyled = styled.div`
   display: flex;
   align-items: center;
+  height: 20px;
 
   color: ${props => props.theme.colors.green};
-  &: last-child {
+  &:last-child {
     color: ${props => props.theme.colors.orange};
   }
 `;
@@ -24,6 +25,11 @@ export const BreadcrumbsMainPageLinkStyled = styled(Link)`
   font-weight: 600;
   margin-right: 15px;
   color: ${props => props.theme.colors.green};
+
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 100%;
 `;
 
 export const BreadcrumbsiconStyled = styled.div`
