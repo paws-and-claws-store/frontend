@@ -26,20 +26,17 @@ export const WeightList = styled.ul`
   left: 20px;
   display: flex;
   flex-direction: column;
-  gap: ${theme.spacing.step * 1}px;
-
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 300;
-  line-height: 16px;
+  gap: ${theme.spacing.step}px;
 `;
 
 export const WidthLink = styled.button`
-  display: inline-block;
+  height: 20px;
+  display: flex;
+  align-items: center;
   background-color: ${theme.colors.beige};
-  border-radius: ${theme.spacing.step * 2 + 2}px;
+  border-radius: 10px;
   border: 1px solid ${theme.colors.green};
-  padding: 2px 12px;
+  padding: 0 12px;
   color: ${theme.colors.green};
 
   &:hover,
@@ -60,8 +57,16 @@ export const WidthLink = styled.button`
     color: ${theme.colors.beige};
   }
   &.active.unavailable {
-    border-color: ${theme.colors.orange};
-    /* color: ${theme.colors.orange}; */
+    border-color: ${theme.colors.grey};
+    color: ${theme.colors.grey};
+    background-color: ${theme.colors.secGrey};
+  }
+
+  & span {
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: 16px;
   }
 `;
 
@@ -106,6 +111,7 @@ export const ShortDiscriptionSt = styled.p`
 
 export const Rating = styled.p`
   display: flex;
+  align-items: center;
 
   gap: ${theme.spacing.step * 1}px;
 
@@ -116,6 +122,13 @@ export const Rating = styled.p`
   font-weight: ${theme.fontWeight.Regular};
   font-size: ${theme.fontSizes.s};
   line-height: ${theme.lineHeight.l};
+
+  & span {
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: 16px;
+  }
 `;
 
 export const PriceBox = styled.div`
@@ -124,7 +137,7 @@ export const PriceBox = styled.div`
   align-items: center;
   /* width: 94px; */
 
-  & .line-through-text {
+  & p.line-through-text {
     font-size: ${theme.fontSizes.s};
     font-weight: ${theme.fontWeight.Medium};
     line-height: 1;
@@ -140,39 +153,42 @@ export const PriceSt = styled.p`
   color: ${props => props.theme.colors.orange};
   /* text-transform: uppercase; */
   /* font-family: 'rawline', sans-serif; */
-  font-weight: ${props => props.theme.fontWeight.SemiBold};
-  font-size: ${props => props.theme.fontSizes.l};
-  line-height: ${props => props.theme.lineHeight.l};
+  font-weight: ${theme.fontWeight.SemiBold};
+  font-size: ${theme.fontSizes.l};
+  line-height: ${theme.lineHeight.l};
   gap: 0;
 `;
 
 export const SymbolCurrency = styled.span`
-  margin-left: ${props => props.theme.spacing.step}px;
-  font-weight: ${props => props.theme.fontWeight.medium};
-  font-size: ${props => props.theme.fontSizes.s};
-  line-height: ${props => props.theme.lineHeight.m};
+  margin-left: ${theme.spacing.step}px;
+  font-weight: ${theme.fontWeight.medium};
+  font-size: ${theme.fontSizes.s};
+  line-height: ${theme.lineHeight.m};
+  .line-through-text & {
+    font-size: 12px;
+  }
 `;
 
 export const Wrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-top: ${props => props.theme.spacing.step * 2}px;
-  /* gap: ${props => props.theme.spacing.step * 4 - 2}px; */
+  margin-top: ${theme.spacing.step * 2}px;
+  /* gap: ${theme.spacing.step * 4 - 2}px; */
 `;
 
 export const Button = styled.button`
   display: block;
-  padding: ${props => props.theme.spacing.step * 2}px 0;
-  width: ${props => props.theme.spacing.step * 39}px;
-  /* height: ${props => props.theme.spacing.step * 10}px; */
-  background-color: ${props => props.theme.colors.orange};
-  color: ${props => props.theme.colors.white};
-  border-radius: ${props => props.theme.spacing.step * 10}px;
+  padding: ${theme.spacing.step * 2}px 0;
+  width: ${theme.spacing.step * 39}px;
+  /* height: ${theme.spacing.step * 10}px; */
+  background-color: ${theme.colors.orange};
+  color: ${theme.colors.white};
+  border-radius: ${theme.spacing.step * 10}px;
 
-  font-weight: ${props => props.theme.fontWeight.medium};
-  font-size: ${props => props.theme.fontSizes.l};
-  line-height: ${props => props.theme.lineHeight.xl};
+  font-weight: ${theme.fontWeight.Medium};
+  font-size: ${theme.fontSizes.l};
+  line-height: ${theme.lineHeight.xl};
 
   &:hover {
     background-color: ${props => props.theme.colors.green};

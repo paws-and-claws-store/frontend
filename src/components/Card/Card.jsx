@@ -179,7 +179,9 @@ export const Card = ({ el, onClick }) => {
               <StarIcon />
               <StarIcon />
 
-              <span>({card.reviews.length})</span>
+              <span>
+                <span>({card.reviews.length})</span>
+              </span>
             </Rating>
           ) : (
             <Rating style={{ visibility: 'hidden' }} className="rating">
