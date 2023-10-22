@@ -9,16 +9,16 @@ import {
   Leng,
   LengLinkStyled,
   LinkWrapper,
-  SearchBox,
+  // SearchBox,
 } from './Header.styled';
 import {
   CartIcon,
   CartNotEmptyIcon,
-  ClearButton,
+  // ClearButton,
   HeartIcon,
   LogoIcon,
   ProfileIcon,
-  SearchIcon,
+  // SearchIcon,
 } from 'components/Icons';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
