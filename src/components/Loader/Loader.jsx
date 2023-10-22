@@ -1,5 +1,5 @@
 import React from 'react';
-import { ThreeCircles } from 'react-loader-spinner';
+// import { ThreeCircles } from 'react-loader-spinner';
 import { PawLoaderContainerSVG } from './Loader.styled';
 
 const Loader = () => {
