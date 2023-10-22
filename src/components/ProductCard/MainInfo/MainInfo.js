@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Rating } from 'components';
 import SizeListLink from '../SizeList/SizeList';
 import { ReactComponent as Icon } from '../../../svg/CheckCircle.svg';
+import ReactCountryFlag from "react-country-flag"
 
 import {
   FlexBox,
@@ -20,8 +21,7 @@ import {
 import QuntityProduct from '../QuntityProduct/QuntityProduct';
 
 const MainInfo = ({ product }) => {
-  const { brand, productName, shortDescription, _country, items, favorite } =
-    product;
+  const { brand, productName, shortDescription, _country, items, favorite } = product;
   const [prodType, setProdType] = useState(items[0]);
   const [fav, setFavorite] = useState(favorite || false);
 
@@ -99,7 +99,18 @@ const MainInfo = ({ product }) => {
             <CardCodeListItem>
               <span>Країна-виробник:</span>
               <span>{_country && _country.ua}</span>
-              <span></span>
+              <span>
+              <ReactCountryFlag
+                countryCode={_country.code}
+                svg
+                style={{
+                    width: '20px',
+                    height: '14px',
+                    borderRadius: '2px',
+                }}
+                title={_country.code}
+            />
+              </span>
             </CardCodeListItem>
           </CardCodeList>
         </CarCodeWrapper>

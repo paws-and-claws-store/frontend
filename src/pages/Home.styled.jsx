@@ -17,9 +17,13 @@ export const Box = styled.div`
 `;
 
 export const Title = styled.h2`
+  height: 32px;
+  display: flex;
+  align-items: center;
   font-size: ${props => props.theme.fontSizes.xl};
-  color: ${props => props.theme.colors.green};
+  color: ${props => props.theme.colors.black};
   font-weight: ${props => props.theme.fontWeight.Medium};
   line-height: 1;
-  margin: ${props => props.theme.spacing.step * 8}px 0;
+  margin-top: ${props => props.theme.spacing.step * 12}px;
+  margin-bottom: 52px;
 `;

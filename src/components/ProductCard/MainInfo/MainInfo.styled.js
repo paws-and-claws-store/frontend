@@ -63,6 +63,9 @@ export const CarCodeWrapper = styled.div`
 `;
 
 export const CardCodeListItem = styled.li`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   padding: 4px 12px;
   border-radius: 20px;
 
@@ -72,7 +75,7 @@ export const CardCodeListItem = styled.li`
 
   color: ${theme.colors.black};
   background-color: #d8d4b8;
-  display: inline-block;
+  
   & span:nth-of-type(n + 2) {
     margin-left: 4px;
   }

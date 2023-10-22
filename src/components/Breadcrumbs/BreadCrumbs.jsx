@@ -8,39 +8,53 @@ import {
 } from './BreadCrumbs.styled';
 import { Vector } from 'components/Icons/Vector';
 import { nanoid } from 'nanoid';
-import { useStateContext } from 'context/StateContext';
+import { useSelector } from 'react-redux';
+import { selectBreadCrumbsStore } from 'redux/selectors';
 
 export default function Breadcrumbs() {
   let languageSite = 'ua';
   const location = useLocation();
   let currentLink = '';
-  const crumbsFilter = location.pathname.split('/').filter(crumb => crumb !== '');
+  const crumbsFilter = location.pathname
+    .split('/')
+    .filter(crumb => crumb !== '');
 
-  const pathNameLocalization = [
-    { code: 'catalog', ua: 'Каталог', en: 'Catalog' },
-    { code: 'prices-drop', ua: 'Акції', en: 'Promotion' },
-    { code: 'brands', ua: 'Бренди', en: 'Brands' },
-    { code: 'aboutUs', ua: 'Про компанію', en: 'About Us' },
-    { code: 'contacts', ua: 'Контакти', en: 'Contacts' },
-  ];
-  const { stateBreadcrumb } = useStateContext();
+  // const pathNameLocalization = [
+  //   { code: 'catalog', ua: 'Каталог', en: 'Catalog' },
+  //   { code: 'prices-drop', ua: 'Акції', en: 'Promotion' },
+  //   { code: 'brands', ua: 'Бренди', en: 'Brands' },
+  //   { code: 'aboutUs', ua: 'Про компанію', en: 'About Us' },
+  //   { code: 'contacts', ua: 'Контакти', en: 'Contacts' },
+  // ];
+  // const { stateBreadcrumb } = useStateContext();
+
+  const stateBreadcrumb = useSelector(selectBreadCrumbsStore);
 
   const crumbs = crumbsFilter.map(crumb => {
     currentLink += `/${crumb}`;
 
-    const localNameCrumb = pathNameLocalization.find(name => name.code === crumb);
-    let renderToPage;
-    const stateBreadCrumbNameCrumb = stateBreadcrumb.find(name => name._id === crumb);
+    // const localNameCrumb = pathNameLocalization.find(name => name.code === crumb);
 
-    if (stateBreadCrumbNameCrumb && stateBreadCrumbNameCrumb[languageSite]) {
-      renderToPage = localNameCrumb
-        ? localNameCrumb[languageSite]
-        : stateBreadCrumbNameCrumb[languageSite];
-    } else if (stateBreadCrumbNameCrumb?._id === crumb) {
-      renderToPage = stateBreadCrumbNameCrumb['productName'];
-    } else {
-      renderToPage = localNameCrumb ? localNameCrumb[languageSite] : crumb;
-    }
+    const stateBreadCrumbNameCrumb = stateBreadcrumb.find(
+      name => name._id === crumb,
+    );
+
+
+
+    const renderToPage = stateBreadCrumbNameCrumb
+      ? stateBreadCrumbNameCrumb[languageSite] ||
+        stateBreadCrumbNameCrumb['productName']
+      : null;
+
+    // if (stateBreadCrumbNameCrumb && stateBreadCrumbNameCrumb[languageSite]) {
+    //   renderToPage = localNameCrumb
+    //     ? localNameCrumb[languageSite]
+    //     : stateBreadCrumbNameCrumb[languageSite];
+    // } else if (stateBreadCrumbNameCrumb?._id === crumb) {
+    //   renderToPage = stateBreadCrumbNameCrumb['productName'];
+    // } else {
+    //   renderToPage = localNameCrumb ? localNameCrumb[languageSite] : crumb;
+    // }
 
     return (
       <BreadcrumbsDivStyled key={nanoid()}>
