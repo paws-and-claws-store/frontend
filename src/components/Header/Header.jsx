@@ -23,7 +23,7 @@ import {
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { selectCartStore } from 'redux/selectors';
-import { Search } from 'components/SearchBar/SearchBar';
+import { SearchBar } from 'components/SearchBar/SearchBar';
 
 // import { Search } from './Search';
 
@@ -68,7 +68,7 @@ export const Header = () => {
               </button>
             </form>
           </SearchBox> */}
-          <Search />
+          <SearchBar />
           <LinkWrapper>
             <button>
               <ProfileIcon />
