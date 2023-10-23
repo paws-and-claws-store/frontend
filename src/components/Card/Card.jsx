@@ -22,7 +22,7 @@ import { Link } from 'react-router-dom';
 import { HeartIcon, StarIcon } from 'components/Icons';
 import { displaySize } from 'helpers';
 import { useDispatch, useSelector } from 'react-redux';
-import { setCartItems } from 'redux/cartSlice';
+import { addCartItem, removeCartItem, updateCartItem } from 'redux/cartSlice';
 import { selectCartStore } from 'redux/selectors';
 
 // import { CardList } from 'components';
@@ -30,56 +30,153 @@ import { selectCartStore } from 'redux/selectors';
 // import { HeartIcon } from 'components/Icons';
 
 export const Card = ({ el, onClick }) => {
+  // const dispatch = useDispatch();
+  // const cardCountRedux = useSelector(selectCartStore);
+  // // console.log('cardCountRedux :>> ', cardCountRedux);
+  // const [
+  //   card,
+  //   // setCard
+  // ] = useState(el);
+
+  // const [elType, setElType] = useState(el.items[0]);
+  // const { brand, mainImage, productName, shortDescription } = el;
+  // const { count, productCode, price, sale = null, size } = elType;
+
+  // const [favourite, setFavourite] = useState(el.favourite || false);
+
+  // const [cardCount, setCardCount] = useState(null);
+
+  // const productObj = {
+  //   brand,
+  //   mainImage,
+  //   productName,
+  //   shortDescription,
+  //   count,
+  //   productCode,
+  //   price,
+  //   sale,
+  //   size,
+  //   cardCount,
+  // };
+
+  // console.log('productObj:', productObj);
+  // const changeFavourite = () => {
+  //   setFavourite(!favourite);
+  // };
+
+  // // change item size
+  // const changeElType = productCode => {
+  //   const newElType = card.items.find(el => el.productCode === productCode);
+  //   setElType(newElType);
+  //   setCardCount(null);
+  // };
+
+  // useEffect(() => {
+  //   const productCount = cardCountRedux[elType.productCode];
+  //   if (productCount) {
+  //     setCardCount(productCount);
+  //   }
+  // }, [cardCountRedux, elType]);
+
+  // const handleClick = e => {
+  //   setCardCount(1);
+  //   const presentProductCode = elType.productCode;
+
+  //   if (e.currentTarget.name === 'increment') {
+  //     setCardCount(prevState => prevState + 1);
+  //     let countIncrement = cardCount + 1;
+  //     dispatch(setCartItems([presentProductCode, countIncrement]));
+  //   }
+  //   if (e.currentTarget.name === 'decrement') {
+  //     let countDecrement = cardCount - 1;
+  //     setCardCount(prevState => prevState - 1);
+
+  //     dispatch(setCartItems([presentProductCode, countDecrement]));
+  //   }
+  //   if (e.currentTarget.name === 'buy') {
+  //     dispatch(setCartItems([presentProductCode, 1]));
+  //   }
+  // };
+
+  // const handleChange = e => {
+  //   if (!e.target.validity.valid) {
+  //     return;
+  //   }
+
+  //   if (e.target.validity.valid) {
+  //     if (e.target.value === '') {
+  //       setCardCount('');
+  //       return;
+  //     }
+
+  //     setCardCount(Number(e.target.value));
+  //   }
+  // };
+
+  // const onSubmitCardHandler = e => {
+  //   e.preventDefault();
+  //   const presentProductCode = elType.productCode;
+  //   dispatch(setCartItems([presentProductCode, cardCount]));
+  // };
+
   const dispatch = useDispatch();
   const cardCountRedux = useSelector(selectCartStore);
-  // console.log('cardCountRedux :>> ', cardCountRedux);
-  const [
-    card,
-    // setCard
-  ] = useState(el);
+  console.log('cardCountRedux:', cardCountRedux);
 
   const [elType, setElType] = useState(el.items[0]);
-  const { count } = elType;
-
+  const { productCode } = elType;
   const [favourite, setFavourite] = useState(el.favourite || false);
-
   const [cardCount, setCardCount] = useState(null);
 
   const changeFavourite = () => {
     setFavourite(!favourite);
   };
 
-  // change item size
   const changeElType = productCode => {
-    const newElType = card.items.find(el => el.productCode === productCode);
+    const newElType = el.items.find(el => el.productCode === productCode);
     setElType(newElType);
-    // setCardCount(null);
+    setCardCount(null);
   };
 
   useEffect(() => {
-    const productCount = cardCountRedux[elType.productCode];
+    const productCount = cardCountRedux?.find(
+      item => item.productCode === productCode,
+    );
     if (productCount) {
-      setCardCount(productCount);
+      setCardCount(productCount.cardCount);
     }
-  }, [cardCountRedux, elType]);
+  }, [cardCountRedux, productCode]);
 
-  const handleClick = e => {
-    setCardCount(1);
-    const presentProductCode = elType.productCode;
-
-    if (e.currentTarget.name === 'increment') {
-      setCardCount(prevState => prevState + 1);
-      let countIncrement = cardCount + 1;
-      dispatch(setCartItems([presentProductCode, countIncrement]));
+  const handleIncrement = () => {
+    if (cardCount === null) {
+      setCardCount(1);
+      dispatch(
+        addCartItem({
+          brand: el.brand,
+          mainImage: el.mainImage,
+          productName: el.productName,
+          shortDescription: el.shortDescription,
+          count: elType.count,
+          productCode: productCode,
+          price: elType.price,
+          sale: elType.sale,
+          size: elType.size,
+          cardCount: 1,
+        }),
+      );
+    } else {
+      setCardCount(cardCount + 1);
+      dispatch(updateCartItem({ productCode, newCount: cardCount + 1 }));
     }
-    if (e.currentTarget.name === 'decrement') {
-      let countDecrement = cardCount - 1;
-      setCardCount(prevState => prevState - 1);
+  };
 
-      dispatch(setCartItems([presentProductCode, countDecrement]));
-    }
-    if (e.currentTarget.name === 'buy') {
-      dispatch(setCartItems([presentProductCode, 1]));
+  const handleDecrement = () => {
+    if (cardCount > 1) {
+      setCardCount(cardCount - 1);
+      dispatch(updateCartItem({ productCode, newCount: cardCount - 1 }));
+    } else {
+      setCardCount(null);
+      dispatch(removeCartItem(productCode));
     }
   };
 
@@ -88,20 +185,36 @@ export const Card = ({ el, onClick }) => {
       return;
     }
 
-    if (e.target.validity.valid) {
-      if (e.target.value === '') {
-        setCardCount('');
-        return;
-      }
-
-      setCardCount(Number(e.target.value));
+    const newCount = Number(e.target.value);
+    if (newCount < 1) {
+      return;
     }
+
+    setCardCount(newCount);
+    dispatch(updateCartItem({ productCode, newCount }));
   };
 
   const onSubmitCardHandler = e => {
     e.preventDefault();
-    const presentProductCode = elType.productCode;
-    dispatch(setCartItems([presentProductCode, cardCount]));
+    if (cardCount === null) {
+      setCardCount(1);
+      dispatch(
+        addCartItem({
+          brand: el.brand,
+          mainImage: el.mainImage,
+          productName: el.productName,
+          shortDescription: el.shortDescription,
+          count: elType.count,
+          productCode: productCode,
+          price: elType.price,
+          sale: elType.sale,
+          size: elType.size,
+          cardCount: 1,
+        }),
+      );
+    } else {
+      dispatch(updateCartItem({ productCode, newCount: cardCount }));
+    }
   };
 
   return (
@@ -150,28 +263,28 @@ export const Card = ({ el, onClick }) => {
       </Link>
 
       <Link
-        to={`/catalog/${card._pet._id}/${card._category._id}/${card._variant._id}/${card._id}`}
+        to={`/catalog/${el._pet._id}/${el._category._id}/${el._variant._id}/${el._id}`}
         // to={`${elType.productCode}`}
       >
-        <Image src={card.mainImage} alt={card.productName} />
+        <Image src={el.mainImage} alt={el.productName} />
       </Link>
       <div>
         <div>
           <div>
             <Link to={'/brands'}>
-              <BrandNameSt>{card.brand}</BrandNameSt>
+              <BrandNameSt>{el.brand}</BrandNameSt>
             </Link>
             <Link
-              to={`/catalog/${card._pet._id}/${card._category._id}/${card._variant._id}/${card._id}`}
+              to={`/catalog/${el._pet._id}/${el._category._id}/${el._variant._id}/${el._id}`}
             >
               <div>
-                <ProductNameSt>{card.productName}</ProductNameSt>
+                <ProductNameSt>{el.productName}</ProductNameSt>
               </div>
-              <ShortDiscriptionSt>{card.shortDescription}</ShortDiscriptionSt>
+              <ShortDiscriptionSt>{el.shortDescription}</ShortDiscriptionSt>
             </Link>
           </div>
 
-          {count > 0 ? (
+          {elType.count > 0 ? (
             <Rating className="rating">
               <StarIcon />
               <StarIcon />
@@ -179,7 +292,9 @@ export const Card = ({ el, onClick }) => {
               <StarIcon />
               <StarIcon />
 
-              <span>({card.reviews.length})</span>
+              <span>
+                <span>({el.reviews.length})</span>
+              </span>
             </Rating>
           ) : (
             <Rating style={{ visibility: 'hidden' }} className="rating">
@@ -189,12 +304,12 @@ export const Card = ({ el, onClick }) => {
               <StarIcon />
               <StarIcon />
 
-              <span>({card.reviews.length})</span>
+              <span>({el.reviews.length})</span>
             </Rating>
           )}
         </div>
         <Wrapper>
-          {count === 0 ? (
+          {elType.count === 0 ? (
             <span style={{ fontWeight: 600, fontSize: '12px', color: 'grey' }}>
               Товар відсутній
             </span>
@@ -218,21 +333,21 @@ export const Card = ({ el, onClick }) => {
             </PriceBox>
           )}
 
-          {count === 0 ? (
+          {elType.count === 0 ? (
             <Button name="buy" disabled={true}>
               Купити
             </Button>
           ) : !cardCount && cardCount !== '' ? (
-            <Button name="buy" disabled={false} onClick={handleClick}>
+            <Button name="buy" disabled={false} onClick={onSubmitCardHandler}>
               Купити
             </Button>
           ) : (
             <QTYBox onSubmit={onSubmitCardHandler}>
-              <BTNDec name="decrement" onClick={handleClick} type="button">
+              <BTNDec name="decrement" onClick={handleDecrement} type="button">
                 <span>-</span>
               </BTNDec>
               <input
-                id={card._id}
+                id={el._id}
                 type="text"
                 minLength={1}
                 maxLength={3}
@@ -241,7 +356,7 @@ export const Card = ({ el, onClick }) => {
                 onChange={handleChange}
                 value={cardCount}
               />
-              <BTNInc name="increment" onClick={handleClick} type="button">
+              <BTNInc name="increment" onClick={handleIncrement} type="button">
                 <span>+</span>
               </BTNInc>
               <button type="submit" style={{ display: 'none' }}></button>
