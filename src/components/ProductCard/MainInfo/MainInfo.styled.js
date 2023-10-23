@@ -75,7 +75,11 @@ export const CardCodeListItem = styled.li`
 
   color: ${theme.colors.black};
   background-color: #d8d4b8;
-  
+  & span {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
   & span:nth-of-type(n + 2) {
     margin-left: 4px;
   }

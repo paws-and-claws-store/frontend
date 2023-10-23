@@ -24,15 +24,21 @@ export const QuintityInput = styled.input`
   width: 156px;
   padding: 5px 22px;
   border: 1px solid ${theme.colors.green};
+  
+  transition: border-color 0.3s;
   border-radius: 40px;
   background-color: ${theme.colors.mainBackground};
 
   text-align: center;
-
+  outline: none;
   font-size: ${theme.fontSizes.xl};
   font-weight: ${theme.fontWeight.Medium};
   line-height: ${theme.lineHeight.xxl};
   color: ${theme.colors.green};
+  &:focus {
+    border-color:  ${theme.colors.orange};
+    color: ${theme.colors.orange};
+  }
 `;
 
 export const BtnDecrement = styled.button`
@@ -45,6 +51,9 @@ export const BtnDecrement = styled.button`
   font-weight: ${theme.fontWeight.Medium};
   line-height: ${theme.lineHeight.xxl};
   color: ${theme.colors.green};
+  &:hover {
+    color: ${theme.colors.orange};
+  }
 
   &:disabled {
     color: ${theme.colors.secGreen};
@@ -62,6 +71,9 @@ export const BtnIncrement = styled.button`
   font-weight: ${theme.fontWeight.Medium};
   line-height: ${theme.lineHeight.xxl};
   color: ${theme.colors.green};
+  &:hover {
+    color: ${theme.colors.orange};
+  }
 `;
 
 export const CountContainer = styled.div`

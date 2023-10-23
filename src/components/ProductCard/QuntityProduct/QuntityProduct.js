@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   QuntityContainer,
   QuintityInputWrapper,
@@ -13,11 +13,80 @@ import {
   SymbolCurrency,
   TextOutOfStock,
 } from './QuntityProduct.styled';
+import { setCartItems } from 'redux/cartSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectCartStore } from 'redux/selectors';
 
 const QuntityProduct = ({ inStock, prodType }) => {
+
   const [quintity, setQuintity] = useState(1);
-  const increment = () => setQuintity(prev => (prev += 1));
-  const decrement = () => setQuintity(prev => (prev -= 1));
+  const [productPrice, setProductPrice] = useState(0);
+  const [isFocused, setIsFocused] = useState(false);
+  const cardCountRedux = useSelector(selectCartStore);
+  const [inCart] = useState(cardCountRedux.hasOwnProperty(prodType.productCode));
+  console.log("inCart:", inCart);
+  
+  console.log("cardCountRedux:", cardCountRedux.hasOwnProperty(prodType.productCode))
+  const dispatch = useDispatch();
+
+  
+
+  useEffect(() => {
+    setProductPrice(prodType.sale || prodType.price);
+    setQuintity(1);
+    setIsFocused(false)
+  }, [prodType]);
+
+  const increment = () => {
+    setQuintity(prev => prev = parseInt(prev) + 1);
+    if (prodType.sale) {
+      setProductPrice(prevPrice => (prevPrice += prodType.sale));
+    } else {
+      setProductPrice(prevPrice => (prevPrice += prodType.price));
+    }
+  };
+
+  const decrement = () => {
+    setQuintity(prev => prev = parseInt(prev) - 1);
+    if (prodType.sale) {
+      setProductPrice(prevPrice => (prevPrice -= prodType.sale));
+    } else {
+      setProductPrice(prevPrice => (prevPrice -= prodType.price));
+    }
+  };
+
+  const hendleInputChange = (e) => {
+    const newQuintity = isNaN(e.currentTarget.value) ? 1 : e.currentTarget.value;
+
+    setQuintity(newQuintity);
+    if (prodType.sale) {
+      setProductPrice(prodType.sale * newQuintity);
+    } else {
+      setProductPrice(prodType.price * newQuintity);
+    }
+    
+  };
+
+  const handleBlur = () => {
+    if( Number(quintity) === 0 || quintity === ''){
+        alert('Enter the required quantity')
+        setQuintity(1)
+        setProductPrice(prodType.sale || prodType.price)
+        setIsFocused(true)
+      }
+  };
+
+  const handleKeyPres = (e) => {
+    if(e.key === 'Enter'){
+      e.preventDefault();
+      setIsFocused(true);
+    }
+  };
+
+  const handleClick = () => {
+    const presentProductCode = prodType.productCode;
+    dispatch(setCartItems([presentProductCode, Number(quintity)]));
+  };
 
   return (
     <form>
@@ -25,7 +94,18 @@ const QuntityProduct = ({ inStock, prodType }) => {
         <QuntityContainer>
           <ChangeQuntityLabel>Змінити кількість</ChangeQuntityLabel>
           <QuintityInputWrapper>
-            <QuintityInput readOnly value={quintity} type="text" id="calc" />
+            <QuintityInput
+              value={quintity}
+              onChange={hendleInputChange}
+              onBlur={handleBlur}
+              onFocus={()=>setIsFocused(true)}
+              style={{borderColor: isFocused ? '#e68314' : '#cac299'}}
+              type="text"
+              inputMode='numeric'
+              id="calc"
+              onKeyDown={handleKeyPres}
+            />
+
             <BtnDecrement
               onClick={decrement}
               type="button"
@@ -34,6 +114,7 @@ const QuntityProduct = ({ inStock, prodType }) => {
             >
               -
             </BtnDecrement>
+
             <BtnIncrement
               onClick={increment}
               type="button"
@@ -41,6 +122,7 @@ const QuntityProduct = ({ inStock, prodType }) => {
             >
               +
             </BtnIncrement>
+
           </QuintityInputWrapper>
         </QuntityContainer>
       )}
@@ -54,7 +136,7 @@ const QuntityProduct = ({ inStock, prodType }) => {
         ) : prodType.sale ? (
           <PriceBox>
             <PriceSt>
-              {prodType.sale.toFixed(2)}
+              {productPrice.toFixed(2)}
 
               <SymbolCurrency>₴</SymbolCurrency>
             </PriceSt>
@@ -71,14 +153,14 @@ const QuntityProduct = ({ inStock, prodType }) => {
         ) : (
           <PriceBox>
             <PriceSt>
-              {prodType.price.toFixed(2)}
+              {productPrice.toFixed(2)}
 
               <SymbolCurrency>₴</SymbolCurrency>
             </PriceSt>
           </PriceBox>
         )}
 
-        <SubmitButton disabled={inStock ? false : true} type="button">
+        <SubmitButton disabled={inStock ? false : true} type="button" onClick={handleClick}>
           Купити
         </SubmitButton>
       </CountContainer>
