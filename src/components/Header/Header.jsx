@@ -31,9 +31,8 @@ export const Header = () => {
   const [scroll, setScroll] = useState('');
 
   const cartStore = useSelector(selectCartStore);
-  const countOfObject = Object.values(cartStore);
-  const totalCount = countOfObject.reduce((previousValue, item) => {
-    return previousValue + item;
+  const totalCount = cartStore.reduce((previousValue, { cardCount }) => {
+    return previousValue + cardCount;
   }, 0);
 
   useEffect(() => {
