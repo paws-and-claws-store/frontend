@@ -20,12 +20,11 @@ import {
 } from './ProductCarusel.styled';
 import { CreateDownMini } from 'components/Icons/CreateDownMini';
 
-
 export const ProductDetailsCarousel = ({ id, image }) => {
-  const imgArray = [image, image, image, image, image, image];
+  const imgArray = [image, image, image];
 
   const [currentImage, setCurrentImage] = useState(0);
-  console.log("currentImage:", currentImage)
+  console.log('currentImage:', currentImage);
 
   const handleImageClick = ind => {
     setCurrentImage(ind);
@@ -39,19 +38,28 @@ export const ProductDetailsCarousel = ({ id, image }) => {
   return (
     <CarouselContainer>
       <Slider>
-        {imgArray.length > 5 ? <PrevImg onClick={prev}>
-          <CreateDownMini/>
-          </PrevImg> : null}
+        {imgArray.length > 5 ? (
+          <PrevImg onClick={prev}>
+            <CreateDownMini />
+          </PrevImg>
+        ) : null}
 
-        <SlidePanel ref={imageContainerRef} style={imgArray.length > 5 ? null : {justifyContent: 'center'}}>
+        <SlidePanel
+          ref={imageContainerRef}
+          style={imgArray.length > 5 ? null : { justifyContent: 'center' }}
+        >
           {imgArray.map((img, index) => (
-            <ImgWrapper key={index} onClick={()=>handleImageClick(index)}>
+            <ImgWrapper key={index} onClick={() => handleImageClick(index)}>
               <Img src={img} alt="Image" />
             </ImgWrapper>
           ))}
         </SlidePanel>
 
-        {imgArray.length > 5 ? <NextImg onClick={next}><CreateDownMini/></NextImg> : null}
+        {imgArray.length > 5 ? (
+          <NextImg onClick={next}>
+            <CreateDownMini />
+          </NextImg>
+        ) : null}
       </Slider>
 
       <MainImgWrapper>

@@ -1,11 +1,11 @@
 import styled from '@emotion/styled';
 
 export const PawLoaderContainerSVG = styled.svg`
-  width: 64px;
-  height: 64px;
+  width: 150px;
+  height: 150px;
 
   #eVgZOIfRPKw4 {
-    animation: eVgZOIfRPKw4_c_o 1000ms linear infinite normal forwards;
+    animation: eVgZOIfRPKw4_c_o 1500ms linear infinite normal forwards;
   }
   @keyframes eVgZOIfRPKw4_c_o {
     0% {
@@ -25,7 +25,7 @@ export const PawLoaderContainerSVG = styled.svg`
     }
   }
   #eVgZOIfRPKw5 {
-    animation: eVgZOIfRPKw5_c_o 1000ms linear infinite normal forwards;
+    animation: eVgZOIfRPKw5_c_o 1500ms linear infinite normal forwards;
   }
   @keyframes eVgZOIfRPKw5_c_o {
     0% {
@@ -51,7 +51,7 @@ export const PawLoaderContainerSVG = styled.svg`
     }
   }
   #eVgZOIfRPKw6 {
-    animation: eVgZOIfRPKw6_c_o 1000ms linear infinite normal forwards;
+    animation: eVgZOIfRPKw6_c_o 1500ms linear infinite normal forwards;
   }
   @keyframes eVgZOIfRPKw6_c_o {
     0% {
@@ -77,7 +77,7 @@ export const PawLoaderContainerSVG = styled.svg`
     }
   }
   #eVgZOIfRPKw7 {
-    animation: eVgZOIfRPKw7_c_o 1000ms linear infinite normal forwards;
+    animation: eVgZOIfRPKw7_c_o 1500ms linear infinite normal forwards;
   }
   @keyframes eVgZOIfRPKw7_c_o {
     0% {
@@ -103,7 +103,7 @@ export const PawLoaderContainerSVG = styled.svg`
     }
   }
   #eVgZOIfRPKw8 {
-    animation: eVgZOIfRPKw8_c_o 1000ms linear infinite normal forwards;
+    animation: eVgZOIfRPKw8_c_o 1500ms linear infinite normal forwards;
   }
   @keyframes eVgZOIfRPKw8_c_o {
     0% {
