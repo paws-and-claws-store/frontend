@@ -11,8 +11,13 @@ export const CatalogContainer = styled.div`
   span {
     display: flex;
     align-items: center;
-    gap: ${theme.spacing.step * 8}px;
+    gap: ${theme.spacing.step * 2}px;
     text-align: center;
+
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 20px;
   }
 `;
 
@@ -40,12 +45,14 @@ export const AsideCatalog = styled.aside`
 
 export const PetButton = styled.button`
   position: relative;
-  /* z-index: 10; */
+  ${props => props.active && 'z-index: 10;'}
   padding: ${theme.spacing.step + 2}px ${theme.spacing.step * 2}px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   width: 100%;
+  height: 44px;
+  width: 304px;
   background-color: ${theme.colors.secGreen};
 
   border: 1px solid ${theme.colors.green};
