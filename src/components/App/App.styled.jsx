@@ -1,10 +1,10 @@
 import styled from '@emotion/styled';
 
 export const Hidden = styled.div`
-  visibility: hidden;
-
+  /* visibility: hidden; */
+  display: none;
   width: 100vw;
-  height: 100vh;
+  height: 300vh;
   background-color: black;
   opacity: 0.2;
 
@@ -14,7 +14,8 @@ export const Hidden = styled.div`
   z-index: 6;
 
   &.isHidden {
-    visibility: visible;
+    /* visibility: visible; */
+    display: block;
   }
 `;
 

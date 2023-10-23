@@ -59,7 +59,7 @@ export const ProductCard = () => {
               justifyContent: 'end',
             }}
           >
-            <ImageContainer >
+            <ImageContainer>
               <ProductDetailsCarousel id={id} image={product.mainImage} />
             </ImageContainer>
             <div>

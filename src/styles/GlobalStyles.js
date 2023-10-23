@@ -19,6 +19,10 @@ export const GlobalStyles = css`
     font-style: normal;
   }
 
+  body.scroll-lock {
+    overflow: hidden;
+  }
+
   h1,
   h2,
   h3,
