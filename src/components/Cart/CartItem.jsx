@@ -1,18 +1,28 @@
 import {
-  BTNDec,
-  BTNInc,
+  //   BTNDec,
+  //   BTNInc,
   PriceBox,
   PriceSt,
-  QTYBox,
+  //   QTYBox,
   SymbolCurrency,
 } from 'components';
 import { displaySize } from 'helpers';
-import React from 'react';
+import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { removeCartItem, updateCartItem } from 'redux/cartSlice';
 import { theme } from 'styles';
-import { TotalQuantity } from './CartItem.styled';
+import {
+  BtnIncrement,
+  ProdTitle,
+  QuintityInput,
+  QuintityInputWrapper,
+  QuntityContainer,
+  ShortDesc,
+  TotalQuantity,
+} from './CartItem.styled';
 import { CrossToDelete } from 'components/Icons';
+import { Link } from 'react-router-dom';
+import { BtnDecrement } from 'components/ProductCard/QuntityProduct/QuntityProduct.styled';
 
 export const CartItem = ({ prod }) => {
   const {
@@ -27,9 +37,9 @@ export const CartItem = ({ prod }) => {
     shortDescription,
     size,
   } = prod;
-  console.log('prod:', prod);
 
   const dispatch = useDispatch();
+  const [isFocused, setIsFocused] = useState(false);
 
   // Функція для розрахунку суми по товару
   const calculateItemTotal = item => {
@@ -71,6 +81,10 @@ export const CartItem = ({ prod }) => {
     }
 
     const newCount = Number(e.target.value);
+
+    if (newCount > count)
+      return dispatch(updateCartItem({ productCode, newCount: count }));
+
     if (newCount < 1) {
       return;
     }
@@ -79,14 +93,50 @@ export const CartItem = ({ prod }) => {
     dispatch(updateCartItem({ productCode, newCount }));
   };
 
+  const handleBlur = () => {
+    setIsFocused(false);
+  };
+
+  const handleKeyPres = e => {
+    console.log('e.key', e.key);
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      setIsFocused(true);
+    }
+  };
+
   return (
-    <div style={{ display: 'flex', gap: '30px', alignItems: 'center' }}>
+    <div
+      style={{
+        display: 'flex',
+        gap: '10px',
+        alignItems: 'center',
+      }}
+    >
       <div style={{ display: 'flex' }}>
-        <div style={{ width: '196px' }}>
-          <img src={mainImage} alt={productName} />
+        <div
+          style={{
+            outline: '1px solid black',
+            width: '196px',
+          }}
+        >
+          <img
+            style={{ objectFit: 'cover' }}
+            src={mainImage}
+            alt={productName}
+          />
         </div>
-        <div>
-          <h2>{productName}</h2>
+        <div
+          style={{
+            width: '512px',
+            marginLeft: '20px',
+            outline: '1px solid green',
+          }}
+          className="prodname"
+        >
+          <Link>
+            <ProdTitle>{productName}</ProdTitle>
+          </Link>
           <p>{productCode}</p>
           <p
             style={{
@@ -96,7 +146,7 @@ export const CartItem = ({ prod }) => {
           >
             {brand}
           </p>
-          <p>{shortDescription}</p>
+          <ShortDesc>{shortDescription}</ShortDesc>
           <p>{displaySize(size)}</p>
           {sale ? (
             <PriceBox>
@@ -119,8 +169,9 @@ export const CartItem = ({ prod }) => {
           )}
         </div>
       </div>
-      <QTYBox
-        style={{ marginLeft: '200px' }}
+
+      {/* <QTYBox
+        style={{ marginLeft: '20px' }}
 
         // onSubmit={onSubmitCardHandler}
       >
@@ -142,7 +193,42 @@ export const CartItem = ({ prod }) => {
           <span>+</span>
         </BTNInc>
         <button type="submit" style={{ display: 'none' }}></button>
-      </QTYBox>
+      </QTYBox> */}
+
+      <QuntityContainer>
+        <QuintityInputWrapper>
+          <QuintityInput
+            value={cardCount}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            onFocus={() => setIsFocused(true)}
+            style={{ borderColor: isFocused ? '#e68314' : '#cac299' }}
+            type="text"
+            inputMode="numeric"
+            pattern="[0-9]*"
+            id="calc"
+            onKeyDown={handleKeyPres}
+          />
+
+          <BtnDecrement
+            onClick={handleDecrement}
+            type="button"
+            aria-label="decrement"
+            // disabled={cardCount < 2}
+          >
+            -
+          </BtnDecrement>
+
+          <BtnIncrement
+            onClick={handleIncrement}
+            type="button"
+            aria-label="increment"
+          >
+            +
+          </BtnIncrement>
+        </QuintityInputWrapper>
+      </QuntityContainer>
+
       <TotalQuantity>{itemTotal.toFixed(2)} ₴</TotalQuantity>
       <button onClick={handleDelete}>
         <CrossToDelete />
