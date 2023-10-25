@@ -1,5 +1,10 @@
 import React from 'react';
-import { BtnBackToCatalog, CartContainer, TitleCart } from './Cart.styled';
+import {
+  BtnBackToCatalog,
+  CartContainer,
+  ListItems,
+  TitleCart,
+} from './Cart.styled';
 import Img from '../images/Travel_bag.png';
 import { useSelector } from 'react-redux';
 import { selectCartStore } from 'redux/selectors';
@@ -7,21 +12,13 @@ import { CartItem } from 'components';
 
 export const Cart = () => {
   const cartStore = useSelector(selectCartStore);
-  console.log('cardCountRedux:', cartStore);
 
   return (
     <>
       {cartStore.length > 0 ? (
         <div>
           <TitleCart>Кошик</TitleCart>
-          <ul
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '24px',
-              marginTop: '48px',
-            }}
-          >
+          <ListItems>
             {cartStore.map(prod => {
               return (
                 <li key={prod.productCode}>
@@ -29,7 +26,7 @@ export const Cart = () => {
                 </li>
               );
             })}
-          </ul>
+          </ListItems>
         </div>
       ) : (
         <CartContainer>

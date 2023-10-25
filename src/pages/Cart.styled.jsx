@@ -46,3 +46,10 @@ export const BtnBackToCatalog = styled(Link)`
     border-color: ${theme.colors.orange};
   }
 `;
+
+export const ListItems = styled.ul`
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin-top: 40px;
+`;

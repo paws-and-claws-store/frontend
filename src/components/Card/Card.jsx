@@ -121,7 +121,6 @@ export const Card = ({ el, onClick }) => {
 
   const dispatch = useDispatch();
   const cardCountRedux = useSelector(selectCartStore);
-  console.log('cardCountRedux:', cardCountRedux);
 
   const [elType, setElType] = useState(el.items[0]);
   const { productCode } = elType;
