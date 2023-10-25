@@ -14,7 +14,14 @@ export const Cart = () => {
       {cartStore.length > 0 ? (
         <div>
           <TitleCart>Кошик</TitleCart>
-          <ul>
+          <ul
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '24px',
+              marginTop: '48px',
+            }}
+          >
             {cartStore.map(prod => {
               return (
                 <li key={prod.productCode}>
