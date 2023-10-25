@@ -124,6 +124,17 @@ export const SubmitButton = styled.button`
   }
 `;
 
+export const InCartButton = styled.button`
+  padding: 16px 58px;
+  background-color: ${theme.colors.green};
+  border-radius: 40px;
+  font-size: ${theme.fontSizes.xl};
+  font-weight: ${theme.fontWeight.Medium};
+  line-height: ${theme.lineHeight.xl};
+  color: ${theme.colors.beige};
+  transition: background-color 0.3s;
+`;
+
 export const PriceBox = styled.div`
   display: grid;
   /* flex-wrap: wrap; */

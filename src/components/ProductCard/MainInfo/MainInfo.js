@@ -21,7 +21,7 @@ import {
 import QuntityProduct from '../QuntityProduct/QuntityProduct';
 
 const MainInfo = ({ product }) => {
-  const { brand, productName, shortDescription, _country, items, favorite } = product;
+  const { brand, productName, shortDescription, _country, items, favorite, mainImage, } = product;
   const [prodType, setProdType] = useState(items[0]);
   const [fav, setFavorite] = useState(favorite || false);
 
@@ -132,7 +132,7 @@ const MainInfo = ({ product }) => {
           prodType={prodType}
           changePropType={changePropType}
         />
-        <QuntityProduct prodType={prodType} inStock={inStock} />
+        <QuntityProduct prodType={prodType} prodDescription={{brand, mainImage, productName, shortDescription}} inStock={inStock} />
       </div>
     </CardContainer>
   );

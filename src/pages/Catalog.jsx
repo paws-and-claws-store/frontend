@@ -23,6 +23,7 @@ export const Catalog = () => {
     isLoading,
     isFetching,
   } = useFetchAllProductsQuery(currentPage);
+    console.log("response:", response)
 
   useEffect(() => {
     async function fetchInitialData() {

@@ -351,7 +351,7 @@ export const Card = ({ el, onClick }) => {
                 minLength={1}
                 maxLength={3}
                 size={3}
-                // pattern="[0-9]*"
+                pattern="[0-9]*"
                 onChange={handleChange}
                 value={cardCount}
               />

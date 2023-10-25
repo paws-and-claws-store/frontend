@@ -7,86 +7,95 @@ import {
   BtnIncrement,
   CountContainer,
   SubmitButton,
+  InCartButton,
   ChangeQuntityLabel,
   PriceBox,
   PriceSt,
   SymbolCurrency,
   TextOutOfStock,
 } from './QuntityProduct.styled';
-import { setCartItems } from 'redux/cartSlice';
+import { addCartItem, updateCartItem } from 'redux/cartSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectCartStore } from 'redux/selectors';
 
-const QuntityProduct = ({ inStock, prodType }) => {
-
+const QuntityProduct = ({ inStock, prodType, prodDescription }) => {
   const [quintity, setQuintity] = useState(1);
-  const [productPrice, setProductPrice] = useState(0);
   const [isFocused, setIsFocused] = useState(false);
+  const [inCart, setInCart] = useState(false);
   const cardCountRedux = useSelector(selectCartStore);
-  const [inCart] = useState(cardCountRedux.hasOwnProperty(prodType.productCode));
-  console.log("inCart:", inCart);
-  
-  console.log("cardCountRedux:", cardCountRedux.hasOwnProperty(prodType.productCode))
-  const dispatch = useDispatch();
 
-  
+  const dispatch = useDispatch();
+  const productCode = prodType.productCode;
 
   useEffect(() => {
-    setProductPrice(prodType.sale || prodType.price);
-    setQuintity(1);
-    setIsFocused(false)
-  }, [prodType]);
+    const productCount = cardCountRedux?.find(
+      item => item.productCode === productCode,
+    );
+    if (productCount) {
+      setQuintity(productCount.cardCount);
+      setInCart(true);
+    } else {
+      setQuintity(1);
+      setInCart(false)
+    }
+
+    setIsFocused(false);
+  }, [productCode, cardCountRedux]);
 
   const increment = () => {
-    setQuintity(prev => prev = parseInt(prev) + 1);
-    if (prodType.sale) {
-      setProductPrice(prevPrice => (prevPrice += prodType.sale));
-    } else {
-      setProductPrice(prevPrice => (prevPrice += prodType.price));
+    setQuintity(prev => (prev = parseInt(prev) + 1));
+    if (inCart) {
+      dispatch(updateCartItem({ productCode, newCount: Number(quintity) + 1 }));
     }
   };
 
   const decrement = () => {
-    setQuintity(prev => prev = parseInt(prev) - 1);
-    if (prodType.sale) {
-      setProductPrice(prevPrice => (prevPrice -= prodType.sale));
-    } else {
-      setProductPrice(prevPrice => (prevPrice -= prodType.price));
+    setQuintity(prev => (prev = parseInt(prev) - 1));
+    if (inCart) {
+      dispatch(updateCartItem({ productCode, newCount: Number(quintity) - 1 }));
     }
   };
 
-  const hendleInputChange = (e) => {
-    const newQuintity = isNaN(e.currentTarget.value) ? 1 : e.currentTarget.value;
+  const hendleInputChange = e => {
+    const newQuintity = isNaN(e.currentTarget.value)
+      ? 1
+      : e.currentTarget.value;
 
     setQuintity(newQuintity);
-    if (prodType.sale) {
-      setProductPrice(prodType.sale * newQuintity);
-    } else {
-      setProductPrice(prodType.price * newQuintity);
-    }
-    
   };
 
   const handleBlur = () => {
-    if( Number(quintity) === 0 || quintity === ''){
-        alert('Enter the required quantity')
-        setQuintity(1)
-        setProductPrice(prodType.sale || prodType.price)
-        setIsFocused(true)
-      }
+    if (Number(quintity) === 0) {
+      setQuintity(1);
+      setIsFocused(true);
+    }
   };
 
-  const handleKeyPres = (e) => {
-    if(e.key === 'Enter'){
+  const handleKeyPres = e => {
+    if (e.key === 'Enter') {
       e.preventDefault();
       setIsFocused(true);
     }
   };
 
-  const handleClick = () => {
-    const presentProductCode = prodType.productCode;
-    dispatch(setCartItems([presentProductCode, Number(quintity)]));
+  const handleClickBuy = () => {
+    dispatch(
+      addCartItem({
+        brand: prodDescription.brand,
+        mainImage: prodDescription.mainImage,
+        productName: prodDescription.productName,
+        shortDescription: prodDescription.shortDescription,
+        count: prodType.count,
+        productCode: prodType.productCode,
+        price: prodType.price,
+        sale: prodType.sale,
+        size: prodType.size,
+        cardCount: quintity,
+      }),
+    );
   };
+
+  const handleClickInCart = () => {};
 
   return (
     <form>
@@ -98,10 +107,11 @@ const QuntityProduct = ({ inStock, prodType }) => {
               value={quintity}
               onChange={hendleInputChange}
               onBlur={handleBlur}
-              onFocus={()=>setIsFocused(true)}
-              style={{borderColor: isFocused ? '#e68314' : '#cac299'}}
+              onFocus={() => setIsFocused(true)}
+              style={{ borderColor: isFocused ? '#e68314' : '#cac299' }}
               type="text"
-              inputMode='numeric'
+              inputMode="numeric"
+              pattern="[0-9]*"
               id="calc"
               onKeyDown={handleKeyPres}
             />
@@ -122,7 +132,6 @@ const QuntityProduct = ({ inStock, prodType }) => {
             >
               +
             </BtnIncrement>
-
           </QuintityInputWrapper>
         </QuntityContainer>
       )}
@@ -136,7 +145,7 @@ const QuntityProduct = ({ inStock, prodType }) => {
         ) : prodType.sale ? (
           <PriceBox>
             <PriceSt>
-              {productPrice.toFixed(2)}
+              {prodType.sale.toFixed(2)}
 
               <SymbolCurrency>₴</SymbolCurrency>
             </PriceSt>
@@ -153,16 +162,26 @@ const QuntityProduct = ({ inStock, prodType }) => {
         ) : (
           <PriceBox>
             <PriceSt>
-              {productPrice.toFixed(2)}
+              {prodType.price.toFixed(2)}
 
               <SymbolCurrency>₴</SymbolCurrency>
             </PriceSt>
           </PriceBox>
         )}
 
-        <SubmitButton disabled={inStock ? false : true} type="button" onClick={handleClick}>
-          Купити
-        </SubmitButton>
+        {inCart ? (
+          <InCartButton type="button" onClick={handleClickInCart}>
+            У кошику
+          </InCartButton>
+        ) : (
+          <SubmitButton
+            disabled={inStock ? false : true}
+            type="button"
+            onClick={handleClickBuy}
+          >
+            Купити
+          </SubmitButton>
+        )}
       </CountContainer>
     </form>
   );
