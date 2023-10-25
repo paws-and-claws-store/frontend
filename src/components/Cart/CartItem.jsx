@@ -1,11 +1,4 @@
-import {
-  //   BTNDec,
-  //   BTNInc,
-  PriceBox,
-  PriceSt,
-  //   QTYBox,
-  SymbolCurrency,
-} from 'components';
+import { PriceBox, PriceSt, SymbolCurrency } from 'components';
 import { displaySize } from 'helpers';
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
@@ -169,31 +162,6 @@ export const CartItem = ({ prod }) => {
           )}
         </div>
       </div>
-
-      {/* <QTYBox
-        style={{ marginLeft: '20px' }}
-
-        // onSubmit={onSubmitCardHandler}
-      >
-        <BTNDec name="decrement" onClick={handleDecrement} type="button">
-          <span>-</span>
-        </BTNDec>
-        <input
-          // id={el._id}
-          type="text"
-          minLength={1}
-          maxLength={3}
-          size={3}
-          pattern="[0-9]*"
-          onChange={handleChange}
-          // onBlur={handleChange}
-          value={cardCount}
-        />
-        <BTNInc name="increment" onClick={handleIncrement} type="button">
-          <span>+</span>
-        </BTNInc>
-        <button type="submit" style={{ display: 'none' }}></button>
-      </QTYBox> */}
 
       <QuntityContainer>
         <QuintityInputWrapper>
