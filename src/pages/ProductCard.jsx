@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Outlet, useParams } from 'react-router-dom';
 import Reviews from 'components/ProductDetailsCarousel/Reviews/Reviews';
 import { fetchOneProduct } from 'services/api';
-import { ProductDetailsCarousel } from 'components/ProductDetailsCarousel/ProductCarousel';
+import { ProductDetailsCarousel } from 'components/ProductDetailsCarousel/ProductCarousel/ProductCarousel';
 import {
   CardContainer,
   ImageContainer,

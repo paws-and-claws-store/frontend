@@ -7,7 +7,7 @@ import {
   BtnIncrement,
   CountContainer,
   SubmitButton,
-  InCartButton,
+  InCartLink,
   ChangeQuntityLabel,
   PriceBox,
   PriceSt,
@@ -45,27 +45,30 @@ const QuntityProduct = ({ inStock, prodType, prodDescription }) => {
   const increment = () => {
     setQuintity(prev => (prev = parseInt(prev) + 1));
     if (inCart) {
-      dispatch(updateCartItem({ productCode, newCount: Number(quintity) + 1 }));
+      dispatch(updateCartItem({ productCode, newCount: quintity + 1 }));
     }
   };
 
   const decrement = () => {
     setQuintity(prev => (prev = parseInt(prev) - 1));
     if (inCart) {
-      dispatch(updateCartItem({ productCode, newCount: Number(quintity) - 1 }));
+      dispatch(updateCartItem({ productCode, newCount: quintity - 1 }));
     }
   };
 
   const hendleInputChange = e => {
-    const newQuintity = isNaN(e.currentTarget.value)
-      ? 1
-      : e.currentTarget.value;
+    if (!e.target.validity.valid) {
+      return;
+    }
+    // const newQuintity = isNaN(e.currentTarget.value)
+    //   ? 1
+    //   : e.currentTarget.value;
 
-    setQuintity(newQuintity);
+    setQuintity(Number(e.currentTarget.value));
   };
 
   const handleBlur = () => {
-    if (Number(quintity) === 0) {
+    if (quintity === 0) {
       setQuintity(1);
       setIsFocused(true);
     }
@@ -94,8 +97,6 @@ const QuntityProduct = ({ inStock, prodType, prodDescription }) => {
       }),
     );
   };
-
-  const handleClickInCart = () => {};
 
   return (
     <form>
@@ -170,9 +171,9 @@ const QuntityProduct = ({ inStock, prodType, prodDescription }) => {
         )}
 
         {inCart ? (
-          <InCartButton type="button" onClick={handleClickInCart}>
+          <InCartLink to="/cart" >
             У кошику
-          </InCartButton>
+          </InCartLink>
         ) : (
           <SubmitButton
             disabled={inStock ? false : true}

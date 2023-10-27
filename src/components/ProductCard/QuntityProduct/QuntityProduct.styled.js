@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { NavLink } from 'react-router-dom';
 import { theme } from 'styles';
 
 export const QuntityContainer = styled.div`
@@ -124,7 +125,7 @@ export const SubmitButton = styled.button`
   }
 `;
 
-export const InCartButton = styled.button`
+export const InCartLink = styled(NavLink)`
   padding: 16px 58px;
   background-color: ${theme.colors.green};
   border-radius: 40px;

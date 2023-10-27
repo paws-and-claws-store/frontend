@@ -47,7 +47,14 @@ export const ProductDetailsCarousel = ({ id, image }) => {
           style={imgArray.length > 5 ? null : { justifyContent: 'center' }}
         >
           {imgArray.map((img, index) => (
-            <ImgWrapper key={index} onClick={() => handleImageClick(index)}>
+            <ImgWrapper 
+            key={index} 
+            onClick={() => handleImageClick(index)} 
+            tabIndex={0}
+            // onFocus={()=>setActiveCard(true)} 
+            // onBlur={()=>setActiveCard(false)}
+            // style={{borderColor: activeCard&&currentImage===index ? theme.colors.orange : theme.colors.green}}
+            >
               <Img src={img} alt="Image" />
             </ImgWrapper>
           ))}
