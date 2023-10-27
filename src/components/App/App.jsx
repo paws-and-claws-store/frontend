@@ -1,6 +1,3 @@
-import ProductComments from 'components/ProductDetailsCarousel/ProductComments/ProductComments';
-import ProductComposition from 'components/ProductDetailsCarousel/ProductComposition/ProductComposition';
-import ProductDescription from 'components/ProductDetailsCarousel/ProductDescription/ProductDescription';
 import SharedLayout from 'components/SharedLayout/SharedLayout';
 import {
   AboutUs,
@@ -56,9 +53,9 @@ export const App = () => {
             path="catalog/:pet/:category/:productType/:id"
             element={<ProductCard />}
           >
-            <Route path="description" element={<ProductDescription />} />
+            {/* <Route path="description" element={<ProductDescription />} />
             <Route path="composition" element={<ProductComposition />} />
-            <Route path="comments" element={<ProductComments />} />
+            <Route path="comments" element={<ProductComments />} /> */}
           </Route>
 
           <Route path="prices-drop" element={<PricesDrop />} />
