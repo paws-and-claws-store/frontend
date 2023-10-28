@@ -64,8 +64,11 @@ export const SearchFilter = styled.div`
 
   width: 100%;
   max-height: ${props => (props.active ? '44px' : '116px')};
-  transition: max-height 0.5s;
-  background-color: ${theme.colors.secGreen};
+  /* transition: max-height 0.5s; */
+  transition-property: max-height, background-color;
+  transition-duration: 0.2s;
+  transition-timing-function: ${props => props.theme.animations.cubicBezier};
+  background-color: ${props => (props.active ? theme.colors.secGreen : theme.colors.beige)};
 
   outline: 1px solid ${theme.colors.green};
 
@@ -146,7 +149,10 @@ export const FoldedContainer = styled.div`
   width: 100%;
   display: flex;
   align-items: center;
-  background-color: #d8d4b8;
+  /* background-color: #d8d4b8; */
+  /* background-color: ${props => (props.active ? theme.colors.beige : theme.colors.secGreen)}; */
+  background-color: ${props => (props.active ? theme.colors.secGreen : theme.colors.beige)};
+  transition: background-color 0.5s;
   justify-content: space-between;
   padding: ${theme.spacing.step + 2}px ${theme.spacing.step * 2}px;
 `;

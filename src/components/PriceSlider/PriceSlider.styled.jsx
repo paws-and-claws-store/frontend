@@ -299,7 +299,7 @@ export const StyledRangeSlider = styled(Slider)`
   }
 `;
 
-export const FilterPriceRangeStyle = styled.div`
+export const PriceRangeStyle = styled.div`
   display: flex;
   align-items: end;
 
@@ -308,7 +308,7 @@ export const FilterPriceRangeStyle = styled.div`
   justify-content: center;
 `;
 
-export const FilterPriceValue = styled.div`
+export const PriceValue = styled.div`
   min-width: 22px;
   color: var(--main-orange, #e68314);
   font-variant-numeric: lining-nums proportional-nums;
@@ -321,7 +321,7 @@ export const FilterPriceValue = styled.div`
   text-transform: uppercase;
 `;
 
-export const FilterPriceCurrency = styled.span`
+export const PriceCurrency = styled.span`
   margin-left: 2px;
   color: var(--main-orange, #e68314);
   font-variant-numeric: lining-nums proportional-nums;

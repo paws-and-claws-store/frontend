@@ -15,9 +15,10 @@ import {
 import { RightArrow } from 'components/Icons';
 import { useDispatch } from 'react-redux';
 // import { setBreadCrumbs } from 'redux/breadCrumbsSlice';
-import { Filter } from 'components/Filter/Filter';
+import { PriceSlider } from 'components/PriceSlider/PriceSlider';
 import React from 'react';
 import { Title } from './Home.styled';
+import { Filter } from 'components/Filter/Filter';
 
 export const Search = () => {
   const [productsList, setProductsList] = useState([]);
@@ -110,14 +111,15 @@ export const Search = () => {
               <SearchCategoryList>
                 <ul style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
                   <li key={1}>
+                    {console.log(active)}
                     <SearchFilter active={active['price']}>
-                      <FoldedContainer>
+                      <FoldedContainer active={active['price']}>
                         <span>Ціна</span>
                         <button onClick={handleClickToggle} name="price">
-                          <RightArrow direction={active['price'] ? 'rotate(90)' : 'rotate(0)'} />
+                          <RightArrow direction={active['price'] ? 'rotate(90)' : 'rotate(-90)'} />
                         </button>
                       </FoldedContainer>
-                      <Filter active={active['price']} />
+                      <PriceSlider active={active['price']} />
                     </SearchFilter>
                   </li>
                   <li key={2}>
@@ -125,7 +127,7 @@ export const Search = () => {
                       <FoldedContainer>
                         <span>Бренди</span>
                         <button onClick={handleClickToggle} name="brands">
-                          <RightArrow direction={active['brands'] ? 'rotate(90)' : 'rotate(0)'} />
+                          <RightArrow direction={active['brands'] ? 'rotate(90)' : 'rotate(-90)'} />
                         </button>
                       </FoldedContainer>
                       <Filter active={active['brands']} />
