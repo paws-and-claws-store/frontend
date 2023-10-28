@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useRef} from 'react';
 
 import ProductComments from 'components/ProductDetailsCarousel/ProductComments/ProductComments';
 import ProductComposition from 'components/ProductDetailsCarousel/ProductComposition/ProductComposition';
@@ -12,6 +12,17 @@ import {
 
 const DetailsList = () => {
   const [productDescription, setProductDescription] = useState(true);
+
+const commentsRef = useRef(null);
+
+  const scrollToComments = () => {
+    if(commentsRef.current){
+      const elementPosition = commentsRef.current.getBoundingClientRect().top;
+      const offset = elementPosition -100;
+      window.scrollTo({top: window.scrollY+ offset, behavior: 'smooth'})
+    }
+    // commentsRef.current.scrollIntoView({behavior: 'smooth', block: 'start', blockOffset: 200,})
+  };
   const handleDescription = () => setProductDescription(true);
   const handleComposition = () => setProductDescription(false);
 
@@ -24,14 +35,14 @@ const DetailsList = () => {
         <CustomNavLink onClick={handleComposition}>
           <p>Склад</p>
         </CustomNavLink>
-        <CustomNavLink>
+        <CustomNavLink onClick={scrollToComments}>
           <p>Відгуки</p>
         </CustomNavLink>
       </InfoLinkList>
       {productDescription
       ?<ProductDescription/>
       :<ProductComposition/>}
-      {/* <ProductComments/> */}
+      <ProductComments forwardedRef = {commentsRef}/>
     </DetailsListContainer>
   );
 };

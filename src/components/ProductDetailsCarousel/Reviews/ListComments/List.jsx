@@ -1,8 +1,8 @@
 import React from 'react';
-import ReviewsItem from '../Item/ReviewsItem';
+import ReviewsItem from '../ItemComments/ReviewsItem';
 import { ReviewsList } from './List.styled';
 
-const List = () => {
+export const List = () => {
   return (
     <ReviewsList>
       <ReviewsItem />
@@ -10,4 +10,3 @@ const List = () => {
   );
 };
 
-export default List;

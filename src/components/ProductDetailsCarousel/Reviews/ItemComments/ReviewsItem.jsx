@@ -1,5 +1,5 @@
 import React from 'react';
-import { Item, Comment, Nickname, DateComment } from './Item.styled';
+import { Item, Comment, Nickname, DateComment } from './ReviewsItem.styled';
 
 const ReviewsItem = () => {
   return (
