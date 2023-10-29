@@ -62,7 +62,7 @@ export const ProductCard = () => {
               <ProductDetailsCarousel id={id} image={product.mainImage} />
             </ImageContainer>
             <div>
-              <DetailsList />
+              <DetailsList product={product}/>
               <Outlet />
               {/* <InfoLinkList>
                 <li>

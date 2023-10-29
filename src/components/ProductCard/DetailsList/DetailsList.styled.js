@@ -12,14 +12,17 @@ export const InfoLinkList = styled.div`
 `;
 
 export const CustomNavLink = styled.button`
-  font-size: ${theme.fontSizes.xl};
-  font-weight: ${theme.fontWeight.Medium};
-  line-height: ${theme.lineHeight.xxl};
-  color: ${theme.colors.green};
+  color: ${({isActive}) =>isActive? `${theme.colors.black}` : `${theme.colors.green}`};
   cursor: pointer;
   &.active,
   &:focus,
   &:hover {
     color: ${theme.colors.black};
   }
+`;
+
+export const Text = styled.p`
+  font-size: ${theme.fontSizes.xl};
+  font-weight: ${theme.fontWeight.Medium};
+  line-height: ${theme.lineHeight.xxl};
 `;

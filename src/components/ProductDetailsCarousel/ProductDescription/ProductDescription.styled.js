@@ -12,3 +12,14 @@ export const ReadAllBtn = styled.button`
 
   color: ${theme.colors.orange};
 `;
+
+
+export const DescriptionWrapper = styled.div`
+`;
+
+export const DescriptionText = styled.p`
+font-size: ${theme.fontSizes.s};
+  font-weight: ${theme.fontWeight.Light};
+  line-height: ${theme.lineHeight.l};
+  font-style: normal;
+`;
