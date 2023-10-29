@@ -24,7 +24,6 @@ export const TotalQuantity = styled.p`
 
 export const QuntityContainer = styled.div`
   /* margin-top: 20px; */
-  margin-left: 50px;
 `;
 
 export const QuintityInputWrapper = styled.div`

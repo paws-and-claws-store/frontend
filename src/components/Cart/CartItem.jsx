@@ -106,10 +106,16 @@ export const CartItem = ({ prod }) => {
         alignItems: 'center',
       }}
     >
-      <div style={{ display: 'flex' }}>
+      <div
+        style={{
+          display: 'flex',
+          // outline: '2px solid pink',
+          //  width: '736px'
+        }}
+      >
         <div
           style={{
-            outline: '1px solid black',
+            outline: `1px solid ${theme.colors.green}`,
             width: '196px',
           }}
         >
@@ -121,16 +127,13 @@ export const CartItem = ({ prod }) => {
         </div>
         <div
           style={{
-            width: '512px',
+            width: '520px',
             marginLeft: '20px',
-            outline: '1px solid green',
+            // outline: '1px solid green',
+            position: 'relative',
           }}
           className="prodname"
         >
-          <Link>
-            <ProdTitle>{productName}</ProdTitle>
-          </Link>
-          <p>{productCode}</p>
           <p
             style={{
               fontSize: '20px',
@@ -139,6 +142,10 @@ export const CartItem = ({ prod }) => {
           >
             {brand}
           </p>
+          <Link>
+            <ProdTitle>{productName}</ProdTitle>
+          </Link>
+
           <ShortDesc>{shortDescription}</ShortDesc>
           <p>{displaySize(size)}</p>
           {sale ? (
@@ -160,47 +167,53 @@ export const CartItem = ({ prod }) => {
               </PriceSt>
             </PriceBox>
           )}
+
+          <QuntityContainer>
+            <QuintityInputWrapper>
+              <QuintityInput
+                value={cardCount}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                onFocus={() => setIsFocused(true)}
+                style={{ borderColor: isFocused ? '#e68314' : '#cac299' }}
+                type="text"
+                inputMode="numeric"
+                pattern="[0-9]*"
+                id="calc"
+                onKeyDown={handleKeyPres}
+              />
+
+              <BtnDecrement
+                onClick={handleDecrement}
+                type="button"
+                aria-label="decrement"
+                // disabled={cardCount < 2}
+              >
+                -
+              </BtnDecrement>
+
+              <BtnIncrement
+                onClick={handleIncrement}
+                type="button"
+                aria-label="increment"
+              >
+                +
+              </BtnIncrement>
+            </QuintityInputWrapper>
+          </QuntityContainer>
+          <TotalQuantity>{itemTotal.toFixed(2)} ₴</TotalQuantity>
+          <button
+            style={{
+              position: 'absolute',
+              top: 0,
+              right: 0,
+            }}
+            onClick={handleDelete}
+          >
+            <CrossToDelete />
+          </button>
         </div>
       </div>
-
-      <QuntityContainer>
-        <QuintityInputWrapper>
-          <QuintityInput
-            value={cardCount}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            onFocus={() => setIsFocused(true)}
-            style={{ borderColor: isFocused ? '#e68314' : '#cac299' }}
-            type="text"
-            inputMode="numeric"
-            pattern="[0-9]*"
-            id="calc"
-            onKeyDown={handleKeyPres}
-          />
-
-          <BtnDecrement
-            onClick={handleDecrement}
-            type="button"
-            aria-label="decrement"
-            // disabled={cardCount < 2}
-          >
-            -
-          </BtnDecrement>
-
-          <BtnIncrement
-            onClick={handleIncrement}
-            type="button"
-            aria-label="increment"
-          >
-            +
-          </BtnIncrement>
-        </QuintityInputWrapper>
-      </QuntityContainer>
-
-      <TotalQuantity>{itemTotal.toFixed(2)} ₴</TotalQuantity>
-      <button onClick={handleDelete}>
-        <CrossToDelete />
-      </button>
     </div>
   );
 };

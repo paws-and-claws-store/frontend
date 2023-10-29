@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { Link } from 'react-router-dom';
 import { theme } from 'styles';
 
-export const CartContainer = styled.div`
+export const EmptyCartContainer = styled.div`
   display: flex;
   justify-content: space-between;
   margin-bottom: 250px;
@@ -47,44 +47,69 @@ export const BtnBackToCatalog = styled(Link)`
   }
 `;
 
+export const CartContainer = styled.div`
+  /* outline: 2px solid blue; */
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+
+  margin-top: 48px;
+`;
+
 export const ListItems = styled.ul`
   display: flex;
   flex-direction: column;
   gap: 24px;
-  margin-top: 40px;
 `;
 
 export const TotalAmountContainer = styled.div`
-  width: 522px;
-  border-top: 1px solid ${theme.colors.secGreen};
-  margin-left: auto;
-  margin-bottom: 355px;
+  width: 520px;
+  height: 148px;
+  padding: 20px;
+  border: 1px solid ${theme.colors.secGreen};
+`;
+
+export const Line = styled.span`
+  margin-top: 8px;
+  display: block;
+  width: 100%;
+  border: 1px solid ${theme.colors.secGreen};
+  color: ${theme.colors.orange};
 `;
 
 export const TotalAmount = styled.p`
   display: flex;
-  align-items: center;
-  gap: 35px;
+  justify-content: space-between;
+  align-items: end;
+  margin-top: 20px;
 
-  margin-top: 41px;
+  & + span {
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 24px;
+  }
+`;
+
+export const TotalAmountTitle = styled.h3`
   color: ${theme.colors.green};
   font-size: 24px;
   font-style: normal;
   font-weight: 500;
   line-height: 32px;
-
-  & span {
-    color: ${theme.colors.orange};
-  }
 `;
 
 export const TotalAmountNumber = styled.span`
+  color: ${theme.colors.orange};
+
   font-size: 40px;
   font-style: normal;
   font-weight: 600;
   line-height: normal;
 `;
 export const TotalAmountSumbol = styled.span`
+  color: ${theme.colors.orange};
+
   margin-left: 4px;
   font-size: 28px;
   font-style: normal;
@@ -123,4 +148,18 @@ export const LinkToCatalog = styled(Link)`
     color: ${theme.colors.secGreen};
     fill: ${theme.colors.secGreen};
   }
+`;
+
+export const Order = styled.button`
+  width: 324px;
+  height: 56px;
+  padding: 16px 10px;
+  border-radius: 40px;
+  border: 1px solid ${theme.colors.orange};
+
+  color: ${theme.colors.orange};
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 24px;
 `;
