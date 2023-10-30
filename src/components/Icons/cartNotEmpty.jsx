@@ -16,7 +16,7 @@ export const CartNotEmptyIcon = () => {
         ></path>
         <path
           fill="#F3ECDC"
-          stroke="#E68314"
+          stroke="#D8D4B8"
           strokeWidth="1.3"
           d="M37.811 9.846a7.658 7.658 0 11-15.315 0 7.658 7.658 0 0115.315 0z"
         ></path>
