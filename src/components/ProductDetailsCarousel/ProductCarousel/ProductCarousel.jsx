@@ -1,7 +1,6 @@
 import React, { useRef, useState } from 'react';
 // import 'react-responsive-carousel/lib/styles/carousel.min.css';
 // requires a loader
-// import { Carousel } from 'react-responsive-carousel';
 // import catalog from '../../DB/catalog.json';
 // import product from '../../DB/products.json';
 // import { useParams } from 'react-router-dom';
@@ -20,14 +19,12 @@ import {
 } from './ProductCarusel.styled';
 import { CreateDownMini } from 'components/Icons/CreateDownMini';
 
-export const ProductDetailsCarousel = ({ id, image }) => {
-  const imgArray = [image, image, image, image, image, image, image];
+export const ProductDetailsCarousel = ({ id, mainImage, images }) => {
 
-  const [currentImage, setCurrentImage] = useState(0);
-  console.log('currentImage:', currentImage);
+  const [currentImage, setCurrentImage] = useState(mainImage);
 
-  const handleImageClick = ind => {
-    setCurrentImage(ind);
+  const handleImageClick = img => {
+    setCurrentImage(img);
   };
 
   let imageContainerRef = useRef(null);
@@ -38,7 +35,7 @@ export const ProductDetailsCarousel = ({ id, image }) => {
   return (
     <CarouselContainer>
       <Slider>
-        {imgArray.length > 5 ? (
+        {images.length > 5 ? (
           <PrevImg onClick={prev}>
             <CreateDownMini />
           </PrevImg>
@@ -46,16 +43,23 @@ export const ProductDetailsCarousel = ({ id, image }) => {
 
         <SlidePanel
           ref={imageContainerRef}
-          style={imgArray.length > 5 ? null : { justifyContent: 'center' }}
+          style={images.length > 5 ? null : { justifyContent: 'center' }}
         >
-          {imgArray.map((img, index) => (
-            <ImgWrapper key={index} onClick={() => handleImageClick(index)}>
+          {images.map((img, index) => (
+            <ImgWrapper 
+            key={index} 
+            onClick={() => handleImageClick(img)} 
+            tabIndex={0}
+            // onFocus={()=>setActiveCard(true)} 
+            // onBlur={()=>setActiveCard(false)}
+            // style={{borderColor: activeCard&&currentImage===index ? theme.colors.orange : theme.colors.green}}
+            >
               <Img src={img} alt="Image" />
             </ImgWrapper>
           ))}
         </SlidePanel>
 
-        {imgArray.length > 5 ? (
+        {images.length > 5 ? (
           <NextImg onClick={next}>
             <CreateDownMini />
           </NextImg>
@@ -63,7 +67,7 @@ export const ProductDetailsCarousel = ({ id, image }) => {
       </Slider>
 
       <MainImgWrapper>
-        <MainImg src={imgArray[currentImage]} alt="img" />
+        <MainImg src={currentImage} alt="img" />
       </MainImgWrapper>
     </CarouselContainer>
   );
