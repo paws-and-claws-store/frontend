@@ -36,35 +36,45 @@ const QuntityProduct = ({ inStock, prodType, prodDescription }) => {
       setInCart(true);
     } else {
       setQuintity(1);
-      setInCart(false)
+      setInCart(false);
     }
 
     setIsFocused(false);
   }, [productCode, cardCountRedux]);
 
   const increment = () => {
-    setQuintity(prev => (prev = parseInt(prev) + 1));
+    if(quintity === prodType.count) {
+      alert(`Maximum ${ prodType.count}`)
+      setQuintity(prodType.count);
+    }else
+    {setQuintity(quintity + 1);}
+
     if (inCart) {
       dispatch(updateCartItem({ productCode, newCount: quintity + 1 }));
     }
   };
 
   const decrement = () => {
-    setQuintity(prev => (prev = parseInt(prev) - 1));
+    
+    setQuintity(quintity - 1);
     if (inCart) {
       dispatch(updateCartItem({ productCode, newCount: quintity - 1 }));
     }
   };
 
   const hendleInputChange = e => {
+    const inputValue = Number(e.currentTarget.value);
     if (!e.target.validity.valid) {
       return;
     }
-    // const newQuintity = isNaN(e.currentTarget.value)
-    //   ? 1
-    //   : e.currentTarget.value;
-
-    setQuintity(Number(e.currentTarget.value));
+    
+    if (inputValue > prodType.count) {
+      alert(`Maximum ${ prodType.count}`)
+      setQuintity(prodType.count);
+    } else {
+      setQuintity(inputValue);
+    }
+    dispatch(updateCartItem({ productCode, newCount: quintity}));
   };
 
   const handleBlur = () => {
@@ -72,12 +82,14 @@ const QuntityProduct = ({ inStock, prodType, prodDescription }) => {
       setQuintity(1);
       setIsFocused(true);
     }
+    dispatch(updateCartItem({ productCode, newCount: quintity}));
   };
 
   const handleKeyPres = e => {
     if (e.key === 'Enter') {
       e.preventDefault();
       setIsFocused(true);
+      dispatch(updateCartItem({ productCode, newCount: quintity}));
     }
   };
 
@@ -171,9 +183,7 @@ const QuntityProduct = ({ inStock, prodType, prodDescription }) => {
         )}
 
         {inCart ? (
-          <InCartLink to="/cart" >
-            У кошику
-          </InCartLink>
+          <InCartLink to="/cart">У кошику</InCartLink>
         ) : (
           <SubmitButton
             disabled={inStock ? false : true}

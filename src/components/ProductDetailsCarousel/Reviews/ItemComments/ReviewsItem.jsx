@@ -1,8 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Item, Comment, ReadAllBtn, Nickname, DateComment } from './ReviewsItem.styled';
 
 const ReviewsItem = () => {
   const [readAll, setReadAll] = useState(false);
+  const [showButton, setShowButton] = useState(false);
+
+  const commentHeigth = useRef(null);
+
+  useEffect(()=>{
+    if(commentHeigth.current.offsetHeigth >= '80px'){
+      setShowButton(true);
+    }
+  },[]);
+
+
   return (
     <>
       <Item>
@@ -21,7 +32,7 @@ const ReviewsItem = () => {
           </svg>
         </span>
 
-        <Comment>
+        <Comment ref={commentHeigth}>
           Я просто захоплений якістю цього корму для собак! Мій чотирилапий
           друг, Рекс, завжди був вибагливим стосовно їжі, але цей корм змінив
           усе. Він їсть його з таким задоволенням, начебто кожен прикладний раз
@@ -46,7 +57,7 @@ const ReviewsItem = () => {
             ></path>
           </svg>
         </span>
-        <Comment readAll={readAll}>
+        <Comment ref={commentHeigth} readAll={readAll}>
           Спробував цей корм за рекомендацією знайомого, але не був вражений.
           Моя собака, Барон, мало зацікавився ним і не показав особливого
           інтересу під час годівлі. 
@@ -79,7 +90,7 @@ const ReviewsItem = () => {
             ></path>
           </svg>
         </span>
-        <Comment readAll={readAll}>
+        <Comment ref={commentHeigth} readAll={readAll}>
           Спробував цей корм за рекомендацією знайомого, але не був вражений.
           Моя собака, Барон, мало зацікавився ним і не показав особливого
           інтересу під час годівлі. 
@@ -112,7 +123,7 @@ const ReviewsItem = () => {
             ></path>
           </svg>
         </span>
-        <Comment readAll={readAll}>
+        <Comment ref={commentHeigth} readAll={readAll}>
           Спробував цей корм за рекомендацією знайомого, але не був вражений.
           Моя собака, Барон, мало зацікавився ним і не показав особливого
           інтересу під час годівлі.
@@ -145,7 +156,7 @@ const ReviewsItem = () => {
             ></path>
           </svg>
         </span>
-        <Comment readAll={readAll}>
+        <Comment ref={commentHeigth} readAll={readAll}>
           Спробував цей корм за рекомендацією знайомого, але не був вражений.
           Моя собака, Барон, мало зацікавився ним і не показав особливого
           інтересу під час годівлі.
