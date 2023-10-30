@@ -353,6 +353,7 @@ export const Card = ({ el, onClick }) => {
                 size={3}
                 pattern="[0-9]*"
                 onChange={handleChange}
+                // onBlur={handleChange}
                 value={cardCount}
               />
               <BTNInc name="increment" onClick={handleIncrement} type="button">

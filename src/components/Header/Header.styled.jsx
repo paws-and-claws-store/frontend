@@ -115,15 +115,25 @@ export const CountContainer = styled.div`
   position: relative;
 `;
 
+export const CountWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  top: 0px;
+  right: 0px;
+`;
+
 export const Count = styled.span`
-  font-size: 12px;
+  font-size: ${props =>
+    props.countDigits > 2 ? 9 : props.countDigits > 1 ? 10 : 12}px;
+  /* font-size: 10px; */
   font-style: normal;
   font-weight: 500;
   line-height: 100%; /* 12px */
 
-  position: absolute;
-  top: 4px;
-  right: 7px;
   color: ${theme.colors.orange};
 `;
 

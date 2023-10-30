@@ -25,7 +25,7 @@ export const SearchBox = styled.div`
     font-size: ${props => props.theme.fontSizes.m};
     font-weight: ${props => props.theme.fontWeight.Light};
     line-height: 1.25; /* 125% */
-    color: ${props => props.theme.colors.green};
+    color: ${props => props.theme.colors.black};
 
     /* border-radius: ${props => props.theme.spacing.step * 10}px;
     border: 1px solid ${props => props.theme.colors.green}; */

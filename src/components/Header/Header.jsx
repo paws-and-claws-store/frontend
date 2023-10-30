@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import {
   Count,
   CountContainer,
+  CountWrapper,
   HeaderContainer,
   HeaderStyled,
   HeaderWrapper,
@@ -23,7 +24,7 @@ import {
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { selectCartStore } from 'redux/selectors';
-import { Search } from 'components/SearchBar/SearchBar';
+import { SearchBar } from 'components/SearchBar/SearchBar';
 
 // import { Search } from './Search';
 
@@ -34,6 +35,10 @@ export const Header = () => {
   const totalCount = cartStore.reduce((previousValue, { cardCount }) => {
     return previousValue + cardCount;
   }, 0);
+
+  const countDigits = number => {
+    return number.toString().length;
+  };
 
   useEffect(() => {
     window.addEventListener('scroll', () => {
@@ -68,7 +73,7 @@ export const Header = () => {
               </button>
             </form>
           </SearchBox> */}
-          <Search />
+          <SearchBar />
           <LinkWrapper>
             <button>
               <ProfileIcon />
@@ -82,7 +87,11 @@ export const Header = () => {
                 <CountContainer>
                   <CartNotEmptyIcon />
 
-                  <Count>{totalCount}</Count>
+                  <CountWrapper>
+                    <Count countDigits={countDigits(totalCount)}>
+                      {totalCount}
+                    </Count>
+                  </CountWrapper>
                 </CountContainer>
               ) : (
                 <CartIcon />

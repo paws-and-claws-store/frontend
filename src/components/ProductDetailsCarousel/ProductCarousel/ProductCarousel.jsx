@@ -20,7 +20,7 @@ import {
 import { CreateDownMini } from 'components/Icons/CreateDownMini';
 
 export const ProductDetailsCarousel = ({ id, image }) => {
-  const imgArray = [image, image, image, image, image, image];
+  const imgArray = [image, image, image, image, image, image, image];
 
   const [currentImage, setCurrentImage] = useState(0);
 
