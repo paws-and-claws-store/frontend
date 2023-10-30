@@ -6,23 +6,22 @@ export const DetailsListContainer = styled.div`
   
 `;
 
-export const InfoLinkList = styled.div`
+export const InfoButtonList = styled.div`
   display: flex;
   gap: 48px;
 `;
 
 export const CustomNavLink = styled.button`
-  color: ${({isActive}) =>isActive? `${theme.colors.black}` : `${theme.colors.green}`};
+  color: ${({isActiveDescription,isActiveComposition,isActiveComments}) =>isActiveDescription||isActiveComposition||isActiveComments ? `${theme.colors.black}` : `${theme.colors.green}`};
+  font-size: ${theme.fontSizes.xl};
+  font-weight: ${theme.fontWeight.Medium};
+  line-height: ${theme.lineHeight.xxl};
   cursor: pointer;
-  &.active,
+  
   &:focus,
   &:hover {
     color: ${theme.colors.black};
   }
 `;
 
-export const Text = styled.p`
-  font-size: ${theme.fontSizes.xl};
-  font-weight: ${theme.fontWeight.Medium};
-  line-height: ${theme.lineHeight.xxl};
-`;
+
