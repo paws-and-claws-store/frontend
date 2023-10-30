@@ -19,13 +19,12 @@ import {
 } from './ProductCarusel.styled';
 import { CreateDownMini } from 'components/Icons/CreateDownMini';
 
-export const ProductDetailsCarousel = ({ id, image }) => {
-  const imgArray = [image, image, image, image, image, image];
+export const ProductDetailsCarousel = ({ id, mainImage, images }) => {
 
-  const [currentImage, setCurrentImage] = useState(0);
+  const [currentImage, setCurrentImage] = useState(mainImage);
 
-  const handleImageClick = ind => {
-    setCurrentImage(ind);
+  const handleImageClick = img => {
+    setCurrentImage(img);
   };
 
   let imageContainerRef = useRef(null);
@@ -36,7 +35,7 @@ export const ProductDetailsCarousel = ({ id, image }) => {
   return (
     <CarouselContainer>
       <Slider>
-        {imgArray.length > 5 ? (
+        {images.length > 5 ? (
           <PrevImg onClick={prev}>
             <CreateDownMini />
           </PrevImg>
@@ -44,12 +43,12 @@ export const ProductDetailsCarousel = ({ id, image }) => {
 
         <SlidePanel
           ref={imageContainerRef}
-          style={imgArray.length > 5 ? null : { justifyContent: 'center' }}
+          style={images.length > 5 ? null : { justifyContent: 'center' }}
         >
-          {imgArray.map((img, index) => (
+          {images.map((img, index) => (
             <ImgWrapper 
             key={index} 
-            onClick={() => handleImageClick(index)} 
+            onClick={() => handleImageClick(img)} 
             tabIndex={0}
             // onFocus={()=>setActiveCard(true)} 
             // onBlur={()=>setActiveCard(false)}
@@ -60,7 +59,7 @@ export const ProductDetailsCarousel = ({ id, image }) => {
           ))}
         </SlidePanel>
 
-        {imgArray.length > 5 ? (
+        {images.length > 5 ? (
           <NextImg onClick={next}>
             <CreateDownMini />
           </NextImg>
@@ -68,7 +67,7 @@ export const ProductDetailsCarousel = ({ id, image }) => {
       </Slider>
 
       <MainImgWrapper>
-        <MainImg src={imgArray[currentImage]} alt="img" />
+        <MainImg src={currentImage} alt="img" />
       </MainImgWrapper>
     </CarouselContainer>
   );

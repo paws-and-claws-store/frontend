@@ -59,7 +59,7 @@ export const ProductCard = () => {
             }}
           >
             <ImageContainer>
-              <ProductDetailsCarousel id={id} image={product.mainImage} />
+              <ProductDetailsCarousel id={id} mainImage={product.mainImage} images={product.images}/>
             </ImageContainer>
             <div>
               <DetailsList product={product}/>

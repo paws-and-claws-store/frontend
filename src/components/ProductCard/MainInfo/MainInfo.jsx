@@ -21,7 +21,8 @@ import {
 import QuntityProduct from '../QuntityProduct/QuntityProduct';
 
 const MainInfo = ({ product }) => {
-  const { brand, productName, shortDescription, _country, items, favorite, mainImage, } = product;
+  console.log("product:", product)
+  const { brand, productName, shortDescription, _country, items, favorite, mainImage} = product;
   const [prodType, setProdType] = useState(items[0]);
   const [fav, setFavorite] = useState(favorite || false);
 
