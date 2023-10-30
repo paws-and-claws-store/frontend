@@ -162,4 +162,14 @@ export const Order = styled.button`
   font-style: normal;
   font-weight: 500;
   line-height: 24px;
+
+  &:hover,
+  &:focus {
+    color: ${theme.colors.green};
+    border-color: ${theme.colors.green};
+  }
+  &:active {
+    color: ${theme.colors.secGreen};
+    border-color: ${theme.colors.secGreen};
+  }
 `;

@@ -1,21 +1,24 @@
-import { PriceBox, PriceSt, SymbolCurrency } from 'components';
-import { displaySize } from 'helpers';
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { removeCartItem, updateCartItem } from 'redux/cartSlice';
-import { theme } from 'styles';
+import { displaySize } from 'helpers';
+
 import {
+  Brand,
+  BtnDecrement,
   BtnIncrement,
+  ImgWrapper,
+  PriceBox,
+  PriceSt,
   ProdTitle,
   QuintityInput,
   QuintityInputWrapper,
-  QuntityContainer,
   ShortDesc,
+  SymbolCurrency,
   TotalQuantity,
 } from './CartItem.styled';
 import { CrossToDelete } from 'components/Icons';
 import { Link } from 'react-router-dom';
-import { BtnDecrement } from 'components/ProductCard/QuntityProduct/QuntityProduct.styled';
 
 export const CartItem = ({ prod }) => {
   const {
@@ -91,7 +94,6 @@ export const CartItem = ({ prod }) => {
   };
 
   const handleKeyPres = e => {
-    console.log('e.key', e.key);
     if (e.key === 'Enter') {
       e.preventDefault();
       setIsFocused(true);
@@ -113,95 +115,99 @@ export const CartItem = ({ prod }) => {
           //  width: '736px'
         }}
       >
-        <div
-          style={{
-            outline: `1px solid ${theme.colors.green}`,
-            width: '196px',
-          }}
-        >
+        <ImgWrapper>
           <img
             style={{ objectFit: 'cover' }}
             src={mainImage}
             alt={productName}
           />
-        </div>
+        </ImgWrapper>
         <div
           style={{
             width: '520px',
             marginLeft: '20px',
             // outline: '1px solid green',
             position: 'relative',
+            display: 'flex',
+            flexDirection: 'column',
           }}
           className="prodname"
         >
-          <p
-            style={{
-              fontSize: '20px',
-              color: `${theme.colors.orange}`,
-            }}
-          >
-            {brand}
-          </p>
-          <Link>
-            <ProdTitle>{productName}</ProdTitle>
-          </Link>
+          <div>
+            <Brand>{brand}</Brand>
+            <Link>
+              <ProdTitle>{productName}</ProdTitle>
+            </Link>
+            <ShortDesc>{shortDescription}</ShortDesc>
+            <p>{displaySize(size)}</p>
+          </div>
 
-          <ShortDesc>{shortDescription}</ShortDesc>
-          <p>{displaySize(size)}</p>
-          {sale ? (
-            <PriceBox>
-              <PriceSt>
-                {sale.toFixed(2)}
-                <SymbolCurrency>₴</SymbolCurrency>
-              </PriceSt>
-              <PriceSt className="line-through-text">
-                {price.toFixed(2)}
-                <SymbolCurrency>₴</SymbolCurrency>
-              </PriceSt>
-            </PriceBox>
-          ) : (
-            <PriceBox>
-              <PriceSt>
-                {price.toFixed(2)}
-                <SymbolCurrency>₴</SymbolCurrency>
-              </PriceSt>
-            </PriceBox>
-          )}
+          <div style={{ marginTop: 'auto' }}>
+            {sale ? (
+              <PriceBox>
+                <PriceSt>
+                  {sale.toFixed(2)}
+                  <SymbolCurrency>₴</SymbolCurrency>
+                </PriceSt>
+                <PriceSt className="line-through-text">
+                  {price.toFixed(2)}
+                  <SymbolCurrency>₴</SymbolCurrency>
+                </PriceSt>
+              </PriceBox>
+            ) : (
+              <PriceBox>
+                <PriceSt>
+                  {price.toFixed(2)}
+                  <SymbolCurrency>₴</SymbolCurrency>
+                </PriceSt>
+              </PriceBox>
+            )}
 
-          <QuntityContainer>
-            <QuintityInputWrapper>
-              <QuintityInput
-                value={cardCount}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                onFocus={() => setIsFocused(true)}
-                style={{ borderColor: isFocused ? '#e68314' : '#cac299' }}
-                type="text"
-                inputMode="numeric"
-                pattern="[0-9]*"
-                id="calc"
-                onKeyDown={handleKeyPres}
-              />
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+              }}
+            >
+              <QuintityInputWrapper>
+                <QuintityInput
+                  value={cardCount}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  onFocus={() => setIsFocused(true)}
+                  style={{ borderColor: isFocused ? '#e68314' : '#cac299' }}
+                  type="text"
+                  inputMode="numeric"
+                  pattern="[0-9]*"
+                  id="calc"
+                  onKeyDown={handleKeyPres}
+                />
 
-              <BtnDecrement
-                onClick={handleDecrement}
-                type="button"
-                aria-label="decrement"
-                // disabled={cardCount < 2}
-              >
-                -
-              </BtnDecrement>
+                <BtnDecrement
+                  onClick={handleDecrement}
+                  type="button"
+                  aria-label="decrement"
+                  // disabled={cardCount < 2}
+                >
+                  -
+                </BtnDecrement>
 
-              <BtnIncrement
-                onClick={handleIncrement}
-                type="button"
-                aria-label="increment"
-              >
-                +
-              </BtnIncrement>
-            </QuintityInputWrapper>
-          </QuntityContainer>
-          <TotalQuantity>{itemTotal.toFixed(2)} ₴</TotalQuantity>
+                <BtnIncrement
+                  onClick={handleIncrement}
+                  type="button"
+                  aria-label="increment"
+                >
+                  +
+                </BtnIncrement>
+              </QuintityInputWrapper>
+
+              <TotalQuantity>
+                {itemTotal.toFixed(2)}
+                <span>₴</span>
+              </TotalQuantity>
+            </div>
+          </div>
           <button
             style={{
               position: 'absolute',
