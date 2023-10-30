@@ -39,7 +39,7 @@ const MainInfo = ({ product }) => {
   };
   return (
     <CardContainer style={{ position: 'sticky', top: '100px' }}>
-      <div className="prodName">
+      
         <FlexBox>
           <BrandTitle>{brand}</BrandTitle>
           <span>
@@ -70,6 +70,7 @@ const MainInfo = ({ product }) => {
 
         <ProductName>{productName}</ProductName>
         <ShortDescription>{shortDescription}</ShortDescription>
+        
         <CarCodeWrapper>
           <Rating className="reiting">
             <span>
@@ -125,16 +126,16 @@ const MainInfo = ({ product }) => {
             <InStockText>Немає в наявності</InStockText>
           </AilabilityWrapper>
         )}
-      </div>
+      
 
-      <div>
+      
         <SizeListLink
           items={items}
           prodType={prodType}
           changePropType={changePropType}
         />
         <QuntityProduct prodType={prodType} prodDescription={{brand, mainImage, productName, shortDescription}} inStock={inStock} />
-      </div>
+      
     </CardContainer>
   );
 };

@@ -6,6 +6,7 @@ export const ChooseSize = styled.p`
   font-weight: ${theme.fontWeight.Medium};
   line-height: ${theme.lineHeight.l};
   color: ${theme.colors.black};
+  margin-top: 1px;
 `;
 
 export const SizeList = styled.ul`
@@ -13,7 +14,7 @@ export const SizeList = styled.ul`
   gap: 12px;
   flex-wrap: wrap;
 
-  margin-top: 12px;
+  margin-top: 10px;
 
   & > li {
     /* padding: 4px 24px;

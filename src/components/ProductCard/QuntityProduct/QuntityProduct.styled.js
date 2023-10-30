@@ -10,7 +10,7 @@ export const QuintityInputWrapper = styled.div`
   position: relative;
   width: 156px;
 
-  margin-top: 12px;
+  margin-top: 11px;
 `;
 
 export const ChangeQuntityLabel = styled.p`
