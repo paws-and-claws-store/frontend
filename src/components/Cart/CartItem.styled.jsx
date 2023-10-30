@@ -2,15 +2,16 @@ import styled from '@emotion/styled';
 import { theme } from 'styles';
 
 export const ImgWrapper = styled.div`
+  /* filter: grayscale(0.7); */
   border: 1px solid ${theme.colors.green};
   width: 196px;
 `;
 
 export const ProdTitle = styled.h2`
-  font-size: 24px;
+  font-size: 20px;
   font-style: normal;
   font-weight: 500;
-  line-height: 32px;
+  line-height: 24px;
 `;
 
 export const Brand = styled.p`
@@ -50,6 +51,7 @@ export const TotalQuantity = styled.p`
   line-height: 32px;
 
   & span {
+    margin-left: 4px;
     font-size: 24px;
     font-style: normal;
     font-weight: 500;
@@ -136,12 +138,15 @@ export const CountContainer = styled.div`
 `;
 
 export const PriceBox = styled.div`
+  height: 36px;
+  /* outline: 1px solid black; */
   display: grid;
   /* flex-wrap: wrap; */
   align-items: center;
+  margin-bottom: 4px;
   /* width: 94px; */
 
-  & p.line-through-text {
+  & span.line-through-text {
     font-size: ${theme.fontSizes.s};
     font-weight: ${theme.fontWeight.Medium};
     line-height: 1;
@@ -152,8 +157,9 @@ export const PriceBox = styled.div`
   }
 `;
 
-export const PriceSt = styled.p`
+export const PriceSt = styled.div`
   display: flex;
+  align-items: baseline;
   color: ${props => props.theme.colors.orange};
   /* text-transform: uppercase; */
   /* font-family: 'rawline', sans-serif; */
@@ -170,5 +176,6 @@ export const SymbolCurrency = styled.span`
   line-height: ${theme.lineHeight.m};
   .line-through-text & {
     font-size: 12px;
+    color: ${theme.colors.grey};
   }
 `;

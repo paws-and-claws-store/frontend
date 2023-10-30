@@ -3,13 +3,14 @@ import { Link } from 'react-router-dom';
 import { theme } from 'styles';
 
 export const EmptyCartContainer = styled.div`
+  margin-top: 48px;
+
   display: flex;
   justify-content: space-between;
   margin-bottom: 250px;
 `;
 
 export const TitleCart = styled.h2`
-  margin-top: 48px;
   font-size: 24px;
   font-style: normal;
   font-weight: 500;
@@ -48,6 +49,11 @@ export const BtnBackToCatalog = styled(Link)`
 `;
 
 export const CartContainer = styled.div`
+  margin-top: 48px;
+  margin-bottom: 230px;
+`;
+
+export const ListContainer = styled.div`
   /* outline: 2px solid blue; */
   display: flex;
   justify-content: space-between;
@@ -59,7 +65,8 @@ export const CartContainer = styled.div`
 export const ListItems = styled.ul`
   display: flex;
   flex-direction: column;
-  gap: 24px;
+
+  row-gap: 48px;
 `;
 
 export const TotalAmountContainer = styled.div`

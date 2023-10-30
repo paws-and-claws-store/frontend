@@ -5,6 +5,7 @@ import {
   EmptyCartContainer,
   Line,
   LinkToCatalog,
+  ListContainer,
   ListItems,
   Order,
   TitleCart,
@@ -24,6 +25,11 @@ import { CaretLeftPagination } from 'components/Icons';
 export const Cart = () => {
   const cartStore = useSelector(selectCartStore);
 
+  // useEffect(() => {
+  //   // Прокручуємо сторінку до гори після завантаження сторінки
+  //   window.scrollTo(0, 0);
+  // }, []);
+
   const calculateTotalCost = () => {
     return cartStore.reduce((total, item) => {
       const itemCost = item.sale
@@ -36,9 +42,9 @@ export const Cart = () => {
   return (
     <>
       {cartStore.length > 0 ? (
-        <div>
+        <CartContainer>
           <TitleCart>Кошик</TitleCart>
-          <CartContainer>
+          <ListContainer>
             <ListItems>
               {cartStore.map(prod => {
                 return (
@@ -84,14 +90,14 @@ export const Cart = () => {
                 </div>
               </div>
             </div>
-          </CartContainer>
-        </div>
+          </ListContainer>
+        </CartContainer>
       ) : (
         <EmptyCartContainer>
           <div>
             <TitleCart>На жаль, ваш кошик порожній</TitleCart>
             <BtnBackToCatalog to={'/catalog'}>
-              Перейти в каталог
+              Перейти до каталогу
             </BtnBackToCatalog>
           </div>
           <div>
