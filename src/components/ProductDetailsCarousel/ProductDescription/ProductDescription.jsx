@@ -7,14 +7,10 @@ const ProductDescription = ({description}) => {
   return (
     <DescriptionContainer>
 
-      <DescriptionWrapper
-        style={
-          readAll
-            ? { overflow: 'auto' }
-            : { overflow: 'hidden', height: '120px' }
-        }
-      >
-        <DescriptionText>
+      <DescriptionWrapper>
+        <DescriptionText 
+        readAll={readAll}
+        >
           {description}
         </DescriptionText>
       </DescriptionWrapper>

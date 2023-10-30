@@ -6,7 +6,7 @@ const ProductComments = ({forwardedRef, reviews}) => {
   return (
     <div ref={forwardedRef}>
       <ReviewsTitle>Відгуки</ReviewsTitle>
-      <List />
+      <List reviews={reviews}/>
     </div>
   );
 };
