@@ -14,3 +14,4 @@ export * from 'components/Carousel/Carousel';
 export * from 'components/Carousel/Crousel.styled';
 export * from 'components/Loader/Loader';
 export * from 'components/Pagination/Pagination';
+export * from 'components/Cart/CartItem';
