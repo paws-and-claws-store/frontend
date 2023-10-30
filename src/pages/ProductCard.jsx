@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Outlet, useParams } from 'react-router-dom';
-import Reviews from 'components/ProductDetailsCarousel/Reviews/Reviews';
-
 import { fetchOneProduct } from 'services/api';
-import { ProductDetailsCarousel } from 'components/ProductDetailsCarousel/ProductCarousel';
+import { ProductDetailsCarousel } from 'components/ProductDetailsCarousel/ProductCarousel/ProductCarousel';
 import {
   CardContainer,
   ImageContainer,
@@ -61,10 +59,10 @@ export const ProductCard = () => {
             }}
           >
             <ImageContainer>
-              <ProductDetailsCarousel id={id} image={product.mainImage} />
+              <ProductDetailsCarousel id={id} mainImage={product.mainImage} images={product.images}/>
             </ImageContainer>
             <div>
-              <DetailsList />
+              <DetailsList product={product}/>
               <Outlet />
               {/* <InfoLinkList>
                 <li>
@@ -78,7 +76,7 @@ export const ProductCard = () => {
                 </li>
               </InfoLinkList> */}
             </div>
-            <Reviews />
+            {/* <Reviews /> */}
           </div>
 
           <CardContainer style={{ position: 'relative' }}>

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import {
   Count,
   CountContainer,
+  CountWrapper,
   HeaderContainer,
   HeaderStyled,
   HeaderWrapper,
@@ -34,6 +35,10 @@ export const Header = () => {
   const totalCount = cartStore.reduce((previousValue, { cardCount }) => {
     return previousValue + cardCount;
   }, 0);
+
+  const countDigits = number => {
+    return number.toString().length;
+  };
 
   useEffect(() => {
     window.addEventListener('scroll', () => {
@@ -80,9 +85,13 @@ export const Header = () => {
             <Link to={'/cart'}>
               {totalCount > 0 ? (
                 <CountContainer>
-                  <CartNotEmptyIcon />
+                  <CartNotEmptyIcon countDigits={countDigits(totalCount)} />
 
-                  <Count>{totalCount}</Count>
+                  <CountWrapper>
+                    <Count countDigits={countDigits(totalCount)}>
+                      {totalCount}
+                    </Count>
+                  </CountWrapper>
                 </CountContainer>
               ) : (
                 <CartIcon />

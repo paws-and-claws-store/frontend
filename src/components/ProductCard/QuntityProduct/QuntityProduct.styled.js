@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { NavLink } from 'react-router-dom';
 import { theme } from 'styles';
 
 export const QuntityContainer = styled.div`
@@ -9,7 +10,7 @@ export const QuintityInputWrapper = styled.div`
   position: relative;
   width: 156px;
 
-  margin-top: 12px;
+  margin-top: 11px;
 `;
 
 export const ChangeQuntityLabel = styled.p`
@@ -24,15 +25,21 @@ export const QuintityInput = styled.input`
   width: 156px;
   padding: 5px 22px;
   border: 1px solid ${theme.colors.green};
+  
+  transition: border-color 0.3s;
   border-radius: 40px;
   background-color: ${theme.colors.mainBackground};
 
   text-align: center;
-
+  outline: none;
   font-size: ${theme.fontSizes.xl};
   font-weight: ${theme.fontWeight.Medium};
   line-height: ${theme.lineHeight.xxl};
   color: ${theme.colors.green};
+  &:focus {
+    border-color:  ${theme.colors.orange};
+    color: ${theme.colors.orange};
+  }
 `;
 
 export const BtnDecrement = styled.button`
@@ -45,6 +52,9 @@ export const BtnDecrement = styled.button`
   font-weight: ${theme.fontWeight.Medium};
   line-height: ${theme.lineHeight.xxl};
   color: ${theme.colors.green};
+  &:hover {
+    color: ${theme.colors.orange};
+  }
 
   &:disabled {
     color: ${theme.colors.secGreen};
@@ -62,6 +72,9 @@ export const BtnIncrement = styled.button`
   font-weight: ${theme.fontWeight.Medium};
   line-height: ${theme.lineHeight.xxl};
   color: ${theme.colors.green};
+  &:hover {
+    color: ${theme.colors.orange};
+  }
 `;
 
 export const CountContainer = styled.div`
@@ -110,6 +123,17 @@ export const SubmitButton = styled.button`
     background-color: ${theme.colors.grey};
     cursor: default;
   }
+`;
+
+export const InCartLink = styled(NavLink)`
+  padding: 16px 58px;
+  background-color: ${theme.colors.green};
+  border-radius: 40px;
+  font-size: ${theme.fontSizes.xl};
+  font-weight: ${theme.fontWeight.Medium};
+  line-height: ${theme.lineHeight.xl};
+  color: ${theme.colors.beige};
+  transition: background-color 0.3s;
 `;
 
 export const PriceBox = styled.div`

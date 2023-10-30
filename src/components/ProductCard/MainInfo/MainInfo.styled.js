@@ -3,21 +3,22 @@ import { theme } from 'styles';
 
 import { ReactComponent as Heart } from '../../../svg/HeartStraight.svg';
 
-export const FlexBox = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
-  margin-bottom: 12px;
-`;
-
 export const CardContainer = styled.div`
   width: 520px;
   height: 628px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  /* justify-content: space-between; */
 `;
+
+export const FlexBox = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 2px;
+  margin-bottom: 12px;
+`;
+
 
 export const BrandTitle = styled.h2`
   font-size: ${theme.fontSizes.xl};
@@ -44,21 +45,24 @@ export const ShortDescription = styled.h4`
 
   color: ${theme.colors.black};
 
-  margin-bottom: 12px;
+  margin-bottom: 5px;
 `;
 
 export const CardCodeList = styled.ul`
+
   display: flex;
   flex-direction: column;
+  justify-content: flex-start;
   align-items: flex-end;
   gap: 12px;
 `;
 
 export const CarCodeWrapper = styled.div`
   display: flex;
+  
   align-items: baseline;
   justify-content: space-between;
-  padding-bottom: 14px;
+  padding-bottom: 16px;
   border-bottom: 1px solid ${theme.colors.secGreen};
 `;
 
@@ -75,7 +79,11 @@ export const CardCodeListItem = styled.li`
 
   color: ${theme.colors.black};
   background-color: #d8d4b8;
-  
+  & span {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
   & span:nth-of-type(n + 2) {
     margin-left: 4px;
   }
@@ -93,7 +101,7 @@ export const AilabilityWrapper = styled.div`
   display: flex;
   gap: 8px;
   margin-top: 12px;
-  /* margin-bottom: auto; */
+  margin-bottom: 124px;
   align-items: center;
 `;
 

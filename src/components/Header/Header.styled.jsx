@@ -115,15 +115,27 @@ export const CountContainer = styled.div`
   position: relative;
 `;
 
+export const CountWrapper = styled.div`
+  /* outline: 1px solid black; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  position: absolute;
+  top: 2px;
+  right: 1.5px;
+`;
+
 export const Count = styled.span`
-  font-size: 12px;
+  font-size: ${props =>
+    props.countDigits > 2 ? 8 : props.countDigits > 1 ? 10 : 12}px;
+  /* font-size: 10px; */
   font-style: normal;
   font-weight: 500;
   line-height: 100%; /* 12px */
 
-  position: absolute;
-  top: 4px;
-  right: 7px;
   color: ${theme.colors.orange};
 `;
 

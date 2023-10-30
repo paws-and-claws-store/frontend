@@ -121,7 +121,6 @@ export const Card = ({ el, onClick }) => {
 
   const dispatch = useDispatch();
   const cardCountRedux = useSelector(selectCartStore);
-  console.log('cardCountRedux:', cardCountRedux);
 
   const [elType, setElType] = useState(el.items[0]);
   const { productCode } = elType;
@@ -354,6 +353,7 @@ export const Card = ({ el, onClick }) => {
                 size={3}
                 pattern="[0-9]*"
                 onChange={handleChange}
+                // onBlur={handleChange}
                 value={cardCount}
               />
               <BTNInc name="increment" onClick={handleIncrement} type="button">
