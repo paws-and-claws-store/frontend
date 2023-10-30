@@ -35,7 +35,7 @@ export const WidthBtn = styled.button`
   border: 1px solid ${theme.colors.green};
   padding: 4px 24px;
   color: ${theme.colors.green};
-
+  box-sizing: border-box;
   font-size: 16px;
   font-style: normal;
   font-weight: 400;
