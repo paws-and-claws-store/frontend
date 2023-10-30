@@ -10,6 +10,7 @@ import {
   SharedLayoutBox,
   NavStyle,
   Link,
+  ScrollToTopOnRouteChange,
 } from 'components';
 import ScrollToTop from 'components/ScrollToTop/ScrollToTop';
 import Breadcrumbs from 'components/Breadcrumbs/BreadCrumbs';
@@ -17,6 +18,7 @@ import Breadcrumbs from 'components/Breadcrumbs/BreadCrumbs';
 const SharedLayout = () => {
   return (
     <SharedLayoutBox className="SharedLayoutBox">
+      <ScrollToTopOnRouteChange />
       <Header />
       <Section>
         <Container>

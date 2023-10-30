@@ -85,7 +85,7 @@ export const Header = () => {
             <Link to={'/cart'}>
               {totalCount > 0 ? (
                 <CountContainer>
-                  <CartNotEmptyIcon />
+                  <CartNotEmptyIcon countDigits={countDigits(totalCount)} />
 
                   <CountWrapper>
                     <Count countDigits={countDigits(totalCount)}>

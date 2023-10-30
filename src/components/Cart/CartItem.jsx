@@ -126,14 +126,20 @@ export const CartItem = ({ prod }) => {
           style={{
             width: '520px',
             marginLeft: '20px',
-            // outline: '1px solid green',
             position: 'relative',
             display: 'flex',
             flexDirection: 'column',
           }}
           className="prodname"
         >
-          <div>
+          <div
+            style={{
+              maxWidth: '412px',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '4px',
+            }}
+          >
             <Brand>{brand}</Brand>
             <Link>
               <ProdTitle>{productName}</ProdTitle>
@@ -150,7 +156,7 @@ export const CartItem = ({ prod }) => {
                   <SymbolCurrency>₴</SymbolCurrency>
                 </PriceSt>
                 <PriceSt className="line-through-text">
-                  {price.toFixed(2)}
+                  <span className="line-through-text ">{price.toFixed(2)}</span>
                   <SymbolCurrency>₴</SymbolCurrency>
                 </PriceSt>
               </PriceBox>

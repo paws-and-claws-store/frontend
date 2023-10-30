@@ -116,19 +116,21 @@ export const CountContainer = styled.div`
 `;
 
 export const CountWrapper = styled.div`
+  /* outline: 1px solid black; */
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 20px;
-  height: 20px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
   position: absolute;
-  top: 0px;
-  right: 0px;
+  top: 2px;
+  right: 1.5px;
 `;
 
 export const Count = styled.span`
   font-size: ${props =>
-    props.countDigits > 2 ? 9 : props.countDigits > 1 ? 10 : 12}px;
+    props.countDigits > 2 ? 8 : props.countDigits > 1 ? 10 : 12}px;
   /* font-size: 10px; */
   font-style: normal;
   font-weight: 500;
