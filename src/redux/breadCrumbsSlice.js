@@ -7,6 +7,7 @@ const breadCrumbsInitialState = {
     { _id: 'brands', ua: 'Бренди', en: 'Brands' },
     { _id: 'aboutUs', ua: 'Про компанію', en: 'About Us' },
     { _id: 'contacts', ua: 'Контакти', en: 'Contacts' },
+    { _id: 'search', ua: 'Результати пошуку', en: 'Search results' },
   ],
 };
 
@@ -19,9 +20,6 @@ const breadCrumbsSlice = createSlice({
       const uniqueObjArray = [...new Map(dirtyArray.map(item => [item['_id'], item])).values()];
 
       state.breadcrumbs = uniqueObjArray;
-    },
-    updateBreadCrumbs(state, action) {
-      //   state.cartObject[action.payload[0]] = action.payload[1];
     },
   },
 });
