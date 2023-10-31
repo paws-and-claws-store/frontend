@@ -3,7 +3,7 @@ import { theme } from 'styles';
 import { Link } from 'react-router-dom';
 
 export const ProductContainer = styled.div`
-  margin-top: 55px;
+  margin-top: 48px;
   display: flex;
   justify-content: space-between;
   gap: 20px;

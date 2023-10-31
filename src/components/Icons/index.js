@@ -14,3 +14,4 @@ export * from './Dog';
 export * from './cartNotEmpty';
 export * from './CaretLeftPagination';
 export * from './CaretRightPagination';
+export * from './CrossToDelete';

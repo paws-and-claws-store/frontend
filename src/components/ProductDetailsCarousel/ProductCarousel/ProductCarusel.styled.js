@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { theme } from 'styles';
 
 export const CarouselContainer = styled.div`
   display: flex;
@@ -35,15 +36,20 @@ export const ImgWrapper = styled.div`
   display: flex;
   width: 88px;
   height: 88px;
+  border: 1px solid ${theme.colors.green};
   box-sizing: border-box;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   cursor: pointer;
+  &:focus,
+  &:hover {
+    border: 1px solid ${theme.colors.orange};
+  };
 `;
 
 export const Img = styled.img`
-  border: 1px solid #b2ab73;
+width: 100%;
 `;
 
 export const SlidePanel = styled.div`

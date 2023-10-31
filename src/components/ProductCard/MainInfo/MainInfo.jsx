@@ -21,7 +21,8 @@ import {
 import QuntityProduct from '../QuntityProduct/QuntityProduct';
 
 const MainInfo = ({ product }) => {
-  const { brand, productName, shortDescription, _country, items, favorite } = product;
+  console.log("product:", product)
+  const { brand, productName, shortDescription, _country, items, favorite, mainImage} = product;
   const [prodType, setProdType] = useState(items[0]);
   const [fav, setFavorite] = useState(favorite || false);
 
@@ -38,7 +39,7 @@ const MainInfo = ({ product }) => {
   };
   return (
     <CardContainer style={{ position: 'sticky', top: '100px' }}>
-      <div className="prodName">
+      
         <FlexBox>
           <BrandTitle>{brand}</BrandTitle>
           <span>
@@ -69,6 +70,7 @@ const MainInfo = ({ product }) => {
 
         <ProductName>{productName}</ProductName>
         <ShortDescription>{shortDescription}</ShortDescription>
+        
         <CarCodeWrapper>
           <Rating className="reiting">
             <span>
@@ -124,16 +126,16 @@ const MainInfo = ({ product }) => {
             <InStockText>Немає в наявності</InStockText>
           </AilabilityWrapper>
         )}
-      </div>
+      
 
-      <div>
+      
         <SizeListLink
           items={items}
           prodType={prodType}
           changePropType={changePropType}
         />
-        <QuntityProduct prodType={prodType} inStock={inStock} />
-      </div>
+        <QuntityProduct prodType={prodType} prodDescription={{brand, mainImage, productName, shortDescription}} inStock={inStock} />
+      
     </CardContainer>
   );
 };

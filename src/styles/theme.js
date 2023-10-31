@@ -12,6 +12,7 @@ export const theme = Object.freeze({
     // secondary
     secGreen: '#D8D4B8',
     secGrey: '#D8D8D8',
+    secBlack: '#4F4F4F',
   },
   fontSizes: {
     xs: '12px',
