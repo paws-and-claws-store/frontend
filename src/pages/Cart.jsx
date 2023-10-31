@@ -26,7 +26,6 @@ export const Cart = () => {
   const cartStore = useSelector(selectCartStore);
   const [scrollY, setScrollY] = useState(0);
   const [shouldRenderComponent, setShouldRenderComponent] = useState(false);
-  console.log('shouldRenderComponent:', shouldRenderComponent);
 
   useEffect(() => {
     const handleScroll = () => {

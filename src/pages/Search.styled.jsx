@@ -3,9 +3,11 @@ import { Link } from 'react-router-dom';
 import { theme } from 'styles';
 
 export const SearchContainer = styled.div`
-  display: grid;
+  /* display: grid;
   grid-template-columns: 1fr 3fr;
-  grid-column-gap: 20px;
+  grid-column-gap: 20px; */
+  display: flex;
+  gap: 20px;
 `;
 export const UpsideSearchContainer = styled.div`
   display: grid;
@@ -87,7 +89,7 @@ export const SearchCategoryList = styled.div`
 `;
 
 export const SearchAsideCatalog = styled.aside`
-  width: ${theme.spacing.step * 76}px;
+  /* width: ${theme.spacing.step * 76}px; */
 `;
 
 export const SearchFilter = styled.div`
@@ -98,12 +100,15 @@ export const SearchFilter = styled.div`
   justify-content: space-between;
   align-items: start;
 
-  width: 100%;
+  /* width: 100%; */
+  width: ${theme.spacing.step * 76}px;
+
   max-height: ${props => (props.active ? '44px' : '116px')};
   transition-property: max-height, background-color;
   transition-duration: 0.2s;
   transition-timing-function: ${props => props.theme.animations.cubicBezier};
-  background-color: ${props => (props.active ? theme.colors.secGreen : theme.colors.beige)};
+  background-color: ${props =>
+    props.active ? theme.colors.secGreen : theme.colors.beige};
 
   outline: 1px solid ${theme.colors.green};
 
@@ -126,7 +131,8 @@ export const SearchBrands = styled.div`
   transition-property: max-height, background-color;
   transition-duration: 0.2s;
   transition-timing-function: ${props => props.theme.animations.cubicBezier};
-  background-color: ${props => (props.activeBrands ? theme.colors.secGreen : theme.colors.beige)};
+  background-color: ${props =>
+    props.activeBrands ? theme.colors.secGreen : theme.colors.beige};
 
   outline: 1px solid ${theme.colors.green};
 
