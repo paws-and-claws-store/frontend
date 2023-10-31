@@ -6,6 +6,7 @@ import {
   StyledRangeSlider,
 } from './PriceSlider.styled';
 import React, { useState } from 'react';
+import { theme } from 'styles';
 
 export const PriceSlider = ({ active }) => {
   const [state, setState] = useState({
@@ -36,7 +37,15 @@ export const PriceSlider = ({ active }) => {
       <PriceRangeStyle>
         <PriceValue>{state.value[0]} </PriceValue>
         <PriceCurrency style={{ marginRight: '12px' }}>₴</PriceCurrency>
-        <span style={{ color: '#E68314', fontSize: '16px', fontWeight: '600' }}>-</span>
+        <span
+          style={{
+            color: theme.colors.orange,
+            fontSize: theme.fontSizes.s,
+            fontWeight: theme.fontWeight.SemiBold,
+          }}
+        >
+          -
+        </span>
         <PriceValue style={{ marginLeft: '12px' }}>{state.value[1]} </PriceValue>
         <PriceCurrency>₴</PriceCurrency>
       </PriceRangeStyle>

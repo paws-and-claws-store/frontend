@@ -1,49 +1,68 @@
 import {
-  FilterPriceCurrency,
-  FilterPriceRangeStyle,
-  FilterPriceValue,
-  PriceContainer,
-  StyledRangeSlider,
+  AlphabetStyled,
+  BrandsCheckBoxContainer,
+  BrandsCheckBoxStyled,
+  CheckBoxLabelStyled,
+  CheckBoxStyled,
+  FilterContainer,
+  LetterStyled,
+  QuantityBrands,
 } from './Filter.styled';
-import React, { useState } from 'react';
+import React from 'react';
 
 export const Filter = ({ active }) => {
-  const [state, setState] = useState({
-    lowerBound: 20,
-    upperBound: 40,
-    min: 0,
-    max: 500,
-    value: [10, 50],
-  });
+  // Generates an alphabet array
+  const alphabet = [...Array(26)].map((_, i) => String.fromCharCode(i + 97));
 
-  const onSliderChange = value => {
-    log(value);
-    setState(prevState => {
-      return { ...prevState, value };
-    });
-  };
+  const brands = [
+    'Royal Canin',
+    'Royal Canin',
+    'Royal Canin',
+    'Canagan',
+    'Canagan',
+    'Royal Canin',
+    'Royal Canin',
+    'Royal Canin',
+    'Canagan',
+    'Canagan',
+    'Royal Canin',
+    'Royal Canin',
+    'Royal Canin',
+    'Canagan',
+    'Canagan',
+    'Royal Canin',
+    'Royal Canin',
+    'Royal Canin',
+    'Canagan',
+    'Canagan',
+  ];
 
   return (
-    <PriceContainer active={active}>
-      <StyledRangeSlider
-        allowCross={false}
-        value={state.value}
-        onChange={onSliderChange}
-        range
-        min={state.min}
-        max={state.max}
-      />
-      <FilterPriceRangeStyle>
-        <FilterPriceValue>{state.value[0]} </FilterPriceValue>
-        <FilterPriceCurrency style={{ marginRight: '12px' }}>₴</FilterPriceCurrency>
-        <span style={{ color: '#E68314', fontSize: '16px', fontWeight: '600' }}>-</span>
-        <FilterPriceValue style={{ marginLeft: '12px' }}>{state.value[1]} </FilterPriceValue>
-        <FilterPriceCurrency>₴</FilterPriceCurrency>
-      </FilterPriceRangeStyle>
-    </PriceContainer>
+    <FilterContainer active={active}>
+      <AlphabetStyled>
+        {alphabet.map(item => {
+          return <LetterStyled key={item}>{item.toUpperCase()}</LetterStyled>;
+        })}
+      </AlphabetStyled>
+      <BrandsCheckBoxContainer>
+        {brands.map(item => {
+          return (
+            <BrandsCheckBoxStyled key={item + Math.random()}>
+              <CheckBoxLabelStyled>
+                <CheckBoxStyled
+                  type="checkbox"
+                  name={item}
+                  onChange={e => {
+                    console.log(e.currentTarget.name);
+                  }}
+                />
+                {item}
+                <QuantityBrands>(0)</QuantityBrands>
+              </CheckBoxLabelStyled>
+            </BrandsCheckBoxStyled>
+          );
+        })}
+      </BrandsCheckBoxContainer>
+    </FilterContainer>
   );
 };
-
-function log(value) {
-  console.log(value); //eslint-disable-line
-}

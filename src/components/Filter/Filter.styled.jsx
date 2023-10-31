@@ -1,24 +1,116 @@
 import styled from '@emotion/styled';
 import Slider from 'rc-slider';
 import PAWS_SVG from '../../svg/PawPrint.svg';
+import { theme } from 'styles';
 
-export const PriceContainer = styled.div`
+export const FilterContainer = styled.div`
+  overflow: hidden;
+  overflow: scroll;
   z-index: 777;
   width: 100%;
-  height: 116px;
+  height: 500px;
   transition-property: transform;
   transition-duration: 0.2s;
-  transition-timing-function: ${props => props.theme.animations.cubicBezier};
+  transition-timing-function: ${theme.animations.cubicBezier};
 
   transform: ${props => (props.active ? 'translateY(-90px)' : null)};
-  /* transition: transform 0.5s; */
 `;
+
+export const AlphabetStyled = styled.ul`
+  display: grid;
+  grid-template-columns: repeat(13, 1fr);
+  grid-row-gap: 4px;
+  padding: 0 20px 12px 20px;
+`;
+export const LetterStyled = styled.li`
+  display: inline-block;
+  text-align: center;
+  color: ${theme.colors.green};
+  font-variant-numeric: lining-nums proportional-nums;
+  font-feature-settings: 'ss09' on;
+
+  /* content card */
+  font-family: Inter;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: 20px; /* 125% */
+`;
+export const BrandsCheckBoxContainer = styled.ul`
+  display: grid;
+  grid-template-rows: 1fr;
+  padding-left: 10px;
+`;
+export const BrandsCheckBoxStyled = styled.li`
+  /* text-align: left; */
+  display: flex;
+  margin-bottom: 8px;
+  color: ${theme.colors.black};
+  font-variant-numeric: lining-nums proportional-nums;
+  font-feature-settings: 'ss09' on;
+
+  /* content card */
+  font-family: Inter;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: 20px; /* 125% */
+`;
+
+export const CheckBoxStyled = styled.input`
+  display: grid;
+  place-content: center;
+  appearance: none;
+  background-color: inherit;
+  margin: 0;
+  color: currentColor;
+  width: 17px;
+  height: 17px;
+  border: 1px solid ${theme.colors.green};
+  border-radius: 0.1em;
+  transform: translateY(2px);
+  &::before {
+    content: '';
+    width: 0.65em;
+    height: 0.65em;
+    transform: scale(0);
+    transition: 120ms transform ease-in-out;
+    box-shadow: inset 1em 1em ${theme.colors.green};
+    transform-origin: bottom left;
+    clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+  }
+  &:checked::before {
+    transform: scale(1);
+  }
+`;
+
+export const CheckBoxLabelStyled = styled.label`
+  display: inline-grid;
+  grid-template-columns: auto auto auto;
+  grid-column-gap: 4px;
+
+  /* gap: 10px; */
+`;
+
+export const QuantityBrands = styled.span`
+  color: ${theme.colors.grey};
+  font-variant-numeric: lining-nums proportional-nums;
+  font-feature-settings: 'ss09' on;
+
+  /* content card */
+  font-family: Inter;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: 20px; /* 125% */
+`;
+
 export const StyledRangeSlider = styled(Slider)`
   position: relative;
   padding-top: 24px;
   padding-bottom: 22px;
-  margin-right: 12px;
-  margin-left: 12px;
+  /* margin-right: 12px;
+  margin-left: 12px; */
   .rc-slider {
     position: relative;
     width: 100%;
@@ -37,14 +129,14 @@ export const StyledRangeSlider = styled(Slider)`
     position: absolute;
     width: 100%;
     height: 4px;
-    background-color: #b2b2b2;
+    background-color: ${theme.colors.grey};
     border-radius: 6px;
   }
   .rc-slider-track,
   .rc-slider-tracks {
     position: absolute;
     height: 4px;
-    background-color: #e68314;
+    background-color: ${theme.colors.orange};
     border-radius: 6px;
   }
   .rc-slider-track-draggable {
@@ -55,7 +147,7 @@ export const StyledRangeSlider = styled(Slider)`
     border-bottom: 5px solid rgba(0, 0, 0, 0);
     transition-property: transform;
     transition-duration: 0.2s;
-    transition-timing-function: ${props => props.theme.animations.cubicBezier};
+    transition-timing-function: ${theme.animations.cubicBezier};
     transform: translateY(-5px);
   }
   .rc-slider-handle {
@@ -65,29 +157,23 @@ export const StyledRangeSlider = styled(Slider)`
     height: 32px;
     background-image: url(${PAWS_SVG});
     margin-top: -18px;
-    /* background-color: #fffccc;
-    border: solid 2px #e68; */
-    /* border-radius: 50%; */
+
     cursor: pointer;
     cursor: -webkit-grab;
     cursor: grab;
-    /* opacity: 0.8; */
     touch-action: pan-x;
   }
-  /* .rc-slider-handle-dragging.rc-slider-handle-dragging.rc-slider-handle-dragging {
-    border-color: #57c;
-    box-shadow: 0 0 0 5px #e68314;
-  } */
+
   .rc-slider-handle:focus {
     outline: none;
     box-shadow: none;
   }
   .rc-slider-handle:focus-visible {
     /* border-color: #2db7f5; */
-    box-shadow: 0 0 0 1px #e68314;
+    box-shadow: 0 0 0 1px ${theme.colors.orange};
   }
   .rc-slider-handle-click-focused:focus {
-    border-color: #e68314;
+    border-color: ${theme.colors.orange};
     box-shadow: unset;
   }
   .rc-slider-handle:hover {
@@ -135,7 +221,7 @@ export const StyledRangeSlider = styled(Slider)`
     cursor: pointer;
   }
   .rc-slider-dot-active {
-    border-color: #e68314;
+    border-color: ${theme.colors.orange};
   }
   .rc-slider-dot-reverse {
     margin-right: -4px;
@@ -178,7 +264,7 @@ export const StyledRangeSlider = styled(Slider)`
     border-left: 5px solid rgba(0, 0, 0, 0);
     transition-property: transform;
     transition-duration: 0.2s;
-    transition-timing-function: ${props => props.theme.animations.cubicBezier};
+    transition-timing-function: ${theme.animations.cubicBezier};
     transform: translateX(-5px);
   }
   .rc-slider-vertical .rc-slider-handle {
@@ -310,7 +396,7 @@ export const FilterPriceRangeStyle = styled.div`
 
 export const FilterPriceValue = styled.div`
   min-width: 22px;
-  color: var(--main-orange, #e68314);
+  color: ${theme.colors.orange};
   font-variant-numeric: lining-nums proportional-nums;
   font-feature-settings: 'ss09' on;
   font-family: Inter;
@@ -323,7 +409,7 @@ export const FilterPriceValue = styled.div`
 
 export const FilterPriceCurrency = styled.span`
   margin-left: 2px;
-  color: var(--main-orange, #e68314);
+  color: ${theme.colors.orange};
   font-variant-numeric: lining-nums proportional-nums;
   font-feature-settings: 'ss09' on;
 

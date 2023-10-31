@@ -3,55 +3,91 @@ import { Link } from 'react-router-dom';
 import { theme } from 'styles';
 
 export const SearchContainer = styled.div`
-  display: flex;
-  gap: ${theme.spacing.step * 5}px;
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+  grid-column-gap: 20px;
+`;
+export const UpsideSearchContainer = styled.div`
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  grid-column-gap: 20px;
+  margin-bottom: 24px;
 `;
 
-export const SearchResultsContainer = styled.div`
+export const TitleSearch = styled.h2`
+  width: 304px;
+  height: 32px;
   display: flex;
+  align-items: center;
+  font-size: ${theme.fontSizes.xl};
+  color: ${theme.colors.black};
+  font-weight: ${theme.fontWeight.Medium};
+  font-size: ${theme.lineHeight.xxl};
+  margin-top: ${theme.spacing.step * 12}px;
+  margin-bottom: 52px;
+`;
+
+export const SearchDesriptionResults = styled.div`
+  margin-top: auto;
+  color: ${theme.colors.black};
+  font-variant-numeric: lining-nums proportional-nums;
+  font-feature-settings: 'ss09' on;
+
+  /* banner content */
+  font-family: Inter;
+  font-size: ${theme.fontSizes.s};
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px; /* 125% */
+`;
+
+export const SearchQuery = styled.span`
+  color: ${theme.colors.green};
+  font-variant-numeric: lining-nums proportional-nums;
+  font-feature-settings: 'ss09' on;
+
+  /* headlines */
+  font-family: Inter;
+  font-size: ${theme.fontSizes.s};
+  font-style: normal;
+  font-weight: 500;
+  line-height: 20px;
+`;
+export const SearchDescriptionSpan = styled.span``;
+
+export const SortingContainer = styled.div`
+  width: 304px;
+  display: flex;
+  align-items: end;
   justify-content: space-between;
 `;
 
+export const SortingSpan = styled.span`
+  margin-bottom: 10px;
+  color: ${theme.colors.green};
+  font-variant-numeric: lining-nums proportional-nums;
+  font-feature-settings: 'ss09' on;
+  /* banner content */
+  font-family: Inter;
+  font-size: ${theme.fontSizes.s};
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px; /* 125% */
+`;
+
 export const SearchCardList = styled.div`
-  display: flex;
-  flex-direction: column;
+  /* display: flex;
+  flex-direction: column; */
 `;
 
 export const SearchCategoryList = styled.div`
-  width: ${theme.spacing.step * 76}px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  gap: ${theme.spacing.step}px;
 `;
 
 export const SearchAsideCatalog = styled.aside`
-  /* outline: 1px solid black; */
-  display: block;
-  flex-grow: 25%;
-
   width: ${theme.spacing.step * 76}px;
-
-  /* .check-with-label:checked + .label-for-check {
-    font-weight: bold;
-    color: red;
-  } */
-`;
-
-export const WrapperCatalog = styled.div`
-  position: relative;
-
-  ._categories-item {
-    display: flex;
-    flex-direction: column;
-    gap: ${theme.spacing.step * 3}px;
-  }
-
-  ._variants {
-    display: flex;
-    flex-direction: column;
-    gap: ${theme.spacing.step * 2}px;
-  }
 `;
 
 export const SearchFilter = styled.div`
@@ -64,7 +100,6 @@ export const SearchFilter = styled.div`
 
   width: 100%;
   max-height: ${props => (props.active ? '44px' : '116px')};
-  /* transition: max-height 0.5s; */
   transition-property: max-height, background-color;
   transition-duration: 0.2s;
   transition-timing-function: ${props => props.theme.animations.cubicBezier};
@@ -78,22 +113,31 @@ export const SearchFilter = styled.div`
     background-color: ${theme.colors.beige};
   }
 `;
-
-export const SearchWrapperCatalog = styled.div`
+export const SearchBrands = styled.div`
+  overflow: hidden;
   position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: start;
 
-  ._categories-item {
-    display: flex;
-    flex-direction: column;
-    gap: ${theme.spacing.step * 3}px;
-  }
+  width: 100%;
+  max-height: ${props => (props.activeBrands ? '44px' : '500px')};
+  transition-property: max-height, background-color;
+  transition-duration: 0.2s;
+  transition-timing-function: ${props => props.theme.animations.cubicBezier};
+  background-color: ${props => (props.activeBrands ? theme.colors.secGreen : theme.colors.beige)};
 
-  ._variants {
-    display: flex;
-    flex-direction: column;
-    gap: ${theme.spacing.step * 2}px;
+  outline: 1px solid ${theme.colors.green};
+
+  &.active {
+    position: relative;
+    z-index: 10;
+    background-color: ${theme.colors.beige};
   }
 `;
+
+export const SearchWrapperCatalog = styled.div``;
 
 export const SearchBoxHiden = styled.div`
   display: none;
@@ -149,9 +193,6 @@ export const FoldedContainer = styled.div`
   width: 100%;
   display: flex;
   align-items: center;
-  /* background-color: #d8d4b8; */
-  /* background-color: ${props => (props.active ? theme.colors.beige : theme.colors.secGreen)}; */
-  background-color: ${props => (props.active ? theme.colors.secGreen : theme.colors.beige)};
   transition: background-color 0.5s;
   justify-content: space-between;
   padding: ${theme.spacing.step + 2}px ${theme.spacing.step * 2}px;
