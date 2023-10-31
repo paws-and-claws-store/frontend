@@ -1,8 +1,9 @@
 import React from 'react';
 
-export const RightArrow = () => {
+export const RightArrow = ({ direction = 'rotate(0)' }) => {
   return (
     <svg
+      transform={direction}
       xmlns="http://www.w3.org/2000/svg"
       width="32"
       height="32"

@@ -19,6 +19,7 @@ import {
 } from './CartItem.styled';
 import { CrossToDelete } from 'components/Icons';
 import { Link } from 'react-router-dom';
+import { Notify } from 'notiflix';
 
 export const CartItem = ({ prod }) => {
   const {
@@ -54,20 +55,25 @@ export const CartItem = ({ prod }) => {
       dispatch(updateCartItem({ productCode, newCount: cardCount - 1 }));
     } else {
       // setCardCount(null);
+      Notify.info('Товар видалено з кошика');
       dispatch(removeCartItem(productCode));
     }
   };
   const handleIncrement = () => {
     if (cardCount < count) {
       // setCardCount(cardCount - 1);
+
       dispatch(updateCartItem({ productCode, newCount: cardCount + 1 }));
     } else {
       // setCardCount(null);
+      Notify.warning('На жаль, на складі відсутня необхідна кількість товару.');
       dispatch(updateCartItem({ productCode, newCount: count }));
     }
   };
 
   const handleDelete = () => {
+    Notify.info('Товар  видалено з кошика');
+
     dispatch(removeCartItem(productCode));
   };
 
@@ -78,8 +84,10 @@ export const CartItem = ({ prod }) => {
 
     const newCount = Number(e.target.value);
 
-    if (newCount > count)
+    if (newCount > count) {
+      Notify.info('На жаль, на складі відсутня необхідна кількість товару.');
       return dispatch(updateCartItem({ productCode, newCount: count }));
+    }
 
     if (newCount < 1) {
       return;
