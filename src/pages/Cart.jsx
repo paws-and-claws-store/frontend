@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   BtnBackToCatalog,
   CartContainer,
@@ -24,11 +24,28 @@ import { CaretLeftPagination } from 'components/Icons';
 
 export const Cart = () => {
   const cartStore = useSelector(selectCartStore);
+  const [scrollY, setScrollY] = useState(0);
+  const [shouldRenderComponent, setShouldRenderComponent] = useState(false);
+  console.log('shouldRenderComponent:', shouldRenderComponent);
 
-  // useEffect(() => {
-  //   // Прокручуємо сторінку до гори після завантаження сторінки
-  //   window.scrollTo(0, 0);
-  // }, []);
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrollY(window.scrollY);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (scrollY === 0) {
+      // Якщо скрол повернувся в 0, встановити shouldRenderComponent в true
+      setShouldRenderComponent(true);
+    }
+  }, [scrollY]);
 
   const calculateTotalCost = () => {
     return cartStore.reduce((total, item) => {
@@ -39,7 +56,7 @@ export const Cart = () => {
     }, 0);
   };
 
-  return (
+  return shouldRenderComponent ? (
     <>
       {cartStore.length > 0 ? (
         <CartContainer>
@@ -106,5 +123,5 @@ export const Cart = () => {
         </EmptyCartContainer>
       )}
     </>
-  );
+  ) : null;
 };
