@@ -56,6 +56,7 @@ export const Filter = ({ active }) => {
                     console.log(e.currentTarget.name);
                   }}
                 />
+
                 {item}
                 <QuantityBrands>(0)</QuantityBrands>
               </CheckBoxLabelStyled>

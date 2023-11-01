@@ -5,7 +5,8 @@ export const List = styled.ul`
   flex-wrap: wrap;
   gap: ${props => props.theme.spacing.step * 5}px; */
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  /* grid-template-columns: 1fr 1fr 1fr 1fr; */
+  grid-template-columns: ${props => props.gridColumns};
   grid-column-gap: 20px;
   grid-row-gap: 20px;
 `;
