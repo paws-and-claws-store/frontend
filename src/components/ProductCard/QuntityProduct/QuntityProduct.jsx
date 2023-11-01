@@ -46,8 +46,9 @@ const QuntityProduct = ({ inStock, prodType, prodDescription }) => {
     if(quintity === prodType.count) {
       alert(`Maximum ${ prodType.count}`)
       setQuintity(prodType.count);
-    }else
-    {setQuintity(quintity + 1);}
+      return
+    }
+    setQuintity(quintity + 1);
 
     if (inCart) {
       dispatch(updateCartItem({ productCode, newCount: quintity + 1 }));
@@ -78,7 +79,7 @@ const QuntityProduct = ({ inStock, prodType, prodDescription }) => {
   };
 
   const handleBlur = () => {
-    if (quintity === 0) {
+    if (quintity === '') {
       setQuintity(1);
       setIsFocused(true);
     }
