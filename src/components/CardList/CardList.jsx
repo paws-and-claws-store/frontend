@@ -1,5 +1,4 @@
 import { Card } from 'components/Card/Card';
-
 import React from 'react';
 import { List, ListItem } from './CardList.styled';
 

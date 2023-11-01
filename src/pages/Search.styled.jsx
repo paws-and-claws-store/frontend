@@ -107,8 +107,7 @@ export const SearchFilter = styled.div`
   transition-property: max-height, background-color;
   transition-duration: 0.2s;
   transition-timing-function: ${props => props.theme.animations.cubicBezier};
-  background-color: ${props =>
-    props.active ? theme.colors.secGreen : theme.colors.beige};
+  background-color: ${props => (props.active ? theme.colors.secGreen : theme.colors.beige)};
 
   outline: 1px solid ${theme.colors.green};
 
@@ -131,8 +130,7 @@ export const SearchBrands = styled.div`
   transition-property: max-height, background-color;
   transition-duration: 0.2s;
   transition-timing-function: ${props => props.theme.animations.cubicBezier};
-  background-color: ${props =>
-    props.activeBrands ? theme.colors.secGreen : theme.colors.beige};
+  background-color: ${props => (props.activeBrands ? theme.colors.secGreen : theme.colors.beige)};
 
   outline: 1px solid ${theme.colors.green};
 
@@ -143,7 +141,10 @@ export const SearchBrands = styled.div`
   }
 `;
 
-export const SearchWrapperCatalog = styled.div``;
+export const SearchWrapperCatalog = styled.div`
+  /* display: grid; */
+  width: 100%;
+`;
 
 export const SearchBoxHiden = styled.div`
   display: none;

@@ -46,12 +46,7 @@ export const Search = () => {
   const [loadMoreProducts, setLoadMoreProducts] = useState([]); // Окремий стан для продуктів, завантажених через "Load More"
   const [loadMoreClicked, setLoadMoreClicked] = useState(false); // Окремий стан для слідкування за натисканням кнопки "Load More"
   const [active, setActive] = useState({ price: false, brands: false });
-  const {
-    data: response,
-    error,
-    isLoading,
-    isFetching,
-  } = useFetchAllProductsQuery(currentPage);
+  const { data: response, error, isLoading, isFetching } = useFetchAllProductsQuery(currentPage);
   // const { data } = useFetchAllStructureQuery();
   // const dispatch = useDispatch();
 
@@ -59,10 +54,7 @@ export const Search = () => {
     if (response) {
       async function fetchInitialData() {
         if (loadMoreClicked) {
-          setLoadMoreProducts(prevLoadMoreProducts => [
-            ...prevLoadMoreProducts,
-            ...response.docs,
-          ]);
+          setLoadMoreProducts(prevLoadMoreProducts => [...prevLoadMoreProducts, ...response.docs]);
           const pagination = {
             hasNextPage: response.hasNextPage,
             hasPrevPage: response.hasPrevPage,
@@ -129,15 +121,13 @@ export const Search = () => {
             <SearchDesriptionResults>
               <SearchDescriptionSpan> За запитом</SearchDescriptionSpan>
               <SearchQuery>
-                “Спробував цей корм за рекомендацією знайомого, але не був
-                вражений. Моя собака, Барон, мало зацікавився ним і не показав
-                особливого інтересу під час годівлі. Після переходу на цей корм,
-                я помітив, що його енергія знизилася цей корм за
+                “Спробував цей корм за рекомендацією знайомого, але не був вражений. Моя собака,
+                Барон, мало зацікавився ним і не показав особливого інтересу під час годівлі. Після
+                переходу на цей корм, я помітив, що його енергія знизилася цей корм за
                 рекомендацією///блаб”
               </SearchQuery>
               <SearchDescriptionSpan> знайдено</SearchDescriptionSpan>{' '}
-              <SearchQuery>103</SearchQuery>{' '}
-              <SearchDescriptionSpan>товари</SearchDescriptionSpan>
+              <SearchQuery>103</SearchQuery> <SearchDescriptionSpan>товари</SearchDescriptionSpan>
             </SearchDesriptionResults>
             <SortingContainer>
               <SortingSpan>Сортування:</SortingSpan>
@@ -167,11 +157,7 @@ export const Search = () => {
                       >
                         <span>Ціна</span>
                         <button onClick={handleClickToggle} name="price">
-                          <RightArrow
-                            direction={
-                              active['price'] ? 'rotate(90)' : 'rotate(-90)'
-                            }
-                          />
+                          <RightArrow direction={active['price'] ? 'rotate(90)' : 'rotate(-90)'} />
                         </button>
                       </FoldedContainer>
                       <PriceSlider active={active['price']} />
@@ -188,11 +174,7 @@ export const Search = () => {
                       >
                         <span>Бренди</span>
                         <button onClick={handleClickToggle} name="brands">
-                          <RightArrow
-                            direction={
-                              active['brands'] ? 'rotate(90)' : 'rotate(-90)'
-                            }
-                          />
+                          <RightArrow direction={active['brands'] ? 'rotate(90)' : 'rotate(-90)'} />
                         </button>
                       </FoldedContainer>
                       <Filter active={active['brands']} />
@@ -203,22 +185,20 @@ export const Search = () => {
             </SearchAsideCatalog>
 
             <SearchWrapperCatalog>
-              <SearchCardList>
-                <CardList
-                  productsList={
-                    currentPage === 1
-                      ? productsList
-                      : loadMoreClicked
-                      ? loadMoreProducts
-                      : productsList
-                  }
-                />
-                <Pagination
-                  paginationData={paginationData}
-                  onPageChange={onPageChange}
-                  onAddPage={onAddPage}
-                />
-              </SearchCardList>
+              <CardList
+                productsList={
+                  currentPage === 1
+                    ? productsList
+                    : loadMoreClicked
+                    ? loadMoreProducts
+                    : productsList
+                }
+              />
+              <Pagination
+                paginationData={paginationData}
+                onPageChange={onPageChange}
+                onAddPage={onAddPage}
+              />
             </SearchWrapperCatalog>
           </SearchContainer>
         </>
