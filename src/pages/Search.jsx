@@ -21,13 +21,12 @@ import {
 } from './Search.styled';
 import { RightArrow } from 'components/Icons';
 import { useSelector } from 'react-redux';
-// import { setBreadCrumbs } from 'redux/breadCrumbsSlice';
 import { PriceSlider } from 'components/PriceSlider/PriceSlider';
 import React from 'react';
 import { Filter } from 'components/Filter/Filter';
 import { SortSelect } from 'components/Filter/SortSelect';
 import { theme } from 'styles';
-import { selectSearchQueryStore } from 'redux/selectors';
+import { selectSearchQueryStore, selectSortingTypeStore } from 'redux/selectors';
 
 export const Search = () => {
   const [productsList, setProductsList] = useState([]);
@@ -44,11 +43,18 @@ export const Search = () => {
   const [loadMoreProducts, setLoadMoreProducts] = useState([]); // Окремий стан для продуктів, завантажених через "Load More"
   const [loadMoreClicked, setLoadMoreClicked] = useState(false); // Окремий стан для слідкування за натисканням кнопки "Load More"
   const [active, setActive] = useState({ price: false, brands: false });
-  // const dispatch = useDispatch();
+
   const searchQuery = useSelector(selectSearchQueryStore);
-  const { data: response, error, isLoading, isFetching } = useFetchSearchQuery(searchQuery);
-  // const { data } = useFetchAllStructureQuery();
-  // console.log('response :>> ', response);
+  const sortingType = useSelector(selectSortingTypeStore);
+  const {
+    data: response,
+    error,
+    isLoading,
+    isFetching,
+  } = useFetchSearchQuery({
+    query: searchQuery,
+    sorting: sortingType ? `&sortBy=${sortingType}` : '',
+  });
 
   useEffect(() => {
     if (response) {

@@ -3,12 +3,15 @@ import { components } from 'react-select';
 import { SelectStyled } from './SortSelect.styled';
 import { RightArrow } from 'components/Icons';
 import { theme } from 'styles';
+import { useDispatch } from 'react-redux';
+import { setValueSort } from 'redux/sortSelectSlice';
 
 export const SortSelect = () => {
+  const dispatch = useDispatch();
   const options = [
-    { value: 'спочатку дешеві', label: 'спочатку дешеві' },
-    { value: 'спочатку дорогі', label: 'спочатку дорогі' },
-    { value: 'за рейтингом', label: 'за рейтингом' },
+    { value: 'спочатку дешеві', label: 'спочатку дешеві', valueEn: 'cheap' },
+    { value: 'спочатку дорогі', label: 'спочатку дорогі', valueEn: 'expensive' },
+    { value: 'за рейтингом', label: 'за рейтингом', valueEn: 'rating' },
   ];
 
   const DropdownIndicator = props => {
@@ -30,6 +33,10 @@ export const SortSelect = () => {
     cursor: 'pointer',
   };
 
+  const onSelectHandler = e => {
+    dispatch(setValueSort(e.valueEn));
+  };
+
   return (
     <SelectStyled
       className="react-select-container"
@@ -37,6 +44,7 @@ export const SortSelect = () => {
       options={options}
       placeholder="обрати"
       //   defaultInputValue="за рейтингом"
+      onChange={onSelectHandler}
       components={{ DropdownIndicator }}
       styles={{
         control: (baseStyles, state) => ({
