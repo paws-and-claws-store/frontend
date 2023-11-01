@@ -18,6 +18,7 @@ import { Route, Routes } from 'react-router-dom';
 import { Hidden } from './App.styled';
 import { CatalogLayout } from 'components/CatalogLayout/CatalogLayout';
 import { ProductType } from 'pages/ProductType';
+import { OrderSuccessful } from 'pages/OrderSuccessful';
 
 export const App = () => {
   return (
@@ -48,6 +49,7 @@ export const App = () => {
 
           <Route path="brands" element={<Brands />} />
           <Route path="cart" element={<Cart />} />
+          <Route path="success" element={<OrderSuccessful />} />
 
           <Route
             path="catalog/:pet/:category/:productType/:id"

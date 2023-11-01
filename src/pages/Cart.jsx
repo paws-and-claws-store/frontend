@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   BtnBackToCatalog,
   CartContainer,
@@ -24,11 +24,27 @@ import { CaretLeftPagination } from 'components/Icons';
 
 export const Cart = () => {
   const cartStore = useSelector(selectCartStore);
+  const [scrollY, setScrollY] = useState(0);
+  const [shouldRenderComponent, setShouldRenderComponent] = useState(false);
 
-  // useEffect(() => {
-  //   // Прокручуємо сторінку до гори після завантаження сторінки
-  //   window.scrollTo(0, 0);
-  // }, []);
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrollY(window.scrollY);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (scrollY === 0) {
+      // Якщо скрол повернувся в 0, встановити shouldRenderComponent в true
+      setShouldRenderComponent(true);
+    }
+  }, [scrollY]);
 
   const calculateTotalCost = () => {
     return cartStore.reduce((total, item) => {
@@ -39,7 +55,32 @@ export const Cart = () => {
     }, 0);
   };
 
-  return (
+  const handleCheckout = async () => {
+    // Виконати перевірку товарів в кошику
+
+    // Відправити дані на сервер
+    try {
+      // const response = await fetch('/api/checkout', {
+      //   method: 'POST',
+      //   headers: {
+      //     'Content-Type': 'application/json',
+      //   },
+      //   body: JSON.stringify({ items: cartItems }),
+      // });
+
+      if (true) {
+        // Перенаправити на сторінку з повідомленням про успішне оформлення замовлення
+        document.location = '/frontend/success';
+      } else {
+        // Обробити помилку
+        console.error('Помилка оформлення замовлення');
+      }
+    } catch (error) {
+      console.error('Помилка відправлення запиту');
+    }
+  };
+
+  return shouldRenderComponent ? (
     <>
       {cartStore.length > 0 ? (
         <CartContainer>
@@ -86,7 +127,7 @@ export const Cart = () => {
                     <span>Повернутися до каталогу</span>
                   </LinkToCatalog>
 
-                  <Order type="submit">Оформити замовлення</Order>
+                  <Order onClick={handleCheckout}>Оформити замовлення</Order>
                 </div>
               </div>
             </div>
@@ -106,5 +147,5 @@ export const Cart = () => {
         </EmptyCartContainer>
       )}
     </>
-  );
+  ) : null;
 };
