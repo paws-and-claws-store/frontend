@@ -25,7 +25,7 @@ export const CartItem = ({ prod }) => {
   const {
     productCode,
     brand,
-    cardCount,
+    // cardCount,
     count,
     mainImage,
     price,
@@ -34,6 +34,8 @@ export const CartItem = ({ prod }) => {
     shortDescription,
     size,
   } = prod;
+
+  const [cardCount, setCardCount] = useState(prod.cardCount);
 
   const dispatch = useDispatch();
   const [isFocused, setIsFocused] = useState(false);
@@ -51,29 +53,31 @@ export const CartItem = ({ prod }) => {
 
   const handleDecrement = () => {
     if (cardCount > 1) {
-      // setCardCount(cardCount - 1);
+      setCardCount(cardCount - 1);
       dispatch(updateCartItem({ productCode, newCount: cardCount - 1 }));
     } else {
-      // setCardCount(null);
+      setCardCount(null);
       Notify.info('Товар видалено з кошика');
       dispatch(removeCartItem(productCode));
     }
   };
   const handleIncrement = () => {
     if (cardCount < count) {
-      // setCardCount(cardCount - 1);
+      setCardCount(Number(cardCount) + 1);
 
-      dispatch(updateCartItem({ productCode, newCount: cardCount + 1 }));
+      dispatch(
+        updateCartItem({ productCode, newCount: Number(cardCount) + 1 }),
+      );
     } else {
-      // setCardCount(null);
-      Notify.warning('На жаль, на складі відсутня необхідна кількість товару.');
+      setCardCount(count);
+      Notify.info('На жаль, на складі відсутня необхідна кількість товару.');
       dispatch(updateCartItem({ productCode, newCount: count }));
     }
   };
 
   const handleDelete = () => {
     Notify.info('Товар  видалено з кошика');
-
+    setCardCount(null);
     dispatch(removeCartItem(productCode));
   };
 
@@ -82,9 +86,14 @@ export const CartItem = ({ prod }) => {
       return;
     }
 
+    if (e.target.value === '') {
+      setCardCount('');
+    }
+
     const newCount = Number(e.target.value);
 
     if (newCount > count) {
+      setCardCount(count);
       Notify.info('На жаль, на складі відсутня необхідна кількість товару.');
       return dispatch(updateCartItem({ productCode, newCount: count }));
     }
@@ -93,18 +102,21 @@ export const CartItem = ({ prod }) => {
       return;
     }
 
-    // setCardCount(newCount);
+    setCardCount(newCount);
     dispatch(updateCartItem({ productCode, newCount }));
   };
 
   const handleBlur = () => {
+    if (cardCount === '')
+      Notify.warning('Мінімальна кількість для замовлення - 1 шт');
+
     setIsFocused(false);
   };
 
   const handleKeyPres = e => {
     if (e.key === 'Enter') {
       e.preventDefault();
-      setIsFocused(true);
+      setIsFocused(false);
     }
   };
 

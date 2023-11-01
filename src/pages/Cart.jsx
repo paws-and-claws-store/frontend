@@ -55,6 +55,31 @@ export const Cart = () => {
     }, 0);
   };
 
+  const handleCheckout = async () => {
+    // Виконати перевірку товарів в кошику
+
+    // Відправити дані на сервер
+    try {
+      // const response = await fetch('/api/checkout', {
+      //   method: 'POST',
+      //   headers: {
+      //     'Content-Type': 'application/json',
+      //   },
+      //   body: JSON.stringify({ items: cartItems }),
+      // });
+
+      if (true) {
+        // Перенаправити на сторінку з повідомленням про успішне оформлення замовлення
+        document.location = '/frontend/success';
+      } else {
+        // Обробити помилку
+        console.error('Помилка оформлення замовлення');
+      }
+    } catch (error) {
+      console.error('Помилка відправлення запиту');
+    }
+  };
+
   return shouldRenderComponent ? (
     <>
       {cartStore.length > 0 ? (
@@ -102,7 +127,7 @@ export const Cart = () => {
                     <span>Повернутися до каталогу</span>
                   </LinkToCatalog>
 
-                  <Order type="submit">Оформити замовлення</Order>
+                  <Order onClick={handleCheckout}>Оформити замовлення</Order>
                 </div>
               </div>
             </div>
