@@ -5,26 +5,33 @@ import { Notify } from 'notiflix';
 import { searchSchema } from './searchValidationSchema';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { resetValueSearch, setResetBoolean, setValueSearch } from 'redux/searchSlice';
-import { selectSearchQueryStore, selectSearchResetBoolean } from 'redux/selectors';
+import { setValueSearch } from 'redux/searchSlice';
+import { selectSearchQueryStore } from 'redux/selectors';
 
 export const SearchBar = ({ queryLink }) => {
   const searchQuery = useSelector(selectSearchQueryStore);
   const [searchValue, setSearchValue] = useState(
     searchQuery ? { query: searchQuery } : { query: '' },
   );
+
+  const [resetBoolean, setResetBoolean] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(setResetBoolean(false));
-  }, [dispatch]);
+    if (searchQuery !== '') {
+      setResetBoolean(true);
+      return;
+    }
+
+    // setResetBoolean(false);
+  }, [searchQuery]);
 
   const handleChage = e => {
     setSearchValue({ query: e.currentTarget.value });
-    dispatch(setResetBoolean(true));
+    setResetBoolean(true);
     if (e.currentTarget.value === '') {
-      dispatch(setResetBoolean(false));
+      setResetBoolean(false);
     }
   };
 
@@ -56,7 +63,7 @@ export const SearchBar = ({ queryLink }) => {
 
   return (
     <>
-      <SearchBox resetBoolean={useSelector(selectSearchResetBoolean)}>
+      <SearchBox resetBoolean={resetBoolean}>
         <form action="/frontend/search" onSubmit={handleSubmit}>
           <input
             type="text"
@@ -68,7 +75,7 @@ export const SearchBar = ({ queryLink }) => {
           <button
             type="reset"
             onClick={() => {
-              dispatch(resetValueSearch());
+              setResetBoolean(false);
               setSearchValue({ query: '' });
             }}
           >

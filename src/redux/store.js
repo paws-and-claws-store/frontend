@@ -29,7 +29,7 @@ const persistConfig = {
   key: 'root',
   version: 1,
   storage,
-  whitelist: ['cart', 'breadcrumbs', 'search'],
+  whitelist: ['cart', 'breadcrumbs'],
 };
 
 const persistedReducer = persistReducer(persistConfig, reducers);
