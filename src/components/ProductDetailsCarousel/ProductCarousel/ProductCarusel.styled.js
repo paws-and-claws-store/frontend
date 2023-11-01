@@ -30,6 +30,8 @@ export const MainImgWrapper = styled.div`
 export const MainImg = styled.img`
   width: 100%;
   height: 100%;
+  transition: opacity 0.5s;
+  /* transition: opacity 1s; */
 `;
 
 export const ImgWrapper = styled.div`
@@ -41,15 +43,18 @@ export const ImgWrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  transition: transform 0.7s ease;
   cursor: pointer;
   &:focus,
   &:hover {
     border: 1px solid ${theme.colors.orange};
-  };
+  }
 `;
 
+
 export const Img = styled.img`
-width: 100%;
+  width: 100%;
+  transition: opacity 0.5s;
 `;
 
 export const SlidePanel = styled.div`
@@ -61,6 +66,7 @@ export const SlidePanel = styled.div`
   overflow-y: scroll;
   scroll-snap-type: y;
   scroll-behavior: smooth;
+  transition: transform 0.7s ease;
   gap: 20px;
   &::-webkit-scrollbar {
     display: none;
@@ -71,6 +77,13 @@ export const PrevImg = styled.button`
   width: 32px;
   height: 32px;
   margin-bottom: 8px;
+  > svg{
+    fill: ${(props) => props.disabled ? 'lightgray' : theme.colors.green };
+    cursor: ${(props) => props.disabled ? 'none' : 'pointer' };
+    &:hover{
+      fill:  ${(props) => props.disabled ? 'lightgray' : theme.colors.orange };
+    }
+  }
 `;
 
 export const NextImg = styled.button`
@@ -78,4 +91,11 @@ export const NextImg = styled.button`
   height: 32px;
   margin-top: 8px;
   transform: rotate(180deg);
+  > svg{
+    fill: ${(props) => props.disabled ? 'lightgray' : theme.colors.green };
+    cursor: ${(props) => props.disabled ? 'none' : 'pointer' };
+    &:hover{
+      fill:  ${(props) => props.disabled ? 'lightgray' : theme.colors.orange };
+    }
+  }
 `;
