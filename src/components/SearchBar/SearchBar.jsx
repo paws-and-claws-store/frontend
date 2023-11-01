@@ -6,10 +6,13 @@ import { searchSchema } from './searchValidationSchema';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { resetValueSearch, setResetBoolean, setValueSearch } from 'redux/searchSlice';
-import { selectSearchResetBoolean } from 'redux/selectors';
+import { selectSearchQueryStore, selectSearchResetBoolean } from 'redux/selectors';
 
 export const SearchBar = ({ queryLink }) => {
-  const [searchValue, setSearchValue] = useState(queryLink ? { query: queryLink } : { query: '' });
+  const searchQuery = useSelector(selectSearchQueryStore);
+  const [searchValue, setSearchValue] = useState(
+    searchQuery ? { query: searchQuery } : { query: '' },
+  );
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -48,7 +51,7 @@ export const SearchBar = ({ queryLink }) => {
       return;
     }
 
-    dispatch(setValueSearch(searchValue.query.toLowerCase()));
+    dispatch(setValueSearch(searchValue.query));
   };
 
   return (

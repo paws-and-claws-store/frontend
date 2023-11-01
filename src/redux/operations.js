@@ -13,7 +13,11 @@ export const api = createApi({
     fetchAllStructure: builder.query({
       query: () => `/api/structure/all`,
     }),
+    fetchSearch: builder.query({
+      query: (query = ``, sorting = '') =>
+        `/api/products/searchByKeyword/card?findBy=${query?.toLowerCase()}${sorting}`,
+    }),
   }),
 });
 
-export const { useFetchAllProductsQuery, useFetchAllStructureQuery } = api;
+export const { useFetchAllProductsQuery, useFetchAllStructureQuery, useFetchSearchQuery } = api;
