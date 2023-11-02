@@ -101,7 +101,7 @@ export const AilabilityWrapper = styled.div`
   display: flex;
   gap: 8px;
   margin-top: 12px;
-  margin-bottom: auto;
+  /* margin-bottom: auto; */
   align-items: center;
 `;
 

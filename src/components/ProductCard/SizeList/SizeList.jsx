@@ -1,10 +1,10 @@
 import React from 'react';
-import { SizeList, ChooseSize, WidthBtn } from './SizeList.styled';
+import { SizeList, ChooseSize, WidthBtn, SizeListLinkContainer } from './SizeList.styled';
 import { displaySize } from 'helpers';
 
 const SizeListLink = ({ items, prodType, changePropType }) => {
   return (
-    <>
+    <SizeListLinkContainer>
       <ChooseSize>Обрати вагу</ChooseSize>
       <SizeList>
         {items?.map(({ productCode, count, size }) => (
@@ -26,7 +26,7 @@ const SizeListLink = ({ items, prodType, changePropType }) => {
           </li>
         ))}
       </SizeList>
-    </>
+    </SizeListLinkContainer>
   );
 };
 
