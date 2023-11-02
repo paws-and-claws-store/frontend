@@ -1,5 +1,5 @@
 import React from 'react';
-import { SizeList, ChooseSize, WidthBtn,SizeListLinkContainer } from './SizeList.styled';
+import { SizeList, ChooseSize, WidthBtn, SizeListLinkContainer } from './SizeList.styled';
 import { displaySize } from 'helpers';
 
 const SizeListLink = ({ items, prodType, changePropType }) => {

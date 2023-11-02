@@ -1,5 +1,9 @@
 import styled from '@emotion/styled';
-import { theme } from 'styles';
+import { theme } from 'styles'; 
+
+export const SizeListLinkContainer = styled.div`
+margin-top: auto;
+`;
 
 export const SizeListLinkContainer = styled.div`
 margin-top: auto;
