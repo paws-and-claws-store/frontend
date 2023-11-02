@@ -1,4 +1,4 @@
-import { ClearButton, SearchIcon } from 'components/Icons';
+import { ResetButton, SearchIcon } from 'components/Icons';
 import React from 'react';
 import { SearchBox } from './SearchBar.styled';
 import { Notify } from 'notiflix';
@@ -65,12 +65,13 @@ export const SearchBar = ({ queryLink }) => {
             onChange={handleChage}
           />
           <button
+            className="resetButton"
             type="reset"
             onClick={() => {
               dispatch(setResetValueSearch());
             }}
           >
-            <ClearButton />
+            <ResetButton />
           </button>
           <button type="submit">
             <SearchIcon />
