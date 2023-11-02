@@ -66,6 +66,7 @@ export const PetButton = styled.button`
 
 export const WrapperCatalog = styled.div`
   position: relative;
+  width: 100%;
 
   ._categories-item {
     display: flex;

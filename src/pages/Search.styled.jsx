@@ -79,11 +79,6 @@ export const SortingSpan = styled.span`
   line-height: 20px; /* 125% */
 `;
 
-export const SearchCardList = styled.div`
-  /* display: flex;
-  flex-direction: column; */
-`;
-
 export const SearchCategoryList = styled.div`
   display: flex;
   flex-direction: column;
@@ -131,7 +126,10 @@ export const SearchBrands = styled.div`
   outline: 1px solid ${theme.colors.green};
 `;
 
-export const SearchWrapperCatalog = styled.div``;
+export const SearchWrapperCatalog = styled.div`
+  /* display: grid; */
+  width: 100%;
+`;
 
 export const SearchCategory = styled(Link)`
   font-size: ${theme.fontSizes.s};

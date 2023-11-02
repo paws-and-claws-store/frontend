@@ -6,7 +6,6 @@ import {
   FoldedContainer,
   SearchAsideCatalog,
   SearchBrands,
-  SearchCardList,
   SearchCategoryList,
   SearchContainer,
   SearchDescriptionSpan,
@@ -207,22 +206,20 @@ export const Search = () => {
             </SearchAsideCatalog>
 
             <SearchWrapperCatalog>
-              <SearchCardList>
-                <CardList
-                  productsList={
-                    currentPage === 1
-                      ? productsList
-                      : loadMoreClicked
-                      ? loadMoreProducts
-                      : productsList
-                  }
-                />
-                <Pagination
-                  paginationData={paginationData}
-                  onPageChange={onPageChange}
-                  onAddPage={onAddPage}
-                />
-              </SearchCardList>
+              <CardList
+                productsList={
+                  currentPage === 1
+                    ? productsList
+                    : loadMoreClicked
+                    ? loadMoreProducts
+                    : productsList
+                }
+              />
+              <Pagination
+                paginationData={paginationData}
+                onPageChange={onPageChange}
+                onAddPage={onAddPage}
+              />
             </SearchWrapperCatalog>
           </SearchContainer>
         </>
