@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Rating } from 'components';
 import SizeListLink from '../SizeList/SizeList';
 import { ReactComponent as Icon } from '../../../svg/CheckCircle.svg';
@@ -20,9 +20,8 @@ import {
 } from './MainInfo.styled';
 import QuntityProduct from '../QuntityProduct/QuntityProduct';
 
-const MainInfo = ({ product }) => {
-  console.log('product:', product);
-  const {
+const MainInfo = ({
+  product: {
     brand,
     productName,
     shortDescription,
@@ -30,11 +29,21 @@ const MainInfo = ({ product }) => {
     items,
     favorite,
     mainImage,
-  } = product;
+  },
+}) => {
   const [prodType, setProdType] = useState(items[0]);
   const [fav, setFavorite] = useState(favorite || false);
+  const [nameHeight, setNameHeight] = useState(null)
 
   const inStock = prodType.count > 0;
+  const prodNameRef = useRef(null);
+
+  useEffect(() => {
+    const prodNameHeight = prodNameRef.current;
+    if (prodNameHeight) {
+      setNameHeight(prodNameHeight.clientHeight);
+    }
+  }, []);
 
   const changeFavorite = () => {
     setFavorite(!fav);
@@ -75,7 +84,7 @@ const MainInfo = ({ product }) => {
         </span>
       </FlexBox>
 
-      <ProductName>{productName}</ProductName>
+      <ProductName style={{fontSize: nameHeight > 96 ? '32px' : '40px'}} ref={prodNameRef}>{productName}</ProductName>
       <ShortDescription>{shortDescription}</ShortDescription>
 
       <CarCodeWrapper>

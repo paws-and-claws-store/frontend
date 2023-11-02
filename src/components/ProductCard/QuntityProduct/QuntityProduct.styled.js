@@ -87,9 +87,9 @@ export const CountContainer = styled.div`
 
 export const TextOutOfStock = styled.span`
   font-weight: ${theme.fontWeight.SemiBold};
-  font-size: ${theme.fontSizes.l};
+  font-size: ${theme.fontSizes.xl};
   color: ${theme.colors.grey};
-  line-height: normal;
+  line-height: ${theme.lineHeight.xl};
 `;
 
 export const CountSum = styled.p`
