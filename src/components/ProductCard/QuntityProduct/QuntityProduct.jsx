@@ -10,6 +10,7 @@ import {
   InCartLink,
   ChangeQuntityLabel,
   PriceBox,
+  OldPrice,
   PriceSt,
   SymbolCurrency,
   TextOutOfStock,
@@ -164,7 +165,7 @@ const QuntityProduct = ({ inStock, prodType, prodDescription }) => {
               <SymbolCurrency>₴</SymbolCurrency>
             </PriceSt>
             <PriceSt className="line-through-text">
-              {prodType.price.toFixed(2)}
+            <OldPrice >{prodType.price.toFixed(2)}</OldPrice>
 
               <SymbolCurrency
                 style={{ fontSize: '18px', lineHeight: 'normal' }}
@@ -177,7 +178,6 @@ const QuntityProduct = ({ inStock, prodType, prodDescription }) => {
           <PriceBox>
             <PriceSt>
               {prodType.price.toFixed(2)}
-
               <SymbolCurrency>₴</SymbolCurrency>
             </PriceSt>
           </PriceBox>

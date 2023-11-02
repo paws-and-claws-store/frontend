@@ -5,17 +5,21 @@ export const SizeListLinkContainer = styled.div`
 margin-top: auto;
 `;
 
+export const SizeListLinkContainer = styled.div`
+margin-top: auto;
+`;
+
 export const ChooseSize = styled.p`
   font-size: ${theme.fontSizes.s};
   font-weight: ${theme.fontWeight.Medium};
   line-height: ${theme.lineHeight.l};
   color: ${theme.colors.black};
-  margin-top: 1px;
+  /* margin-top: 1px; */
 `;
 
 export const SizeList = styled.ul`
   display: flex;
-  gap: 12px;
+  gap: 10.6px;
   flex-wrap: wrap;
 
   margin-top: 10px;
