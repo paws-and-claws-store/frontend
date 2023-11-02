@@ -9,7 +9,13 @@ export const SelectStyled = styled(Select)`
   .react-select__menu {
     border-radius: 0;
     background-color: ${theme.colors.mainBackground};
+    margin: 0;
+    width: 198px;
+    transform: translate(-1px, -41px);
+    box-shadow: none;
+    border: 1px solid #d8d4b8;
   }
+
   .react-select__placeholder {
     color: ${theme.colors.green};
   }
@@ -21,5 +27,6 @@ export const SelectStyled = styled(Select)`
   .react-select__indicator {
     padding: 0;
     padding-right: 8px;
+    z-index: 77;
   }
 `;

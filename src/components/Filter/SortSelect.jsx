@@ -15,9 +15,11 @@ export const SortSelect = () => {
   ];
 
   const DropdownIndicator = props => {
+    const { isFocused } = props;
+
     return (
       <components.DropdownIndicator {...props}>
-        <RightArrow direction="rotate(90)" />
+        <RightArrow direction={isFocused ? 'rotate(-90)' : 'rotate(90)'} />
       </components.DropdownIndicator>
     );
   };
@@ -56,15 +58,15 @@ export const SortSelect = () => {
           height: '40px',
           ...styles,
         }),
-        option: (baseStyles, state) =>
-          //   console.log(baseStyles),
-          //   console.log(state),
-          ({
-            ...baseStyles,
-            backgroundColor: state.isFocused ? theme.colors.secGreen : theme.colors.mainBackground,
-            color: state.isSelected ? theme.colors.black : theme.colors.black,
-            ...styles,
-          }),
+
+        option: (baseStyles, state) => ({
+          ...baseStyles,
+          backgroundColor: state.isFocused
+            ? theme.colors.mainBackground
+            : theme.colors.mainBackground,
+          color: state.isSelected ? theme.colors.black : theme.colors.black,
+          ...styles,
+        }),
       }}
     />
   );
