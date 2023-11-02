@@ -12,7 +12,8 @@ export const HeaderStyled = styled.header`
   top: 0;
   left: 50%;
   transform: translateX(-50%);
-  z-index: 5;
+  /* z-index: 40; */
+  z-index: ${theme.zIndexes.header};
 
   background-color: ${props => props.theme.colors.mainBackground};
 
@@ -129,8 +130,7 @@ export const CountWrapper = styled.div`
 `;
 
 export const Count = styled.span`
-  font-size: ${props =>
-    props.countDigits > 2 ? 8 : props.countDigits > 1 ? 10 : 12}px;
+  font-size: ${props => (props.countDigits > 2 ? 8 : props.countDigits > 1 ? 10 : 12)}px;
   /* font-size: 10px; */
   font-style: normal;
   font-weight: 500;
@@ -215,29 +215,6 @@ export const SearchBox = styled.div`
 
     .searchIcon:active {
       transform: scale(0.95);
-    }
-  }
-
-  /* #Search::-webkit-search-cancel-button {
-    position: relative;
-    right: 20px;
-
-    -webkit-appearance: none;
-    height: 20px;
-    width: 20px;
-    border-radius: 10px;
-    background: red;
-  } */
-
-  .clearButton {
-    display: none;
-    position: absolute;
-    right: ${props => props.theme.spacing.step * 5}px;
-    top: 50%;
-    transform: translateY(-50%);
-
-    input:focus {
-      display: block;
     }
   }
 `;

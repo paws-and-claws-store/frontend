@@ -1,21 +1,18 @@
 import { CardList, Pagination } from 'components';
 import Loader from 'components/Loader/Loader';
 import { useEffect, useState } from 'react';
-import {
-  useFetchAllProductsQuery,
-  // useFetchAllStructureQuery
-} from 'redux/operations';
+import { useFetchSearchQuery } from 'redux/operations';
 import {
   FoldedContainer,
   SearchAsideCatalog,
   SearchBrands,
-  // SearchCardList,
   SearchCategoryList,
   SearchContainer,
   SearchDescriptionSpan,
   SearchDesriptionResults,
   SearchFilter,
   SearchQuery,
+  SearchTravelBag,
   SearchWrapperCatalog,
   SortingContainer,
   SortingSpan,
@@ -23,13 +20,14 @@ import {
   UpsideSearchContainer,
 } from './Search.styled';
 import { RightArrow } from 'components/Icons';
-// import { useDispatch } from 'react-redux';
-// import { setBreadCrumbs } from 'redux/breadCrumbsSlice';
+import { useSelector } from 'react-redux';
 import { PriceSlider } from 'components/PriceSlider/PriceSlider';
 import React from 'react';
 import { Filter } from 'components/Filter/Filter';
 import { SortSelect } from 'components/Filter/SortSelect';
 import { theme } from 'styles';
+import { selectSearchQueryStore, selectSortingTypeStore } from 'redux/selectors';
+import { SearchBar } from 'components/SearchBar/SearchBar';
 
 export const Search = () => {
   const [productsList, setProductsList] = useState([]);
@@ -46,14 +44,22 @@ export const Search = () => {
   const [loadMoreProducts, setLoadMoreProducts] = useState([]); // Окремий стан для продуктів, завантажених через "Load More"
   const [loadMoreClicked, setLoadMoreClicked] = useState(false); // Окремий стан для слідкування за натисканням кнопки "Load More"
   const [active, setActive] = useState({ price: false, brands: false });
+
+
+  const searchQuery = useSelector(selectSearchQueryStore);
+  const sortingType = useSelector(selectSortingTypeStore);
+
   const {
     data: response,
     error,
     isLoading,
     isFetching,
-  } = useFetchAllProductsQuery(currentPage);
-  // const { data } = useFetchAllStructureQuery();
-  // const dispatch = useDispatch();
+
+  } = useFetchSearchQuery({
+    query: searchQuery,
+    sorting: sortingType ? `&sortBy=${sortingType}` : '',
+  });
+
 
   useEffect(() => {
     if (response) {
@@ -118,26 +124,40 @@ export const Search = () => {
 
   return (
     <>
-      {error ? (
+      {error?.status >= 500 ? (
         <>Oops, there was an error ...</>
       ) : isLoading ? (
         <Loader />
+      ) : error?.status < 500 ? (
+        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+          <div style={{ marginTop: '48px' }}>
+            <SearchDesriptionResults style={{ fontSize: '24px' }}>
+              <SearchDescriptionSpan>За запитом </SearchDescriptionSpan>
+              <SearchQuery>{searchQuery}</SearchQuery>
+              <SearchDescriptionSpan> нічого не знайдено </SearchDescriptionSpan>
+            </SearchDesriptionResults>
+            <div style={{ marginTop: '180px', width: '520px' }}>
+              <div style={{ marginBottom: '20px' }}>Спробуйте ще раз, уточнивши свій запит:</div>
+              <SearchBar />
+            </div>
+          </div>
+
+          <SearchTravelBag />
+        </div>
       ) : response?.docs.length > 0 ? (
         <>
           <UpsideSearchContainer>
             <TitleSearch>Результати пошуку</TitleSearch>
             <SearchDesriptionResults>
-              <SearchDescriptionSpan> За запитом</SearchDescriptionSpan>
-              <SearchQuery>
-                “Спробував цей корм за рекомендацією знайомого, але не був
-                вражений. Моя собака, Барон, мало зацікавився ним і не показав
-                особливого інтересу під час годівлі. Після переходу на цей корм,
-                я помітив, що його енергія знизилася цей корм за
-                рекомендацією///блаб”
-              </SearchQuery>
-              <SearchDescriptionSpan> знайдено</SearchDescriptionSpan>{' '}
-              <SearchQuery>103</SearchQuery>{' '}
-              <SearchDescriptionSpan>товари</SearchDescriptionSpan>
+
+              <SearchDescriptionSpan>За запитом </SearchDescriptionSpan>
+              <SearchQuery>{searchQuery}</SearchQuery>
+              <SearchDescriptionSpan> знайдено </SearchDescriptionSpan>
+              <SearchQuery>{response.totalDocs} </SearchQuery>
+              <SearchDescriptionSpan>
+                {response.totalDocs === 1 ? 'товар' : response.totalDocs < 5 ? 'товари' : 'товарів'}
+              </SearchDescriptionSpan>
+
             </SearchDesriptionResults>
             <SortingContainer>
               <SortingSpan>Сортування:</SortingSpan>

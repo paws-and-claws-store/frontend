@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 import { Link } from 'react-router-dom';
 import { theme } from 'styles';
+import TRAVEL_BAG from '../svg/Travel_bag.svg';
 
 export const SearchContainer = styled.div`
   /* display: grid;
@@ -11,7 +12,7 @@ export const SearchContainer = styled.div`
 `;
 export const UpsideSearchContainer = styled.div`
   display: grid;
-  grid-template-columns: 1fr auto 1fr;
+  grid-template-columns: 1fr 628px 1fr;
   grid-column-gap: 20px;
   margin-bottom: 24px;
 `;
@@ -31,6 +32,7 @@ export const TitleSearch = styled.h2`
 
 export const SearchDesriptionResults = styled.div`
   margin-top: auto;
+  margin-bottom: auto;
   color: ${theme.colors.black};
   font-variant-numeric: lining-nums proportional-nums;
   font-feature-settings: 'ss09' on;
@@ -45,15 +47,15 @@ export const SearchDesriptionResults = styled.div`
 
 export const SearchQuery = styled.span`
   color: ${theme.colors.green};
-  font-variant-numeric: lining-nums proportional-nums;
-  font-feature-settings: 'ss09' on;
+  /* font-variant-numeric: lining-nums proportional-nums;
+  font-feature-settings: 'ss09' on; */
 
   /* headlines */
-  font-family: Inter;
+  /* font-family: Inter;
   font-size: ${theme.fontSizes.s};
   font-style: normal;
   font-weight: 500;
-  line-height: 20px;
+  line-height: 20px; */
 `;
 export const SearchDescriptionSpan = styled.span``;
 
@@ -75,11 +77,6 @@ export const SortingSpan = styled.span`
   font-style: normal;
   font-weight: 400;
   line-height: 20px; /* 125% */
-`;
-
-export const SearchCardList = styled.div`
-  /* display: flex;
-  flex-direction: column; */
 `;
 
 export const SearchCategoryList = styled.div`
@@ -110,12 +107,6 @@ export const SearchFilter = styled.div`
   background-color: ${props => (props.active ? theme.colors.secGreen : theme.colors.beige)};
 
   outline: 1px solid ${theme.colors.green};
-
-  &.active {
-    position: relative;
-    z-index: 10;
-    background-color: ${theme.colors.beige};
-  }
 `;
 export const SearchBrands = styled.div`
   overflow: hidden;
@@ -133,48 +124,11 @@ export const SearchBrands = styled.div`
   background-color: ${props => (props.activeBrands ? theme.colors.secGreen : theme.colors.beige)};
 
   outline: 1px solid ${theme.colors.green};
-
-  &.active {
-    position: relative;
-    z-index: 10;
-    background-color: ${theme.colors.beige};
-  }
 `;
 
 export const SearchWrapperCatalog = styled.div`
   /* display: grid; */
   width: 100%;
-`;
-
-export const SearchBoxHiden = styled.div`
-  display: none;
-  position: absolute;
-  z-index: 10;
-  background-color: ${theme.colors.beige};
-  border: 1px solid ${theme.colors.green};
-
-  width: ${theme.spacing.step * 76}px;
-  /* width: 100%; */
-  padding: ${theme.spacing.step * 5}px;
-
-  &.active {
-    display: block;
-  }
-
-  & > ul {
-    display: flex;
-    flex-direction: column;
-    gap: ${theme.spacing.step * 3}px;
-  }
-
-  a:hover,
-  a:focus {
-    color: ${theme.colors.green};
-  }
-
-  a:active {
-    color: ${theme.colors.orange};
-  }
 `;
 
 export const SearchCategory = styled(Link)`
@@ -196,11 +150,18 @@ export const SearchFoodType = styled(Link)`
 `;
 
 export const FoldedContainer = styled.div`
-  z-index: 778;
+  z-index: ${theme.zIndexes.foldedContainer};
   width: 100%;
   display: flex;
   align-items: center;
   transition: background-color 0.5s;
   justify-content: space-between;
   padding: ${theme.spacing.step + 2}px ${theme.spacing.step * 2}px;
+`;
+
+export const SearchTravelBag = styled.svg`
+  width: 572px;
+  height: 572px;
+  background-image: url(${TRAVEL_BAG});
+  fill: aqua;
 `;
