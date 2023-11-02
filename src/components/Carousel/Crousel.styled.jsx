@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 import Carousel from 'react-bootstrap/Carousel';
+import { theme } from 'styles';
 
 export const CarouselStyle = styled(Carousel)`
   .carousel {
@@ -10,7 +11,8 @@ export const CarouselStyle = styled(Carousel)`
 
     flex-direction: column;
     justify-content: center;
-    z-index: 5;
+    /* z-index: 5; */
+    z-index: ${theme.zIndexes.carousel};
   }
 
   .carousel-indicators {
