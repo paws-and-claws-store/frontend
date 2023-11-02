@@ -45,23 +45,30 @@ export const Search = () => {
   const [loadMoreClicked, setLoadMoreClicked] = useState(false); // Окремий стан для слідкування за натисканням кнопки "Load More"
   const [active, setActive] = useState({ price: false, brands: false });
 
+
   const searchQuery = useSelector(selectSearchQueryStore);
   const sortingType = useSelector(selectSortingTypeStore);
+
   const {
     data: response,
     error,
     isLoading,
     isFetching,
+
   } = useFetchSearchQuery({
     query: searchQuery,
     sorting: sortingType ? `&sortBy=${sortingType}` : '',
   });
 
+
   useEffect(() => {
     if (response) {
       async function fetchInitialData() {
         if (loadMoreClicked) {
-          setLoadMoreProducts(prevLoadMoreProducts => [...prevLoadMoreProducts, ...response.docs]);
+          setLoadMoreProducts(prevLoadMoreProducts => [
+            ...prevLoadMoreProducts,
+            ...response.docs,
+          ]);
           const pagination = {
             hasNextPage: response.hasNextPage,
             hasPrevPage: response.hasPrevPage,
@@ -142,6 +149,7 @@ export const Search = () => {
           <UpsideSearchContainer>
             <TitleSearch>Результати пошуку</TitleSearch>
             <SearchDesriptionResults>
+
               <SearchDescriptionSpan>За запитом </SearchDescriptionSpan>
               <SearchQuery>{searchQuery}</SearchQuery>
               <SearchDescriptionSpan> знайдено </SearchDescriptionSpan>
@@ -149,6 +157,7 @@ export const Search = () => {
               <SearchDescriptionSpan>
                 {response.totalDocs === 1 ? 'товар' : response.totalDocs < 5 ? 'товари' : 'товарів'}
               </SearchDescriptionSpan>
+
             </SearchDesriptionResults>
             <SortingContainer>
               <SortingSpan>Сортування:</SortingSpan>
@@ -178,7 +187,11 @@ export const Search = () => {
                       >
                         <span>Ціна</span>
                         <button onClick={handleClickToggle} name="price">
-                          <RightArrow direction={active['price'] ? 'rotate(90)' : 'rotate(-90)'} />
+                          <RightArrow
+                            direction={
+                              active['price'] ? 'rotate(90)' : 'rotate(-90)'
+                            }
+                          />
                         </button>
                       </FoldedContainer>
                       <PriceSlider active={active['price']} />
@@ -195,7 +208,11 @@ export const Search = () => {
                       >
                         <span>Бренди</span>
                         <button onClick={handleClickToggle} name="brands">
-                          <RightArrow direction={active['brands'] ? 'rotate(90)' : 'rotate(-90)'} />
+                          <RightArrow
+                            direction={
+                              active['brands'] ? 'rotate(90)' : 'rotate(-90)'
+                            }
+                          />
                         </button>
                       </FoldedContainer>
                       <Filter active={active['brands']} />
