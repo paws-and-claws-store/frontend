@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { theme } from 'styles';
 
 import {
@@ -9,113 +9,77 @@ import {
   SlidePanel,
   PrevImg,
   NextImg,
-  MainImg,
   MainImgWrapper,
+  MainImgAnimated,
 } from './ProductCarusel.styled';
 import { CreateDownMini } from 'components/Icons/CreateDownMini';
 
-export const ProductDetailsCarousel = ({ id, mainImage, images }) => {
-
-  const [currentImage, setCurrentImage] = useState(mainImage);
-  const [isTopButtonDisabled, setIsTopButtonDisabled] = useState(false);
-const [isNextButtonDisabled, setIsNextButtonDisabled] = useState(false);
-
-useEffect(() => {
-  const container = imageContainerRef.current;
-
-  const handleScroll = () => {
-    if (container.scrollTop > 0) {
-      setIsTopButtonDisabled(false); // Снимаем disabled с верхней кнопки
-    } else {
-      setIsTopButtonDisabled(true); // Включаем disabled на верхней кнопке
-    }
-
-    if (container.scrollTop + container.clientHeight < container.scrollHeight) {
-      setIsNextButtonDisabled(false); // Снимаем disabled с нижней кнопки
-    } else {
-      setIsNextButtonDisabled(true); // Включаем disabled на нижней кнопке
-    }
-  };
-
-  container.addEventListener('scroll', handleScroll);
-
-  return () => {
-    container.removeEventListener('scroll', handleScroll);
-  };
-}, []);
-  
-  const handleImageClick = (img, indx) => {
-    setCurrentImage(img);
-    // setIsLastImage(images.indexOf(img)===images.length-1)
-    // console.log("images.indexOf(img):", images.indexOf(img))
-    // console.log("images.length-1:", images.length-1)
-  };
-
-  let imageContainerRef = useRef(null);
+export const ProductDetailsCarousel = ({ mainImage, images }) => {
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const imageContainerRef = useRef(null);
 
   const prev = () => {
-    if (imageContainerRef.current.scrollTop === 0) { 
-      setIsTopButtonDisabled(true);
-    } 
-    imageContainerRef.current.scrollTop -= 109;
+    if (!isTopButtonDisabled) {
+      imageContainerRef.current.scrollTop -= 109; // Уменьшьте значение, если необходимо большее смещение
+      setCurrentImageIndex(currentImageIndex - 1);
+    }
+  };
 
-    if (imageContainerRef.current.scrollTop + imageContainerRef.current.clientHeight < imageContainerRef.current.scrollHeight) {
-      setIsNextButtonDisabled(false);
-    }
-   
-  };
-  
   const next = () => {
-    if (imageContainerRef.current.scrollTop + imageContainerRef.current.clientHeight >= imageContainerRef.current.scrollHeight) {
-      setIsNextButtonDisabled(true);
+    if (!isNextButtonDisabled) {
+      imageContainerRef.current.scrollTop += 109; // Увеличьте значение, если необходимо большее смещение
+      setCurrentImageIndex(currentImageIndex + 1);
     }
-    imageContainerRef.current.scrollTop += 109;
-    if (imageContainerRef.current.scrollTop !== 0) {
-      
-      setIsTopButtonDisabled(false);
-    } 
   };
+
+  const isTopButtonDisabled = currentImageIndex === 0;
+  const isNextButtonDisabled = currentImageIndex === images.length - 1;
+
+  useEffect(() => {
+    // Найдем индекс главной картинки и установим его как начальный индекс
+    const initialIndex = images.indexOf(mainImage);
+    if (initialIndex !== -1) {
+      setCurrentImageIndex(initialIndex);
+    }
+  }, [mainImage, images]);
+
+  const currentImage = images[currentImageIndex];
 
   return (
     <CarouselContainer>
       <Slider>
-        {images.length > 5 ? (
-          <PrevImg onClick={prev} disabled={isTopButtonDisabled}>
-            <CreateDownMini />
-          </PrevImg>
-        ) : null}
+      {images.length > 5 ? (
+        <PrevImg onClick={prev} disabled={isTopButtonDisabled}>
+          <CreateDownMini />
+        </PrevImg>
+         ) : null}
 
-        <SlidePanel 
+        <SlidePanel
           ref={imageContainerRef}
-          style={images.length > 5 ? null : { justifyContent: 'center' }}
+          style={{ height: `${images.length * 108}px` }} 
         >
           {images.map((img, index) => (
-            <ImgWrapper 
-            key={index} 
-            onClick={() => handleImageClick(img, index)} 
-            style={{borderColor: currentImage===img ? theme.colors.orange : theme.colors.green}}
-            tabIndex={0}
+            <ImgWrapper
+              key={index}
+              onClick={() => setCurrentImageIndex(index)}
+              style={{
+                borderColor: index === currentImageIndex ? theme.colors.orange : theme.colors.green,
+              }}
+              tabIndex={0}
             >
               <Img src={img} alt="Image" />
             </ImgWrapper>
           ))}
         </SlidePanel>
-
         {images.length > 5 ? (
-          <NextImg onClick={next} disabled={isNextButtonDisabled}>
-            <CreateDownMini />
-          </NextImg>
+        <NextImg onClick={next} disabled={isNextButtonDisabled}>
+          <CreateDownMini />
+        </NextImg>
         ) : null}
       </Slider>
 
       <MainImgWrapper>
-      
-       <MainImg 
-       src={currentImage} 
-       alt="img" 
-       style={{opacity: 1}}
-       />
-      
+        <MainImgAnimated src={currentImage} alt="img" style={{ opacity: 1 }} />
       </MainImgWrapper>
     </CarouselContainer>
   );

@@ -65,8 +65,12 @@ const QuntityProduct = ({ inStock, prodType, prodDescription }) => {
 
   const hendleInputChange = e => {
     const inputValue = Number(e.currentTarget.value);
+    console.log("inputValue:", inputValue)
     if (!e.target.validity.valid) {
       return;
+    };
+    if (inputValue === 0) {
+      setQuintity('');
     }
     
     if (inputValue > prodType.count) {
