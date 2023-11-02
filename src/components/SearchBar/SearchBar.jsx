@@ -55,7 +55,7 @@ export const SearchBar = ({ queryLink }) => {
 
   return (
     <>
-      <SearchBox resetBoolean={resetBoolean}>
+      <SearchBox resetBoolean={resetBoolean} searchValue={searchValue}>
         <form action="/frontend/search" onSubmit={handleSubmit}>
           <input
             type="text"
