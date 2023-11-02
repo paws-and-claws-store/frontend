@@ -217,27 +217,4 @@ export const SearchBox = styled.div`
       transform: scale(0.95);
     }
   }
-
-  /* #Search::-webkit-search-cancel-button {
-    position: relative;
-    right: 20px;
-
-    -webkit-appearance: none;
-    height: 20px;
-    width: 20px;
-    border-radius: 10px;
-    background: red;
-  } */
-
-  .clearButton {
-    display: none;
-    position: absolute;
-    right: ${props => props.theme.spacing.step * 5}px;
-    top: 50%;
-    transform: translateY(-50%);
-
-    input:focus {
-      display: block;
-    }
-  }
 `;

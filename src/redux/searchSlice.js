@@ -3,19 +3,24 @@ import { createSlice } from '@reduxjs/toolkit';
 const SearchInitialState = {
   query: '',
   resetBoolean: false,
+  value: '',
 };
 
 const searchSlice = createSlice({
   name: 'search',
   initialState: SearchInitialState,
   reducers: {
-    setValueSearch(state, action) {
+    setQuerySearch(state, action) {
       state.query = action.payload;
       state.resetBoolean = true;
     },
+    setValueSearch(state, action) {
+      state.value = action.payload;
+      state.resetBoolean = true;
+    },
 
-    resetValueSearch(state) {
-      state.query = '';
+    setResetValueSearch(state) {
+      state.value = '';
       state.resetBoolean = false;
     },
     setResetBoolean(state, action) {
@@ -25,4 +30,5 @@ const searchSlice = createSlice({
 });
 
 export const searchSliceReducer = searchSlice.reducer;
-export const { setValueSearch, resetValueSearch, setResetBoolean } = searchSlice.actions;
+export const { setQuerySearch, setResetBoolean, setValueSearch, setResetValueSearch } =
+  searchSlice.actions;
