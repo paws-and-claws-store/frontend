@@ -12,7 +12,8 @@ export const HeaderStyled = styled.header`
   top: 0;
   left: 50%;
   transform: translateX(-50%);
-  z-index: 5;
+  /* z-index: 40; */
+  z-index: ${theme.zIndexes.header};
 
   background-color: ${props => props.theme.colors.mainBackground};
 
@@ -129,8 +130,7 @@ export const CountWrapper = styled.div`
 `;
 
 export const Count = styled.span`
-  font-size: ${props =>
-    props.countDigits > 2 ? 8 : props.countDigits > 1 ? 10 : 12}px;
+  font-size: ${props => (props.countDigits > 2 ? 8 : props.countDigits > 1 ? 10 : 12)}px;
   /* font-size: 10px; */
   font-style: normal;
   font-weight: 500;

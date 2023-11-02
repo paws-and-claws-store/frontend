@@ -4,7 +4,8 @@ import PAWS_SVG from '../../svg/PawPrint.svg';
 import { theme } from 'styles';
 
 export const PriceContainer = styled.div`
-  z-index: 777;
+  /* z-index: 12; */
+  z-index: ${theme.zIndexes.priceSlider};
   width: 100%;
   height: 116px;
   transition-property: transform;

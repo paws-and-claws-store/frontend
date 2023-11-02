@@ -52,4 +52,14 @@ export const theme = Object.freeze({
   spacing: {
     step: 4,
   },
+  zIndexes: {
+    header: 40,
+    filterSearch: 12,
+    scrollToTop: 20,
+    foldedContainer: 13,
+    priceSliderBase: 1,
+    carousel: 5,
+    app: 6,
+    priceSlider: 12,
+  },
 });
