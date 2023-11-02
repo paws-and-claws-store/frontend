@@ -1,17 +1,21 @@
 import styled from '@emotion/styled';
 import { theme } from 'styles';
 
+export const SizeListLinkContainer = styled.div`
+margin-top: auto;
+`;
+
 export const ChooseSize = styled.p`
   font-size: ${theme.fontSizes.s};
   font-weight: ${theme.fontWeight.Medium};
   line-height: ${theme.lineHeight.l};
   color: ${theme.colors.black};
-  margin-top: 1px;
+  /* margin-top: 1px; */
 `;
 
 export const SizeList = styled.ul`
   display: flex;
-  gap: 12px;
+  gap: 10.6px;
   flex-wrap: wrap;
 
   margin-top: 10px;
@@ -54,12 +58,12 @@ export const WidthBtn = styled.button`
   }
 
   &.unavailable {
-    border-color: ${theme.colors.black};
+    border-color: ${theme.colors.grey};
     background-color: ${theme.colors.grey};
-    color: ${theme.colors.black};
+    color: ${theme.colors.beige};
   }
   &.active.unavailable {
-    border-color: ${theme.colors.grey};
-    color: ${theme.colors.beige};
+    border-color: ${theme.colors.black};
+    color: ${theme.colors.black};
   }
 `;
