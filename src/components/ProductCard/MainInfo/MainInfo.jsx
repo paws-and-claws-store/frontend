@@ -21,7 +21,6 @@ import {
 import QuntityProduct from '../QuntityProduct/QuntityProduct';
 
 const MainInfo = ({ product }) => {
-  console.log('product:', product);
   const {
     brand,
     productName,
