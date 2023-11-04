@@ -1,19 +1,24 @@
 import styled from '@emotion/styled';
 import { theme } from 'styles';
 
+export const SizeListLinkContainer = styled.div`
+  margin-top: auto;
+`;
+
 export const ChooseSize = styled.p`
   font-size: ${theme.fontSizes.s};
   font-weight: ${theme.fontWeight.Medium};
   line-height: ${theme.lineHeight.l};
   color: ${theme.colors.black};
+  /* margin-top: 1px; */
 `;
 
 export const SizeList = styled.ul`
   display: flex;
-  gap: 12px;
+  gap: 10.6px;
   flex-wrap: wrap;
 
-  margin-top: 12px;
+  margin-top: 10px;
 
   & > li {
     /* padding: 4px 24px;
@@ -34,7 +39,7 @@ export const WidthBtn = styled.button`
   border: 1px solid ${theme.colors.green};
   padding: 4px 24px;
   color: ${theme.colors.green};
-
+  box-sizing: border-box;
   font-size: 16px;
   font-style: normal;
   font-weight: 400;
@@ -52,13 +57,14 @@ export const WidthBtn = styled.button`
     color: ${theme.colors.orange};
   }
 
-  &.unavailable {
-    border-color: ${theme.colors.black};
-    background-color: ${theme.colors.grey};
-    color: ${theme.colors.black};
-  }
   &.active.unavailable {
     border-color: ${theme.colors.grey};
+    background-color: ${theme.colors.grey};
     color: ${theme.colors.beige};
+  }
+  &.unavailable {
+    border-color: ${theme.colors.black};
+    background-color: ${theme.colors.secGrey};
+    color: ${theme.colors.black};
   }
 `;

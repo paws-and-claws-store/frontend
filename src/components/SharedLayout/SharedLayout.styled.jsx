@@ -5,6 +5,7 @@ import { theme } from 'styles';
 
 export const SharedLayoutBox = styled.div`
   /* margin: 0 auto; */
+  /* position: relative; */
 `;
 
 export const BoxMT = styled.div`

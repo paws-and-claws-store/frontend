@@ -15,19 +15,21 @@ import { cartReducer } from './cartSlice';
 import { api } from './operations';
 import { breadCrumbsReducer } from './breadCrumbsSlice';
 import { searchSliceReducer } from './searchSlice';
+import { searchSelectReducer } from './sortSelectSlice';
 
 const reducers = combineReducers({
   [api.reducerPath]: api.reducer,
   cart: cartReducer,
   breadcrumbs: breadCrumbsReducer,
   search: searchSliceReducer,
+  sorting: searchSelectReducer,
 });
 
 const persistConfig = {
   key: 'root',
   version: 1,
   storage,
-  whitelist: ['cart', 'breadcrumbs', 'search'],
+  whitelist: ['cart', 'breadcrumbs'],
 };
 
 const persistedReducer = persistReducer(persistConfig, reducers);

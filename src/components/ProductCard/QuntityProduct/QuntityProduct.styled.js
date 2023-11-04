@@ -10,7 +10,7 @@ export const QuintityInputWrapper = styled.div`
   position: relative;
   width: 156px;
 
-  margin-top: 12px;
+  margin-top: 11px;
 `;
 
 export const ChangeQuntityLabel = styled.p`
@@ -25,7 +25,7 @@ export const QuintityInput = styled.input`
   width: 156px;
   padding: 5px 22px;
   border: 1px solid ${theme.colors.green};
-  
+
   transition: border-color 0.3s;
   border-radius: 40px;
   background-color: ${theme.colors.mainBackground};
@@ -37,7 +37,7 @@ export const QuintityInput = styled.input`
   line-height: ${theme.lineHeight.xxl};
   color: ${theme.colors.green};
   &:focus {
-    border-color:  ${theme.colors.orange};
+    border-color: ${theme.colors.orange};
     color: ${theme.colors.orange};
   }
 `;
@@ -82,14 +82,14 @@ export const CountContainer = styled.div`
   justify-content: space-between;
   align-items: center;
   height: 72px;
-  margin-top: 20px;
+  margin-top: 18px;
 `;
 
 export const TextOutOfStock = styled.span`
   font-weight: ${theme.fontWeight.SemiBold};
-  font-size: ${theme.fontSizes.l};
+  font-size: ${theme.fontSizes.xl};
   color: ${theme.colors.grey};
-  line-height: normal;
+  line-height: ${theme.lineHeight.xl};
 `;
 
 export const CountSum = styled.p`
@@ -146,11 +146,13 @@ export const PriceBox = styled.div`
     font-size: ${theme.fontSizes.xl};
     font-weight: ${theme.fontWeight.SemiBold};
     line-height: 1;
-
-    text-decoration-line: line-through;
-    text-transform: uppercase;
     color: ${theme.colors.grey};
   }
+`;
+
+export const OldPrice = styled.span`
+  text-decoration-line: line-through;
+  text-transform: uppercase;
 `;
 
 export const PriceSt = styled.p`

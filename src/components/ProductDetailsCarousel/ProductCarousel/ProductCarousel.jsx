@@ -1,10 +1,5 @@
-import React, { useRef, useState } from 'react';
-// import 'react-responsive-carousel/lib/styles/carousel.min.css';
-// requires a loader
-// import catalog from '../../DB/catalog.json';
-// import product from '../../DB/products.json';
-// import { useParams } from 'react-router-dom';
-// import ImageGallery from 'react-image-gallery';
+import React, { useState, useRef, useEffect } from 'react';
+import { theme } from 'styles';
 
 import {
   CarouselContainer,
@@ -14,61 +9,77 @@ import {
   SlidePanel,
   PrevImg,
   NextImg,
-  MainImg,
   MainImgWrapper,
+  MainImgAnimated,
 } from './ProductCarusel.styled';
 import { CreateDownMini } from 'components/Icons/CreateDownMini';
 
-export const ProductDetailsCarousel = ({ id, image }) => {
-  const imgArray = [image, image, image, image, image, image, image];
+export const ProductDetailsCarousel = ({ mainImage, images }) => {
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const imageContainerRef = useRef(null);
 
-  const [currentImage, setCurrentImage] = useState(0);
-
-  const handleImageClick = ind => {
-    setCurrentImage(ind);
+  const prev = () => {
+    if (!isTopButtonDisabled) {
+      imageContainerRef.current.scrollTop -= 109; // Уменьшьте значение, если необходимо большее смещение
+      setCurrentImageIndex(currentImageIndex - 1);
+    }
   };
 
-  let imageContainerRef = useRef(null);
+  const next = () => {
+    if (!isNextButtonDisabled) {
+      imageContainerRef.current.scrollTop += 109; // Увеличьте значение, если необходимо большее смещение
+      setCurrentImageIndex(currentImageIndex + 1);
+    }
+  };
 
-  const prev = () => (imageContainerRef.current.scrollTop -= 109);
-  const next = () => (imageContainerRef.current.scrollTop += 109);
+  const isTopButtonDisabled = currentImageIndex === 0;
+  const isNextButtonDisabled = currentImageIndex === images.length - 1;
+
+  useEffect(() => {
+    // Найдем индекс главной картинки и установим его как начальный индекс
+    const initialIndex = images.indexOf(mainImage);
+    if (initialIndex !== -1) {
+      setCurrentImageIndex(initialIndex);
+    }
+  }, [mainImage, images]);
+
+  const currentImage = images[currentImageIndex];
 
   return (
     <CarouselContainer>
       <Slider>
-        {imgArray.length > 5 ? (
-          <PrevImg onClick={prev}>
-            <CreateDownMini />
-          </PrevImg>
-        ) : null}
+      {images.length > 5 ? (
+        <PrevImg onClick={prev} disabled={isTopButtonDisabled}>
+          <CreateDownMini />
+        </PrevImg>
+         ) : null}
 
         <SlidePanel
           ref={imageContainerRef}
-          style={imgArray.length > 5 ? null : { justifyContent: 'center' }}
+          style={{ height: `${images.length * 108}px` }} 
         >
-          {imgArray.map((img, index) => (
-            <ImgWrapper 
-            key={index} 
-            onClick={() => handleImageClick(index)} 
-            tabIndex={0}
-            // onFocus={()=>setActiveCard(true)} 
-            // onBlur={()=>setActiveCard(false)}
-            // style={{borderColor: activeCard&&currentImage===index ? theme.colors.orange : theme.colors.green}}
+          {images.map((img, index) => (
+            <ImgWrapper
+              key={index}
+              onClick={() => setCurrentImageIndex(index)}
+              style={{
+                borderColor: index === currentImageIndex ? theme.colors.orange : theme.colors.green,
+              }}
+              tabIndex={0}
             >
               <Img src={img} alt="Image" />
             </ImgWrapper>
           ))}
         </SlidePanel>
-
-        {imgArray.length > 5 ? (
-          <NextImg onClick={next}>
-            <CreateDownMini />
-          </NextImg>
+        {images.length > 5 ? (
+        <NextImg onClick={next} disabled={isNextButtonDisabled}>
+          <CreateDownMini />
+        </NextImg>
         ) : null}
       </Slider>
 
       <MainImgWrapper>
-        <MainImg src={imgArray[currentImage]} alt="img" />
+        <MainImgAnimated src={currentImage} alt="img" style={{ opacity: 1 }} />
       </MainImgWrapper>
     </CarouselContainer>
   );

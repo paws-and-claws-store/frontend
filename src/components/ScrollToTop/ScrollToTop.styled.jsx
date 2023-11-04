@@ -64,7 +64,8 @@ export const ScrollToTopStyled = styled.div`
   /* right: 15px; */
   right: ${theme.spacing.step * 4 - 1}px;
 
-  z-index: 20;
+  /* z-index: 20; */
+  z-index: ${theme.zIndexes.foldedContainer};
   /* background-color: #f3ecdc; */
   /* background-color: ${theme.colors.beige}; */
 

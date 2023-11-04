@@ -10,6 +10,7 @@ import {
   InCartLink,
   ChangeQuntityLabel,
   PriceBox,
+  OldPrice,
   PriceSt,
   SymbolCurrency,
   TextOutOfStock,
@@ -17,6 +18,7 @@ import {
 import { addCartItem, updateCartItem } from 'redux/cartSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectCartStore } from 'redux/selectors';
+import { Notify } from 'notiflix';
 
 const QuntityProduct = ({ inStock, prodType, prodDescription }) => {
   const [quintity, setQuintity] = useState(1);
@@ -36,21 +38,30 @@ const QuntityProduct = ({ inStock, prodType, prodDescription }) => {
       setInCart(true);
     } else {
       setQuintity(1);
-      setInCart(false)
+      setInCart(false);
     }
 
     setIsFocused(false);
   }, [productCode, cardCountRedux]);
 
   const increment = () => {
-    setQuintity(prev => (prev = parseInt(prev) + 1));
-    if (inCart) {
+    if (quintity < prodType.count) {
+      setQuintity(Number(quintity) + 1);
+    } else {
+      Notify.info('На жаль, на складі відсутня необхідна кількість товару.');
+      setQuintity(prodType.count);
+    }
+
+    if (inCart && quintity < prodType.count) {
       dispatch(updateCartItem({ productCode, newCount: quintity + 1 }));
     }
   };
 
   const decrement = () => {
-    setQuintity(prev => (prev = parseInt(prev) - 1));
+    if (quintity > 1) {
+      setQuintity(Number(quintity) - 1);
+    }
+
     if (inCart) {
       dispatch(updateCartItem({ productCode, newCount: quintity - 1 }));
     }
@@ -60,25 +71,52 @@ const QuntityProduct = ({ inStock, prodType, prodDescription }) => {
     if (!e.target.validity.valid) {
       return;
     }
-    // const newQuintity = isNaN(e.currentTarget.value)
-    //   ? 1
-    //   : e.currentTarget.value;
 
-    setQuintity(Number(e.currentTarget.value));
+    if (e.target.value === '') {
+      setQuintity('');
+      return;
+    }
+
+    const newCount = Number(e.currentTarget.value);
+
+    if (newCount < 1) {
+      return;
+    }
+
+    if (newCount > prodType.count) {
+      Notify.info('На жаль, на складі відсутня необхідна кількість товару.');
+      setQuintity(prodType.count);
+      return dispatch(
+        updateCartItem({ productCode, newCount: prodType.count }),
+      );
+    }
+    setQuintity(newCount);
+    dispatch(updateCartItem({ productCode, newCount }));
   };
 
   const handleBlur = () => {
-    if (quintity === 0) {
-      setQuintity(1);
-      setIsFocused(true);
+    if (quintity === '') {
+      // setQuintity(1);
+      Notify.warning('Мінімальна кількість для замовлення - 1 шт');
+      setIsFocused(false);
+      return;
     }
+    setIsFocused(false);
+    dispatch(updateCartItem({ productCode, newCount: quintity }));
   };
 
   const handleKeyPres = e => {
     if (e.key === 'Enter') {
       e.preventDefault();
-      setIsFocused(true);
+      setIsFocused(false);
+      dispatch(updateCartItem({ productCode, newCount: quintity }));
     }
+  };
+
+  const clickToBuy = () => {
+    if (quintity > 0) {
+      return handleClickBuy();
+    } else return Notify.warning('Мінімальна кількість для замовлення - 1 шт');
   };
 
   const handleClickBuy = () => {
@@ -151,7 +189,7 @@ const QuntityProduct = ({ inStock, prodType, prodDescription }) => {
               <SymbolCurrency>₴</SymbolCurrency>
             </PriceSt>
             <PriceSt className="line-through-text">
-              {prodType.price.toFixed(2)}
+              <OldPrice>{prodType.price.toFixed(2)}</OldPrice>
 
               <SymbolCurrency
                 style={{ fontSize: '18px', lineHeight: 'normal' }}
@@ -164,21 +202,19 @@ const QuntityProduct = ({ inStock, prodType, prodDescription }) => {
           <PriceBox>
             <PriceSt>
               {prodType.price.toFixed(2)}
-
               <SymbolCurrency>₴</SymbolCurrency>
             </PriceSt>
           </PriceBox>
         )}
 
         {inCart ? (
-          <InCartLink to="/cart" >
-            У кошику
-          </InCartLink>
+          <InCartLink to="/cart">У кошику</InCartLink>
         ) : (
           <SubmitButton
             disabled={inStock ? false : true}
             type="button"
-            onClick={handleClickBuy}
+            // onClick={handleClickBuy}
+            onClick={clickToBuy}
           >
             Купити
           </SubmitButton>

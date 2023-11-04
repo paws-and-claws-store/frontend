@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { theme } from 'styles';
 
 export const SearchBox = styled.div`
   display: flex;
@@ -6,8 +7,8 @@ export const SearchBox = styled.div`
   position: relative;
 
   form {
-    width: ${props => props.theme.spacing.step * 157}px;
-    height: ${props => props.theme.spacing.step * 11}px;
+    width: ${theme.spacing.step * 157}px;
+    height: ${theme.spacing.step * 11}px;
   }
 
   input {
@@ -15,32 +16,33 @@ export const SearchBox = styled.div`
     height: 100%;
     outline: 0;
 
-    border-radius: ${props => props.theme.spacing.step * 10}px;
-    border: 1px solid ${props => props.theme.colors.green};
-    padding: ${props => props.theme.spacing.step * 2 + 2}px
-      ${props => props.theme.spacing.step * 4}px;
-    padding-left: ${props => props.theme.spacing.step * 13}px;
-    background-color: ${props => props.theme.colors.beige};
+    border-radius: ${theme.spacing.step * 10}px;
+    border: 1px solid ${theme.colors.green};
+    padding: ${theme.spacing.step * 2 + 2}px ${theme.spacing.step * 4}px;
+    padding-left: ${theme.spacing.step * 13}px;
+    background-color: ${theme.colors.beige};
 
-    font-size: ${props => props.theme.fontSizes.m};
-    font-weight: ${props => props.theme.fontWeight.Light};
+    font-size: ${theme.fontSizes.m};
+    font-weight: ${theme.fontWeight.Light};
     line-height: 1.25; /* 125% */
-    color: ${props => props.theme.colors.black};
+    color: ${theme.colors.black};
 
-    /* border-radius: ${props => props.theme.spacing.step * 10}px;
-    border: 1px solid ${props => props.theme.colors.green}; */
+    &:focus {
+      border: 1px solid ${theme.colors.secGreen};
+      color: ${props => (props.searchValue !== '' ? theme.colors.black : theme.colors.green)};
+    }
 
     &::placeholder {
-      font-size: ${props => props.theme.fontSizes.s};
-      font-weight: ${props => props.theme.fontWeight.Light};
+      font-size: ${theme.fontSizes.s};
+      font-weight: ${theme.fontWeight.Light};
       line-height: 1.25; /* 125% */
-      color: ${props => props.theme.colors.secGreen};
+      color: ${theme.colors.green};
     }
   }
 
   .searchIcon {
     position: absolute;
-    left: ${props => props.theme.spacing.step * 5}px;
+    left: ${theme.spacing.step * 5}px;
     top: 50%;
     transform: translateY(-50%);
 
@@ -48,26 +50,21 @@ export const SearchBox = styled.div`
       transform: scale(0.95);
     }
   }
-
-  /* #Search::-webkit-search-cancel-button {
-    position: relative;
-    right: 20px;
-
-    -webkit-appearance: none;
-    height: 20px;
-    width: 20px;
-    border-radius: 10px;
-    background: red;
-  } */
-
-  .clearButton {
-    /* display: none; */
-
+  .resetButton {
     display: ${props => (props.resetBoolean ? 'block' : 'none')};
     position: absolute;
-    right: ${props => props.theme.spacing.step * 5}px;
+    right: 10px;
     top: 50%;
     transform: translateY(-50%);
+    background-color: ${theme.colors.beige};
+    width: 22px;
+    height: 22px;
+  }
+  .resetButtonSVG {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 
     input:focus {
       display: block;

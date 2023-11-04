@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { theme } from 'styles';
 
 export const Hidden = styled.div`
   /* visibility: hidden; */
@@ -11,7 +12,8 @@ export const Hidden = styled.div`
   position: absolute;
   top: 0;
 
-  z-index: 6;
+  /* z-index: 6; */
+  z-index: ${theme.zIndexes.app};
 
   &.isHidden {
     /* visibility: visible; */
