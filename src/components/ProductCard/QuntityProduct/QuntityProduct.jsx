@@ -52,11 +52,7 @@ const QuntityProduct = ({ inStock, prodType, prodDescription }) => {
       setQuintity(prodType.count);
     }
 
-    // if (quintity > prodType.count) {
-    //   return;
-    // }
-
-    if (inCart) {
+    if (inCart && quintity < prodType.count) {
       dispatch(updateCartItem({ productCode, newCount: quintity + 1 }));
     }
   };
@@ -72,8 +68,6 @@ const QuntityProduct = ({ inStock, prodType, prodDescription }) => {
   };
 
   const hendleInputChange = e => {
-    console.log('e.currentTarget.value:', e.currentTarget.value);
-
     if (!e.target.validity.valid) {
       return;
     }
@@ -117,6 +111,12 @@ const QuntityProduct = ({ inStock, prodType, prodDescription }) => {
       setIsFocused(false);
       dispatch(updateCartItem({ productCode, newCount: quintity }));
     }
+  };
+
+  const clickToBuy = () => {
+    if (quintity > 0) {
+      return handleClickBuy();
+    } else return alert('min 1 pcs');
   };
 
   const handleClickBuy = () => {
@@ -213,7 +213,8 @@ const QuntityProduct = ({ inStock, prodType, prodDescription }) => {
           <SubmitButton
             disabled={inStock ? false : true}
             type="button"
-            onClick={handleClickBuy}
+            // onClick={handleClickBuy}
+            onClick={clickToBuy}
           >
             Купити
           </SubmitButton>
