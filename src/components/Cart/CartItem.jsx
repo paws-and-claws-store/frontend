@@ -14,6 +14,7 @@ import {
   QuintityInput,
   QuintityInputWrapper,
   ShortDesc,
+  Size,
   SymbolCurrency,
   TotalQuantity,
 } from './CartItem.styled';
@@ -165,37 +166,40 @@ export const CartItem = ({ prod }) => {
               <ProdTitle>{productName}</ProdTitle>
             </Link>
             <ShortDesc>{shortDescription}</ShortDesc>
-            <p>{displaySize(size)}</p>
+            <Size>{displaySize(size)}</Size>
           </div>
 
-          <div style={{ marginTop: 'auto' }}>
-            {sale ? (
-              <PriceBox>
-                <PriceSt>
-                  {sale.toFixed(2)}
-                  <SymbolCurrency>₴</SymbolCurrency>
-                </PriceSt>
-                <PriceSt className="line-through-text">
-                  <span className="line-through-text ">{price.toFixed(2)}</span>
-                  <SymbolCurrency>₴</SymbolCurrency>
-                </PriceSt>
-              </PriceBox>
-            ) : (
-              <PriceBox>
-                <PriceSt>
-                  {price.toFixed(2)}
-                  <SymbolCurrency>₴</SymbolCurrency>
-                </PriceSt>
-              </PriceBox>
-            )}
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              marginTop: 'auto',
+            }}
+          >
+            <div>
+              {sale ? (
+                <PriceBox>
+                  <PriceSt>
+                    {sale.toFixed(2)}
+                    <SymbolCurrency>₴</SymbolCurrency>
+                  </PriceSt>
+                  <PriceSt className="line-through-text">
+                    <span className="line-through-text ">
+                      {price.toFixed(2)}
+                    </span>
+                    <SymbolCurrency>₴</SymbolCurrency>
+                  </PriceSt>
+                </PriceBox>
+              ) : (
+                <PriceBox>
+                  <PriceSt>
+                    {price.toFixed(2)}
+                    <SymbolCurrency>₴</SymbolCurrency>
+                  </PriceSt>
+                </PriceBox>
+              )}
 
-            <div
-              style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-              }}
-            >
               <QuintityInputWrapper>
                 <QuintityInput
                   value={cardCount}
@@ -227,12 +231,12 @@ export const CartItem = ({ prod }) => {
                   +
                 </BtnIncrement>
               </QuintityInputWrapper>
-
-              <TotalQuantity>
-                {itemTotal.toFixed(2)}
-                <span>₴</span>
-              </TotalQuantity>
             </div>
+
+            <TotalQuantity>
+              <span> {itemTotal.toFixed(2)}</span>
+              <span>₴</span>
+            </TotalQuantity>
           </div>
           <button
             style={{
