@@ -12,15 +12,7 @@ import {
   LinkWrapper,
   // SearchBox,
 } from './Header.styled';
-import {
-  CartIcon,
-  CartNotEmptyIcon,
-  // ClearButton,
-  HeartIcon,
-  LogoIcon,
-  ProfileIcon,
-  // SearchIcon,
-} from 'components/Icons';
+import { CartIcon, CartNotEmptyIcon, HeartIcon, LogoIcon, ProfileIcon } from 'components/Icons';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { selectCartStore } from 'redux/selectors';
@@ -57,22 +49,6 @@ export const Header = () => {
           <Link to="/" className="logo">
             <LogoIcon />
           </Link>
-
-          {/* <LinkWrapper>
-              <NavLinkStyled to="/catalog">Каталог</NavLinkStyled>
-              <NavLinkStyled to="/brands">Бренди</NavLinkStyled>
-            </LinkWrapper> */}
-          {/* <SearchBox>
-            <form action="/frontend/search">
-              <input type="search" placeholder="Введіть назву товару" />
-              <button>
-                <ClearButton />
-              </button>
-              <button type="submit">
-                <SearchIcon />
-              </button>
-            </form>
-          </SearchBox> */}
           <SearchBar />
           <LinkWrapper>
             <button>
@@ -88,9 +64,7 @@ export const Header = () => {
                   <CartNotEmptyIcon countDigits={countDigits(totalCount)} />
 
                   <CountWrapper>
-                    <Count countDigits={countDigits(totalCount)}>
-                      {totalCount}
-                    </Count>
+                    <Count countDigits={countDigits(totalCount)}>{totalCount}</Count>
                   </CountWrapper>
                 </CountContainer>
               ) : (

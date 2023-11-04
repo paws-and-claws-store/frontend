@@ -50,13 +50,21 @@ export const SearchBox = styled.div`
       transform: scale(0.95);
     }
   }
-
-  .clearButton {
+  .resetButton {
     display: ${props => (props.resetBoolean ? 'block' : 'none')};
     position: absolute;
-    right: ${theme.spacing.step * 5}px;
+    right: 10px;
     top: 50%;
     transform: translateY(-50%);
+    background-color: ${theme.colors.beige};
+    width: 22px;
+    height: 22px;
+  }
+  .resetButtonSVG {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 
     input:focus {
       display: block;
