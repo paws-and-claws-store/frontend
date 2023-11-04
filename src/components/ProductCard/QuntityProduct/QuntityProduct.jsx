@@ -116,7 +116,7 @@ const QuntityProduct = ({ inStock, prodType, prodDescription }) => {
   const clickToBuy = () => {
     if (quintity > 0) {
       return handleClickBuy();
-    } else return alert('min 1 pcs');
+    } else return Notify.warning('Мінімальна кількість для замовлення - 1 шт');
   };
 
   const handleClickBuy = () => {
