@@ -77,24 +77,24 @@ export const TotalAmountContainer = styled.div`
 `;
 
 export const Line = styled.span`
-  margin-top: 8px;
+  margin-top: 6px;
   display: block;
   width: 100%;
-  border: 1px solid ${theme.colors.secGreen};
+  border-top: 1px solid ${theme.colors.secGreen};
   color: ${theme.colors.orange};
 `;
 
-export const TotalAmount = styled.p`
+export const TotalAmount = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: end;
   margin-top: 20px;
 
-  & + span {
+  & p {
     font-size: 20px;
     font-style: normal;
     font-weight: 500;
-    line-height: 24px;
+    line-height: 24px; /* 120% */
   }
 `;
 

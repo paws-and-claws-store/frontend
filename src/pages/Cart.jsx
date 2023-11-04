@@ -102,14 +102,14 @@ export const Cart = () => {
                   <TotalAmountTitle>Підсумки кошика:</TotalAmountTitle>
                   <Line></Line>
                   <TotalAmount>
-                    <span>Загальна сума:</span>
+                    <p>Загальна сума:</p>
 
-                    <span>
+                    <div>
                       <TotalAmountNumber>
                         {calculateTotalCost().toFixed(2)}
                       </TotalAmountNumber>
                       <TotalAmountSumbol>₴</TotalAmountSumbol>
-                    </span>
+                    </div>
                   </TotalAmount>
                 </TotalAmountContainer>
 

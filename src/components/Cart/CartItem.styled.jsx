@@ -35,8 +35,6 @@ export const ShortDesc = styled.p`
 `;
 
 export const Size = styled.p`
-  margin-top: 4px;
-
   font-size: 16px;
   font-style: normal;
   font-weight: 500;
@@ -44,14 +42,21 @@ export const Size = styled.p`
 `;
 
 export const TotalQuantity = styled.p`
+  display: flex;
+  align-items: end;
+  gap: 4px;
   color: ${theme.colors.orange};
-  font-size: 28px;
-  font-style: normal;
-  font-weight: 600;
-  line-height: 32px;
+
+  margin-top: auto;
+
+  & span:first-child {
+    font-size: 28px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 32px;
+  }
 
   & span {
-    margin-left: 4px;
     font-size: 24px;
     font-style: normal;
     font-weight: 500;
@@ -66,8 +71,8 @@ export const QuntityContainer = styled.div`
 
 export const QuintityInputWrapper = styled.div`
   position: relative;
-  width: 120px;
-  height: 36px;
+  /* width: 120px; */
+  /* height: 36px; */
 
   /* margin-top: 12px; */
 `;
@@ -76,7 +81,7 @@ export const QuintityInput = styled.input`
   box-sizing: border-box;
   width: 120px;
   height: 36px;
-  padding: 0px 22px;
+  padding: 0px 10px;
   border: 1px solid ${theme.colors.green};
 
   transition: border-color 0.3s;
@@ -99,9 +104,8 @@ export const QuintityInput = styled.input`
 export const BtnIncrement = styled.button`
   position: absolute;
   top: 50%;
-  right: 14px;
+  right: 16px;
   transform: translateY(-50%);
-
   font-size: 20px;
   font-style: normal;
   font-weight: 500;
@@ -115,7 +119,7 @@ export const BtnIncrement = styled.button`
 export const BtnDecrement = styled.button`
   position: absolute;
   top: 50%;
-  left: 14px;
+  left: 16px;
   transform: translatey(-50%);
 
   font-size: 20px;
@@ -166,12 +170,12 @@ export const PriceSt = styled.div`
   font-weight: ${theme.fontWeight.SemiBold};
   font-size: ${theme.fontSizes.l};
   line-height: ${theme.lineHeight.l};
-  gap: 0;
+  gap: 2px;
 `;
 
 export const SymbolCurrency = styled.span`
-  margin-left: ${theme.spacing.step}px;
-  font-weight: ${theme.fontWeight.medium};
+  /* margin-left: ${theme.spacing.step}px; */
+  font-weight: ${theme.fontWeight.Medium};
   font-size: ${theme.fontSizes.s};
   line-height: ${theme.lineHeight.m};
   .line-through-text & {
