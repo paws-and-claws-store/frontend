@@ -57,13 +57,14 @@ export const WidthBtn = styled.button`
     color: ${theme.colors.orange};
   }
 
-  &.unavailable {
+  &.active.unavailable {
     border-color: ${theme.colors.grey};
     background-color: ${theme.colors.grey};
     color: ${theme.colors.beige};
   }
-  &.active.unavailable {
+  &.unavailable {
     border-color: ${theme.colors.black};
+    background-color: ${theme.colors.secGrey};
     color: ${theme.colors.black};
   }
 `;

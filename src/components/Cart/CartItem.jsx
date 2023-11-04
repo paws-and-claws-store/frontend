@@ -57,7 +57,7 @@ export const CartItem = ({ prod }) => {
       dispatch(updateCartItem({ productCode, newCount: cardCount - 1 }));
     } else {
       setCardCount(null);
-      Notify.info('Товар видалено з кошика');
+      // Notify.info('Товар видалено з кошика');
       dispatch(removeCartItem(productCode));
     }
   };
@@ -76,7 +76,7 @@ export const CartItem = ({ prod }) => {
   };
 
   const handleDelete = () => {
-    Notify.info('Товар  видалено з кошика');
+    // Notify.info('Товар  видалено з кошика');
     setCardCount(null);
     dispatch(removeCartItem(productCode));
   };
