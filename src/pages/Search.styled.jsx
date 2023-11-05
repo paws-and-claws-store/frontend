@@ -14,7 +14,7 @@ export const UpsideSearchContainer = styled.div`
   display: grid;
   grid-template-columns: 1fr 628px 1fr;
   grid-column-gap: 20px;
-  margin-bottom: 24px;
+  margin-bottom: 20px;
 `;
 
 export const TitleSearch = styled.h2`
@@ -60,24 +60,16 @@ export const SearchQuery = styled.span`
 export const SearchDescriptionSpan = styled.span``;
 
 export const SortingContainer = styled.div`
+position: relative;
   width: 304px;
+  height: 40px;
+  margin-top: auto;
   display: flex;
   align-items: end;
   justify-content: space-between;
 `;
 
-export const SortingSpan = styled.span`
-  margin-bottom: 10px;
-  color: ${theme.colors.green};
-  font-variant-numeric: lining-nums proportional-nums;
-  font-feature-settings: 'ss09' on;
-  /* banner content */
-  font-family: Inter;
-  font-size: ${theme.fontSizes.s};
-  font-style: normal;
-  font-weight: 400;
-  line-height: 20px; /* 125% */
-`;
+
 
 export const SearchCategoryList = styled.div`
   display: flex;

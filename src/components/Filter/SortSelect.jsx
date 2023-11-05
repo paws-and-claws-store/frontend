@@ -1,73 +1,92 @@
-import React from 'react';
-import { components } from 'react-select';
-import { SelectStyled } from './SortSelect.styled';
+import React, { useState } from 'react';
+// import { components } from 'react-select';
+
+import {
+  BurgerContainer,
+  SortingSpan,
+  DropDownContainer,
+  DefaultWrapper,
+  DefaultValue,
+  IndicatorWrapper,
+  IndicatorValue,
+  BurgerBtn,
+} from './SortSelect.styled';
 import { RightArrow } from 'components/Icons';
 import { theme } from 'styles';
 import { useDispatch } from 'react-redux';
 import { setValueSort } from 'redux/sortSelectSlice';
 
 export const SortSelect = () => {
+  const [isClickBurger, setIsClickBurger] = useState(true);
+  const [indicator, setIndicator] = useState('обрати');
   const dispatch = useDispatch();
-  const options = [
-    { value: 'спочатку дешеві', label: 'спочатку дешеві', valueEn: 'cheap' },
-    { value: 'спочатку дорогі', label: 'спочатку дорогі', valueEn: 'expensive' },
-    { value: 'за рейтингом', label: 'за рейтингом', valueEn: 'rating' },
-  ];
 
-  const DropdownIndicator = props => {
-    const { isFocused } = props;
+  const indicatorHandler = value => {
+    switch (value) {
+      case 'cheap':
+        setIndicator('спочатку дешеві');
+        dispatch(setValueSort(value));
+        break;
 
-    return (
-      <components.DropdownIndicator {...props}>
-        <RightArrow direction={isFocused ? 'rotate(-90)' : 'rotate(90)'} />
-      </components.DropdownIndicator>
-    );
+      case 'expensive':
+        setIndicator('спочатку дорогі');
+        dispatch(setValueSort(value));
+        break;
+
+      case 'rating':
+        setIndicator('за рейтингом');
+        // dispatch(setValueSort(value));
+        break;
+
+      default:
+        setIndicator('rating');
+      // dispatch(setValueSort(value));
+    }
+
+    setIsClickBurger(!isClickBurger);
   };
 
-  const styles = {
-    fontFamily: 'Inter',
-    fontSize: '14px',
-    fontStyle: 'normal',
-    fontWeight: '300',
-    lineHeight: '16px',
-    fontVariantNumeric: 'lining-nums proportional-nums',
-    fontFeatureSettings: '"ss09" on',
-    cursor: 'pointer',
-  };
-
-  const onSelectHandler = e => {
-    dispatch(setValueSort(e.valueEn));
-  };
+  const onButtonHandler = () => setIsClickBurger(!isClickBurger);
 
   return (
-    <SelectStyled
-      className="react-select-container"
-      classNamePrefix="react-select"
-      options={options}
-      placeholder="обрати"
-      //   defaultInputValue="за рейтингом"
-      onChange={onSelectHandler}
-      components={{ DropdownIndicator }}
-      styles={{
-        control: (baseStyles, state) => ({
-          ...baseStyles,
-          borderColor: state.isFocused ? theme.colors.green : theme.colors.secGreen,
-          borderRadius: '0',
-          backgroundColor: theme.colors.mainBackground,
-          width: '196px',
-          height: '40px',
-          ...styles,
-        }),
-
-        option: (baseStyles, state) => ({
-          ...baseStyles,
-          backgroundColor: state.isFocused
-            ? theme.colors.mainBackground
-            : theme.colors.mainBackground,
-          color: state.isSelected ? theme.colors.black : theme.colors.black,
-          ...styles,
-        }),
-      }}
-    />
+    <BurgerContainer>
+      <SortingSpan>Сортування:</SortingSpan>
+      <DropDownContainer>
+        {isClickBurger ? (
+          <DefaultWrapper>
+            <DefaultValue
+              style={{
+                color:
+                  indicator === 'обрати'
+                    ? theme.colors.green
+                    : theme.colors.black,
+              }}
+            >
+              {indicator}
+            </DefaultValue>
+          </DefaultWrapper>
+        ) : (
+          <IndicatorWrapper>
+            <IndicatorValue onClick={() => indicatorHandler('cheap')}>
+              спочатку дешеві
+            </IndicatorValue>
+            <IndicatorValue onClick={() => indicatorHandler('expensive')}>
+              спочатку дорогі
+            </IndicatorValue>
+            <IndicatorValue onClick={() => indicatorHandler('rating')}>
+              за рейтингом
+            </IndicatorValue>
+          </IndicatorWrapper>
+        )}
+        <BurgerBtn
+          onClick={onButtonHandler}
+          style={{
+            transform: isClickBurger ? 'rotate(90deg)' : 'rotate(-90deg)',
+          }}
+        >
+          <RightArrow />
+        </BurgerBtn>
+      </DropDownContainer>
+    </BurgerContainer>
   );
 };

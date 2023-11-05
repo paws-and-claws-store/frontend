@@ -15,7 +15,6 @@ import {
   SearchTravelBag,
   SearchWrapperCatalog,
   SortingContainer,
-  SortingSpan,
   TitleSearch,
   UpsideSearchContainer,
 } from './Search.styled';
@@ -160,7 +159,6 @@ export const Search = () => {
 
             </SearchDesriptionResults>
             <SortingContainer>
-              <SortingSpan>Сортування:</SortingSpan>
               <SortSelect />
             </SortingContainer>
           </UpsideSearchContainer>
