@@ -10,12 +10,14 @@ import {
   PetButton,
   WrapperCatalog,
 } from 'pages/Catalog.styled';
+import { TitelContainer, Sorter } from './CatalogLayout.styled';
 import { Title } from 'pages/Home.styled';
 import React, { useEffect, useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import { setBreadCrumbs } from 'redux/breadCrumbsSlice';
 import { useFetchAllStructureQuery } from 'redux/operations';
 import { useDispatch } from 'react-redux';
+import { SortSelect } from 'components/Filter/SortSelect';
 // import { fetchAllStructure } from 'services/api';
 export const CatalogLayout = () => {
   const [active, setActive] = useState('');
@@ -89,7 +91,13 @@ export const CatalogLayout = () => {
 
   return (
     <>
-      <Title>Каталог товарів</Title>
+    <TitelContainer>
+    <Title>Каталог товарів</Title>
+    <Sorter>
+    <SortSelect style={{top: '100px', left: '0px'}}/>
+    </Sorter>
+    </TitelContainer>
+      
       <CatalogContainer>
         <AsideCatalog>
           {structure.length !== 0 && (
