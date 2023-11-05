@@ -7,18 +7,6 @@ export const CatalogContainer = styled.div`
   /* flex-wrap: wrap; */
   /* gap: 20px; */
   gap: ${theme.spacing.step * 5}px;
-
-  span {
-    display: flex;
-    align-items: center;
-    gap: ${theme.spacing.step * 2}px;
-    text-align: center;
-
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: 20px;
-  }
 `;
 
 export const CategoryList = styled.div`
@@ -56,6 +44,12 @@ export const PetButton = styled.button`
   background-color: ${theme.colors.secGreen};
 
   border: 1px solid ${theme.colors.green};
+
+  & span {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
 
   &.active {
     position: relative;

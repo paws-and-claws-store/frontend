@@ -24,6 +24,7 @@ import { displaySize } from 'helpers';
 import { useDispatch, useSelector } from 'react-redux';
 import { addCartItem, removeCartItem, updateCartItem } from 'redux/cartSlice';
 import { selectCartStore } from 'redux/selectors';
+import { Notify } from 'notiflix';
 
 // import { CardList } from 'components';
 
@@ -163,9 +164,14 @@ export const Card = ({ el, onClick }) => {
           cardCount: 1,
         }),
       );
-    } else {
+    } else if (cardCount < elType.count) {
       setCardCount(cardCount + 1);
       dispatch(updateCartItem({ productCode, newCount: cardCount + 1 }));
+    } else {
+      Notify.info('На жаль, на складі відсутня необхідна кількість товару.');
+
+      setCardCount(elType.count);
+      dispatch(updateCartItem({ productCode, newCount: elType.count }));
     }
   };
 
@@ -184,13 +190,32 @@ export const Card = ({ el, onClick }) => {
       return;
     }
 
+    if (e.target.value === '') {
+      setCardCount('');
+    }
+
     const newCount = Number(e.target.value);
+
+    if (newCount > elType.count) {
+      setCardCount(elType.count);
+      Notify.info('На жаль, на складі відсутня необхідна кількість товару.');
+      return dispatch(updateCartItem({ productCode, newCount: elType.count }));
+    }
+
     if (newCount < 1) {
       return;
     }
 
     setCardCount(newCount);
     dispatch(updateCartItem({ productCode, newCount }));
+  };
+
+  const handleBlur = () => {
+    if (cardCount === '') {
+      Notify.warning('Мінімальна кількість для замовлення - 1 шт');
+      setCardCount(null);
+      dispatch(removeCartItem(productCode));
+    }
   };
 
   const onSubmitCardHandler = e => {
@@ -319,7 +344,9 @@ export const Card = ({ el, onClick }) => {
                 <SymbolCurrency>₴</SymbolCurrency>
               </PriceSt>
               <PriceSt className="line-through-text">
-                {elType.price.toFixed(2)}
+                <span className="line-through-text">
+                  {elType.price.toFixed(2)}
+                </span>
                 <SymbolCurrency>₴</SymbolCurrency>
               </PriceSt>
             </PriceBox>
@@ -353,7 +380,7 @@ export const Card = ({ el, onClick }) => {
                 size={3}
                 pattern="[0-9]*"
                 onChange={handleChange}
-                // onBlur={handleChange}
+                onBlur={handleBlur}
                 value={cardCount}
               />
               <BTNInc name="increment" onClick={handleIncrement} type="button">
