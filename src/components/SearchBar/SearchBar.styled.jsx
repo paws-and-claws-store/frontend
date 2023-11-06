@@ -18,7 +18,7 @@ export const SearchBox = styled.div`
 
     border-radius: ${theme.spacing.step * 10}px;
     border: 1px solid ${theme.colors.green};
-    padding: ${theme.spacing.step * 2 + 2}px ${theme.spacing.step * 4}px;
+    padding: ${theme.spacing.step * 2 + 2}px ${theme.spacing.step * 4 + 15}px;
     padding-left: ${theme.spacing.step * 13}px;
     background-color: ${theme.colors.beige};
 

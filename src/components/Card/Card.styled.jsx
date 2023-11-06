@@ -52,14 +52,14 @@ export const WidthLink = styled.button`
   }
 
   &.unavailable {
-    border-color: ${theme.colors.grey};
-    background-color: ${theme.colors.grey};
-    color: ${theme.colors.beige};
+    border-color: ${theme.colors.secBlack};
+    background-color: ${theme.colors.secGrey};
+    color: ${theme.colors.secBlack};
   }
   &.active.unavailable {
     border-color: ${theme.colors.grey};
-    color: ${theme.colors.grey};
-    background-color: ${theme.colors.secGrey};
+    color: ${theme.colors.beige};
+    background-color: ${theme.colors.grey};
   }
 
   & span {
@@ -111,19 +111,19 @@ export const ShortDiscriptionSt = styled.p`
 
 export const Rating = styled.p`
   display: flex;
-  align-items: center;
+  align-items: baseline;
 
   gap: ${theme.spacing.step * 1}px;
 
   height: ${theme.spacing.step * 5}px;
-  margin-top: ${theme.spacing.step * 2}px;
+  margin-top: ${theme.spacing.step * 2 + 1}px;
 
   color: ${theme.colors.grey};
   font-weight: ${theme.fontWeight.Regular};
   font-size: ${theme.fontSizes.s};
   line-height: ${theme.lineHeight.l};
 
-  & span {
+  & span:last-child {
     font-size: 14px;
     font-style: normal;
     font-weight: 300;
@@ -132,15 +132,15 @@ export const Rating = styled.p`
 `;
 
 export const PriceBox = styled.div`
-  display: grid;
+  display: flex;
+  flex-direction: column;
   /* flex-wrap: wrap; */
-  align-items: center;
+
   /* width: 94px; */
 
-  & p.line-through-text {
+  & span.line-through-text {
     font-size: ${theme.fontSizes.s};
     font-weight: ${theme.fontWeight.Medium};
-    line-height: 1;
 
     text-decoration-line: line-through;
     text-transform: uppercase;
@@ -148,23 +148,25 @@ export const PriceBox = styled.div`
   }
 `;
 
-export const PriceSt = styled.p`
+export const PriceSt = styled.div`
   display: flex;
+  align-items: center;
   color: ${props => props.theme.colors.orange};
   /* text-transform: uppercase; */
   /* font-family: 'rawline', sans-serif; */
   font-weight: ${theme.fontWeight.SemiBold};
   font-size: ${theme.fontSizes.l};
   line-height: ${theme.lineHeight.l};
-  gap: 0;
 `;
 
 export const SymbolCurrency = styled.span`
   margin-left: ${theme.spacing.step}px;
   font-weight: ${theme.fontWeight.medium};
   font-size: ${theme.fontSizes.s};
-  line-height: ${theme.lineHeight.m};
+  line-height: ${theme.lineHeight.s};
+  align-self: flex-end;
   .line-through-text & {
+    color: ${theme.colors.grey};
     font-size: 12px;
   }
 `;
@@ -174,12 +176,12 @@ export const Wrapper = styled.div`
   align-items: center;
   justify-content: space-between;
   margin-top: ${theme.spacing.step * 2}px;
-  /* gap: ${theme.spacing.step * 4 - 2}px; */
 `;
 
 export const Button = styled.button`
   display: block;
-  padding: ${theme.spacing.step * 2}px 0;
+  height: 40px;
+  /* padding: ${theme.spacing.step * 2}px 0; */
   width: ${theme.spacing.step * 39}px;
   /* height: ${theme.spacing.step * 10}px; */
   background-color: ${theme.colors.orange};

@@ -36,7 +36,7 @@ export const SearchDesriptionResults = styled.div`
   color: ${theme.colors.black};
   font-variant-numeric: lining-nums proportional-nums;
   font-feature-settings: 'ss09' on;
-
+  word-wrap: break-word;
   /* banner content */
   font-family: Inter;
   font-size: ${theme.fontSizes.s};
@@ -47,6 +47,7 @@ export const SearchDesriptionResults = styled.div`
 
 export const SearchQuery = styled.span`
   color: ${theme.colors.green};
+
   /* font-variant-numeric: lining-nums proportional-nums;
   font-feature-settings: 'ss09' on; */
 
@@ -60,7 +61,7 @@ export const SearchQuery = styled.span`
 export const SearchDescriptionSpan = styled.span``;
 
 export const SortingContainer = styled.div`
-position: relative;
+  position: relative;
   width: 304px;
   height: 40px;
   margin-top: auto;
@@ -68,8 +69,6 @@ position: relative;
   align-items: end;
   justify-content: space-between;
 `;
-
-
 
 export const SearchCategoryList = styled.div`
   display: flex;

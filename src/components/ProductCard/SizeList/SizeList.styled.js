@@ -63,8 +63,8 @@ export const WidthBtn = styled.button`
     color: ${theme.colors.beige};
   }
   &.unavailable {
-    border-color: ${theme.colors.black};
+    border-color: ${theme.colors.secBlack};
     background-color: ${theme.colors.secGrey};
-    color: ${theme.colors.black};
+    color: ${theme.colors.secBlack};
   }
 `;
