@@ -47,7 +47,9 @@ export const theme = Object.freeze({
     xl: '1440px',
   },
   animations: {
-    cubicBezier: 'cubic-bezier(0, 0.110, 0.35, 2);',
+    // cubicBezier: 'cubic-bezier(0, 0.110, 0.35, 2);',
+    cubicBezier: 'cubic-bezier(.17,.67,.83,.67)',
+    transitionDuration: '0.1s',
   },
   spacing: {
     step: 4,

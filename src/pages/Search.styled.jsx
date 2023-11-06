@@ -90,10 +90,10 @@ export const SearchFilter = styled.div`
 
   /* width: 100%; */
   width: ${theme.spacing.step * 76}px;
-
+  min-height: 44px;
   max-height: ${props => (props.active ? '44px' : '116px')};
   transition-property: max-height, background-color;
-  transition-duration: 0.2s;
+  transition-duration: ${theme.animations.transitionDuration};
   transition-timing-function: ${props => props.theme.animations.cubicBezier};
   background-color: ${props => (props.active ? theme.colors.secGreen : theme.colors.beige)};
 
@@ -108,9 +108,10 @@ export const SearchBrands = styled.div`
   align-items: start;
 
   width: 100%;
+  min-height: 44px;
   max-height: ${props => (props.activeBrands ? '44px' : '500px')};
   transition-property: max-height, background-color;
-  transition-duration: 0.2s;
+  transition-duration: ${theme.animations.transitionDuration};
   transition-timing-function: ${props => props.theme.animations.cubicBezier};
   background-color: ${props => (props.activeBrands ? theme.colors.secGreen : theme.colors.beige)};
 

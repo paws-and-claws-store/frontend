@@ -91,20 +91,18 @@ export const CatalogLayout = () => {
 
   return (
     <>
-    <TitelContainer>
-    <Title>Каталог товарів</Title>
-    <Sorter>
-    <SortSelect style={{top: '100px', left: '0px'}}/>
-    </Sorter>
-    </TitelContainer>
-      
+      <TitelContainer>
+        <Title>Каталог товарів</Title>
+        <Sorter>
+          <SortSelect style={{ top: '100px', left: '0px' }} />
+        </Sorter>
+      </TitelContainer>
+
       <CatalogContainer>
         <AsideCatalog>
           {structure.length !== 0 && (
             <CategoryList>
-              <ul
-                style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}
-              >
+              <ul style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
                 {structure.map((el, i) => {
                   // console.log('el:', el);
                   switch (el.code) {
@@ -114,9 +112,7 @@ export const CatalogLayout = () => {
                           <PetButton
                             active={active}
                             id={el.code}
-                            className={
-                              active === 'for_dogs' ? 'active' : undefined
-                            }
+                            className={active === 'for_dogs' ? 'active' : undefined}
                             onClick={handleClick}
                           >
                             <span>
@@ -135,9 +131,7 @@ export const CatalogLayout = () => {
                           <PetButton
                             active={active}
                             id={el.code}
-                            className={
-                              active === 'for_cats' ? 'active' : undefined
-                            }
+                            className={active === 'for_cats' ? 'active' : undefined}
                             onClick={handleClick}
                             // onBlur={() => {
                             //   setActive('');

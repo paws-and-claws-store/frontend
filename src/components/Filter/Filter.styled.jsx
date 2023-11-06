@@ -9,7 +9,7 @@ export const FilterContainer = styled.div`
   width: 100%;
   height: 500px;
   transition-property: transform;
-  transition-duration: 0.2s;
+  transition-duration: ${theme.animations.transitionDuration};
   transition-timing-function: ${theme.animations.cubicBezier};
 
   transform: ${props => (props.active ? 'translateY(-90px)' : null)};
@@ -73,7 +73,7 @@ export const CheckBoxStyled = styled.input`
     width: 0.65em;
     height: 0.65em;
     transform: scale(0);
-    transition: 120ms transform ease-in-out;
+    transition: 120ms transform ${theme.animations.cubicBezier};
     box-shadow: inset 1em 1em ${theme.colors.green};
     transform-origin: bottom left;
     clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
@@ -102,39 +102,4 @@ export const QuantityBrands = styled.span`
   font-style: normal;
   font-weight: 300;
   line-height: 20px; /* 125% */
-`;
-
-export const FilterPriceRangeStyle = styled.div`
-  display: flex;
-  align-items: end;
-
-  width: 100%;
-  height: 16px;
-  justify-content: center;
-`;
-
-export const FilterPriceValue = styled.div`
-  min-width: 22px;
-  color: ${theme.colors.orange};
-  font-variant-numeric: lining-nums proportional-nums;
-  font-feature-settings: 'ss09' on;
-  font-family: Inter;
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 600;
-  line-height: 16px; /* 100% */
-  text-transform: uppercase;
-`;
-
-export const FilterPriceCurrency = styled.span`
-  margin-left: 2px;
-  color: ${theme.colors.orange};
-  font-variant-numeric: lining-nums proportional-nums;
-  font-feature-settings: 'ss09' on;
-
-  font-family: Inter;
-  font-size: 12px;
-  font-style: normal;
-  font-weight: 600;
-  line-height: 100%; /* 12px */
 `;
