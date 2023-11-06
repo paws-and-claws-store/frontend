@@ -80,7 +80,7 @@ export const CatalogLayout = () => {
         setCategories(...filter);
       }
 
-      //loading structure for breadcrumbs
+      //loading structure for breadcrumbscs
       const subCategory = structure.flatMap(item => item._categories);
       const variants = subCategory.flatMap(item => item._variants);
       dispatch(setBreadCrumbs([...structure, ...subCategory, ...variants]));

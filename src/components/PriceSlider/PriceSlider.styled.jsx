@@ -9,7 +9,7 @@ export const PriceContainer = styled.div`
   width: 100%;
   height: 116px;
   transition-property: transform;
-  transition-duration: 0.2s;
+  transition-duration: ${theme.animations.transitionDuration};
   transition-timing-function: ${theme.animations.cubicBezier};
 
   transform: ${props => (props.active ? 'translateY(-90px)' : null)};
@@ -55,7 +55,7 @@ export const StyledRangeSlider = styled(Slider)`
     border-top: 5px solid rgba(0, 0, 0, 0);
     border-bottom: 5px solid rgba(0, 0, 0, 0);
     transition-property: transform;
-    transition-duration: 0.2s;
+    transition-duration: ${theme.animations.transitionDuration};
     transition-timing-function: ${theme.animations.cubicBezier};
     transform: translateY(-5px);
   }
@@ -177,7 +177,7 @@ export const StyledRangeSlider = styled(Slider)`
     border-right: 5px solid rgba(0, 0, 0, 0);
     border-left: 5px solid rgba(0, 0, 0, 0);
     transition-property: transform;
-    transition-duration: 0.2s;
+    transition-duration: ${theme.animations.transitionDuration};
     transition-timing-function: ${theme.animations.cubicBezier};
     transform: translateX(-5px);
   }
