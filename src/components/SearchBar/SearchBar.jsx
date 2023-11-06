@@ -60,7 +60,7 @@ export const SearchBar = ({ queryLink }) => {
           <input
             type="text"
             placeholder="Введіть назву товару"
-            autoFocus
+            // autoFocus
             value={searchValue}
             onChange={handleChage}
           />
