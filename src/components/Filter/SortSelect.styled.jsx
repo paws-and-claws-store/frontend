@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 import { theme } from 'styles';
 
 export const BurgerContainer = styled.div`
-position: absolute;
+  position: absolute;
   top: 0px;
   right: 0px;
   display: flex;
@@ -11,8 +11,8 @@ position: absolute;
 `;
 
 export const SortingSpan = styled.span`
-margin-top: 9px;
-margin-right: 10px;
+  margin-top: 9px;
+  margin-right: 10px;
   color: ${theme.colors.green};
   font-variant-numeric: lining-nums proportional-nums;
   font-feature-settings: 'ss09' on;
@@ -21,11 +21,10 @@ margin-right: 10px;
   font-size: ${theme.fontSizes.s};
   font-style: normal;
   font-weight: 400;
-  line-height: 20px; 
+  line-height: 20px;
 `;
 
 export const DropDownContainer = styled.div`
-  
   display: flex;
   justify-content: space-between;
   border: 1px solid ${theme.colors.secGreen};
@@ -39,37 +38,40 @@ export const DropDownContainer = styled.div`
 `;
 
 export const DefaultWrapper = styled.div`
-width: 100%;
-height: 32px;
-display: flex;
-flex-direction: column;
+  width: 100%;
+  height: 32px;
+  display: flex;
+  flex-direction: column;
   align-items: flex-start;
   justify-content: center;
 `;
 
 export const DefaultValue = styled.p`
-font-size: 14px;
-font-weight: ${theme.fontWeight.Light};
-line-height: ${theme.lineHeight.s};
-cursor: default;
+  font-size: 14px;
+  font-weight: ${theme.fontWeight.Light};
+  line-height: ${theme.lineHeight.s};
+  cursor: default;
 `;
 
 export const IndicatorWrapper = styled.div`
-display: flex;
-flex-direction: column;
-align-items: flex-start;
-padding-top: 8px;
-padding-bottom: 8px;
-gap: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  gap: 8px;
 `;
 
 export const IndicatorValue = styled.p`
-color: ${theme.colors.black};
-font-size: 14px;
-font-weight: ${theme.fontWeight.Light};
-line-height: ${theme.lineHeight.s};
-cursor: pointer;
-`
+  color: ${theme.colors.black};
+  font-size: 14px;
+  font-weight: ${theme.fontWeight.Light};
+  line-height: ${theme.lineHeight.s};
+  cursor: pointer;
+`;
 export const BurgerBtn = styled.button`
-margin-bottom: auto;
+  margin-bottom: auto;
+  &:hover {
+    fill: ${theme.colors.green};
+  }
 `;

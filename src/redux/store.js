@@ -1,5 +1,6 @@
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
-import storage from 'redux-persist/lib/storage';
+// import storage from 'redux-persist/lib/storage';
+import sessionStorage from 'redux-persist/es/storage/session';
 import {
   persistStore,
   persistReducer,
@@ -28,7 +29,7 @@ const reducers = combineReducers({
 const persistConfig = {
   key: 'root',
   version: 1,
-  storage,
+  storage: sessionStorage, // to use loacalstorage only in one session
   whitelist: ['cart', 'breadcrumbs'],
 };
 

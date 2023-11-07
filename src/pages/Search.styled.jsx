@@ -149,6 +149,10 @@ export const FoldedContainer = styled.div`
   transition: background-color 0.5s;
   justify-content: space-between;
   padding: ${theme.spacing.step + 2}px ${theme.spacing.step * 2}px;
+  cursor: pointer;
+  &:hover {
+    fill: ${theme.colors.green};
+  }
 `;
 
 export const SearchTravelBag = styled.svg`

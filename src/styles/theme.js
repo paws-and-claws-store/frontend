@@ -63,5 +63,7 @@ export const theme = Object.freeze({
     carousel: 5,
     app: 6,
     priceSlider: 12,
+    sortSelect: 6,
+    catalogPetButtons: 10,
   },
 });
