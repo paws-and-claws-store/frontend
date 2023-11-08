@@ -8,6 +8,13 @@ export const BreadcrumbsLinkStyled = styled(Link)`
   margin-right: 15px;
 `;
 
+export const BreadcrumbsNoLinkStyled = styled.div`
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  margin-right: 15px;
+`;
+
 export const BreadcrumbsDivStyled = styled.div`
   display: flex;
   align-items: center;
