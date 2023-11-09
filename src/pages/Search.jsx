@@ -110,9 +110,9 @@ export const Search = () => {
   };
 
   const handleClickToggle = e => {
-    active[e.currentTarget.name]
-      ? setActive({ ...active, [e.currentTarget.name]: false })
-      : setActive({ ...active, [e.currentTarget.name]: true });
+    active[e.currentTarget.attributes.name.value]
+      ? setActive({ ...active, [e.currentTarget.attributes.name.value]: false })
+      : setActive({ ...active, [e.currentTarget.attributes.name.value]: true });
   };
 
   return (
@@ -174,9 +174,11 @@ export const Search = () => {
                             ? theme.colors.secGreen
                             : theme.colors.beige,
                         }}
+                        onClick={handleClickToggle}
+                        name="price"
                       >
                         <span>Ціна</span>
-                        <button onClick={handleClickToggle} name="price">
+                        <button name="price">
                           <RightArrow direction={active['price'] ? 'rotate(90)' : 'rotate(-90)'} />
                         </button>
                       </FoldedContainer>
@@ -191,9 +193,11 @@ export const Search = () => {
                             ? theme.colors.secGreen
                             : theme.colors.beige,
                         }}
+                        onClick={handleClickToggle}
+                        name="brands"
                       >
                         <span>Бренди</span>
-                        <button onClick={handleClickToggle} name="brands">
+                        <button name="brands">
                           <RightArrow direction={active['brands'] ? 'rotate(90)' : 'rotate(-90)'} />
                         </button>
                       </FoldedContainer>
