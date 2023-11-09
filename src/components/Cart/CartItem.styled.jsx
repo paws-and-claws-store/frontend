@@ -49,7 +49,7 @@ export const TotalQuantity = styled.p`
 
   margin-top: auto;
 
-  & span:first-child {
+  & span:first-of-type {
     font-size: 28px;
     font-style: normal;
     font-weight: 600;
