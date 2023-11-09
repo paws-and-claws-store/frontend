@@ -15,17 +15,60 @@ import {
   TotalAmountSumbol,
   TotalAmountTitle,
 } from './Cart.styled';
-import Img from '../images/Travel_bag.png';
+import Img from '../../images/Travel_bag.png';
 import { useSelector } from 'react-redux';
 import { selectCartStore } from 'redux/selectors';
 import { CartItem } from 'components';
 
 import { CaretLeftPagination } from 'components/Icons';
+import { fetchValidateCartItems } from 'services/api';
 
 export const Cart = () => {
   const cartStore = useSelector(selectCartStore);
   const [scrollY, setScrollY] = useState(0);
   const [shouldRenderComponent, setShouldRenderComponent] = useState(false);
+  const [statusCode, setStatusCode] = useState(null);
+  const [unavailable, setUnavailable] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const array = cartStore.map(({ productCode, cardCount }) => ({
+        productCode,
+        cardCount,
+      }));
+
+      try {
+        const result = await fetchValidateCartItems(array);
+
+        if (result.code === 400) {
+          setStatusCode(result.code);
+
+          const unavailableArrayCode = result.errors.map(
+            ({ productCode }) => productCode,
+          );
+
+          // Використання методу filter для отримання товарів за вказаними кодами
+          const filteredProducts = cartStore.filter(function (product) {
+            return unavailableArrayCode.includes(product.productCode);
+          });
+
+          // Створення нового масиву з назвами товарів
+          const productNames = filteredProducts.map(function (product) {
+            return product.productName;
+          });
+          setUnavailable(productNames);
+        } else {
+          setStatusCode(result.code);
+        }
+
+        // Ви можете обробити дані тут
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    };
+
+    fetchData();
+  }, [cartStore]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -85,6 +128,24 @@ export const Cart = () => {
       {cartStore.length > 0 ? (
         <CartContainer>
           <TitleCart>Кошик</TitleCart>
+
+          {statusCode === 400 && (
+            <div style={{ backgroundColor: '#f55e53' }}>
+              {unavailable.length > 1 ? (
+                <p>
+                  {' '}
+                  На жаль, обраної кількості товарів вже немає в наявності.
+                </p>
+              ) : (
+                <p> На жаль, обраної кількості товару вже немає в наявності.</p>
+              )}
+              <ul>
+                {unavailable?.map((item, index) => (
+                  <li key={index}>{item}</li>
+                ))}
+              </ul>
+            </div>
+          )}
           <ListContainer>
             <ListItems>
               {cartStore.map(prod => {

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { BtnBackToCatalog, EmptyCartContainer } from './Cart.styled';
+import { BtnBackToCatalog, EmptyCartContainer } from './Cart/Cart.styled';
 import Img from '../images/Travel_bag.png';
 import { useDispatch } from 'react-redux';
 import { clearCartItems } from 'redux/cartSlice';

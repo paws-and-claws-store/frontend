@@ -177,3 +177,18 @@ export async function fetchAllStructure() {
     Notify.failure(error.message);
   }
 }
+// requests by Cart
+export async function fetchValidateCartItems(array) {
+  try {
+    const response = await axios.post(`/api/products/checkBasket/card`, {
+      array,
+    });
+    // console.log('response:', response);
+
+    return response.data;
+  } catch (error) {
+    // console.log('error:', error);
+    // Notify.failure(error.message);
+    return error.response.data;
+  }
+}
