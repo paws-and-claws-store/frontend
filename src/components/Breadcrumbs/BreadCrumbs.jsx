@@ -4,6 +4,7 @@ import {
   BreadcrumbsDivStyled,
   BreadcrumbsLinkStyled,
   BreadcrumbsMainPageLinkStyled,
+  BreadcrumbsNoLinkStyled,
   BreadcrumbsiconStyled,
 } from './BreadCrumbs.styled';
 import { Vector } from 'components/Icons/Vector';
@@ -15,9 +16,7 @@ export default function Breadcrumbs() {
   let languageSite = 'ua';
   const location = useLocation();
   let currentLink = '';
-  const crumbsFilter = location.pathname
-    .split('/')
-    .filter(crumb => crumb !== '');
+  const crumbsFilter = location.pathname.split('/').filter(crumb => crumb !== '');
 
   // const pathNameLocalization = [
   //   { code: 'catalog', ua: 'Каталог', en: 'Catalog' },
@@ -30,20 +29,15 @@ export default function Breadcrumbs() {
 
   const stateBreadcrumb = useSelector(selectBreadCrumbsStore);
 
-  const crumbs = crumbsFilter.map(crumb => {
+  const crumbs = crumbsFilter.map((crumb, index, array) => {
     currentLink += `/${crumb}`;
 
     // const localNameCrumb = pathNameLocalization.find(name => name.code === crumb);
 
-    const stateBreadCrumbNameCrumb = stateBreadcrumb.find(
-      name => name._id === crumb,
-    );
-
-
+    const stateBreadCrumbNameCrumb = stateBreadcrumb.find(name => name._id === crumb);
 
     const renderToPage = stateBreadCrumbNameCrumb
-      ? stateBreadCrumbNameCrumb[languageSite] ||
-        stateBreadCrumbNameCrumb['productName']
+      ? stateBreadCrumbNameCrumb[languageSite] || stateBreadCrumbNameCrumb['productName']
       : null;
 
     // if (stateBreadCrumbNameCrumb && stateBreadCrumbNameCrumb[languageSite]) {
@@ -61,9 +55,13 @@ export default function Breadcrumbs() {
         <BreadcrumbsiconStyled>
           <Vector key={nanoid()} />
         </BreadcrumbsiconStyled>
-        <BreadcrumbsLinkStyled to={currentLink} key={crumb}>
-          {renderToPage}
-        </BreadcrumbsLinkStyled>
+        {index !== array.length - 1 ? (
+          <BreadcrumbsLinkStyled to={currentLink} key={crumb}>
+            {renderToPage}
+          </BreadcrumbsLinkStyled>
+        ) : (
+          <BreadcrumbsNoLinkStyled key={crumb}>{renderToPage}</BreadcrumbsNoLinkStyled>
+        )}
       </BreadcrumbsDivStyled>
     );
   });
