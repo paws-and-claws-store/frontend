@@ -22,6 +22,7 @@ import { CartItem } from 'components';
 
 import { CaretLeftPagination } from 'components/Icons';
 import { fetchValidateCartItems } from 'services/api';
+import { unavailableFilterProducts } from 'helpers';
 
 export const Cart = () => {
   const cartStore = useSelector(selectCartStore);
@@ -47,15 +48,21 @@ export const Cart = () => {
             ({ productCode }) => productCode,
           );
 
-          // Використання методу filter для отримання товарів за вказаними кодами
-          const filteredProducts = cartStore.filter(function (product) {
-            return unavailableArrayCode.includes(product.productCode);
-          });
+          // // Використання методу filter для отримання товарів за вказаними кодами
+          // const filteredProducts = cartStore.filter(function (product) {
+          //   return unavailableArrayCode.includes(product.productCode);
+          // });
 
-          // Створення нового масиву з назвами товарів
-          const productNames = filteredProducts.map(function (product) {
-            return product.productName;
-          });
+          // // Створення нового масиву з назвами товарів
+          // const productNames = filteredProducts.map(function (product) {
+          //   return product.productName;
+          // });
+
+          const productNames = unavailableFilterProducts(
+            cartStore,
+            unavailableArrayCode,
+          );
+
           setUnavailable(productNames);
         } else {
           setStatusCode(result.code);
