@@ -4,6 +4,7 @@ const SearchInitialState = {
   query: '',
   resetBoolean: false,
   value: '',
+  status: 'rejected',
 };
 
 const searchSlice = createSlice({
@@ -14,21 +15,12 @@ const searchSlice = createSlice({
       state.query = action.payload;
       state.resetBoolean = true;
     },
-    setValueSearch(state, action) {
-      state.value = action.payload;
-      state.resetBoolean = true;
-    },
 
-    setResetValueSearch(state) {
-      state.value = '';
-      state.resetBoolean = false;
-    },
-    setResetBoolean(state, action) {
-      state.resetBoolean = action.payload;
+    setValueSearchStatusRedux(state, action) {
+      state.status = action.payload;
     },
   },
 });
 
 export const searchSliceReducer = searchSlice.reducer;
-export const { setQuerySearch, setResetBoolean, setValueSearch, setResetValueSearch } =
-  searchSlice.actions;
+export const { setQuerySearch, setValueSearchStatusRedux } = searchSlice.actions;

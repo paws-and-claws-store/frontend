@@ -19,7 +19,7 @@ import {
   UpsideSearchContainer,
 } from './Search.styled';
 import { RightArrow } from 'components/Icons';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { PriceSlider } from 'components/PriceSlider/PriceSlider';
 import React from 'react';
 import { Filter } from 'components/Filter/Filter';
@@ -27,6 +27,7 @@ import { SortSelect } from 'components/Filter/SortSelect';
 import { theme } from 'styles';
 import { selectSearchQueryStore, selectSortingTypeStore } from 'redux/selectors';
 import { SearchBar } from 'components/SearchBar/SearchBar';
+import { setValueSearchStatusRedux } from 'redux/searchSlice';
 
 export const Search = () => {
   const [productsList, setProductsList] = useState([]);
@@ -46,12 +47,14 @@ export const Search = () => {
 
   const searchQuery = useSelector(selectSearchQueryStore);
   const sortingType = useSelector(selectSortingTypeStore);
+  const dispatch = useDispatch();
 
   const {
     data: response,
     error,
     isLoading,
     isFetching,
+    status,
   } = useFetchSearchQuery({
     query: searchQuery,
     sorting: sortingType ? `&sortBy=${sortingType}` : '',
@@ -95,6 +98,10 @@ export const Search = () => {
       }
     }
   }, [isFetching, loadMoreClicked, response]);
+
+  useEffect(() => {
+    dispatch(setValueSearchStatusRedux(status));
+  }, [dispatch, status]);
 
   const onPageChange = pageNumber => {
     // При кліку на номер сторінки через пагінацію, змініть стан
