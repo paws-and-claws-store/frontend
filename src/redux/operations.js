@@ -1,4 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+// import { apiController } from 'pages/Search';
 
 export const api = createApi({
   reducerPath: 'api',
@@ -14,8 +15,10 @@ export const api = createApi({
       query: () => `/api/structure/all`,
     }),
     fetchSearch: builder.query({
-      query: ({ query, sorting = '' }) =>
-        `/api/products/searchByKeyword/card?findBy=${query?.toLowerCase()}${sorting}`,
+      query: ({ query, sorting = '', signal }) => ({
+        url: `/api/products/searchByKeyword/card?findBy=${query?.toLowerCase()}${sorting}`,
+        signal,
+      }),
     }),
   }),
 });

@@ -3,27 +3,28 @@ import React, { useEffect, useState } from 'react';
 import { SearchBox } from './SearchBar.styled';
 import { Notify } from 'notiflix';
 import { searchSchema } from './searchValidationSchema';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { setQuerySearch } from 'redux/searchSlice';
-import { selectSearchQueryStore, selectValueSearchStatusRedux } from 'redux/selectors';
+import { selectSearchQueryStore } from 'redux/selectors';
 
-export const SearchBar = () => {
-  const status = useSelector(selectValueSearchStatusRedux);
+export const SearchBar = ({ status }) => {
   const value = useSelector(selectSearchQueryStore);
-  const [searchValue, setSearchValue] = useState(status === 'fulfilled' ? value : '');
+  const [searchValue, setSearchValue] = useState(status === 'rejected' ? '' : value);
+  const location = useLocation();
 
   useEffect(() => {
     setSearchValue(value);
-  }, [value]);
+    if (status === 'rejected') {
+      setSearchValue('');
+    }
+  }, [value, status]);
 
   const [resetBoolean, setResetBoolean] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const handleChage = e => {
-    // dispatch(setValueSearch(e.currentTarget.value));
-
     setSearchValue(e.currentTarget.value);
     if (e.currentTarget.value === '') {
       setResetBoolean(false);
@@ -45,7 +46,9 @@ export const SearchBar = () => {
     if (isQueryValid) {
       //If form is valid, continue submission
       // console.log('Query is legit');
-      navigate('/search', { replace: false });
+      if (location?.pathname !== 'search') {
+        navigate('/search', { replace: false });
+      }
     }
 
     // If form is not valid, send error to UI:
