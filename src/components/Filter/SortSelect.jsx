@@ -47,19 +47,17 @@ export const SortSelect = () => {
   };
 
   const onButtonHandler = () => setIsClickBurger(!isClickBurger);
+  const onBlurHandler = () => setIsClickBurger(true);
 
   return (
     <BurgerContainer>
       <SortingSpan>Сортування:</SortingSpan>
-      <DropDownContainer>
+      <DropDownContainer onBlur={onBlurHandler} onClick={onButtonHandler} tabIndex="0">
         {isClickBurger ? (
           <DefaultWrapper>
             <DefaultValue
               style={{
-                color:
-                  indicator === 'обрати'
-                    ? theme.colors.green
-                    : theme.colors.black,
+                color: indicator === 'обрати' ? theme.colors.green : theme.colors.black,
               }}
             >
               {indicator}
@@ -73,13 +71,10 @@ export const SortSelect = () => {
             <IndicatorValue onClick={() => indicatorHandler('expensive')}>
               спочатку дорогі
             </IndicatorValue>
-            <IndicatorValue onClick={() => indicatorHandler('rating')}>
-              за рейтингом
-            </IndicatorValue>
+            <IndicatorValue onClick={() => indicatorHandler('rating')}>за рейтингом</IndicatorValue>
           </IndicatorWrapper>
         )}
         <BurgerBtn
-          onClick={onButtonHandler}
           style={{
             transform: isClickBurger ? 'rotate(90deg)' : 'rotate(-90deg)',
           }}
