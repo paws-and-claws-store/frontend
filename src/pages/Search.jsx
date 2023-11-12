@@ -122,14 +122,22 @@ export const Search = () => {
       ) : isLoading ? (
         <Loader />
       ) : error?.status < 500 ? (
-        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-          <div style={{ marginTop: '48px' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '250px' }}>
+          <div
+            style={{
+              marginTop: '48px',
+              height: '272px',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'space-between',
+            }}
+          >
             <SearchDesriptionResults style={{ fontSize: '24px', width: '736px' }}>
               <SearchDescriptionSpan>За запитом </SearchDescriptionSpan>
               <SearchQuery>{searchQuery}</SearchQuery>
               <SearchDescriptionSpan> нічого не знайдено </SearchDescriptionSpan>
             </SearchDesriptionResults>
-            <div style={{ marginTop: '180px', width: '520px' }}>
+            <div style={{ width: '520px' }}>
               <div style={{ marginBottom: '20px' }}>Спробуйте ще раз, уточнивши свій запит:</div>
               <SearchBar />
             </div>

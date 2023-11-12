@@ -31,8 +31,6 @@ export const TitleSearch = styled.h2`
 `;
 
 export const SearchDesriptionResults = styled.div`
-  margin-top: auto;
-  margin-bottom: auto;
   color: ${theme.colors.black};
   font-variant-numeric: lining-nums proportional-nums;
   font-feature-settings: 'ss09' on;
