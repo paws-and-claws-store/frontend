@@ -1,28 +1,35 @@
 import { ResetButton, SearchIcon } from 'components/Icons';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { SearchBox } from './SearchBar.styled';
 import { Notify } from 'notiflix';
 import { searchSchema } from './searchValidationSchema';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  setQuerySearch,
-  setResetBoolean,
-  setResetValueSearch,
-  setValueSearch,
-} from 'redux/searchSlice';
-import { selectSearchResetBoolean, selectSearchValueStore } from 'redux/selectors';
+import { setQuerySearch } from 'redux/searchSlice';
+import { selectSearchQueryStore } from 'redux/selectors';
 
-export const SearchBar = ({ queryLink }) => {
-  const searchValue = useSelector(selectSearchValueStore);
-  const resetBoolean = useSelector(selectSearchResetBoolean);
+export const SearchBar = ({ status }) => {
+  const value = useSelector(selectSearchQueryStore);
+  const [searchValue, setSearchValue] = useState(status === 'rejected' ? '' : value);
+  const location = useLocation();
+
+  useEffect(() => {
+    setSearchValue(value);
+    if (status === 'rejected') {
+      setSearchValue('');
+    }
+  }, [value, status]);
+
+  const [resetBoolean, setResetBoolean] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const handleChage = e => {
-    dispatch(setValueSearch(e.currentTarget.value));
+    setSearchValue(e.currentTarget.value);
     if (e.currentTarget.value === '') {
-      dispatch(setResetBoolean(false));
+      setResetBoolean(false);
+    } else {
+      setResetBoolean(true);
     }
   };
 
@@ -39,7 +46,9 @@ export const SearchBar = ({ queryLink }) => {
     if (isQueryValid) {
       //If form is valid, continue submission
       // console.log('Query is legit');
-      navigate('/search', { replace: false });
+      if (location?.pathname !== 'search') {
+        navigate('/search', { replace: false });
+      }
     }
 
     // If form is not valid, send error to UI:
@@ -68,7 +77,8 @@ export const SearchBar = ({ queryLink }) => {
             className="resetButton"
             type="reset"
             onClick={() => {
-              dispatch(setResetValueSearch());
+              setSearchValue('');
+              setResetBoolean(false);
             }}
           >
             <ResetButton />
