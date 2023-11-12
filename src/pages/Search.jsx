@@ -1,6 +1,6 @@
 import { CardList, Pagination } from 'components';
 import Loader from 'components/Loader/Loader';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useFetchSearchQuery } from 'redux/operations';
 import {
   FoldedContainer,
@@ -12,7 +12,6 @@ import {
   SearchDesriptionResults,
   SearchFilter,
   SearchQuery,
-  SearchTravelBag,
   SearchWrapperCatalog,
   SortingContainer,
   TitleSearch,
@@ -26,7 +25,7 @@ import { Filter } from 'components/Filter/Filter';
 import { SortSelect } from 'components/Filter/SortSelect';
 import { theme } from 'styles';
 import { selectSearchQueryStore, selectSortingTypeStore } from 'redux/selectors';
-import { SearchBar } from 'components/SearchBar/SearchBar';
+import { NoSearch } from 'components/NoSearch/NoSearch';
 
 export const Search = () => {
   const [productsList, setProductsList] = useState([]);
@@ -43,19 +42,32 @@ export const Search = () => {
   const [loadMoreProducts, setLoadMoreProducts] = useState([]); // Окремий стан для продуктів, завантажених через "Load More"
   const [loadMoreClicked, setLoadMoreClicked] = useState(false); // Окремий стан для слідкування за натисканням кнопки "Load More"
   const [active, setActive] = useState({ price: false, brands: false });
+  const abortControllerRef = useRef();
+  const searchRef = useRef();
 
   const searchQuery = useSelector(selectSearchQueryStore);
   const sortingType = useSelector(selectSortingTypeStore);
+
+  if (abortControllerRef.current && searchQuery === '') {
+    abortControllerRef.current.abort('empty query');
+  }
+
+  abortControllerRef.current = new AbortController();
+  const signal = abortControllerRef.current.signal;
 
   const {
     data: response,
     error,
     isLoading,
     isFetching,
+    status,
+    currentData,
   } = useFetchSearchQuery({
     query: searchQuery,
     sorting: sortingType ? `&sortBy=${sortingType}` : '',
+    signal,
   });
+  searchRef.current = { searchQuery: searchQuery, totalDocs: response.totalDocs };
 
   useEffect(() => {
     if (response) {
@@ -116,46 +128,28 @@ export const Search = () => {
   };
 
   return (
-    <>
+    <div style={{ minHeight: '640px' }}>
       {error?.status >= 500 ? (
         <>Oops, there was an error ...</>
       ) : isLoading ? (
         <Loader />
       ) : error?.status < 500 ? (
-        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '250px' }}>
-          <div
-            style={{
-              marginTop: '48px',
-              height: '272px',
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'space-between',
-            }}
-          >
-            <SearchDesriptionResults style={{ fontSize: '24px', width: '736px' }}>
-              <SearchDescriptionSpan>За запитом </SearchDescriptionSpan>
-              <SearchQuery>{searchQuery}</SearchQuery>
-              <SearchDescriptionSpan> нічого не знайдено </SearchDescriptionSpan>
-            </SearchDesriptionResults>
-            <div style={{ width: '520px' }}>
-              <div style={{ marginBottom: '20px' }}>Спробуйте ще раз, уточнивши свій запит:</div>
-              <SearchBar />
-            </div>
-          </div>
-
-          <SearchTravelBag />
-        </div>
-      ) : response?.docs.length > 0 ? (
+        <NoSearch status={status} />
+      ) : currentData ? (
         <>
           <UpsideSearchContainer>
             <TitleSearch>Результати пошуку</TitleSearch>
             <SearchDesriptionResults>
               <SearchDescriptionSpan>За запитом </SearchDescriptionSpan>
-              <SearchQuery>{searchQuery}</SearchQuery>
+              <SearchQuery>{searchRef.current.searchQuery}</SearchQuery>
               <SearchDescriptionSpan> знайдено </SearchDescriptionSpan>
-              <SearchQuery>{response.totalDocs} </SearchQuery>
+              <SearchQuery>{searchRef.current.totalDocs} </SearchQuery>
               <SearchDescriptionSpan>
-                {response.totalDocs === 1 ? 'товар' : response.totalDocs < 5 ? 'товари' : 'товарів'}
+                {searchRef.current.totalDocs === 1
+                  ? 'товар'
+                  : searchRef.current.totalDocs < 5
+                  ? 'товари'
+                  : 'товарів'}
               </SearchDescriptionSpan>
             </SearchDesriptionResults>
             <SortingContainer>
@@ -235,6 +229,6 @@ export const Search = () => {
           </SearchContainer>
         </>
       ) : null}
-    </>
+    </div>
   );
 };
