@@ -18,7 +18,7 @@ import { Route, Routes } from 'react-router-dom';
 import { Hidden } from './App.styled';
 import { CatalogLayout } from 'components/CatalogLayout/CatalogLayout';
 import { ProductType } from 'pages/ProductType';
-import { OrderSuccessful } from 'pages/OrderSuccessful';
+import { OrderSuccessful } from 'pages/Cart/OrderSuccessful/OrderSuccessful';
 
 export const App = () => {
   return (

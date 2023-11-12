@@ -15,3 +15,4 @@ export * from './cartNotEmpty';
 export * from './CaretLeftPagination';
 export * from './CaretRightPagination';
 export * from './CrossToDelete';
+export * from './CheckCircle';

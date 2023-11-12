@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { BtnBackToCatalog, EmptyCartContainer } from './Cart/Cart.styled';
-import Img from '../images/Travel_bag.png';
+import { BtnBackToCatalog, EmptyCartContainer } from '../Cart.styled';
 import { useDispatch } from 'react-redux';
 import { clearCartItems } from 'redux/cartSlice';
+import { image6 } from 'images';
+import { TitleContainer } from './OrderSuccessful.styled';
+import { CheckCircle } from 'components/Icons';
 
 export const OrderSuccessful = () => {
   const [scrollY, setScrollY] = useState(0);
@@ -33,16 +35,28 @@ export const OrderSuccessful = () => {
   return shouldRenderComponent ? (
     <>
       <EmptyCartContainer>
-        <div>
-          <h2 style={{ fontSize: '32px' }}>
-            Ваше замовлення оформлене. Дякуємо за покупку!
-          </h2>
+        <TitleContainer>
+          <p
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '4px',
+            }}
+          >
+            <span>Ваше замовлення оформлене</span>
+            <span style={{ margin: '2px' }}>
+              <CheckCircle />
+            </span>
+          </p>
+          <p style={{ marginTop: '8px' }}>
+            Дякуємо за те, що обрали наш магазин!
+          </p>
           <BtnBackToCatalog to={'/catalog'}>
             Перейти до каталогу
           </BtnBackToCatalog>
-        </div>
+        </TitleContainer>
         <div>
-          <img src={Img} alt="Cart img" />
+          <img src={image6} alt="Cart img" />
         </div>
       </EmptyCartContainer>
     </>
