@@ -4,3 +4,5 @@ export const selectSearchQueryStore = state => state.search.query;
 export const selectSearchValueStore = state => state.search.value;
 export const selectSearchResetBoolean = state => state.search.resetBoolean;
 export const selectSortingTypeStore = state => state.sorting.type;
+export const selectViewedProducts = state => state.viewedProducts.viewedList;
+

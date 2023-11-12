@@ -16,6 +16,7 @@ import { api } from './operations';
 import { breadCrumbsReducer } from './breadCrumbsSlice';
 import { searchSliceReducer } from './searchSlice';
 import { searchSelectReducer } from './sortSelectSlice';
+import { viewedProductsReducer } from './viewedProductsSlice';
 
 const reducers = combineReducers({
   [api.reducerPath]: api.reducer,
@@ -23,13 +24,14 @@ const reducers = combineReducers({
   breadcrumbs: breadCrumbsReducer,
   search: searchSliceReducer,
   sorting: searchSelectReducer,
+  viewedProducts: viewedProductsReducer,
 });
 
 const persistConfig = {
   key: 'root',
   version: 1,
   storage,
-  whitelist: ['cart', 'breadcrumbs'],
+  whitelist: ['cart', 'breadcrumbs', 'viewedProducts'],
 };
 
 const persistedReducer = persistReducer(persistConfig, reducers);

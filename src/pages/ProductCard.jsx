@@ -11,7 +11,7 @@ import {
 import MainInfo from 'components/ProductCard/MainInfo/MainInfo';
 import DetailsList from 'components/ProductCard/DetailsList/DetailsList';
 
-import ViewedProducts from 'components/ProductCard/ViewedProducts/ViewedProducts';
+import { ViewedProducts } from 'components/ProductCard/ViewedProducts/ViewedProducts'; 
 import { CardList } from 'components';
 import { setBreadCrumbs } from 'redux/breadCrumbsSlice';
 import { useDispatch } from 'react-redux';
@@ -85,7 +85,7 @@ export const ProductCard = () => {
         </ProductContainer>
       )}
       <ViewedProducts />
-      {productsList && <CardList productsList={productsList.slice(0, 4)} />}
+      {/* {productsList && <CardList productsList={productsList.slice(0, 4)} />} */}
     </>
   );
 };

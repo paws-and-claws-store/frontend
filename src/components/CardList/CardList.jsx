@@ -1,13 +1,16 @@
 import { Card } from 'components/Card/Card';
 import React, { useEffect, useState } from 'react';
 import { List, ListItem } from './CardList.styled';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { selectSortingTypeStore } from 'redux/selectors';
+import { setViewedProducts } from 'redux/viewedProductsSlice';
 
 export const CardList = ({ productsList }) => {
 const [isSorted, setIsSortet]= useState([])
 
   const sortingType = useSelector(selectSortingTypeStore);
+
+  const dispatch = useDispatch();
   
   useEffect(()=>{
     if(sortingType === 'cheap'){
@@ -24,13 +27,18 @@ const [isSorted, setIsSortet]= useState([])
 
   },[productsList, sortingType])
 
+  const onCardClick = (el)=>{
+    // console.log('el:',el);
+    dispatch(setViewedProducts(el))
+  }
+
   return (
     <>
       {isSorted.length !== 0 && (
         <List>
-          {isSorted.map(el => {
+          {isSorted.map(el => { 
             return (
-              <ListItem key={el._id}>
+              <ListItem key={el._id} onClick={()=>onCardClick(el)}>
                 <Card el={el} />
               </ListItem>
             );
