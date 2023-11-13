@@ -43,6 +43,17 @@ const cartSlice = createSlice({
         state.cartItems[index].cardCount = newCount;
       }
     },
+    updateCartItemCount(state, action) {
+      console.log('action:', action);
+      const { productCode, newCount } = action.payload;
+      const index = state.cartItems.findIndex(
+        item => item.productCode === productCode,
+      );
+      if (index !== -1) {
+        state.cartItems[index].count = newCount;
+      }
+      // return { ...state }; // Повернення оновленого стану
+    },
     removeCartItem(state, action) {
       const productCode = action.payload;
       state.cartItems = state.cartItems.filter(
@@ -56,5 +67,10 @@ const cartSlice = createSlice({
 });
 
 export const cartReducer = cartSlice.reducer;
-export const { addCartItem, updateCartItem, removeCartItem, clearCartItems } =
-  cartSlice.actions;
+export const {
+  addCartItem,
+  updateCartItem,
+  removeCartItem,
+  clearCartItems,
+  updateCartItemCount,
+} = cartSlice.actions;

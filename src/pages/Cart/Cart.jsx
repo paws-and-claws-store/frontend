@@ -16,20 +16,24 @@ import {
   TotalAmountTitle,
 } from './Cart.styled';
 import Img from '../../images/Travel_bag.png';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { selectCartStore } from 'redux/selectors';
 import { CartItem } from 'components';
 
 import { CaretLeftPagination } from 'components/Icons';
 import { fetchValidateCartItems } from 'services/api';
 import { unavailableFilterProducts } from 'helpers';
+// import { updateCartItemCount } from 'redux/cartSlice';
 
 export const Cart = () => {
   const cartStore = useSelector(selectCartStore);
+  // const [cartStore, setCartStore] = useState(useSelector(selectCartStore));
   const [scrollY, setScrollY] = useState(0);
   const [shouldRenderComponent, setShouldRenderComponent] = useState(false);
   const [statusCode, setStatusCode] = useState(null);
   const [unavailable, setUnavailable] = useState([]);
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -41,22 +45,31 @@ export const Cart = () => {
       try {
         const result = await fetchValidateCartItems(array);
 
+        const allData = result.errors
+          ? [...result?.data, ...result?.errors]
+          : [...result.data];
+
+        allData.forEach(item => {
+          const { productCode, count } = item;
+          const index = cartStore.findIndex(
+            item => item.productCode === productCode,
+          );
+          if (index !== -1) {
+            item[index].count = count;
+          }
+
+          console.log('item:', item);
+          console.log('productCode, count:', productCode, count);
+
+          // dispatch(updateCartItemCount({ productCode, count }));
+        });
+
         if (result.code === 400) {
           setStatusCode(result.code);
 
           const unavailableArrayCode = result.errors.map(
             ({ productCode }) => productCode,
           );
-
-          // // Використання методу filter для отримання товарів за вказаними кодами
-          // const filteredProducts = cartStore.filter(function (product) {
-          //   return unavailableArrayCode.includes(product.productCode);
-          // });
-
-          // // Створення нового масиву з назвами товарів
-          // const productNames = filteredProducts.map(function (product) {
-          //   return product.productName;
-          // });
 
           const productNames = unavailableFilterProducts(
             cartStore,
@@ -75,7 +88,7 @@ export const Cart = () => {
     };
 
     fetchData();
-  }, [cartStore]);
+  }, [cartStore, dispatch]);
 
   useEffect(() => {
     const handleScroll = () => {
