@@ -30,7 +30,7 @@ const SharedLayout = () => {
               <Link to={'aboutUs'}>Про компанію</Link>
               <Link to={'contacts'}>Контакти</Link>
             </NavStyle>
-            <main style={{ minHeight: '58vh' }}>
+            <main>
               <Suspense fallback={<Loader />}>
                 <Breadcrumbs />
                 <Outlet />

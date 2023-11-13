@@ -26,6 +26,7 @@ import { SortSelect } from 'components/Filter/SortSelect';
 import { theme } from 'styles';
 import { selectSearchQueryStore, selectSortingTypeStore } from 'redux/selectors';
 import { NoSearch } from 'components/NoSearch/NoSearch';
+import { Notify } from 'notiflix';
 
 export const Search = () => {
   const [productsList, setProductsList] = useState([]);
@@ -67,7 +68,11 @@ export const Search = () => {
     sorting: sortingType ? `&sortBy=${sortingType}` : '',
     signal,
   });
-  searchRef.current = { searchQuery: searchQuery, totalDocs: response.totalDocs };
+  searchRef.current = { searchQuery: searchQuery, totalDocs: response?.totalDocs };
+  if (error) {
+    console.log('error :>> ', error.error);
+    Notify.failure(error.error);
+  }
 
   useEffect(() => {
     if (response) {

@@ -20,7 +20,50 @@ export const api = createApi({
         signal,
       }),
     }),
+
+    fetchProductsByOneCategory: builder.query({
+      query: (oneCategory, pageNumber) => ({
+        url: `/api/products/categories/${oneCategory}`,
+
+        params: {
+          page: pageNumber,
+        },
+      }),
+    }),
+    fetchProductsByOnePet: builder.query({
+      query: (onePet, pageNumber) => ({
+        url: `/api/products/pets/${onePet}`,
+
+        params: {
+          page: pageNumber,
+        },
+      }),
+    }),
+
+    fetchProductsByOneProductType: builder.query({
+      query: (oneProductType, pageNumber) => ({
+        url: `/api/products/product_types/${oneProductType}`,
+
+        params: {
+          page: pageNumber,
+        },
+      }),
+    }),
+
+    fetchOneProduct: builder.query({
+      query: oneProduct => ({
+        url: `/api/products/${oneProduct}`,
+      }),
+    }),
   }),
 });
 
-export const { useFetchAllProductsQuery, useFetchAllStructureQuery, useFetchSearchQuery } = api;
+export const {
+  useFetchAllProductsQuery,
+  useFetchAllStructureQuery,
+  useFetchSearchQuery,
+  useFetchProductsByOneCategoryQuery,
+  useFetchProductsByOnePetQuery,
+  useFetchProductsByOneProductTypeQuery,
+  useFetchOneProductQuery,
+} = api;
