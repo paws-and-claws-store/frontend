@@ -59,6 +59,7 @@ export const App = () => {
             <Route path="composition" element={<ProductComposition />} />
             <Route path="comments" element={<ProductComments />} /> */}
           </Route>
+          <Route path=":code" element={<ProductCard />}></Route>
 
           <Route path="prices-drop" element={<PricesDrop />} />
           <Route path="search" element={<Search />} />

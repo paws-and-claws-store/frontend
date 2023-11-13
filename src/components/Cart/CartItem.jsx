@@ -21,6 +21,7 @@ import {
 import { CrossToDelete } from 'components/Icons';
 import { Link } from 'react-router-dom';
 import { Notify } from 'notiflix';
+import { fetchProductsByOnePetCopy } from 'services/api';
 
 export const CartItem = ({ prod }) => {
   const {
@@ -121,6 +122,15 @@ export const CartItem = ({ prod }) => {
     }
   };
 
+  const handleClick = async () => {
+    try {
+      const obj = await fetchProductsByOnePetCopy(productCode);
+      console.log('obj:', obj);
+    } catch (error) {
+      console.log('error:', error);
+    }
+  };
+
   return (
     <div
       style={{
@@ -162,7 +172,7 @@ export const CartItem = ({ prod }) => {
             }}
           >
             <Brand>{brand}</Brand>
-            <Link>
+            <Link onClick={handleClick}>
               <ProdTitle>{productName}</ProdTitle>
             </Link>
             <ShortDesc>{shortDescription}</ShortDesc>

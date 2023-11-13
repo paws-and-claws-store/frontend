@@ -21,12 +21,13 @@ import { selectCartStore } from 'redux/selectors';
 import { CartItem } from 'components';
 
 import { CaretLeftPagination } from 'components/Icons';
-import { fetchValidateCartItems } from 'services/api';
+import { BuyProducts, fetchValidateCartItems } from 'services/api';
 import { unavailableFilterProducts } from 'helpers';
 // import { updateCartItemCount } from 'redux/cartSlice';
 
 export const Cart = () => {
   const cartStore = useSelector(selectCartStore);
+  // console.log('cartStore:', cartStore);
   // const [cartStore, setCartStore] = useState(useSelector(selectCartStore));
   const [scrollY, setScrollY] = useState(0);
   const [shouldRenderComponent, setShouldRenderComponent] = useState(false);
@@ -50,17 +51,9 @@ export const Cart = () => {
           : [...result.data];
 
         allData.forEach(item => {
-          const { productCode, count } = item;
-          const index = cartStore.findIndex(
-            item => item.productCode === productCode,
-          );
-          if (index !== -1) {
-            item[index].count = count;
-          }
-
-          console.log('item:', item);
-          console.log('productCode, count:', productCode, count);
-
+          // const { productCode, count } = item;
+          // console.log('item:', item);
+          // console.log('productCode, count:', productCode, count);
           // dispatch(updateCartItemCount({ productCode, count }));
         });
 
@@ -120,9 +113,18 @@ export const Cart = () => {
 
   const handleCheckout = async () => {
     // Виконати перевірку товарів в кошику
-
+    const array = cartStore.map(({ productCode, cardCount }) => ({
+      productCode,
+      cardCount,
+    }));
     // Відправити дані на сервер
     try {
+      console.log('Click');
+      // console.log('await BuyProducts(array):', BuyProducts(array));
+
+      const result = await BuyProducts(array);
+      console.log('array:', array);
+      console.log('result:', result);
       // const response = await fetch('/api/checkout', {
       //   method: 'POST',
       //   headers: {
@@ -133,7 +135,7 @@ export const Cart = () => {
 
       if (true) {
         // Перенаправити на сторінку з повідомленням про успішне оформлення замовлення
-        document.location = '/frontend/success';
+        // document.location = '/frontend/success';
       } else {
         // Обробити помилку
         console.error('Помилка оформлення замовлення');
