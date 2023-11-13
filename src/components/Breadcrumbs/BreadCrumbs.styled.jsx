@@ -26,6 +26,7 @@ export const BreadcrumbsDivStyled = styled.div`
   color: ${props => props.theme.colors.green};
   &:last-child {
     color: ${props => props.theme.colors.orange};
+    cursor: default;
   }
 `;
 

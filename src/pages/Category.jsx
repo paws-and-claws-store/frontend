@@ -1,38 +1,24 @@
 import { CardList } from 'components';
-import React, { useEffect, useState } from 'react';
+import Loader from 'components/Loader/Loader';
+import React from 'react';
 import { useParams } from 'react-router-dom';
-import { fetchProductsByOneCategory } from 'services/api';
+import { useFetchProductsByOneCategoryQuery } from 'redux/operations';
+import { Notify } from 'notiflix';
 
 export const Category = () => {
-  const { category } = useParams();
+  const { category: oneCategory } = useParams();
 
-  // const [currentCategory, setCurrentCategory] = useState(category);
-  const [productsList, setProductsList] = useState([]);
-
-  // useEffect(() => {
-  //   setCurrentCategory(category);
-  // }, [category]);
-
-  useEffect(() => {
-    // fetchProductsByOneCategory(category).then(res => {
-    //   setProductsList( [ ...res]);
-    // });
-
-    async function fetchData() {
-      // You can await here
-      const res = await fetchProductsByOneCategory(category);
-
-      if (res) {
-        setProductsList([...res.docs]);
-      }
-      // console.log('response:', res);
-    }
-    fetchData();
-  }, [category]);
+  const { data, isLoading, isError, error } = useFetchProductsByOneCategoryQuery(oneCategory);
 
   return (
     <>
-      <CardList productsList={productsList} />
+      {isError && !isLoading ? (
+        (Notify.failure(error.error), (<></>))
+      ) : isLoading && !isError ? (
+        <Loader />
+      ) : (
+        <CardList productsList={data.docs} />
+      )}
     </>
   );
 };

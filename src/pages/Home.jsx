@@ -1,22 +1,26 @@
 import { Hero, Title } from './Home.styled';
 import { CardList } from 'components/CardList/CardList';
 import ControlledCarousel from 'components/Carousel/Carousel';
-import { useEffect, useState } from 'react';
-import { fetchProducts } from 'services/api';
+import { useFetchProductsQuery } from 'redux/operations';
+import { Loader } from 'rsuite';
+import { Notify } from 'notiflix';
 
 export const Home = () => {
-  const [productsList, setProductsList] = useState([]);
+  const { data, isLoading, isError, error } = useFetchProductsQuery();
 
-  useEffect(() => {
-    fetchProducts().then(res => setProductsList(res));
-  }, []);
   return (
     <>
       <Hero>
         <ControlledCarousel />
       </Hero>
       <Title>Aкційні пропозиції</Title>
-      <CardList productsList={productsList} />
+      {isError && !isLoading ? (
+        (Notify.failure(error.error), (<></>))
+      ) : isLoading && !isError ? (
+        <Loader />
+      ) : (
+        <CardList productsList={data} />
+      )}
     </>
   );
 };

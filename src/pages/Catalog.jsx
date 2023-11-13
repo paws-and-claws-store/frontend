@@ -2,6 +2,7 @@ import { CardList, Pagination } from 'components';
 import Loader from 'components/Loader/Loader';
 import { useEffect, useState } from 'react';
 import { useFetchAllProductsQuery } from 'redux/operations';
+import { Notify } from 'notiflix';
 
 export const Catalog = () => {
   const [productsList, setProductsList] = useState([]);
@@ -17,7 +18,13 @@ export const Catalog = () => {
   });
   const [loadMoreProducts, setLoadMoreProducts] = useState([]); // Окремий стан для продуктів, завантажених через "Load More"
   const [loadMoreClicked, setLoadMoreClicked] = useState(false); // Окремий стан для слідкування за натисканням кнопки "Load More"
-  const { data: response, error, isLoading, isFetching } = useFetchAllProductsQuery(currentPage);
+  const {
+    data: response,
+    error,
+    isLoading,
+    isFetching,
+    isError,
+  } = useFetchAllProductsQuery(currentPage);
 
   useEffect(() => {
     async function fetchInitialData() {
@@ -51,10 +58,10 @@ export const Catalog = () => {
       }
     }
 
-    if (!isFetching) {
+    if (!isFetching && !isError) {
       fetchInitialData();
     }
-  }, [isFetching, loadMoreClicked, response]);
+  }, [error, isError, isFetching, loadMoreClicked, response]);
 
   const onPageChange = pageNumber => {
     // При кліку на номер сторінки через пагінацію, змініть стан
@@ -71,11 +78,11 @@ export const Catalog = () => {
 
   return (
     <>
-      {error ? (
-        <>Oops, there was an error ...</>
-      ) : isLoading ? (
+      {isError && !isLoading ? (
+        (Notify.failure(error.error), (<></>))
+      ) : isLoading && !isError ? (
         <Loader />
-      ) : response.docs.length > 0 ? (
+      ) : response?.docs.length > 0 ? (
         <>
           <CardList
             productsList={

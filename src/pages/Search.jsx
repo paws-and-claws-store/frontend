@@ -26,6 +26,7 @@ import { SortSelect } from 'components/Filter/SortSelect';
 import { theme } from 'styles';
 import { selectSearchQueryStore, selectSortingTypeStore } from 'redux/selectors';
 import { NoSearch } from 'components/NoSearch/NoSearch';
+import { Notify } from 'notiflix';
 
 export const Search = () => {
   const [productsList, setProductsList] = useState([]);
@@ -62,6 +63,7 @@ export const Search = () => {
     isFetching,
     status,
     currentData,
+    isError,
   } = useFetchSearchQuery({
     query: searchQuery,
     sorting: sortingType ? `&sortBy=${sortingType}` : '',
@@ -130,8 +132,8 @@ export const Search = () => {
   return (
     <div style={{ minHeight: '640px' }}>
       {error?.status >= 500 ? (
-        <>Oops, there was an error ...</>
-      ) : isLoading ? (
+        (Notify.failure(error.error), (<></>))
+      ) : isLoading && !isError ? (
         <Loader />
       ) : error?.status < 500 ? (
         <NoSearch status={status} />
