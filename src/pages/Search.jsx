@@ -69,7 +69,6 @@ export const Search = () => {
     sorting: sortingType ? `&sortBy=${sortingType}` : '',
     signal,
   });
-
   searchRef.current = { searchQuery: searchQuery, totalDocs: response?.totalDocs };
 
   useEffect(() => {
