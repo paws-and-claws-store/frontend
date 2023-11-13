@@ -63,16 +63,14 @@ export const Search = () => {
     isFetching,
     status,
     currentData,
+    isError,
   } = useFetchSearchQuery({
     query: searchQuery,
     sorting: sortingType ? `&sortBy=${sortingType}` : '',
     signal,
   });
+
   searchRef.current = { searchQuery: searchQuery, totalDocs: response?.totalDocs };
-  if (error) {
-    console.log('error :>> ', error.error);
-    Notify.failure(error.error);
-  }
 
   useEffect(() => {
     if (response) {
@@ -135,8 +133,8 @@ export const Search = () => {
   return (
     <div style={{ minHeight: '640px' }}>
       {error?.status >= 500 ? (
-        <>Oops, there was an error ...</>
-      ) : isLoading ? (
+        (Notify.failure(error.error), (<></>))
+      ) : isLoading && !isError ? (
         <Loader />
       ) : error?.status < 500 ? (
         <NoSearch status={status} />

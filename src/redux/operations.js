@@ -55,6 +55,12 @@ export const api = createApi({
         url: `/api/products/${oneProduct}`,
       }),
     }),
+
+    fetchProducts: builder.query({
+      query: () => ({
+        url: `/api/products`,
+      }),
+    }),
   }),
 });
 
@@ -66,4 +72,5 @@ export const {
   useFetchProductsByOnePetQuery,
   useFetchProductsByOneProductTypeQuery,
   useFetchOneProductQuery,
+  useFetchProductsQuery,
 } = api;

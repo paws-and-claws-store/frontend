@@ -8,11 +8,17 @@ import { Notify } from 'notiflix';
 export const Pet = () => {
   const { pet } = useParams();
 
-  const { data, isLoading, isError, error } = useFetchProductsByOnePetQuery(pet);
-  if (error) {
-    console.log('error :>> ', error);
-    Notify.failure(error.error);
-  }
+  const { data = {}, isLoading, isError, error } = useFetchProductsByOnePetQuery(pet);
 
-  return <>{isError ? <></> : isLoading ? <Loader /> : <CardList productsList={data.docs} />}</>;
+  return (
+    <>
+      {isError && !isLoading ? (
+        (Notify.failure(error.error), (<></>))
+      ) : isLoading && !isError ? (
+        <Loader />
+      ) : (
+        <CardList productsList={data.docs} />
+      )}
+    </>
+  );
 };

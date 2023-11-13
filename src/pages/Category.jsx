@@ -9,10 +9,16 @@ export const Category = () => {
   const { category: oneCategory } = useParams();
 
   const { data, isLoading, isError, error } = useFetchProductsByOneCategoryQuery(oneCategory);
-  if (error) {
-    console.log('error :>> ', error);
-    Notify.failure(error.error);
-  }
 
-  return <>{isError ? <></> : isLoading ? <Loader /> : <CardList productsList={data.docs} />}</>;
+  return (
+    <>
+      {isError && !isLoading ? (
+        (Notify.failure(error.error), (<></>))
+      ) : isLoading && !isError ? (
+        <Loader />
+      ) : (
+        <CardList productsList={data.docs} />
+      )}
+    </>
+  );
 };

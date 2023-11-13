@@ -8,10 +8,16 @@ import { Notify } from 'notiflix';
 export const ProductType = () => {
   const { productType } = useParams();
   const { data, isLoading, isError, error } = useFetchProductsByOneProductTypeQuery(productType);
-  if (error) {
-    console.log('error :>> ', error.error);
-    Notify.failure(error.error);
-  }
 
-  return <>{isError ? <></> : isLoading ? <Loader /> : <CardList productsList={data.docs} />}</>;
+  return (
+    <>
+      {isError && !isLoading ? (
+        (Notify.failure(error.error), (<></>))
+      ) : isLoading && !isError ? (
+        <Loader />
+      ) : (
+        <CardList productsList={data.docs} />
+      )}
+    </>
+  );
 };
