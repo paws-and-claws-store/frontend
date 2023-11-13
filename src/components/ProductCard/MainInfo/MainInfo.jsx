@@ -19,6 +19,8 @@ import {
   CardContainer,
 } from './MainInfo.styled';
 import QuntityProduct from '../QuntityProduct/QuntityProduct';
+// import { useSelector } from 'react-redux';
+// import { selectViewedProducts } from 'redux/selectors';
 
 const MainInfo = ({
   product: {
@@ -33,17 +35,32 @@ const MainInfo = ({
 }) => {
   const [prodType, setProdType] = useState(items[0]);
   const [fav, setFavorite] = useState(favorite || false);
-  const [nameHeight, setNameHeight] = useState(null)
+  const [nameHeight, setNameHeight] = useState(null);
 
   const inStock = prodType.count > 0;
   const prodNameRef = useRef(null);
 
   useEffect(() => {
     const prodNameHeight = prodNameRef.current;
-    if (prodNameHeight) {
-      setNameHeight(prodNameHeight.clientHeight);
-    }
-  }, []);
+
+    if (!prodNameHeight) return;
+
+    const resizeObserver = new MutationObserver((mutationList) => {
+      mutationList.forEach((mutation)=>{
+        if(mutation.type === 'characterData'){
+          const charCount = prodNameHeight.textContent.length
+          setNameHeight(charCount);
+        }
+      })
+      
+    })
+
+    resizeObserver.observe(prodNameHeight, {characterData: true, subtree: true});
+
+    return () => {
+      resizeObserver.disconnect();
+    };
+  }, [nameHeight]);
 
   const changeFavorite = () => {
     setFavorite(!fav);
@@ -84,7 +101,12 @@ const MainInfo = ({
         </span>
       </FlexBox>
 
-      <ProductName style={{fontSize: nameHeight > 96 ? '32px' : '40px'}} ref={prodNameRef}>{productName}</ProductName>
+      <ProductName
+        style={{ fontSize: nameHeight > 40 ? '32px' : '40px' }}
+        ref={prodNameRef}
+      >
+        {productName}
+      </ProductName>
       <ShortDescription>{shortDescription}</ShortDescription>
 
       <CarCodeWrapper>

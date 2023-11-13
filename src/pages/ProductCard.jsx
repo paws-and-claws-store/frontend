@@ -12,7 +12,7 @@ import MainInfo from 'components/ProductCard/MainInfo/MainInfo';
 import DetailsList from 'components/ProductCard/DetailsList/DetailsList';
 
 import { ViewedProducts } from 'components/ProductCard/ViewedProducts/ViewedProducts'; 
-import { CardList } from 'components';
+// import { CardList } from 'components';
 import { setBreadCrumbs } from 'redux/breadCrumbsSlice';
 import { useDispatch } from 'react-redux';
 import { useFetchAllStructureQuery } from 'redux/operations';
