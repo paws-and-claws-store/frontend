@@ -1,6 +1,6 @@
 import { CardList, Pagination } from 'components';
 import Loader from 'components/Loader/Loader';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useFetchSearchQuery } from 'redux/operations';
 import {
   FoldedContainer,
@@ -12,7 +12,6 @@ import {
   SearchDesriptionResults,
   SearchFilter,
   SearchQuery,
-  SearchTravelBag,
   SearchWrapperCatalog,
   SortingContainer,
   TitleSearch,
@@ -26,7 +25,8 @@ import { Filter } from 'components/Filter/Filter';
 import { SortSelect } from 'components/Filter/SortSelect';
 import { theme } from 'styles';
 import { selectSearchQueryStore, selectSortingTypeStore } from 'redux/selectors';
-import { SearchBar } from 'components/SearchBar/SearchBar';
+import { NoSearch } from 'components/NoSearch/NoSearch';
+import { Notify } from 'notiflix';
 
 export const Search = () => {
   const [productsList, setProductsList] = useState([]);
@@ -43,19 +43,33 @@ export const Search = () => {
   const [loadMoreProducts, setLoadMoreProducts] = useState([]); // Окремий стан для продуктів, завантажених через "Load More"
   const [loadMoreClicked, setLoadMoreClicked] = useState(false); // Окремий стан для слідкування за натисканням кнопки "Load More"
   const [active, setActive] = useState({ price: false, brands: false });
+  const abortControllerRef = useRef();
+  const searchRef = useRef();
 
   const searchQuery = useSelector(selectSearchQueryStore);
   const sortingType = useSelector(selectSortingTypeStore);
+
+  if (abortControllerRef.current && searchQuery === '') {
+    abortControllerRef.current.abort('empty query');
+  }
+
+  abortControllerRef.current = new AbortController();
+  const signal = abortControllerRef.current.signal;
 
   const {
     data: response,
     error,
     isLoading,
     isFetching,
+    status,
+    currentData,
+    isError,
   } = useFetchSearchQuery({
     query: searchQuery,
     sorting: sortingType ? `&sortBy=${sortingType}` : '',
+    signal,
   });
+  searchRef.current = { searchQuery: searchQuery, totalDocs: response?.totalDocs };
 
   useEffect(() => {
     if (response) {
@@ -110,44 +124,34 @@ export const Search = () => {
   };
 
   const handleClickToggle = e => {
-    active[e.currentTarget.name]
-      ? setActive({ ...active, [e.currentTarget.name]: false })
-      : setActive({ ...active, [e.currentTarget.name]: true });
+    active[e.currentTarget.attributes.name.value]
+      ? setActive({ ...active, [e.currentTarget.attributes.name.value]: false })
+      : setActive({ ...active, [e.currentTarget.attributes.name.value]: true });
   };
 
   return (
-    <>
+    <div style={{ minHeight: '640px' }}>
       {error?.status >= 500 ? (
-        <>Oops, there was an error ...</>
-      ) : isLoading ? (
+        (Notify.failure(error.error), (<></>))
+      ) : isLoading && !isError ? (
         <Loader />
       ) : error?.status < 500 ? (
-        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-          <div style={{ marginTop: '48px' }}>
-            <SearchDesriptionResults style={{ fontSize: '24px', width: '736px' }}>
-              <SearchDescriptionSpan>За запитом </SearchDescriptionSpan>
-              <SearchQuery>{searchQuery}</SearchQuery>
-              <SearchDescriptionSpan> нічого не знайдено </SearchDescriptionSpan>
-            </SearchDesriptionResults>
-            <div style={{ marginTop: '180px', width: '520px' }}>
-              <div style={{ marginBottom: '20px' }}>Спробуйте ще раз, уточнивши свій запит:</div>
-              <SearchBar />
-            </div>
-          </div>
-
-          <SearchTravelBag />
-        </div>
-      ) : response?.docs.length > 0 ? (
+        <NoSearch status={status} />
+      ) : currentData ? (
         <>
           <UpsideSearchContainer>
             <TitleSearch>Результати пошуку</TitleSearch>
             <SearchDesriptionResults>
               <SearchDescriptionSpan>За запитом </SearchDescriptionSpan>
-              <SearchQuery>{searchQuery}</SearchQuery>
+              <SearchQuery>{searchRef.current.searchQuery}</SearchQuery>
               <SearchDescriptionSpan> знайдено </SearchDescriptionSpan>
-              <SearchQuery>{response.totalDocs} </SearchQuery>
+              <SearchQuery>{searchRef.current.totalDocs} </SearchQuery>
               <SearchDescriptionSpan>
-                {response.totalDocs === 1 ? 'товар' : response.totalDocs < 5 ? 'товари' : 'товарів'}
+                {searchRef.current.totalDocs === 1
+                  ? 'товар'
+                  : searchRef.current.totalDocs < 5
+                  ? 'товари'
+                  : 'товарів'}
               </SearchDescriptionSpan>
             </SearchDesriptionResults>
             <SortingContainer>
@@ -174,9 +178,11 @@ export const Search = () => {
                             ? theme.colors.secGreen
                             : theme.colors.beige,
                         }}
+                        onClick={handleClickToggle}
+                        name="price"
                       >
                         <span>Ціна</span>
-                        <button onClick={handleClickToggle} name="price">
+                        <button name="price">
                           <RightArrow direction={active['price'] ? 'rotate(90)' : 'rotate(-90)'} />
                         </button>
                       </FoldedContainer>
@@ -191,9 +197,11 @@ export const Search = () => {
                             ? theme.colors.secGreen
                             : theme.colors.beige,
                         }}
+                        onClick={handleClickToggle}
+                        name="brands"
                       >
                         <span>Бренди</span>
-                        <button onClick={handleClickToggle} name="brands">
+                        <button name="brands">
                           <RightArrow direction={active['brands'] ? 'rotate(90)' : 'rotate(-90)'} />
                         </button>
                       </FoldedContainer>
@@ -223,6 +231,6 @@ export const Search = () => {
           </SearchContainer>
         </>
       ) : null}
-    </>
+    </div>
   );
 };

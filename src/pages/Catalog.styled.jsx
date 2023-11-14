@@ -33,7 +33,7 @@ export const AsideCatalog = styled.aside`
 
 export const PetButton = styled.button`
   position: relative;
-  ${props => props.active && 'z-index: 10;'}
+  ${props => props.active && `z-index: ${theme.zIndexes.catalogPetButtons};`}
   padding: ${theme.spacing.step + 2}px ${theme.spacing.step * 2}px;
   display: flex;
   justify-content: space-between;
@@ -53,7 +53,7 @@ export const PetButton = styled.button`
 
   &.active {
     position: relative;
-    z-index: 10;
+    z-index: ${theme.zIndexes.catalogPetButtons};
     background-color: ${theme.colors.beige};
   }
 `;
@@ -78,7 +78,7 @@ export const WrapperCatalog = styled.div`
 export const BoxHiden = styled.div`
   display: none;
   position: absolute;
-  z-index: 10;
+  z-index: ${theme.zIndexes.catalogPetButtons};
   background-color: ${theme.colors.beige};
   border: 1px solid ${theme.colors.green};
 

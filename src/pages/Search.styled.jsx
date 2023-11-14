@@ -31,8 +31,6 @@ export const TitleSearch = styled.h2`
 `;
 
 export const SearchDesriptionResults = styled.div`
-  margin-top: auto;
-  margin-bottom: auto;
   color: ${theme.colors.black};
   font-variant-numeric: lining-nums proportional-nums;
   font-feature-settings: 'ss09' on;
@@ -149,6 +147,10 @@ export const FoldedContainer = styled.div`
   transition: background-color 0.5s;
   justify-content: space-between;
   padding: ${theme.spacing.step + 2}px ${theme.spacing.step * 2}px;
+  cursor: pointer;
+  &:hover {
+    fill: ${theme.colors.green};
+  }
 `;
 
 export const SearchTravelBag = styled.svg`

@@ -24,7 +24,7 @@ export const CatalogLayout = () => {
   const [structure, setStructure] = useState([]);
   const [categories, setCategories] = useState([]);
 
-  const { data, isLoading } = useFetchAllStructureQuery();
+  const { data, isLoading, isError } = useFetchAllStructureQuery();
   const dispatch = useDispatch();
 
   const hiddenElement = document.getElementById('hidden');
@@ -64,7 +64,7 @@ export const CatalogLayout = () => {
   };
 
   useEffect(() => {
-    if (isLoading) {
+    if (isLoading || isError) {
       return;
     }
     async function fetchData() {
@@ -87,7 +87,7 @@ export const CatalogLayout = () => {
     }
 
     fetchData();
-  }, [active, data, dispatch, isLoading, structure]);
+  }, [active, data, dispatch, isError, isLoading, structure]);
 
   return (
     <>
@@ -100,7 +100,7 @@ export const CatalogLayout = () => {
 
       <CatalogContainer>
         <AsideCatalog>
-          {structure.length !== 0 && (
+          {!isError && structure?.length !== 0 && (
             <CategoryList>
               <ul style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
                 {structure.map((el, i) => {

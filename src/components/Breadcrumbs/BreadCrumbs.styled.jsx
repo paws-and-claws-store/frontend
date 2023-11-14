@@ -6,6 +6,16 @@ export const BreadcrumbsLinkStyled = styled(Link)`
   font-size: 12px;
   font-weight: 600;
   margin-right: 15px;
+  &:hover {
+    text-decoration: underline;
+  }
+`;
+
+export const BreadcrumbsNoLinkStyled = styled.div`
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  margin-right: 15px;
 `;
 
 export const BreadcrumbsDivStyled = styled.div`
@@ -16,6 +26,7 @@ export const BreadcrumbsDivStyled = styled.div`
   color: ${props => props.theme.colors.green};
   &:last-child {
     color: ${props => props.theme.colors.orange};
+    cursor: default;
   }
 `;
 
@@ -30,6 +41,9 @@ export const BreadcrumbsMainPageLinkStyled = styled(Link)`
   font-style: normal;
   font-weight: 600;
   line-height: 100%;
+  &:hover {
+    text-decoration: underline;
+  }
 `;
 
 export const BreadcrumbsiconStyled = styled.div`

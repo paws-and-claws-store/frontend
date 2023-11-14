@@ -2,6 +2,7 @@ import { CardList, Pagination } from 'components';
 import Loader from 'components/Loader/Loader';
 import { useEffect, useState } from 'react';
 import { useFetchAllProductsQuery } from 'redux/operations';
+import { Notify } from 'notiflix';
 
 export const Catalog = () => {
   const [productsList, setProductsList] = useState([]);
@@ -22,16 +23,13 @@ export const Catalog = () => {
     error,
     isLoading,
     isFetching,
+    isError,
   } = useFetchAllProductsQuery(currentPage);
-    console.log("response:", response)
 
   useEffect(() => {
     async function fetchInitialData() {
       if (loadMoreClicked) {
-        setLoadMoreProducts(prevLoadMoreProducts => [
-          ...prevLoadMoreProducts,
-          ...response.docs,
-        ]);
+        setLoadMoreProducts(prevLoadMoreProducts => [...prevLoadMoreProducts, ...response.docs]);
         const pagination = {
           hasNextPage: response.hasNextPage,
           hasPrevPage: response.hasPrevPage,
@@ -60,10 +58,10 @@ export const Catalog = () => {
       }
     }
 
-    if (!isFetching) {
+    if (!isFetching && !isError) {
       fetchInitialData();
     }
-  }, [isFetching, loadMoreClicked, response]);
+  }, [error, isError, isFetching, loadMoreClicked, response]);
 
   const onPageChange = pageNumber => {
     // При кліку на номер сторінки через пагінацію, змініть стан
@@ -80,19 +78,15 @@ export const Catalog = () => {
 
   return (
     <>
-      {error ? (
-        <>Oops, there was an error ...</>
-      ) : isLoading ? (
+      {isError && !isLoading ? (
+        (Notify.failure(error.error), (<></>))
+      ) : isLoading && !isError ? (
         <Loader />
-      ) : response.docs.length > 0 ? (
+      ) : response?.docs.length > 0 ? (
         <>
           <CardList
             productsList={
-              currentPage === 1
-                ? productsList
-                : loadMoreClicked
-                ? loadMoreProducts
-                : productsList
+              currentPage === 1 ? productsList : loadMoreClicked ? loadMoreProducts : productsList
             }
           />
           <Pagination

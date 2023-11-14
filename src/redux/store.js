@@ -1,14 +1,15 @@
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
-import storage from 'redux-persist/lib/storage';
+// import storage from 'redux-persist/lib/storage';
+import sessionStorage from 'redux-persist/es/storage/session';
 import {
   persistStore,
   persistReducer,
-  FLUSH,
-  REHYDRATE,
-  PAUSE,
-  PERSIST,
-  PURGE,
-  REGISTER,
+  // FLUSH,
+  // REHYDRATE,
+  // PAUSE,
+  // PERSIST,
+  // PURGE,
+  // REGISTER,
 } from 'redux-persist';
 
 import { cartReducer } from './cartSlice';
@@ -30,8 +31,13 @@ const reducers = combineReducers({
 const persistConfig = {
   key: 'root',
   version: 1,
-  storage,
+
+
   whitelist: ['cart', 'breadcrumbs', 'viewedProducts'],
+
+  storage: sessionStorage, // to use loacalstorage only in one session
+
+
 };
 
 const persistedReducer = persistReducer(persistConfig, reducers);
@@ -40,9 +46,10 @@ export const store = configureStore({
   reducer: persistedReducer,
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({
-      serializableCheck: {
-        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
-      },
+      // serializableCheck: {
+      //   ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+      // },
+      serializableCheck: false,
     }).concat(api.middleware),
 });
 
