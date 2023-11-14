@@ -51,6 +51,7 @@ const MainInfo = ({ product, prodNameLength }) => {
     const newElType = items.find(el => el.productCode === productCode);
     setProdType(newElType);
     // setCount(null);
+    // setCount(null);
   };
 
   return (
