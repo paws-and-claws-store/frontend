@@ -19,11 +19,10 @@ import {
   CardContainer,
 } from './MainInfo.styled';
 import QuntityProduct from '../QuntityProduct/QuntityProduct';
-// import { useSelector } from 'react-redux';
-// import { selectViewedProducts } from 'redux/selectors';
 
-const MainInfo = ({
-  product: {
+const MainInfo = ({ product, prodNameLength }) => {
+  console.log('prodName:', prodNameLength);
+  const {
     brand,
     productName,
     shortDescription,
@@ -31,8 +30,8 @@ const MainInfo = ({
     items,
     favorite,
     mainImage,
-  },
-}) => {
+  } = product;
+
   const [prodType, setProdType] = useState(items[0]);
   const [fav, setFavorite] = useState(favorite || false);
   const [nameHeight, setNameHeight] = useState(null);
@@ -41,26 +40,8 @@ const MainInfo = ({
   const prodNameRef = useRef(null);
 
   useEffect(() => {
-    const prodNameHeight = prodNameRef.current;
-
-    if (!prodNameHeight) return;
-
-    const resizeObserver = new MutationObserver((mutationList) => {
-      mutationList.forEach((mutation)=>{
-        if(mutation.type === 'characterData'){
-          const charCount = prodNameHeight.textContent.length
-          setNameHeight(charCount);
-        }
-      })
-      
-    })
-
-    resizeObserver.observe(prodNameHeight, {characterData: true, subtree: true});
-
-    return () => {
-      resizeObserver.disconnect();
-    };
-  }, [nameHeight]);
+    if (prodNameLength !== nameHeight) setNameHeight(prodNameLength);
+  }, [nameHeight, prodNameLength]);
 
   const changeFavorite = () => {
     setFavorite(!fav);
@@ -71,6 +52,8 @@ const MainInfo = ({
     setProdType(newElType);
     // setCount(null);
   };
+  console.log('nameHeight:', nameHeight);
+
   return (
     <CardContainer style={{ position: 'sticky', top: '100px' }}>
       <FlexBox>

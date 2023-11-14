@@ -97,7 +97,7 @@ export const ProductCard = () => {
                 </div>
 
                 <CardContainer style={{ position: 'relative' }}>
-                  <MainInfo product={response} />
+                  <MainInfo product={response} prodNameLength={response.productName.length}/>
                 </CardContainer>
               </ProductContainer>
             )}
