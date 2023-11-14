@@ -21,7 +21,7 @@ import {
 import QuntityProduct from '../QuntityProduct/QuntityProduct';
 
 const MainInfo = ({ product, prodNameLength }) => {
-  console.log('prodName:', prodNameLength);
+
   const {
     brand,
     productName,
@@ -52,7 +52,6 @@ const MainInfo = ({ product, prodNameLength }) => {
     setProdType(newElType);
     // setCount(null);
   };
-  console.log('nameHeight:', nameHeight);
 
   return (
     <CardContainer style={{ position: 'sticky', top: '100px' }}>
