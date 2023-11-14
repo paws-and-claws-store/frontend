@@ -7,7 +7,7 @@ import { CardContainer, ImageContainer, ProductContainer } from './ProductCard.s
 import MainInfo from 'components/ProductCard/MainInfo/MainInfo';
 import DetailsList from 'components/ProductCard/DetailsList/DetailsList';
 
-import { ViewedProducts } from 'components/ProductCard/ViewedProducts/ViewedProducts';
+import { ViewedProducts } from 'components/ProductCard/ViewedProducts/ViewedProducts'; 
 // import { CardList } from 'components';
 import { setBreadCrumbs } from 'redux/breadCrumbsSlice';
 import { useDispatch } from 'react-redux';
@@ -97,7 +97,7 @@ export const ProductCard = () => {
                 </div>
 
                 <CardContainer style={{ position: 'relative' }}>
-                  <MainInfo product={response} />
+                  <MainInfo product={response} prodNameLength={response.productName.length}/>
                 </CardContainer>
               </ProductContainer>
             )}

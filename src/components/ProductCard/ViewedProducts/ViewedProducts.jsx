@@ -1,30 +1,38 @@
-import React from //  { useEffect, useState }
-'react';
-import { useSelector } from 'react-redux';
-import { ViewedProductsContainer } from './ViewedProducts.styled';
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  ViewedProductsContainer,
+  ViewedProductsTitel,
+  ViewedProductsList,
+  ViewedProductsItem
+} from './ViewedProducts.styled';
 import { selectViewedProducts } from 'redux/selectors';
 import { Card } from 'components/Card/Card';
+import { setViewedProducts } from 'redux/viewedProductsSlice';
 
 export const ViewedProducts = () => {
+    
   const viewedProducts = useSelector(selectViewedProducts);
-  console.log('viewedProducts:', viewedProducts);
+  const dispatch = useDispatch();
+
+  const onCardClick = (el)=>{
+    dispatch(setViewedProducts(el))
+  };
 
   return (
     <ViewedProductsContainer>
-      <h3>Переглянуті товари</h3>
-      <ul style={{ display: 'flex', gap: '20px' }}>
+      <ViewedProductsTitel>Переглянуті товари</ViewedProductsTitel>
+      <ViewedProductsList >
         {viewedProducts.length > 0
           ? viewedProducts
-              .map((el, indx) => {
-                return (
-                  <li key={indx}>
-                    <Card el={el} />
-                  </li>
-                );
-              })
+              .map(el => (
+                <ViewedProductsItem key={el._id} onClick={()=>onCardClick(el)}>
+                  <Card el={el} />
+                </ViewedProductsItem>
+              ))
               .slice(0, 4)
           : null}
-      </ul>
+      </ViewedProductsList>
     </ViewedProductsContainer>
   );
 };
