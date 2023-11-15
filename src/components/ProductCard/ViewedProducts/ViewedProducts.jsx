@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   ViewedProductsContainer,
@@ -11,9 +11,16 @@ import { Card } from 'components/Card/Card';
 import { setViewedProducts } from 'redux/viewedProductsSlice';
 
 export const ViewedProducts = () => {
-    
+  const [productsList, setProductsList] = useState(null);  
   const viewedProducts = useSelector(selectViewedProducts);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    
+    if (productsList !== viewedProducts) {
+      setProductsList(viewedProducts)
+    }
+},[productsList, viewedProducts])
 
   const onCardClick = (el)=>{
     dispatch(setViewedProducts(el))
@@ -23,8 +30,8 @@ export const ViewedProducts = () => {
     <ViewedProductsContainer>
       <ViewedProductsTitel>Переглянуті товари</ViewedProductsTitel>
       <ViewedProductsList >
-        {viewedProducts.length > 0
-          ? viewedProducts
+        {productsList
+          ? productsList
               .map(el => (
                 <ViewedProductsItem key={el._id} onClick={()=>onCardClick(el)}>
                   <Card el={el} />
