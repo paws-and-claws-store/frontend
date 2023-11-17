@@ -321,7 +321,7 @@ export const Card = ({ el, onClick }) => {
               </span>
             </Rating>
           ) : (
-            <Rating style={{ visibility: 'hidden' }} className="rating">
+            <Rating style={{}} className="rating">
               <StarIcon />
               <StarIcon />
               <StarIcon />
