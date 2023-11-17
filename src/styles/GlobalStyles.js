@@ -67,4 +67,7 @@ export const GlobalStyles = css`
   code {
     font-family: Releway, monospace;
   }
+  main {
+    min-height: 930px;
+  }
 `;

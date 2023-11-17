@@ -9,6 +9,7 @@ const viewedProductsSlice = createSlice({
   initialState: viewedProductsInitialState,
   reducers: {
     setViewedProducts(state, { payload }) {
+      
       const findEl = state.viewedList.some(el => el._id === payload._id);
 
       if (findEl && state.viewedList.length > 0) {
