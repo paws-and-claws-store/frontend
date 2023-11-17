@@ -14,11 +14,11 @@ export const ViewedProductsTitel = styled.p`
 `;
 
 
-export const ViewedProductsList = styled.ul`
-display: flex;
-gap: 20px;
-`;
+// export const ViewedProductsList = styled.div`
+// display: flex;
+// gap: 20px;
+// `;
 
-export const ViewedProductsItem = styled.li`
+export const ViewedProductsItem = styled.div`
 
 `;

@@ -20,14 +20,14 @@ export const ProductDetailsCarousel = ({ mainImage, images }) => {
 
   const prev = () => {
     if (!isTopButtonDisabled) {
-      imageContainerRef.current.scrollTop -= 109; // Уменьшьте значение, если необходимо большее смещение
+      imageContainerRef.current.scrollTop -= 108; // Уменьшьте значение, если необходимо большее смещение
       setCurrentImageIndex(currentImageIndex - 1);
     }
   };
 
   const next = () => {
     if (!isNextButtonDisabled) {
-      imageContainerRef.current.scrollTop += 109; // Увеличьте значение, если необходимо большее смещение
+      imageContainerRef.current.scrollTop += 108; // Увеличьте значение, если необходимо большее смещение
       setCurrentImageIndex(currentImageIndex + 1);
     }
   };
