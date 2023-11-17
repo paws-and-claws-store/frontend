@@ -18,7 +18,7 @@ import Breadcrumbs from 'components/Breadcrumbs/BreadCrumbs';
 const SharedLayout = () => {
   return (
     <SharedLayoutBox className="SharedLayoutBox">
-      <ScrollToTopOnRouteChange />
+      {/* <ScrollToTopOnRouteChange /> */}
       <Header />
       <Section>
         <Container>
