@@ -81,12 +81,20 @@ export const BrandNameSt = styled.h3`
   line-height: ${theme.lineHeight.s};
 `;
 
+export const FixedBlock = styled.div`
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  white-space: wrap;
+`;
+
 export const ProductNameSt = styled.h2`
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
+
   margin-top: ${theme.spacing.step * 4}px;
   margin-bottom: ${theme.spacing.step * 3}px;
   color: ${theme.colors.black};
@@ -97,13 +105,12 @@ export const ProductNameSt = styled.h2`
 `;
 
 export const ShortDiscriptionSt = styled.p`
-  height: ${theme.spacing.step * 10}px;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
-  margin-top: ${theme.spacing.step}px;
+
   margin-top: ${theme.spacing.step}px;
   color: ${theme.colors.black};
   font-weight: ${theme.fontWeight.Light};
