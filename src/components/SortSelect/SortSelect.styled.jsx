@@ -8,6 +8,7 @@ export const BurgerContainer = styled.div`
   right: 0px;
   display: flex;
   align-items: flex-start;
+  cursor: pointer;
 `;
 
 export const SortingSpan = styled.span`
@@ -34,7 +35,7 @@ export const DropDownContainer = styled.div`
   padding-right: 8px;
   padding-top: 3px;
   padding-bottom: 3px;
-  z-index: ${theme.zIndexes.filterSearch};
+  z-index: ${theme.zIndexes.sortSelect};
 `;
 
 export const DefaultWrapper = styled.div`
@@ -50,7 +51,7 @@ export const DefaultValue = styled.p`
   font-size: 14px;
   font-weight: ${theme.fontWeight.Light};
   line-height: ${theme.lineHeight.s};
-  cursor: default;
+  cursor: inherit;
 `;
 
 export const IndicatorWrapper = styled.div`
@@ -67,7 +68,10 @@ export const IndicatorValue = styled.p`
   font-size: 14px;
   font-weight: ${theme.fontWeight.Light};
   line-height: ${theme.lineHeight.s};
-  cursor: pointer;
+  cursor: inherit;
+  &:hover {
+    color: ${theme.colors.green};
+  }
 `;
 export const BurgerBtn = styled.button`
   margin-bottom: auto;

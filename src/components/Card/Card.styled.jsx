@@ -82,6 +82,8 @@ export const BrandNameSt = styled.h3`
 `;
 
 export const FixedBlock = styled.div`
+  margin-top: ${theme.spacing.step * 4}px;
+  margin-bottom: ${theme.spacing.step * 3}px;
   overflow: hidden;
   display: flex;
   align-items: center;
@@ -95,8 +97,6 @@ export const ProductNameSt = styled.h2`
   overflow: hidden;
   text-overflow: ellipsis;
 
-  margin-top: ${theme.spacing.step * 4}px;
-  margin-bottom: ${theme.spacing.step * 3}px;
   color: ${theme.colors.black};
   text-transform: capitalize;
   font-weight: ${theme.fontWeight.Medium};

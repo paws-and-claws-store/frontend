@@ -16,7 +16,9 @@ export const api = createApi({
     }),
     fetchSearch: builder.query({
       query: ({ query, sorting = '', signal }) => ({
-        url: `/api/products/searchByKeyword/card?findBy=${query?.toLowerCase()}${sorting}`,
+        url: `/api/products/searchByKeyword/card?findBy=${encodeURIComponent(
+          query,
+        )?.toLowerCase()}${sorting}`,
         signal,
       }),
     }),
