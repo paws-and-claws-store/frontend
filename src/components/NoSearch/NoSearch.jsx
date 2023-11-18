@@ -4,7 +4,7 @@ import {
   SearchDesriptionResults,
   SearchQuery,
   SearchTravelBag,
-} from 'pages/Search.styled';
+} from 'pages/Search/Search.styled';
 import { useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { selectSearchQueryStore } from 'redux/selectors';
