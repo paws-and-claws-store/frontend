@@ -15,10 +15,10 @@ export const api = createApi({
       query: () => `/api/structure/all`,
     }),
     fetchSearch: builder.query({
-      query: ({ query, sorting = '', signal }) => ({
+      query: ({ query, sorting = '', signal, pageNumber = '&page=1' }) => ({
         url: `/api/products/searchByKeyword/card?findBy=${encodeURIComponent(
           query,
-        )?.toLowerCase()}${sorting}`,
+        )?.toLowerCase()}${sorting}${pageNumber}`,
         signal,
       }),
     }),
