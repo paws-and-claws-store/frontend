@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Outlet, useParams } from 'react-router-dom';
 
 import { ProductDetailsCarousel } from 'components/ProductDetailsCarousel/ProductCarousel/ProductCarousel';
@@ -7,7 +7,7 @@ import { CardContainer, ImageContainer, ProductContainer } from './ProductCard.s
 import MainInfo from 'components/ProductCard/MainInfo/MainInfo';
 import DetailsList from 'components/ProductCard/DetailsList/DetailsList';
 
-import { ViewedProducts } from 'components/ProductCard/ViewedProducts/ViewedProducts'; 
+import { ViewedProducts } from 'components/ProductCard/ViewedProducts/ViewedProducts';
 // import { CardList } from 'components';
 import { setBreadCrumbs } from 'redux/breadCrumbsSlice';
 import { useDispatch } from 'react-redux';
@@ -17,9 +17,6 @@ import { Notify } from 'notiflix';
 
 export const ProductCard = () => {
   const { id } = useParams();
-
-  // eslint-disable-next-line no-unused-vars
-  const [productsList, setProductsList] = useState([]);
 
   const dispatch = useDispatch();
   const {
@@ -97,14 +94,13 @@ export const ProductCard = () => {
                 </div>
 
                 <CardContainer style={{ position: 'relative' }}>
-                  <MainInfo product={response} prodNameLength={response.productName.length}/>
+                  <MainInfo product={response} prodNameLength={response.productName.length} />
                 </CardContainer>
               </ProductContainer>
             )}
           </div>
 
           <ViewedProducts />
-          {/* {productsList && <CardList productsList={productsList.slice(0, 4)} />} */}
         </>
       )}
     </>

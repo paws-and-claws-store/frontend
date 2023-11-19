@@ -1,7 +1,6 @@
-import { memo } from 'react';
 import { SearchDescriptionSpan, SearchDesriptionResults, SearchQuery } from './Search.styled';
 
-export default memo(function SearchDescription({ searchRef }) {
+export default function SearchDescription({ searchRef }) {
   return (
     <SearchDesriptionResults>
       <SearchDescriptionSpan>За запитом </SearchDescriptionSpan>
@@ -17,4 +16,4 @@ export default memo(function SearchDescription({ searchRef }) {
       </SearchDescriptionSpan>
     </SearchDesriptionResults>
   );
-});
+}

@@ -15,7 +15,7 @@ import { setViewedProducts } from 'redux/viewedProductsSlice';
 export const ViewedProducts = () => {
   const [productsList, setProductsList] = useState(null);
   const viewedProducts = useSelector(selectViewedProducts);
-  console.log('viewedProducts:', viewedProducts);
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -36,7 +36,7 @@ export const ViewedProducts = () => {
           perPage: 4,
           perMove: 1,
           pagination: false,
-          arrows:productsList && productsList.length <=4 ? false: true, // включаем кнопки переключения
+          arrows: productsList && productsList.length <= 4 ? false : true, // включаем кнопки переключения
           gap: 20,
           speed: 800,
         }}
@@ -50,8 +50,7 @@ export const ViewedProducts = () => {
                 </ViewedProductsItem>
               </SplideSlide>
             ))
-          : 
-            null}
+          : null}
         {/* </ViewedProductsList> */}
       </Splide>
     </ViewedProductsContainer>

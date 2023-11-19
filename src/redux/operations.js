@@ -9,45 +9,51 @@ export const api = createApi({
   //   tagTypes: ['Products'],
   endpoints: builder => ({
     fetchAllProducts: builder.query({
-      query: (page = 1) => `/api/products/allItems?page=${page}`,
+      query: ({ params }) => ({
+        url: `/api/products/allItems`,
+        params: {
+          ...params,
+        },
+      }),
     }),
     fetchAllStructure: builder.query({
       query: () => `/api/structure/all`,
     }),
     fetchSearch: builder.query({
-      query: ({ query, sorting = '', signal, pageNumber = '&page=1' }) => ({
-        url: `/api/products/searchByKeyword/card?findBy=${encodeURIComponent(
-          query,
-        )?.toLowerCase()}${sorting}${pageNumber}`,
+      query: ({ signal, params }) => ({
+        url: `/api/products/searchByKeyword/card`,
         signal,
+        params: {
+          ...params,
+        },
       }),
     }),
 
     fetchProductsByOneCategory: builder.query({
-      query: (oneCategory, pageNumber) => ({
+      query: ({ oneCategory, params }) => ({
         url: `/api/products/categories/${oneCategory}`,
 
         params: {
-          page: pageNumber,
+          ...params,
         },
       }),
     }),
     fetchProductsByOnePet: builder.query({
-      query: (onePet, pageNumber) => ({
-        url: `/api/products/pets/${onePet}`,
+      query: ({ pet, params }) => ({
+        url: `/api/products/pets/${pet}`,
 
         params: {
-          page: pageNumber,
+          ...params,
         },
       }),
     }),
 
     fetchProductsByOneProductType: builder.query({
-      query: (oneProductType, pageNumber) => ({
-        url: `/api/products/product_types/${oneProductType}`,
+      query: ({ productType, params }) => ({
+        url: `/api/products/product_types/${productType}`,
 
         params: {
-          page: pageNumber,
+          ...params,
         },
       }),
     }),
