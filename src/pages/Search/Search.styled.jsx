@@ -27,7 +27,7 @@ export const TitleSearch = styled.h2`
   font-size: ${theme.fontSizes.xl};
   color: ${theme.colors.black};
   font-weight: ${theme.fontWeight.Medium};
-  font-size: ${theme.lineHeight.xxl};
+  font-size: ${theme.lineHeight.xl};
   margin-top: auto;
   margin-bottom: auto;
 `;
@@ -97,7 +97,8 @@ export const SearchFilter = styled.div`
   transition-property: max-height, background-color;
   transition-duration: ${theme.animations.transitionDuration};
   transition-timing-function: ${props => props.theme.animations.cubicBezier};
-  background-color: ${props => (props.active ? theme.colors.secGreen : theme.colors.beige)};
+  background-color: ${props =>
+    props.active ? theme.colors.secGreen : theme.colors.beige};
 
   outline: 1px solid ${theme.colors.green};
 `;
@@ -115,7 +116,8 @@ export const SearchBrands = styled.div`
   transition-property: max-height, background-color;
   transition-duration: ${theme.animations.transitionDuration};
   transition-timing-function: ${props => props.theme.animations.cubicBezier};
-  background-color: ${props => (props.activeBrands ? theme.colors.secGreen : theme.colors.beige)};
+  background-color: ${props =>
+    props.activeBrands ? theme.colors.secGreen : theme.colors.beige};
 
   outline: 1px solid ${theme.colors.green};
 `;
