@@ -28,6 +28,7 @@
     "react-select": "^5.7.7",
     "redux-persist": "^6.0.0",
     "rsuite": "^5.41.0",
+    "swiper": "^11.0.4",
     "web-vitals": "^2.1.3",
     "yup": "^1.3.2"
   },
@@ -55,5 +56,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11"
   }
 }

@@ -1,19 +1,28 @@
 import React, { useState, useEffect } from 'react';
-import { Outlet, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 import { ProductDetailsCarousel } from 'components/ProductDetailsCarousel/ProductCarousel/ProductCarousel';
-import { CardContainer, ImageContainer, ProductContainer } from './ProductCard.styled';
+import {
+  CardContainer,
+  ImageContainer,
+  ProductContainer,
+} from './ProductCard.styled';
 
 import MainInfo from 'components/ProductCard/MainInfo/MainInfo';
 import DetailsList from 'components/ProductCard/DetailsList/DetailsList';
 
-import { ViewedProducts } from 'components/ProductCard/ViewedProducts/ViewedProducts'; 
+import { ViewedProducts } from 'components/ProductCard/ViewedProducts/ViewedProducts';
 // import { CardList } from 'components';
 import { setBreadCrumbs } from 'redux/breadCrumbsSlice';
 import { useDispatch } from 'react-redux';
-import { useFetchAllStructureQuery, useFetchOneProductQuery } from 'redux/operations';
+import {
+  useFetchAllStructureQuery,
+  useFetchOneProductQuery,
+} from 'redux/operations';
 import Loader from 'components/Loader/Loader';
 import { Notify } from 'notiflix';
+
+
 
 export const ProductCard = () => {
   const { id } = useParams();
@@ -22,6 +31,8 @@ export const ProductCard = () => {
   const [productsList, setProductsList] = useState([]);
 
   const dispatch = useDispatch();
+
+
   const {
     data: response,
     error: errorProduct,
@@ -63,48 +74,26 @@ export const ProductCard = () => {
           <div style={{ minHeight: '930px' }}>
             {Object.keys(response).length !== 0 && (
               <ProductContainer>
-                <div
-                  style={{
-                    maxWidth: '736px',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    justifyContent: 'end',
-                  }}
-                >
-                  <ImageContainer>
-                    <ProductDetailsCarousel
-                      id={id}
-                      mainImage={response.mainImage}
-                      images={response.images}
-                    />
-                  </ImageContainer>
-                  <div>
-                    <DetailsList product={response} />
-                    <Outlet />
-                    {/* <InfoLinkList>
-                <li>
-                  <CustomNavLink to="description">Опис товару</CustomNavLink>
-                </li>
-                <li>
-                  <CustomNavLink to="composition">Склад</CustomNavLink>
-                </li>
-                <li>
-                  <CustomNavLink to="comments">Відгуки</CustomNavLink>
-                </li>
-              </InfoLinkList> */}
-                  </div>
-                  {/* <Reviews /> */}
-                </div>
+                <ImageContainer>
+                  <ProductDetailsCarousel
+                    id={id}
+                    // mainImage={response.mainImage}
+                    images={response.images}
+                  />
+                  <DetailsList product={response} />
+                </ImageContainer>
 
                 <CardContainer style={{ position: 'relative' }}>
-                  <MainInfo product={response} prodNameLength={response.productName.length}/>
+                  <MainInfo
+                    product={response}
+                    prodNameLength={response.productName.length}
+                  />
                 </CardContainer>
               </ProductContainer>
             )}
           </div>
 
           <ViewedProducts />
-          {/* {productsList && <CardList productsList={productsList.slice(0, 4)} />} */}
         </>
       )}
     </>

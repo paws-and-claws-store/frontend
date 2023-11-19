@@ -15,7 +15,7 @@ import { setViewedProducts } from 'redux/viewedProductsSlice';
 export const ViewedProducts = () => {
   const [productsList, setProductsList] = useState(null);
   const viewedProducts = useSelector(selectViewedProducts);
-  console.log('viewedProducts:', viewedProducts);
+  // console.log('viewedProducts:', viewedProducts);
   const dispatch = useDispatch();
 
   useEffect(() => {
