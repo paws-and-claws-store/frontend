@@ -11,7 +11,7 @@ export * from './Star';
 export * from './RightArrow';
 export * from './Cat';
 export * from './Dog';
-export * from './CartNotEmpty';
+export * from './CartNotEmptyIcon';
 export * from './CaretLeftPagination';
 export * from './CaretRightPagination';
 export * from './CrossToDelete';
