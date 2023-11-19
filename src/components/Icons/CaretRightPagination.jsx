@@ -17,16 +17,3 @@ export const CaretRightPagination = () => {
     </SvgFirstGreen>
   );
 };
-
-<svg
-  xmlns="http://www.w3.org/2000/svg"
-  width="32"
-  height="32"
-  viewBox="0 0 32 32"
-  fill="none"
->
-  <path
-    fill=""
-    d="M22.174 16.593L10.992 27.775a.839.839 0 01-1.186-1.185L20.394 16 9.806 5.41a.839.839 0 011.186-1.185l11.182 11.182a.839.839 0 010 1.186z"
-  ></path>
-</svg>;
