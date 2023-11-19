@@ -4,16 +4,27 @@ import { useState } from 'react';
 import { useFetchAllProductsQuery } from 'redux/operations';
 import { Notify } from 'notiflix';
 import { usePagination } from 'components/CustomHooks/usePagination';
+import { useSelector } from 'react-redux';
+import { selectSortingTypeStore } from 'redux/selectors';
 
 export const Catalog = () => {
   const [currentPage, setCurrentPage] = useState(1);
+  const sortingType = useSelector(selectSortingTypeStore);
+
+  const params = { page: currentPage };
+  if (sortingType !== '') {
+    params.sortBy = sortingType;
+  }
+
   const {
     data: response,
     error,
     isLoading,
     isFetching,
     isError,
-  } = useFetchAllProductsQuery(currentPage);
+  } = useFetchAllProductsQuery({
+    params,
+  });
 
   const {
     productsList,

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Loader from 'components/Loader/Loader';
 import { useRef, useState } from 'react';
 import { useFetchSearchQuery } from 'redux/operations';
@@ -29,6 +29,17 @@ export default function Search() {
   const searchQuery = useSelector(selectSearchQueryStore);
   const sortingType = useSelector(selectSortingTypeStore);
 
+  // const params = { findBy: encodeURIComponent(searchQuery).toLowerCase(), page: currentPage };
+  const params = { findBy: encodeURIComponent(searchQuery).toLowerCase(), page: currentPage };
+
+  //This is watching for changing current page, if user now on 2-nd or nore page and he change query page must be again 1
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchQuery]);
+  if (sortingType !== '') {
+    params.sortBy = sortingType;
+  }
+
   if (abortControllerRef.current && searchQuery === '') {
     abortControllerRef.current.abort('empty query');
   }
@@ -44,9 +55,10 @@ export default function Search() {
     status,
     isError,
   } = useFetchSearchQuery({
-    query: searchQuery,
-    sorting: sortingType ? `&sortBy=${sortingType}` : '',
+    // query: searchQuery,
+    // sorting: sortingType ? `&sortBy=${sortingType}` : '',
     signal,
+    params,
     // pageNumber: `&page=${currentPage}`,
   });
   searchRef.current = { searchQuery: searchQuery, totalDocs: response?.totalDocs };
