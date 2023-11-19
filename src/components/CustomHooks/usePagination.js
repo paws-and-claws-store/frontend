@@ -1,6 +1,13 @@
+import { updatePaginationData } from 'helpers';
 import { useEffect, useState } from 'react';
 
-export function usePagination({ response, isFetching, isError, setCurrentPage, currentPage }) {
+export function usePagination({
+  response,
+  isFetching,
+  isError,
+  setCurrentPage,
+  currentPage,
+}) {
   const [productsList, setProductsList] = useState([]);
   //   const [currentPage, setCurrentPage] = useState(1);
   const [paginationData, setPaginationData] = useState({
@@ -18,32 +25,39 @@ export function usePagination({ response, isFetching, isError, setCurrentPage, c
   useEffect(() => {
     async function fetchInitialData() {
       if (loadMoreClicked) {
-        setLoadMoreProducts(prevLoadMoreProducts => [...prevLoadMoreProducts, ...response.docs]);
-        const pagination = {
-          hasNextPage: response.hasNextPage,
-          hasPrevPage: response.hasPrevPage,
-          limit: response.limit,
-          nextPage: response.nextPage,
-          page: response.page,
-          prevPage: response.prevPage,
-          totalPages: response.totalPages,
-        };
-        setPaginationData(pagination);
+        setLoadMoreProducts(prevLoadMoreProducts => [
+          ...prevLoadMoreProducts,
+          ...response.docs,
+        ]);
+        // const pagination = {
+        //   hasNextPage: response.hasNextPage,
+        //   hasPrevPage: response.hasPrevPage,
+        //   limit: response.limit,
+        //   nextPage: response.nextPage,
+        //   page: response.page,
+        //   prevPage: response.prevPage,
+        //   totalPages: response.totalPages,
+        // };
+        // setPaginationData(pagination);
+
+        setPaginationData(updatePaginationData(response));
       } else {
         setProductsList([...response.docs]);
         setLoadMoreProducts([...response.docs]);
         setLoadMoreClicked(false);
 
-        const pagination = {
-          hasNextPage: response.hasNextPage,
-          hasPrevPage: response.hasPrevPage,
-          limit: response.limit,
-          nextPage: response.nextPage,
-          page: response.page,
-          prevPage: response.prevPage,
-          totalPages: response.totalPages,
-        };
-        setPaginationData(pagination);
+        // const pagination = {
+        //   hasNextPage: response.hasNextPage,
+        //   hasPrevPage: response.hasPrevPage,
+        //   limit: response.limit,
+        //   nextPage: response.nextPage,
+        //   page: response.page,
+        //   prevPage: response.prevPage,
+        //   totalPages: response.totalPages,
+        // };
+        // setPaginationData(pagination);
+
+        setPaginationData(updatePaginationData(response));
       }
     }
 
@@ -59,10 +73,10 @@ export function usePagination({ response, isFetching, isError, setCurrentPage, c
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const onAddPage = async () => {
+  const onAddPage = pageNumber => {
     // При натисканні на кнопку "Load More", змініть стан
     setLoadMoreClicked(true);
-    setCurrentPage(currentPage + 1);
+    setCurrentPage(pageNumber + 1);
   };
 
   return {

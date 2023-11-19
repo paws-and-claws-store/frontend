@@ -20,7 +20,7 @@ import { useSelector } from 'react-redux';
 import { selectCartStore } from 'redux/selectors';
 import { CartItem } from 'components';
 
-import { CaretLeftPagination } from 'components/Icons';
+import { ArrowLeft } from 'components/Icons';
 
 export const Cart = () => {
   const cartStore = useSelector(selectCartStore);
@@ -122,7 +122,7 @@ export const Cart = () => {
                 >
                   <LinkToCatalog to={'/catalog'}>
                     <span>
-                      <CaretLeftPagination />
+                      <ArrowLeft />
                     </span>
                     <span>Повернутися до каталогу</span>
                   </LinkToCatalog>
