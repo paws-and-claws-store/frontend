@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { Link } from 'react-router-dom';
 import { theme } from 'styles';
-import TRAVEL_BAG from '../svg/Travel_bag.svg';
+import TRAVEL_BAG from '../../svg/Travel_bag.svg';
 
 export const SearchContainer = styled.div`
   /* display: grid;
@@ -15,6 +15,8 @@ export const UpsideSearchContainer = styled.div`
   grid-template-columns: 1fr 628px 1fr;
   grid-column-gap: 20px;
   margin-bottom: 20px;
+  margin-top: 16px;
+  height: 96px;
 `;
 
 export const TitleSearch = styled.h2`
@@ -25,12 +27,14 @@ export const TitleSearch = styled.h2`
   font-size: ${theme.fontSizes.xl};
   color: ${theme.colors.black};
   font-weight: ${theme.fontWeight.Medium};
-  font-size: ${theme.lineHeight.xxl};
-  margin-top: ${theme.spacing.step * 12}px;
-  margin-bottom: 52px;
+  font-size: ${theme.lineHeight.xl};
+  margin-top: auto;
+  margin-bottom: auto;
 `;
 
 export const SearchDesriptionResults = styled.div`
+  margin-top: auto;
+  margin-bottom: auto;
   color: ${theme.colors.black};
   font-variant-numeric: lining-nums proportional-nums;
   font-feature-settings: 'ss09' on;
@@ -93,7 +97,8 @@ export const SearchFilter = styled.div`
   transition-property: max-height, background-color;
   transition-duration: ${theme.animations.transitionDuration};
   transition-timing-function: ${props => props.theme.animations.cubicBezier};
-  background-color: ${props => (props.active ? theme.colors.secGreen : theme.colors.beige)};
+  background-color: ${props =>
+    props.active ? theme.colors.secGreen : theme.colors.beige};
 
   outline: 1px solid ${theme.colors.green};
 `;
@@ -111,7 +116,8 @@ export const SearchBrands = styled.div`
   transition-property: max-height, background-color;
   transition-duration: ${theme.animations.transitionDuration};
   transition-timing-function: ${props => props.theme.animations.cubicBezier};
-  background-color: ${props => (props.activeBrands ? theme.colors.secGreen : theme.colors.beige)};
+  background-color: ${props =>
+    props.activeBrands ? theme.colors.secGreen : theme.colors.beige};
 
   outline: 1px solid ${theme.colors.green};
 `;
