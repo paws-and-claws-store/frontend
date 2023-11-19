@@ -10,7 +10,10 @@ export const ProductContainer = styled.div`
 `;
 
 export const ImageContainer = styled.div`
-  /* height: 628px; */
+  max-width: 736px;
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
 `;
 
 export const CardContainer = styled.div`
