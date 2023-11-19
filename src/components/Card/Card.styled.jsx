@@ -3,8 +3,8 @@ import { theme } from 'styles';
 
 export const BoxCard = styled.div`
   position: relative;
-  width: ${theme.spacing.step * 76}px;
-  height: ${theme.spacing.step * 128}px;
+  min-width: ${theme.spacing.step * 76}px;
+  min-height: ${theme.spacing.step * 128}px;
   border: 1px solid ${theme.colors.green};
   padding: ${theme.spacing.step * 5}px;
 
@@ -81,13 +81,22 @@ export const BrandNameSt = styled.h3`
   line-height: ${theme.lineHeight.s};
 `;
 
-export const ProductNameSt = styled.h2`
-  height: ${theme.spacing.step * 12}px;
+export const FixedBlock = styled.div`
+  margin-top: ${theme.spacing.step * 4}px;
+  margin-bottom: ${theme.spacing.step * 3}px;
+  overflow: hidden;
   display: flex;
   align-items: center;
-  flex-wrap: wrap;
+  white-space: wrap;
+`;
+
+export const ProductNameSt = styled.h2`
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
   overflow: hidden;
-  margin-top: ${theme.spacing.step}px;
+  text-overflow: ellipsis;
+
   color: ${theme.colors.black};
   text-transform: capitalize;
   font-weight: ${theme.fontWeight.Medium};
@@ -96,12 +105,12 @@ export const ProductNameSt = styled.h2`
 `;
 
 export const ShortDiscriptionSt = styled.p`
-  height: ${theme.spacing.step * 10}px;
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
   overflow: hidden;
-  margin-top: ${theme.spacing.step}px;
+  text-overflow: ellipsis;
+
   margin-top: ${theme.spacing.step}px;
   color: ${theme.colors.black};
   font-weight: ${theme.fontWeight.Light};
@@ -151,7 +160,7 @@ export const PriceBox = styled.div`
 export const PriceSt = styled.div`
   display: flex;
   align-items: center;
-  color: ${props => props.theme.colors.orange};
+  color: ${theme.colors.orange};
   /* text-transform: uppercase; */
   /* font-family: 'rawline', sans-serif; */
   font-weight: ${theme.fontWeight.SemiBold};
@@ -264,8 +273,8 @@ export const BTNInc = styled.button`
 `;
 
 export const Image = styled.img`
-  width: ${props => props.theme.spacing.step * 66}px;
-  height: ${props => props.theme.spacing.step * 66}px;
+  width: ${theme.spacing.step * 66}px;
+  height: ${theme.spacing.step * 66}px;
   object-fit: cover;
 `;
 

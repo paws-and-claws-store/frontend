@@ -5,6 +5,7 @@ import {
   BoxCard,
   BrandNameSt,
   Button,
+  FixedBlock,
   Image,
   PriceBox,
   PriceSt,
@@ -301,10 +302,12 @@ export const Card = ({ el, onClick }) => {
             <Link
               to={`/catalog/${el._pet._id}/${el._category._id}/${el._variant._id}/${el._id}`}
             >
-              <div>
+              <FixedBlock style={{ height: '48px' }}>
                 <ProductNameSt>{el.productName}</ProductNameSt>
-              </div>
-              <ShortDiscriptionSt>{el.shortDescription}</ShortDiscriptionSt>
+              </FixedBlock>
+              <FixedBlock style={{ height: '40px' }}>
+                <ShortDiscriptionSt>{el.shortDescription}</ShortDiscriptionSt>
+              </FixedBlock>
             </Link>
           </div>
 
@@ -321,7 +324,7 @@ export const Card = ({ el, onClick }) => {
               </span>
             </Rating>
           ) : (
-            <Rating style={{ visibility: 'hidden' }} className="rating">
+            <Rating style={{}} className="rating">
               <StarIcon />
               <StarIcon />
               <StarIcon />

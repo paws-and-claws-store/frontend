@@ -17,7 +17,7 @@ import { Outlet } from 'react-router-dom';
 import { setBreadCrumbs } from 'redux/breadCrumbsSlice';
 import { useFetchAllStructureQuery } from 'redux/operations';
 import { useDispatch } from 'react-redux';
-import { SortSelect } from 'components/Filter/SortSelect';
+import { SortSelect } from 'components/SortSelect/SortSelect';
 // import { fetchAllStructure } from 'services/api';
 export const CatalogLayout = () => {
   const [active, setActive] = useState('');

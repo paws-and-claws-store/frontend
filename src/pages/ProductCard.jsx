@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { ProductDetailsCarousel } from 'components/ProductDetailsCarousel/ProductCarousel/ProductCarousel';
@@ -26,9 +26,6 @@ import { Notify } from 'notiflix';
 
 export const ProductCard = () => {
   const { id } = useParams();
-
-  // eslint-disable-next-line no-unused-vars
-  const [productsList, setProductsList] = useState([]);
 
   const dispatch = useDispatch();
 
@@ -84,10 +81,7 @@ export const ProductCard = () => {
                 </ImageContainer>
 
                 <CardContainer style={{ position: 'relative' }}>
-                  <MainInfo
-                    product={response}
-                    prodNameLength={response.productName.length}
-                  />
+                  <MainInfo product={response} prodNameLength={response.productName.length} />
                 </CardContainer>
               </ProductContainer>
             )}

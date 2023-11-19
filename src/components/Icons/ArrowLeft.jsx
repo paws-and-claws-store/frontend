@@ -1,7 +1,7 @@
 import React from 'react';
 import { SvgFirstGreen } from './SvgStyled.styled';
 
-export const CaretLeftPagination = () => {
+export const ArrowLeft = () => {
   return (
     <SvgFirstGreen
       xmlns="http://www.w3.org/2000/svg"
@@ -10,10 +10,12 @@ export const CaretLeftPagination = () => {
       fill="none"
       viewBox="0 0 32 32"
     >
-      <path
-        fill=""
-        d="M22.163 26.55a.836.836 0 11-1.183 1.183L9.817 16.572a.837.837 0 010-1.184L20.98 4.225a.837.837 0 011.183 1.183l-10.57 10.571 10.57 10.571z"
-      ></path>
+    <path
+  fill=""
+  d="M18.506 21.887l-5.591-5.59a.42.42 0 010-.593l5.59-5.591a.42.42 0 01.593.592L13.804 16l5.294 5.295a.42.42 0 01-.592.592z"
+></path>
     </SvgFirstGreen>
   );
 };
+
+
