@@ -31,8 +31,8 @@ export const WeightList = styled.ul`
 
 export const WidthLink = styled.button`
   height: 20px;
-  display: flex;
-  align-items: center;
+  /* display: flex; */
+  /* align-items: center; */
   background-color: ${theme.colors.beige};
   border-radius: 10px;
   border: 1px solid ${theme.colors.green};
@@ -160,9 +160,10 @@ export const PriceSt = styled.div`
   color: ${theme.colors.orange};
   /* text-transform: uppercase; */
   /* font-family: 'rawline', sans-serif; */
-  font-weight: ${theme.fontWeight.SemiBold};
+
+  font-weight: ${theme.fontWeight.Medium};
   font-size: ${theme.fontSizes.l};
-  line-height: ${theme.lineHeight.l};
+  /* line-height: ${theme.lineHeight.l}; */
 `;
 
 export const SymbolCurrency = styled.span`
