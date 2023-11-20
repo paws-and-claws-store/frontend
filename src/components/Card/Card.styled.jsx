@@ -5,7 +5,7 @@ export const BoxCard = styled.div`
   position: relative;
   min-width: ${theme.spacing.step * 76}px;
   min-height: ${theme.spacing.step * 128}px;
-  border: 1px solid ${theme.colors.green};
+  outline: 1px solid ${theme.colors.green};
   padding: ${theme.spacing.step * 5}px;
 
   .heartIcon svg {
@@ -82,21 +82,19 @@ export const BrandNameSt = styled.h3`
 `;
 
 export const FixedBlock = styled.div`
-  margin-top: ${theme.spacing.step * 4}px;
-  margin-bottom: ${theme.spacing.step * 3}px;
   overflow: hidden;
   display: flex;
   align-items: center;
   white-space: wrap;
+  margin-top: ${theme.spacing.step}px;
 `;
 
-export const ProductNameSt = styled.h2`
+export const ProductNameSt = styled.div`
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
-
   color: ${theme.colors.black};
   text-transform: capitalize;
   font-weight: ${theme.fontWeight.Medium};
@@ -111,7 +109,6 @@ export const ShortDiscriptionSt = styled.p`
   overflow: hidden;
   text-overflow: ellipsis;
 
-  margin-top: ${theme.spacing.step}px;
   color: ${theme.colors.black};
   font-weight: ${theme.fontWeight.Light};
   font-size: ${theme.fontSizes.s};
@@ -125,7 +122,7 @@ export const Rating = styled.p`
   gap: ${theme.spacing.step * 1}px;
 
   height: ${theme.spacing.step * 5}px;
-  margin-top: ${theme.spacing.step * 2 + 1}px;
+  margin-top: ${theme.spacing.step * 2}px;
 
   color: ${theme.colors.grey};
   font-weight: ${theme.fontWeight.Regular};
