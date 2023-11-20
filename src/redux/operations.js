@@ -61,6 +61,16 @@ export const api = createApi({
         url: `/api/products`,
       }),
     }),
+
+    fetchValidateCartItems: builder.mutation({
+      query: array => ({
+        url: '/api/products/checkBasket/card',
+        method: 'POST',
+        body: { array },
+      }),
+      transformResponse: response => response.data,
+      invalidatesTags: ['Products'],
+    }),
   }),
 });
 
@@ -73,4 +83,6 @@ export const {
   useFetchProductsByOneProductTypeQuery,
   useFetchOneProductQuery,
   useFetchProductsQuery,
+  useFetchValidateCartItemsMutation,
 } = api;
+console.log('api:', api);

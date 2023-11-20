@@ -23,6 +23,7 @@ import { CartItem } from 'components';
 import { CaretLeftPagination } from 'components/Icons';
 import { BuyProducts, fetchValidateCartItems } from 'services/api';
 import { unavailableFilterProducts } from 'helpers';
+import { useFetchValidateCartItemsMutation } from 'redux/operations';
 // import { updateCartItemCount } from 'redux/cartSlice';
 
 export const Cart = () => {
@@ -35,53 +36,82 @@ export const Cart = () => {
   const [unavailable, setUnavailable] = useState([]);
 
   const dispatch = useDispatch();
+  const array = cartStore.map(({ productCode, cardCount }) => ({
+    productCode,
+    cardCount,
+  }));
+  console.log('array:', array);
+
+  const { mutate } = useFetchValidateCartItemsMutation();
 
   useEffect(() => {
-    const fetchData = async () => {
-      const array = cartStore.map(({ productCode, cardCount }) => ({
-        productCode,
-        cardCount,
-      }));
-
+    // Тут ви викликаєте мутацію при завантаженні сторінки кошика
+    const validateCart = async array => {
       try {
-        const result = await fetchValidateCartItems(array);
-
-        const allData = result.errors
-          ? [...result?.data, ...result?.errors]
-          : [...result.data];
-
-        allData.forEach(item => {
-          // const { productCode, count } = item;
-          // console.log('item:', item);
-          // console.log('productCode, count:', productCode, count);
-          // dispatch(updateCartItemCount({ productCode, count }));
-        });
-
-        if (result.code === 400) {
-          setStatusCode(result.code);
-
-          const unavailableArrayCode = result.errors.map(
-            ({ productCode }) => productCode,
-          );
-
-          const productNames = unavailableFilterProducts(
-            cartStore,
-            unavailableArrayCode,
-          );
-
-          setUnavailable(productNames);
-        } else {
-          setStatusCode(result.code);
-        }
-
-        // Ви можете обробити дані тут
+        // Використовуйте `array` у мутації
+        const result = await mutate(array);
+        // Обробка результату
+        console.log('Mutation result:', result);
       } catch (error) {
-        console.error('Error:', error);
+        // Обробка помилок
+        console.error('Mutation error:', error);
       }
     };
+    // Запустіть мутацію при завантаженні сторінки
+    validateCart(array);
 
-    fetchData();
-  }, [cartStore, dispatch]);
+    // При необхідності ви можете очищати ресурси або виконувати інші завдання при виході з компонента
+    return () => {
+      // Очищення ресурсів або інші завдання
+    };
+  }, [array, mutate]);
+
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     const array = cartStore.map(({ productCode, cardCount }) => ({
+  //       productCode,
+  //       cardCount,
+  //     }));
+
+  //     try {
+  //       const result = await fetchValidateCartItems(array);
+
+  //       const allData = result.errors
+  //         ? [...result?.data, ...result?.errors]
+  //         : [...result.data];
+
+  //       allData.forEach(item => {
+  //         // const { productCode, count } = item;
+  //         // console.log('item:', item);
+  //         // console.log('productCode, count:', productCode, count);
+  //         // dispatch(updateCartItemCount({ productCode, count }));
+  //       });
+
+  //       if (result.code === 400) {
+  //         setStatusCode(result.code);
+
+  //         const unavailableArrayCode = result.errors.map(
+  //           ({ productCode }) => productCode,
+  //         );
+
+  //         const productNames = unavailableFilterProducts(
+  //           cartStore,
+  //           unavailableArrayCode,
+  //         );
+
+  //         setUnavailable(productNames);
+  //       } else {
+  //         setStatusCode(result.code);
+  //       }
+
+  //       // Ви можете обробити дані тут
+  //     } catch (error) {
+  //       console.error('Error:', error);
+  //     }
+  //   };
+
+  //   fetchData();
+  // }, [cartStore, dispatch]);
 
   useEffect(() => {
     const handleScroll = () => {
