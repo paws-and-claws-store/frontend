@@ -1,8 +1,9 @@
 import styled from '@emotion/styled';
 import Images from '../images/banner2.jpg';
+import { theme } from 'styles';
 
 export const Hero = styled.section`
-  margin-top: ${props => props.theme.spacing.step * 4 + 2}px;
+  margin-top: ${theme.spacing.step * 4 + 2}px;
   /*max-width: 1276px;
   height: 660px;
   width: 100%;
@@ -20,10 +21,10 @@ export const Title = styled.h2`
   height: 32px;
   display: flex;
   align-items: center;
-  font-size: ${props => props.theme.fontSizes.xl};
-  color: ${props => props.theme.colors.black};
-  font-weight: ${props => props.theme.fontWeight.Medium};
+  font-size: ${theme.fontSizes.xl};
+  color: ${theme.colors.black};
+  font-weight: ${theme.fontWeight.Medium};
   line-height: 1;
-  margin-top: ${props => props.theme.spacing.step * 12}px;
-  margin-bottom: 52px;
+  margin-top: ${theme.spacing.step * 8}px;
+  margin-bottom: ${theme.spacing.step * 8}px;
 `;
