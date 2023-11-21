@@ -37,18 +37,19 @@ export const Cart = () => {
 
   // const dispatch = useDispatch();
 
-  // const array = cartStore.map(({ productCode, cardCount }) => ({
-  //   productCode,
-  //   cardCount,
-  // }));
-  // console.log('array:', array);
+  const array = cartStore.map(({ productCode, cardCount }) => ({
+    productCode,
+    cardCount,
+  }));
 
   const [mutate, { data, isError, isLoading, isSuccess }] = useFetchValidateCartItemsMutation();
 
   useEffect(() => {
-    return () => {
-      mutate(cartStore);
-    };
+    const array = cartStore.map(({ productCode, cardCount }) => ({
+      productCode,
+      cardCount,
+    }));
+    mutate(array);
   }, [cartStore, mutate]);
 
   //   // При необхідності ви можете очищати ресурси або виконувати інші завдання при виході з компонента
