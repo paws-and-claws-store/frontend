@@ -35,16 +35,11 @@ export const ProductDetailsCarousel = ({ id, images }) => {
     }
 
     if (mainSwiper.current && mainSwiper.current.swiper) {
-      // Обновляем слайдер главных изображений
-
-      // mainSwiper.current.swiper.params.effect = 'fade';
-      // mainSwiper.current.swiper.params.fadeEffect = {crossFade:true};
       mainSwiper.current.swiper.update();
       mainSwiper.current.swiper.slideTo(0);
     }
 
     if (thumbsSwiper.current && thumbsSwiper.current.swiper) {
-      // Обновляем слайдер миниатюр
       thumbsSwiper.current.swiper.update();
       thumbsSwiper.current.swiper.slideTo(0);
     }
@@ -71,10 +66,7 @@ export const ProductDetailsCarousel = ({ id, images }) => {
       mainSwiper.current.swiper.slideNext();
       setImageIndex(mainSwiper.current.swiper.realIndex);
     }
-    
   };
-  
-
 
   return (
     <CarouselContainer>
@@ -96,7 +88,6 @@ export const ProductDetailsCarousel = ({ id, images }) => {
           spaceBetween={20}
           direction="vertical"
           slidesPerView={currentImage.length >= 5 ? 5 : currentImage.length}
-          // className="mySwiper"
           style={{
             height:
               currentImage.length === 5
@@ -148,7 +139,6 @@ export const ProductDetailsCarousel = ({ id, images }) => {
         spaceBetween={1}
         direction="vertical"
         slidesPerView={1}
-        // className="mySwiper2"
       >
         {currentImage?.map((img, index) => (
           <SwiperSlide key={index}>

@@ -13,12 +13,4 @@ export const ViewedProductsTitel = styled.p`
   line-height: 24px;
 `;
 
-
-// export const ViewedProductsList = styled.div`
-// display: flex;
-// gap: 20px;
-// `;
-
-export const ViewedProductsItem = styled.div`
-
-`;
+export const ViewedProductsItem = styled.div``;

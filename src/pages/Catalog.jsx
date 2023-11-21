@@ -33,7 +33,13 @@ export const Catalog = () => {
     onAddPage,
     onPageChange,
     loadMoreClicked,
-  } = usePagination({ response, isFetching, isError, setCurrentPage, currentPage });
+  } = usePagination({
+    response,
+    isFetching,
+    isError,
+    setCurrentPage,
+    currentPage,
+  });
 
   return (
     <>
@@ -45,7 +51,11 @@ export const Catalog = () => {
         <>
           <CardList
             productsList={
-              currentPage === 1 ? productsList : loadMoreClicked ? loadMoreProducts : productsList
+              currentPage === 1
+                ? productsList
+                : loadMoreClicked
+                ? loadMoreProducts
+                : productsList
             }
           />
           <Pagination
