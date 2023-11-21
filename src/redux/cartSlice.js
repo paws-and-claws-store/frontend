@@ -46,11 +46,15 @@ const cartSlice = createSlice({
     updateCartItemCount(state, action) {
       console.log('action:', action);
       const { productCode, newCount } = action.payload;
-      const index = state.cartItems.findIndex(
-        item => item.productCode === productCode,
-      );
+      const index = state.cartItems.findIndex(item => {
+        return item.productCode === productCode;
+      });
       if (index !== -1) {
         state.cartItems[index].count = newCount;
+        console.log(
+          'state.cartItems[index].count:',
+          state.cartItems[index].count,
+        );
       }
       // return { ...state }; // Повернення оновленого стану
     },

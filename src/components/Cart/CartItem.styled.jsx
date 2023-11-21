@@ -103,6 +103,7 @@ export const QuintityInput = styled.input`
 
 export const BtnIncrement = styled.button`
   position: absolute;
+
   top: 50%;
   right: 16px;
   transform: translateY(-50%);
@@ -113,6 +114,11 @@ export const BtnIncrement = styled.button`
   color: ${theme.colors.green};
   &:hover {
     color: ${theme.colors.orange};
+  }
+
+  &:disabled {
+    color: ${theme.colors.secGreen};
+    cursor: default;
   }
 `;
 

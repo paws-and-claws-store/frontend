@@ -24,7 +24,7 @@ import { CaretLeftPagination } from 'components/Icons';
 import { BuyProducts, fetchValidateCartItems } from 'services/api';
 import { unavailableFilterProducts } from 'helpers';
 import { useFetchValidateCartItemsMutation } from 'redux/operations';
-// import { updateCartItemCount } from 'redux/cartSlice';
+import { updateCartItemCount } from 'redux/cartSlice';
 
 export const Cart = () => {
   const cartStore = useSelector(selectCartStore);
@@ -35,14 +35,61 @@ export const Cart = () => {
   const [statusCode, setStatusCode] = useState(null);
   const [unavailable, setUnavailable] = useState([]);
 
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
   const array = cartStore.map(({ productCode, cardCount }) => ({
     productCode,
     cardCount,
   }));
 
-  const [mutate, { data, isError, isLoading, isSuccess }] = useFetchValidateCartItemsMutation();
+  const [mutate, { data, isError, error, isLoading, isSuccess }] =
+    useFetchValidateCartItemsMutation();
+
+  console.log('isLoading:', isLoading);
+  console.log('isSuccess:', isSuccess);
+  console.log('data:', data);
+
+  // if (isError) {
+  //   console.log('error:', error);
+  //   const unavailableArrayCode = error.data.errors.map(
+  //     ({ productCode }) => productCode,
+  //   );
+
+  //   const productNames = unavailableFilterProducts(
+  //     cartStore,
+  //     unavailableArrayCode,
+  //   );
+  //   setUnavailable(productNames);
+
+  //   // setUnavailable(unavailableArrayCode);
+  //   console.log('unavailableArrayCode:', unavailableArrayCode);
+  // }
+
+  useEffect(() => {
+    if (isError) {
+      console.log('error:', error);
+      const {
+        data: { data, errors },
+      } = error;
+      console.log('errors:', errors);
+      console.log('data:', data);
+      const unavailableArrayCode = errors.map(({ productCode }) => productCode);
+
+      const productNames = unavailableFilterProducts(
+        cartStore,
+        unavailableArrayCode,
+      );
+
+      setUnavailable(productNames);
+
+      const allData = [...data, ...errors];
+
+      dispatch(updateCartItemCount(allData));
+      console.log('allData:', allData);
+
+      console.log('unavailableArrayCode:', unavailableArrayCode);
+    }
+  }, [isError, error, cartStore, dispatch]);
 
   useEffect(() => {
     const array = cartStore.map(({ productCode, cardCount }) => ({
@@ -147,7 +194,9 @@ export const Cart = () => {
 
   const calculateTotalCost = () => {
     return cartStore.reduce((total, item) => {
-      const itemCost = item.sale ? item.sale * item.cardCount : item.price * item.cardCount;
+      const itemCost = item.sale
+        ? item.sale * item.cardCount
+        : item.price * item.cardCount;
       return total + itemCost;
     }, 0);
   };
@@ -192,10 +241,13 @@ export const Cart = () => {
         <CartContainer>
           <TitleCart>Кошик</TitleCart>
 
-          {statusCode === 400 && (
+          {isError && (
             <div style={{ backgroundColor: '#f55e53' }}>
               {unavailable.length > 1 ? (
-                <p> На жаль, обраної кількості товарів вже немає в наявності.</p>
+                <p>
+                  {' '}
+                  На жаль, обраної кількості товарів вже немає в наявності.
+                </p>
               ) : (
                 <p> На жаль, обраної кількості товару вже немає в наявності.</p>
               )}
@@ -226,7 +278,9 @@ export const Cart = () => {
                     <p>Загальна сума:</p>
 
                     <div>
-                      <TotalAmountNumber>{calculateTotalCost().toFixed(2)}</TotalAmountNumber>
+                      <TotalAmountNumber>
+                        {calculateTotalCost().toFixed(2)}
+                      </TotalAmountNumber>
                       <TotalAmountSumbol>₴</TotalAmountSumbol>
                     </div>
                   </TotalAmount>
@@ -256,7 +310,9 @@ export const Cart = () => {
         <EmptyCartContainer>
           <div>
             <TitleCart>На жаль, ваш кошик порожній</TitleCart>
-            <BtnBackToCatalog to={'/catalog'}>Перейти до каталогу</BtnBackToCatalog>
+            <BtnBackToCatalog to={'/catalog'}>
+              Перейти до каталогу
+            </BtnBackToCatalog>
           </div>
           <div>
             <img src={Img} alt="Cart img" />

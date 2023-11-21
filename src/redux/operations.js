@@ -85,4 +85,3 @@ export const {
   useFetchProductsQuery,
   useFetchValidateCartItemsMutation,
 } = api;
-console.log('api:', api);

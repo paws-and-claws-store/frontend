@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { removeCartItem, updateCartItem } from 'redux/cartSlice';
 import { displaySize } from 'helpers';
@@ -54,7 +54,10 @@ export const CartItem = ({ prod }) => {
   });
 
   const handleDecrement = () => {
-    if (cardCount > 1) {
+    if (cardCount > count) {
+      setCardCount(count);
+      dispatch(updateCartItem({ productCode, newCount: count }));
+    } else if (cardCount > 1) {
       setCardCount(cardCount - 1);
       dispatch(updateCartItem({ productCode, newCount: cardCount - 1 }));
     } else {
@@ -228,7 +231,7 @@ export const CartItem = ({ prod }) => {
                   onClick={handleDecrement}
                   type="button"
                   aria-label="decrement"
-                  // disabled={cardCount < 2}
+                  // disabled={isDisabled}
                 >
                   -
                 </BtnDecrement>
@@ -237,6 +240,7 @@ export const CartItem = ({ prod }) => {
                   onClick={handleIncrement}
                   type="button"
                   aria-label="increment"
+                  disabled={cardCount > count}
                 >
                   +
                 </BtnIncrement>
