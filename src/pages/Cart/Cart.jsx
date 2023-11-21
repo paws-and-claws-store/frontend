@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   BtnBackToCatalog,
   CartContainer,
@@ -35,36 +35,48 @@ export const Cart = () => {
   const [statusCode, setStatusCode] = useState(null);
   const [unavailable, setUnavailable] = useState([]);
 
-  const dispatch = useDispatch();
-  const array = cartStore.map(({ productCode, cardCount }) => ({
-    productCode,
-    cardCount,
-  }));
-  console.log('array:', array);
+  // const dispatch = useDispatch();
 
-  const { mutate } = useFetchValidateCartItemsMutation();
+  // const array = cartStore.map(({ productCode, cardCount }) => ({
+  //   productCode,
+  //   cardCount,
+  // }));
+  // console.log('array:', array);
+
+  const [mutate, { data, isError, isLoading, isSuccess }] = useFetchValidateCartItemsMutation();
 
   useEffect(() => {
-    // Тут ви викликаєте мутацію при завантаженні сторінки кошика
-    const validateCart = async array => {
-      try {
-        // Використовуйте `array` у мутації
-        const result = await mutate(array);
-        // Обробка результату
-        console.log('Mutation result:', result);
-      } catch (error) {
-        // Обробка помилок
-        console.error('Mutation error:', error);
-      }
-    };
-    // Запустіть мутацію при завантаженні сторінки
-    validateCart(array);
-
-    // При необхідності ви можете очищати ресурси або виконувати інші завдання при виході з компонента
     return () => {
-      // Очищення ресурсів або інші завдання
+      mutate(cartStore);
     };
-  }, [array, mutate]);
+  }, [cartStore, mutate]);
+
+  //   // При необхідності ви можете очищати ресурси або виконувати інші завдання при виході з компонента
+  //   return () => {
+  //     // Очищення ресурсів або інші завдання
+  //   };
+
+  // useEffect(() => {
+  //   // Тут ви викликаєте мутацію при завантаженні сторінки кошика
+  //   const validateCart = async array => {
+  //     try {
+  //       // Використовуйте `array` у мутації
+  //       const result = await mutate(array);
+  //       // Обробка результату
+  //       console.log('Mutation result:', result);
+  //     } catch (error) {
+  //       // Обробка помилок
+  //       console.error('Mutation error:', error);
+  //     }
+  //   };
+  //   // Запустіть мутацію при завантаженні сторінки
+  //   validateCart(array);
+
+  //   // При необхідності ви можете очищати ресурси або виконувати інші завдання при виході з компонента
+  //   return () => {
+  //     // Очищення ресурсів або інші завдання
+  //   };
+  // }, [array, mutate]);
 
   // useEffect(() => {
   //   const fetchData = async () => {
@@ -134,9 +146,7 @@ export const Cart = () => {
 
   const calculateTotalCost = () => {
     return cartStore.reduce((total, item) => {
-      const itemCost = item.sale
-        ? item.sale * item.cardCount
-        : item.price * item.cardCount;
+      const itemCost = item.sale ? item.sale * item.cardCount : item.price * item.cardCount;
       return total + itemCost;
     }, 0);
   };
@@ -184,10 +194,7 @@ export const Cart = () => {
           {statusCode === 400 && (
             <div style={{ backgroundColor: '#f55e53' }}>
               {unavailable.length > 1 ? (
-                <p>
-                  {' '}
-                  На жаль, обраної кількості товарів вже немає в наявності.
-                </p>
+                <p> На жаль, обраної кількості товарів вже немає в наявності.</p>
               ) : (
                 <p> На жаль, обраної кількості товару вже немає в наявності.</p>
               )}
@@ -218,9 +225,7 @@ export const Cart = () => {
                     <p>Загальна сума:</p>
 
                     <div>
-                      <TotalAmountNumber>
-                        {calculateTotalCost().toFixed(2)}
-                      </TotalAmountNumber>
+                      <TotalAmountNumber>{calculateTotalCost().toFixed(2)}</TotalAmountNumber>
                       <TotalAmountSumbol>₴</TotalAmountSumbol>
                     </div>
                   </TotalAmount>
@@ -250,9 +255,7 @@ export const Cart = () => {
         <EmptyCartContainer>
           <div>
             <TitleCart>На жаль, ваш кошик порожній</TitleCart>
-            <BtnBackToCatalog to={'/catalog'}>
-              Перейти до каталогу
-            </BtnBackToCatalog>
+            <BtnBackToCatalog to={'/catalog'}>Перейти до каталогу</BtnBackToCatalog>
           </div>
           <div>
             <img src={Img} alt="Cart img" />
