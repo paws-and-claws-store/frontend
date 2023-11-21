@@ -1,12 +1,12 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { theme } from 'styles';
 import { SwiperSlide } from 'swiper/react';
-import { EffectFlip, EffectCube, EffectFade } from 'swiper/modules';
+// import { EffectFlip, EffectCube, EffectFade } from 'swiper/modules';
 // Import Swiper styles
 import 'swiper/css';
-import 'swiper/css/free-mode';
-import 'swiper/css/navigation';
-import 'swiper/css/thumbs';
+// import 'swiper/css/free-mode';
+// import 'swiper/css/navigation';
+// import 'swiper/css/thumbs';
 
 import {
   CarouselContainer,
@@ -17,7 +17,7 @@ import {
   PrevImg,
   NextImg,
   MainImgWrapper,
-  MainImgAnimated,
+  MainImg,
 } from './ProductCarusel.styled';
 import { CreateDownMini } from 'components/Icons/CreateDownMini';
 
@@ -31,6 +31,7 @@ export const ProductDetailsCarousel = ({ id, images }) => {
   useEffect(() => {
     if (currentImage && currentImage[0] !== images[0]) {
       setCurrentImage(images);
+      setImageIndex(0);
     }
 
     if (mainSwiper.current && mainSwiper.current.swiper) {
@@ -70,7 +71,10 @@ export const ProductDetailsCarousel = ({ id, images }) => {
       mainSwiper.current.swiper.slideNext();
       setImageIndex(mainSwiper.current.swiper.realIndex);
     }
+    
   };
+  
+
 
   return (
     <CarouselContainer>
@@ -130,7 +134,7 @@ export const ProductDetailsCarousel = ({ id, images }) => {
             onClick={() => {
               handleNextThumbnail();
             }}
-            disabled={imageIndex.current === currentImage.length - 1}
+            disabled={imageIndex === currentImage.length - 1}
           >
             <CreateDownMini />
           </NextImg>
@@ -144,19 +148,11 @@ export const ProductDetailsCarousel = ({ id, images }) => {
         spaceBetween={1}
         direction="vertical"
         slidesPerView={1}
-        effect={'fade'}
-        fadeEffect={{
-          crossFade: true,
-          // crossFadeThreshold: 0.4, // Порог затухания (значение от 0 до 1)
-          // crossFadeEnabled: true, // Включить или выключить затухание
-          // duration: 5000, // Длительность затухания в миллисекундах
-        }}
-        modules={[EffectFade]}
-        className="mySwiper2"
+        // className="mySwiper2"
       >
         {currentImage?.map((img, index) => (
           <SwiperSlide key={index}>
-            <MainImgAnimated
+            <MainImg
               src={img}
               style={{ opacity: index === imageIndex ? 1 : 0 }}
               alt="img"

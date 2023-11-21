@@ -29,16 +29,15 @@ export const MainImgWrapper = styled(Swiper)`
 `;
 
 
- const MainImg = styled.img`
+export const MainImg = styled.img`
   width: 100%;
   height: 100%;
-  /* opacity: 0; */
-  transition: opacity 300ms ease-in-out;
+  object-fit: cover;
+  /* transition: opacity 900ms ease-in-out; */
 `;
 
-export const MainImgAnimated = styled(MainImg)`
-/* opacity: 1; */
-`
+// export const MainImgAnimated = styled(MainImg)`
+// `;
 
 export const ImgWrapper = styled.div`
   display: flex;
