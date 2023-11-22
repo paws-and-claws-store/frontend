@@ -97,8 +97,7 @@ export const SearchFilter = styled.div`
   transition-property: max-height, background-color;
   transition-duration: ${theme.animations.transitionDuration};
   transition-timing-function: ${props => props.theme.animations.cubicBezier};
-  background-color: ${props =>
-    props.active ? theme.colors.secGreen : theme.colors.beige};
+  background-color: ${props => (props.active ? theme.colors.secGreen : theme.colors.beige)};
 
   outline: 1px solid ${theme.colors.green};
 `;
@@ -116,8 +115,7 @@ export const SearchBrands = styled.div`
   transition-property: max-height, background-color;
   transition-duration: ${theme.animations.transitionDuration};
   transition-timing-function: ${props => props.theme.animations.cubicBezier};
-  background-color: ${props =>
-    props.activeBrands ? theme.colors.secGreen : theme.colors.beige};
+  background-color: ${props => (props.activeBrands ? theme.colors.secGreen : theme.colors.beige)};
 
   outline: 1px solid ${theme.colors.green};
 `;
@@ -164,4 +162,13 @@ export const SearchTravelBag = styled.svg`
   height: 572px;
   background-image: url(${TRAVEL_BAG});
   fill: aqua;
+`;
+
+export const SearchCallToAction = styled.div`
+  margin-top: 80px;
+  width: 520px;
+  font-size: ${theme.fontSizes.l};
+  font-style: normal;
+  font-weight: ${theme.fontWeight.Medium};
+  line-height: ${theme.lineHeight.xl}; /* 120% */
 `;

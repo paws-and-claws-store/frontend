@@ -1,35 +1,28 @@
 import { ResetButton, SearchIcon } from 'components/Icons';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { SearchBox } from './SearchBar.styled';
 import { Notify } from 'notiflix';
-import { searchSchema } from './searchValidationSchema';
+import { searchSchema } from './searchValidationSchema'; // add search schema validation
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { setQuerySearch } from 'redux/searchSlice';
 import { selectSearchQueryStore } from 'redux/selectors';
 
-export const SearchBar = ({ status }) => {
-  const value = useSelector(selectSearchQueryStore);
-  const [searchValue, setSearchValue] = useState(status === 'rejected' ? '' : value);
+export const SearchBar = () => {
+  const value = useSelector(selectSearchQueryStore); // extract search value from the Redux store
+  const [searchValue, setSearchValue] = useState(value);
   const location = useLocation();
 
-  useEffect(() => {
-    setSearchValue(value);
-    if (status === 'rejected') {
-      setSearchValue('');
-    }
-  }, [value, status]);
-
-  const [resetBoolean, setResetBoolean] = useState(false);
+  const [resetBoolean, setResetBoolean] = useState(false); //this state needs to reset search query and show or hide reset button
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const handleChage = e => {
     setSearchValue(e.currentTarget.value);
     if (e.currentTarget.value === '') {
-      setResetBoolean(false);
+      setResetBoolean(false); // hiding reset button
     } else {
-      setResetBoolean(true);
+      setResetBoolean(true); // showing reset button
     }
   };
 
@@ -47,7 +40,7 @@ export const SearchBar = ({ status }) => {
       //If form is valid, continue submission
       // console.log('Query is legit');
       if (location?.pathname !== 'search') {
-        navigate('/search', { replace: false });
+        navigate('/search', { replace: false }); // redirect to search page after submitting and passing valiadation
       }
     }
 
@@ -59,7 +52,7 @@ export const SearchBar = ({ status }) => {
       return;
     }
 
-    dispatch(setQuerySearch(searchValue));
+    dispatch(setQuerySearch(searchValue)); // set search query to the Redux store
   };
 
   return (
@@ -77,8 +70,8 @@ export const SearchBar = ({ status }) => {
             className="resetButton"
             type="reset"
             onClick={() => {
-              setSearchValue('');
-              setResetBoolean(false);
+              setSearchValue(''); // reset search value on input field
+              setResetBoolean(false); // hide reset button on input field
             }}
           >
             <ResetButton />
