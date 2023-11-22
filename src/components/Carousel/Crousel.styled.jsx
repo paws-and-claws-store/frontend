@@ -24,12 +24,12 @@ export const CarouselStyle = styled(Carousel)`
 
   .carousel-control-prev {
     justify-content: flex-start;
-    padding-left: 11px;
+    padding-left: 16px;
   }
 
   .carousel-control-next {
     justify-content: flex-end;
-    padding-right: 11px;
+    padding-right: 16px;
     /* display: none; */
   }
 

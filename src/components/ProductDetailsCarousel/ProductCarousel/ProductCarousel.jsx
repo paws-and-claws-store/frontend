@@ -1,7 +1,10 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { theme } from 'styles';
 import { SwiperSlide } from 'swiper/react';
+
 // import { EffectFlip, EffectCube, EffectFade } from 'swiper/modules';
+
+
 // Import Swiper styles
 import 'swiper/css';
 // import 'swiper/css/free-mode';
