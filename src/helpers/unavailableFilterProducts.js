@@ -5,9 +5,14 @@ export const unavailableFilterProducts = (cartStore, unavailableArrayCode) => {
   });
 
   // Створення нового масиву з назвами товарів
-  const productNames = filteredProducts.map(function (product) {
-    return product.productName;
+  const products = filteredProducts.map(function (product) {
+    return {
+      productName: product.productName,
+      productCode: product.productCode,
+      count: product.count,
+    };
+    // return product.productName;
   });
 
-  return productNames;
+  return products;
 };

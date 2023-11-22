@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   BtnBackToCatalog,
   CartContainer,
@@ -21,75 +21,61 @@ import { selectCartStore } from 'redux/selectors';
 import { CartItem } from 'components';
 
 import { CaretLeftPagination } from 'components/Icons';
-import { BuyProducts, fetchValidateCartItems } from 'services/api';
-import { unavailableFilterProducts } from 'helpers';
+import { BuyProducts } from 'services/api';
+import { calculateTotalCost, unavailableFilterProducts } from 'helpers';
 import { useFetchValidateCartItemsMutation } from 'redux/operations';
 import { updateCartItemCount } from 'redux/cartSlice';
 
 export const Cart = () => {
   const cartStore = useSelector(selectCartStore);
-  // console.log('cartStore:', cartStore);
-  // const [cartStore, setCartStore] = useState(useSelector(selectCartStore));
   const [scrollY, setScrollY] = useState(0);
   const [shouldRenderComponent, setShouldRenderComponent] = useState(false);
-  const [statusCode, setStatusCode] = useState(null);
   const [unavailable, setUnavailable] = useState([]);
+  const [totalAmount, setTotalAmount] = useState(null);
 
   const dispatch = useDispatch();
 
-  const array = cartStore.map(({ productCode, cardCount }) => ({
-    productCode,
-    cardCount,
-  }));
+  // const array = cartStore.map(({ productCode, cardCount }) => ({
+  //   productCode,
+  //   cardCount,
+  // }));
 
-  const [mutate, { data, isError, error, isLoading, isSuccess }] =
-    useFetchValidateCartItemsMutation();
-
-  console.log('isLoading:', isLoading);
-  console.log('isSuccess:', isSuccess);
-  console.log('data:', data);
-
-  // if (isError) {
-  //   console.log('error:', error);
-  //   const unavailableArrayCode = error.data.errors.map(
-  //     ({ productCode }) => productCode,
-  //   );
-
-  //   const productNames = unavailableFilterProducts(
-  //     cartStore,
-  //     unavailableArrayCode,
-  //   );
-  //   setUnavailable(productNames);
-
-  //   // setUnavailable(unavailableArrayCode);
-  //   console.log('unavailableArrayCode:', unavailableArrayCode);
-  // }
+  const [
+    mutate,
+    {
+      data,
+      isError,
+      error,
+      // isLoading, isSuccess
+    },
+  ] = useFetchValidateCartItemsMutation();
 
   useEffect(() => {
     if (isError) {
-      console.log('error:', error);
       const {
         data: { data, errors },
       } = error;
-      console.log('errors:', errors);
-      console.log('data:', data);
-      const unavailableArrayCode = errors.map(({ productCode }) => productCode);
 
+      const unavailableArrayCode = errors.map(({ productCode }) => productCode);
       const productNames = unavailableFilterProducts(
         cartStore,
         unavailableArrayCode,
       );
 
       setUnavailable(productNames);
-
+      // take data from error and spray it into an array
       const allData = [...data, ...errors];
 
       dispatch(updateCartItemCount(allData));
-      console.log('allData:', allData);
-
-      console.log('unavailableArrayCode:', unavailableArrayCode);
+      return;
     }
-  }, [isError, error, cartStore, dispatch]);
+
+    if (data) {
+      // take data from useFetchValidateCartItemsMutation
+      dispatch(updateCartItemCount(data));
+      setUnavailable([]);
+    }
+  }, [isError, error, cartStore, dispatch, data]);
 
   useEffect(() => {
     const array = cartStore.map(({ productCode, cardCount }) => ({
@@ -192,14 +178,20 @@ export const Cart = () => {
     }
   }, [scrollY]);
 
-  const calculateTotalCost = () => {
-    return cartStore.reduce((total, item) => {
-      const itemCost = item.sale
-        ? item.sale * item.cardCount
-        : item.price * item.cardCount;
-      return total + itemCost;
-    }, 0);
-  };
+  // const calculateTotalCost = () => {
+  //   return cartStore.reduce((total, item) => {
+  //     const itemCost = item.sale
+  //       ? item.sale * item.cardCount
+  //       : item.price * item.cardCount;
+  //     return total + itemCost;
+  //   }, 0);
+  // };
+
+  // const totalAmount = calculateTotalCost(cartStore, unavailable).toFixed(2);
+
+  useEffect(() => {
+    setTotalAmount(calculateTotalCost(cartStore, unavailable).toFixed(2));
+  }, [cartStore, unavailable]);
 
   const handleCheckout = async () => {
     // Виконати перевірку товарів в кошику
@@ -242,7 +234,7 @@ export const Cart = () => {
           <TitleCart>Кошик</TitleCart>
 
           {isError && (
-            <div style={{ backgroundColor: '#f55e53' }}>
+            <div style={{ color: '#f55e53' }}>
               {unavailable.length > 1 ? (
                 <p>
                   {' '}
@@ -252,8 +244,8 @@ export const Cart = () => {
                 <p> На жаль, обраної кількості товару вже немає в наявності.</p>
               )}
               <ul>
-                {unavailable?.map((item, index) => (
-                  <li key={index}>{item}</li>
+                {unavailable?.map(({ productName, productCode }) => (
+                  <li key={productCode}>{productName}</li>
                 ))}
               </ul>
             </div>
@@ -263,7 +255,7 @@ export const Cart = () => {
               {cartStore.map(prod => {
                 return (
                   <li key={prod.productCode}>
-                    <CartItem prod={prod} />
+                    <CartItem prod={prod} unavailable={unavailable} />
                   </li>
                 );
               })}
@@ -278,9 +270,7 @@ export const Cart = () => {
                     <p>Загальна сума:</p>
 
                     <div>
-                      <TotalAmountNumber>
-                        {calculateTotalCost().toFixed(2)}
-                      </TotalAmountNumber>
+                      <TotalAmountNumber>{totalAmount}</TotalAmountNumber>
                       <TotalAmountSumbol>₴</TotalAmountSumbol>
                     </div>
                   </TotalAmount>

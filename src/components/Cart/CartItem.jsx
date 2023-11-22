@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { removeCartItem, updateCartItem } from 'redux/cartSlice';
 import { displaySize } from 'helpers';
@@ -23,7 +23,7 @@ import { Link } from 'react-router-dom';
 import { Notify } from 'notiflix';
 import { fetchProductsByOnePetCopy } from 'services/api';
 
-export const CartItem = ({ prod }) => {
+export const CartItem = ({ prod, unavailable }) => {
   const {
     productCode,
     brand,
@@ -37,8 +37,11 @@ export const CartItem = ({ prod }) => {
     size,
   } = prod;
 
-  const [cardCount, setCardCount] = useState(prod.cardCount);
+  const isUnavailable = unavailable
+    ?.map(unavailableItem => unavailableItem.productCode)
+    .includes(productCode);
 
+  const [cardCount, setCardCount] = useState(prod.cardCount);
   const dispatch = useDispatch();
   const [isFocused, setIsFocused] = useState(false);
 
@@ -145,11 +148,25 @@ export const CartItem = ({ prod }) => {
       <div
         style={{
           display: 'flex',
+          position: 'relative',
           // outline: '2px solid pink',
           //  width: '736px'
         }}
       >
-        <ImgWrapper>
+        {isUnavailable && (
+          <span
+            style={{
+              position: 'absolute',
+              bottom: '5px',
+              left: '20px',
+
+              color: 'black',
+            }}
+          >
+            Доступнo {count} шт{' '}
+          </span>
+        )}
+        <ImgWrapper isUnavailable={isUnavailable}>
           <img
             style={{ objectFit: 'cover' }}
             src={mainImage}
@@ -247,10 +264,12 @@ export const CartItem = ({ prod }) => {
               </QuintityInputWrapper>
             </div>
 
-            <TotalQuantity>
-              <span> {itemTotal.toFixed(2)}</span>
-              <span>₴</span>
-            </TotalQuantity>
+            {!isUnavailable && (
+              <TotalQuantity>
+                <span> {itemTotal.toFixed(2)}</span>
+                <span>₴</span>
+              </TotalQuantity>
+            )}
           </div>
           <button
             style={{

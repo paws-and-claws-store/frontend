@@ -2,6 +2,8 @@ import styled from '@emotion/styled';
 import { theme } from 'styles';
 
 export const ImgWrapper = styled.div`
+  position: relative;
+  filter: opacity(${props => (props.isUnavailable ? 0.3 : 1)});
   /* filter: grayscale(0.7); */
   border: 1px solid ${theme.colors.green};
   width: 196px;
