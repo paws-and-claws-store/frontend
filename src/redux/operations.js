@@ -71,6 +71,16 @@ export const api = createApi({
       transformResponse: response => response.data,
       invalidatesTags: ['Products'],
     }),
+
+    BuyProducts: builder.mutation({
+      query: array => ({
+        url: '/api/products/buyProduct',
+        method: 'POST',
+        body: { array },
+      }),
+      transformResponse: response => response.data,
+      invalidatesTags: ['Products'],
+    }),
   }),
 });
 
@@ -84,4 +94,5 @@ export const {
   useFetchOneProductQuery,
   useFetchProductsQuery,
   useFetchValidateCartItemsMutation,
+  useBuyProductsMutation,
 } = api;
