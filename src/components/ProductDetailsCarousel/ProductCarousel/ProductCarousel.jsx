@@ -1,15 +1,15 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { theme } from 'styles';
 import { SwiperSlide } from 'swiper/react';
-import {
-  // EffectFlip, EffectCube,
-  EffectFade,
-} from 'swiper/modules';
+
+// import { EffectFlip, EffectCube, EffectFade } from 'swiper/modules';
+
+
 // Import Swiper styles
 import 'swiper/css';
-import 'swiper/css/free-mode';
-import 'swiper/css/navigation';
-import 'swiper/css/thumbs';
+// import 'swiper/css/free-mode';
+// import 'swiper/css/navigation';
+// import 'swiper/css/thumbs';
 
 import {
   CarouselContainer,
@@ -20,7 +20,7 @@ import {
   PrevImg,
   NextImg,
   MainImgWrapper,
-  MainImgAnimated,
+  MainImg,
 } from './ProductCarusel.styled';
 import { CreateDownMini } from 'components/Icons/CreateDownMini';
 
@@ -34,19 +34,15 @@ export const ProductDetailsCarousel = ({ id, images }) => {
   useEffect(() => {
     if (currentImage && currentImage[0] !== images[0]) {
       setCurrentImage(images);
+      setImageIndex(0);
     }
 
     if (mainSwiper.current && mainSwiper.current.swiper) {
-      // Обновляем слайдер главных изображений
-
-      // mainSwiper.current.swiper.params.effect = 'fade';
-      // mainSwiper.current.swiper.params.fadeEffect = {crossFade:true};
       mainSwiper.current.swiper.update();
       mainSwiper.current.swiper.slideTo(0);
     }
 
     if (thumbsSwiper.current && thumbsSwiper.current.swiper) {
-      // Обновляем слайдер миниатюр
       thumbsSwiper.current.swiper.update();
       thumbsSwiper.current.swiper.slideTo(0);
     }
@@ -95,7 +91,6 @@ export const ProductDetailsCarousel = ({ id, images }) => {
           spaceBetween={20}
           direction="vertical"
           slidesPerView={currentImage.length >= 5 ? 5 : currentImage.length}
-          // className="mySwiper"
           style={{
             height:
               currentImage.length === 5
@@ -133,7 +128,7 @@ export const ProductDetailsCarousel = ({ id, images }) => {
             onClick={() => {
               handleNextThumbnail();
             }}
-            disabled={imageIndex.current === currentImage.length - 1}
+            disabled={imageIndex === currentImage.length - 1}
           >
             <CreateDownMini />
           </NextImg>
@@ -147,19 +142,10 @@ export const ProductDetailsCarousel = ({ id, images }) => {
         spaceBetween={1}
         direction="vertical"
         slidesPerView={1}
-        effect={'fade'}
-        fadeEffect={{
-          crossFade: true,
-          // crossFadeThreshold: 0.4, // Порог затухания (значение от 0 до 1)
-          // crossFadeEnabled: true, // Включить или выключить затухание
-          // duration: 5000, // Длительность затухания в миллисекундах
-        }}
-        modules={[EffectFade]}
-        className="mySwiper2"
       >
         {currentImage?.map((img, index) => (
           <SwiperSlide key={index}>
-            <MainImgAnimated
+            <MainImg
               src={img}
               style={{ opacity: index === imageIndex ? 1 : 0 }}
               alt="img"

@@ -3,10 +3,10 @@ import { theme } from 'styles';
 
 export const BoxCard = styled.div`
   position: relative;
-  min-width: ${theme.spacing.step * 76}px;
-  min-height: ${theme.spacing.step * 128}px;
-  outline: 1px solid ${theme.colors.green};
-  padding: ${theme.spacing.step * 5}px;
+  width: ${theme.spacing.step * 76}px;
+  height: ${theme.spacing.step * 128}px;
+  border: 1px solid ${theme.colors.green};
+  padding: ${theme.spacing.step * 5 - 1}px;
 
   .heartIcon svg {
     position: absolute;

@@ -5,7 +5,6 @@ import '@splidejs/splide/dist/css/themes/splide-default.min.css';
 import {
   ViewedProductsContainer,
   ViewedProductsTitel,
-  // ViewedProductsList,
   ViewedProductsItem,
 } from './ViewedProducts.styled';
 import { selectViewedProducts } from 'redux/selectors';
@@ -40,7 +39,6 @@ export const ViewedProducts = () => {
           speed: 800,
         }}
       >
-        {/* <ViewedProductsList> */}
         {productsList
           ? productsList.map(el => (
               <SplideSlide key={el._id}>
@@ -50,7 +48,6 @@ export const ViewedProducts = () => {
               </SplideSlide>
             ))
           : null}
-        {/* </ViewedProductsList> */}
       </Splide>
     </ViewedProductsContainer>
   );
