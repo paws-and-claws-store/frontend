@@ -25,6 +25,6 @@ export const Title = styled.h2`
   color: ${theme.colors.black};
   font-weight: ${theme.fontWeight.Medium};
   line-height: 1;
-  margin-top: ${theme.spacing.step * 8}px;
-  margin-bottom: ${theme.spacing.step * 8}px;
+  margin-top: ${theme.spacing.step * 7}px;
+  margin-bottom: ${theme.spacing.step * 7}px;
 `;
