@@ -12,11 +12,11 @@ export const Pagination = ({ paginationData, onPageChange, onAddPage }) => {
   const {
     hasNextPage,
     hasPrevPage,
+    totalPages,
     // limit,
     nextPage,
     page,
     prevPage,
-    totalPages,
   } = paginationData;
   // const hasNextPage = true;
   // const hasPrevPage = true;
@@ -62,10 +62,12 @@ export const Pagination = ({ paginationData, onPageChange, onAddPage }) => {
     displayedPages.push(totalPages);
   }
 
-  return (
+  return totalPages <= 1 ? null : (
     <BoxPagination>
       {hasNextPage && (
-        <BtnLoadMore onClick={onAddPage}>Завантажити ще</BtnLoadMore>
+        <BtnLoadMore onClick={() => onAddPage(page)}>
+          Завантажити ще
+        </BtnLoadMore>
       )}
       <nav>
         <PaginationList>

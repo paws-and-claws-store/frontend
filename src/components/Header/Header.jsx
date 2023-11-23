@@ -12,7 +12,13 @@ import {
   LinkWrapper,
   // SearchBox,
 } from './Header.styled';
-import { CartIcon, CartNotEmptyIcon, HeartIcon, LogoIcon, ProfileIcon } from 'components/Icons';
+import {
+  CartIcon,
+  CartNotEmptyIcon,
+  HeartIcon,
+  LogoIcon,
+  ProfileIcon,
+} from 'components/Icons';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { selectCartStore } from 'redux/selectors';
@@ -64,7 +70,9 @@ export const Header = () => {
                   <CartNotEmptyIcon countDigits={countDigits(totalCount)} />
 
                   <CountWrapper>
-                    <Count countDigits={countDigits(totalCount)}>{totalCount}</Count>
+                    <Count countDigits={countDigits(totalCount)}>
+                      {totalCount}
+                    </Count>
                   </CountWrapper>
                 </CountContainer>
               ) : (

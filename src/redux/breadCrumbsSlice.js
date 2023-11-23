@@ -18,7 +18,9 @@ const breadCrumbsSlice = createSlice({
   reducers: {
     setBreadCrumbs(state, action) {
       const dirtyArray = [...state.breadcrumbs, ...action.payload];
-      const uniqueObjArray = [...new Map(dirtyArray.map(item => [item['_id'], item])).values()];
+      const uniqueObjArray = [
+        ...new Map(dirtyArray.map(item => [item['_id'], item])).values(),
+      ];
 
       state.breadcrumbs = uniqueObjArray;
     },

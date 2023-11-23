@@ -13,18 +13,29 @@ import {
 import { TitelContainer, Sorter } from './CatalogLayout.styled';
 import { Title } from 'pages/Home.styled';
 import React, { useEffect, useState } from 'react';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
 import { setBreadCrumbs } from 'redux/breadCrumbsSlice';
 import { useFetchAllStructureQuery } from 'redux/operations';
 import { useDispatch } from 'react-redux';
-import { SortSelect } from 'components/Filter/SortSelect';
+import { SortSelect } from 'components/SortSelect/SortSelect';
+import { flattenCategories } from 'helpers';
 // import { fetchAllStructure } from 'services/api';
 export const CatalogLayout = () => {
   const [active, setActive] = useState('');
   const [structure, setStructure] = useState([]);
   const [categories, setCategories] = useState([]);
+  const pathname = useLocation().pathname;
+
+  const pathParts = pathname.split('/');
+  const lastPathParts = pathParts[pathParts.length - 1];
 
   const { data, isLoading, isError } = useFetchAllStructureQuery();
+
+  const flattenedCategories = flattenCategories(data);
+  const title = flattenedCategories?.find(item => {
+    return item.id.toString() === lastPathParts.toString();
+  });
+
   const dispatch = useDispatch();
 
   const hiddenElement = document.getElementById('hidden');
@@ -81,7 +92,9 @@ export const CatalogLayout = () => {
       }
 
       //loading structure for breadcrumbs
-      const subCategory = structure.flatMap(item => item._categories);
+      const subCategory = structure.flatMap(item => {
+        return item._categories;
+      });
       const variants = subCategory.flatMap(item => item._variants);
       dispatch(setBreadCrumbs([...structure, ...subCategory, ...variants]));
     }
@@ -92,7 +105,10 @@ export const CatalogLayout = () => {
   return (
     <>
       <TitelContainer>
-        <Title>Каталог товарів</Title>
+        <Title>
+          {/* Каталог товарів */}
+          {title ? title?.title : 'Каталог товарів'}
+        </Title>
         <Sorter>
           <SortSelect style={{ top: '100px', left: '0px' }} />
         </Sorter>
@@ -102,7 +118,9 @@ export const CatalogLayout = () => {
         <AsideCatalog>
           {!isError && structure?.length !== 0 && (
             <CategoryList>
-              <ul style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+              <ul
+                style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}
+              >
                 {structure.map((el, i) => {
                   // console.log('el:', el);
                   switch (el.code) {
@@ -112,7 +130,9 @@ export const CatalogLayout = () => {
                           <PetButton
                             active={active}
                             id={el.code}
-                            className={active === 'for_dogs' ? 'active' : undefined}
+                            className={
+                              active === 'for_dogs' ? 'active' : undefined
+                            }
                             onClick={handleClick}
                           >
                             <span>
@@ -131,7 +151,9 @@ export const CatalogLayout = () => {
                           <PetButton
                             active={active}
                             id={el.code}
-                            className={active === 'for_cats' ? 'active' : undefined}
+                            className={
+                              active === 'for_cats' ? 'active' : undefined
+                            }
                             onClick={handleClick}
                             // onBlur={() => {
                             //   setActive('');

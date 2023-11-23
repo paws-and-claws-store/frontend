@@ -20,8 +20,9 @@ import {
 } from './MainInfo.styled';
 import QuntityProduct from '../QuntityProduct/QuntityProduct';
 
-const MainInfo = ({
-  product: {
+const MainInfo = ({ product, prodNameLength }) => {
+
+  const {
     brand,
     productName,
     shortDescription,
@@ -29,21 +30,18 @@ const MainInfo = ({
     items,
     favorite,
     mainImage,
-  },
-}) => {
+  } = product;
+
   const [prodType, setProdType] = useState(items[0]);
   const [fav, setFavorite] = useState(favorite || false);
-  const [nameHeight, setNameHeight] = useState(null)
+  const [nameHeight, setNameHeight] = useState(null);
 
   const inStock = prodType.count > 0;
   const prodNameRef = useRef(null);
 
   useEffect(() => {
-    const prodNameHeight = prodNameRef.current;
-    if (prodNameHeight) {
-      setNameHeight(prodNameHeight.clientHeight);
-    }
-  }, []);
+    if (prodNameLength !== nameHeight) setNameHeight(prodNameLength);
+  }, [nameHeight, prodNameLength]);
 
   const changeFavorite = () => {
     setFavorite(!fav);
@@ -52,8 +50,8 @@ const MainInfo = ({
   const changePropType = productCode => {
     const newElType = items.find(el => el.productCode === productCode);
     setProdType(newElType);
-    // setCount(null);
   };
+
   return (
     <CardContainer style={{ position: 'sticky', top: '100px' }}>
       <FlexBox>
@@ -84,7 +82,12 @@ const MainInfo = ({
         </span>
       </FlexBox>
 
-      <ProductName style={{fontSize: nameHeight > 96 ? '32px' : '40px'}} ref={prodNameRef}>{productName}</ProductName>
+      <ProductName
+        style={{ fontSize: nameHeight > 40 ? '32px' : '40px' }}
+        ref={prodNameRef}
+      >
+        {productName}
+      </ProductName>
       <ShortDescription>{shortDescription}</ShortDescription>
 
       <CarCodeWrapper>

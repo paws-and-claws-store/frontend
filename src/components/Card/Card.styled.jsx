@@ -3,9 +3,9 @@ import { theme } from 'styles';
 
 export const BoxCard = styled.div`
   position: relative;
-  width: ${theme.spacing.step * 76}px;
-  height: ${theme.spacing.step * 128}px;
-  border: 1px solid ${theme.colors.green};
+  min-width: ${theme.spacing.step * 76}px;
+  min-height: ${theme.spacing.step * 128}px;
+  outline: 1px solid ${theme.colors.green};
   padding: ${theme.spacing.step * 5}px;
 
   .heartIcon svg {
@@ -31,8 +31,8 @@ export const WeightList = styled.ul`
 
 export const WidthLink = styled.button`
   height: 20px;
-  display: flex;
-  align-items: center;
+  /* display: flex; */
+  /* align-items: center; */
   background-color: ${theme.colors.beige};
   border-radius: 10px;
   border: 1px solid ${theme.colors.green};
@@ -81,13 +81,20 @@ export const BrandNameSt = styled.h3`
   line-height: ${theme.lineHeight.s};
 `;
 
-export const ProductNameSt = styled.h2`
-  height: ${theme.spacing.step * 12}px;
+export const FixedBlock = styled.div`
+  overflow: hidden;
   display: flex;
   align-items: center;
-  flex-wrap: wrap;
-  overflow: hidden;
+  white-space: wrap;
   margin-top: ${theme.spacing.step}px;
+`;
+
+export const ProductNameSt = styled.div`
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
   color: ${theme.colors.black};
   text-transform: capitalize;
   font-weight: ${theme.fontWeight.Medium};
@@ -96,13 +103,12 @@ export const ProductNameSt = styled.h2`
 `;
 
 export const ShortDiscriptionSt = styled.p`
-  height: ${theme.spacing.step * 10}px;
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
   overflow: hidden;
-  margin-top: ${theme.spacing.step}px;
-  margin-top: ${theme.spacing.step}px;
+  text-overflow: ellipsis;
+
   color: ${theme.colors.black};
   font-weight: ${theme.fontWeight.Light};
   font-size: ${theme.fontSizes.s};
@@ -116,7 +122,7 @@ export const Rating = styled.p`
   gap: ${theme.spacing.step * 1}px;
 
   height: ${theme.spacing.step * 5}px;
-  margin-top: ${theme.spacing.step * 2 + 1}px;
+  margin-top: ${theme.spacing.step * 2}px;
 
   color: ${theme.colors.grey};
   font-weight: ${theme.fontWeight.Regular};
@@ -151,12 +157,13 @@ export const PriceBox = styled.div`
 export const PriceSt = styled.div`
   display: flex;
   align-items: center;
-  color: ${props => props.theme.colors.orange};
+  color: ${theme.colors.orange};
   /* text-transform: uppercase; */
   /* font-family: 'rawline', sans-serif; */
-  font-weight: ${theme.fontWeight.SemiBold};
+
+  font-weight: ${theme.fontWeight.Medium};
   font-size: ${theme.fontSizes.l};
-  line-height: ${theme.lineHeight.l};
+  /* line-height: ${theme.lineHeight.l}; */
 `;
 
 export const SymbolCurrency = styled.span`
@@ -263,8 +270,8 @@ export const BTNInc = styled.button`
 `;
 
 export const Image = styled.img`
-  width: ${props => props.theme.spacing.step * 66}px;
-  height: ${props => props.theme.spacing.step * 66}px;
+  width: ${theme.spacing.step * 66}px;
+  height: ${theme.spacing.step * 66}px;
   object-fit: cover;
 `;
 

@@ -1,30 +1,57 @@
-import React from //  { useEffect, useState }
-'react';
-import { useSelector } from 'react-redux';
-import { ViewedProductsContainer } from './ViewedProducts.styled';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Splide, SplideSlide } from '@splidejs/react-splide';
+import '@splidejs/splide/dist/css/themes/splide-default.min.css';
+import {
+  ViewedProductsContainer,
+  ViewedProductsTitel,
+  // ViewedProductsList,
+  ViewedProductsItem,
+} from './ViewedProducts.styled';
 import { selectViewedProducts } from 'redux/selectors';
 import { Card } from 'components/Card/Card';
+import { setViewedProducts } from 'redux/viewedProductsSlice';
 
 export const ViewedProducts = () => {
+  const [productsList, setProductsList] = useState(null);
   const viewedProducts = useSelector(selectViewedProducts);
-  console.log('viewedProducts:', viewedProducts);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (productsList !== viewedProducts) {
+      setProductsList(viewedProducts);
+    }
+  }, [productsList, viewedProducts]);
+
+  const onCardClick = el => {
+    dispatch(setViewedProducts(el));
+  };
 
   return (
     <ViewedProductsContainer>
-      <h3>Переглянуті товари</h3>
-      <ul style={{ display: 'flex', gap: '20px' }}>
-        {viewedProducts.length > 0
-          ? viewedProducts
-              .map((el, indx) => {
-                return (
-                  <li key={indx}>
-                    <Card el={el} />
-                  </li>
-                );
-              })
-              .slice(0, 4)
+      <ViewedProductsTitel>Переглянуті товари</ViewedProductsTitel>
+      <Splide
+        options={{
+          perPage: 4,
+          perMove: 1,
+          pagination: false,
+          arrows: productsList && productsList.length <= 4 ? false : true, // включаем кнопки переключения
+          gap: 20,
+          speed: 800,
+        }}
+      >
+        {/* <ViewedProductsList> */}
+        {productsList
+          ? productsList.map(el => (
+              <SplideSlide key={el._id}>
+                <ViewedProductsItem onClick={() => onCardClick(el)}>
+                  <Card el={el} />
+                </ViewedProductsItem>
+              </SplideSlide>
+            ))
           : null}
-      </ul>
+        {/* </ViewedProductsList> */}
+      </Splide>
     </ViewedProductsContainer>
   );
 };
