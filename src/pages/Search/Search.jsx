@@ -75,9 +75,9 @@ export default function Search() {
         (Notify.failure(error.error), (<></>)) // If there's a server error (status >= 500), it triggers a failure notification using Notify.failure(error.error).
       ) : isLoading && !isError ? (
         <Loader /> // Show a loader if data is loading (isLoading && !isError).
-      ) : error?.status < 500 ? (
+      ) : response?.totalDocs === 0 ? (
         <NoSearch /> // Show a component indicating no search results (<NoSearch />) if there's an error with status less than 500.
-      ) : response ? ( // Display search results (response) with appropriate components for sorting, descriptions, categories, and pagination.
+      ) : response?.totalDocs > 0 ? ( // Display search results (response) with appropriate components for sorting, descriptions, categories, and pagination.
         <>
           <UpsideSearchContainer>
             <TitleSearch>Результати пошуку</TitleSearch>
