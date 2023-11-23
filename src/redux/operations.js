@@ -69,6 +69,29 @@ export const api = createApi({
         url: `/api/products`,
       }),
     }),
+
+    fetchValidateCartItems: builder.mutation({
+      query: array => ({
+        url: '/api/products/checkBasket/card',
+        method: 'POST',
+        body: { array },
+      }),
+      transformResponse: response => response.data,
+      invalidatesTags: ['Products'],
+    }),
+
+    BuyProducts: builder.mutation({
+      query: array => ({
+        url: '/api/products/buyProduct',
+        method: 'POST',
+        body: { array },
+      }),
+      transformResponse: response => {
+        console.log('response:', response);
+        return response;
+      },
+      invalidatesTags: ['Products'],
+    }),
   }),
 });
 
@@ -81,4 +104,6 @@ export const {
   useFetchProductsByOneProductTypeQuery,
   useFetchOneProductQuery,
   useFetchProductsQuery,
+  useFetchValidateCartItemsMutation,
+  useBuyProductsMutation,
 } = api;
