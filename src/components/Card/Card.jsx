@@ -197,11 +197,11 @@ export const Card = ({ el, onClick }) => {
 
     const newCount = Number(e.target.value);
 
-    if (newCount > elType.count) {
-      setCardCount(elType.count);
-      Notify.info('На жаль, на складі відсутня необхідна кількість товару.');
-      return dispatch(updateCartItem({ productCode, newCount: elType.count }));
-    }
+    // if (newCount > elType.count) {
+    //   setCardCount(elType.count);
+    //   Notify.info('На жаль, на складі відсутня необхідна кількість товару.');
+    //   return dispatch(updateCartItem({ productCode, newCount: elType.count }));
+    // }
 
     if (newCount < 1) {
       return;

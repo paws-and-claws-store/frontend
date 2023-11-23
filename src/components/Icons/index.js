@@ -15,4 +15,5 @@ export * from './CartNotEmptyIcon';
 export * from './CaretLeftPagination';
 export * from './CaretRightPagination';
 export * from './CrossToDelete';
+export * from './CheckCircle';
 export * from './ArrowLeft';

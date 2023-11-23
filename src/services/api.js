@@ -55,6 +55,23 @@ export async function fetchProductsByOnePet(onePet, pageNumber) {
     Notify.failure(error.message);
   }
 }
+//by onePet
+export async function fetchProductsByOnePetCopy(onePet) {
+  // const config = {
+  //   params: {
+  //     page: pageNumber,
+  //   },
+  // };
+
+  try {
+    const response = await axios.get(`/api/products/pets/copy/${onePet}`);
+
+    console.log('response:', response);
+    return response.data;
+  } catch (error) {
+    Notify.failure(error.message);
+  }
+}
 
 //by oneCategory
 export async function fetchProductsByOneCategory(oneCategory, pageNumber) {
@@ -175,5 +192,34 @@ export async function fetchAllStructure() {
     return response.data;
   } catch (error) {
     Notify.failure(error.message);
+  }
+}
+// requests by Cart
+export async function fetchValidateCartItems(array) {
+  try {
+    const response = await axios.post(`/api/products/checkBasket/card`, {
+      array,
+    });
+    // console.log('response:', response);
+
+    return response.data;
+  } catch (error) {
+    // console.log('error:', error);
+    // Notify.failure(error.message);
+    return error.response.data;
+  }
+}
+export async function BuyProducts(array) {
+  try {
+    const response = await axios.post(`/api/products/buyProduct`, {
+      array,
+    });
+    console.log('response:', response);
+
+    return response.data;
+  } catch (error) {
+    console.log('error:', error);
+    // Notify.failure(error.message);
+    return error.response.data;
   }
 }

@@ -253,8 +253,7 @@ export const QTYBox = styled.form`
     background-color: ${theme.colors.orange};
     color: ${theme.colors.white};
   }
-  & button:hover,
-  & button:focus {
+  & button:hover {
     background-color: ${theme.colors.green};
   }
 

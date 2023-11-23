@@ -43,6 +43,36 @@ const cartSlice = createSlice({
         state.cartItems[index].cardCount = newCount;
       }
     },
+    // updateCartItemCount(state, action) {
+    //   const { productCode, count } = action.payload;
+    //   console.log('action.payload:', action.payload);
+    //   console.log('count:', count);
+    //   const index = state.cartItems.findIndex(item => {
+    //     return item.productCode === productCode;
+    //   });
+    //   if (index !== -1) {
+    //     // state.cartItems[index].count = newCount;
+    //     console.log(
+    //       'state.cartItems[index].count:',
+    //       state.cartItems[index].count,
+    //     );
+    //   }
+    //   // return { ...state }; // Повернення оновленого стану
+    // },
+
+    updateCartItemCount(state, action) {
+      const { payload } = action;
+      for (const item of payload) {
+        const index = state.cartItems.findIndex(
+          i => i.productCode === item.productCode,
+        );
+        if (index !== -1) {
+          state.cartItems[index].count = item.count;
+        }
+      }
+      return state;
+    },
+
     removeCartItem(state, action) {
       const productCode = action.payload;
       state.cartItems = state.cartItems.filter(
@@ -56,5 +86,10 @@ const cartSlice = createSlice({
 });
 
 export const cartReducer = cartSlice.reducer;
-export const { addCartItem, updateCartItem, removeCartItem, clearCartItems } =
-  cartSlice.actions;
+export const {
+  addCartItem,
+  updateCartItem,
+  removeCartItem,
+  clearCartItems,
+  updateCartItemCount,
+} = cartSlice.actions;

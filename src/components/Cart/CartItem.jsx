@@ -21,8 +21,9 @@ import {
 import { CrossToDelete } from 'components/Icons';
 import { Link } from 'react-router-dom';
 import { Notify } from 'notiflix';
+import { fetchProductsByOnePetCopy } from 'services/api';
 
-export const CartItem = ({ prod }) => {
+export const CartItem = ({ prod, unavailable }) => {
   const {
     productCode,
     brand,
@@ -36,8 +37,11 @@ export const CartItem = ({ prod }) => {
     size,
   } = prod;
 
-  const [cardCount, setCardCount] = useState(prod.cardCount);
+  const isUnavailable = unavailable
+    ?.map(unavailableItem => unavailableItem.productCode)
+    .includes(productCode);
 
+  const [cardCount, setCardCount] = useState(prod.cardCount);
   const dispatch = useDispatch();
   const [isFocused, setIsFocused] = useState(false);
 
@@ -53,7 +57,10 @@ export const CartItem = ({ prod }) => {
   });
 
   const handleDecrement = () => {
-    if (cardCount > 1) {
+    if (cardCount > count) {
+      setCardCount(count);
+      dispatch(updateCartItem({ productCode, newCount: count }));
+    } else if (cardCount > 1) {
       setCardCount(cardCount - 1);
       dispatch(updateCartItem({ productCode, newCount: cardCount - 1 }));
     } else {
@@ -121,6 +128,15 @@ export const CartItem = ({ prod }) => {
     }
   };
 
+  const handleClick = async () => {
+    try {
+      const obj = await fetchProductsByOnePetCopy(productCode);
+      console.log('obj:', obj);
+    } catch (error) {
+      console.log('error:', error);
+    }
+  };
+
   return (
     <div
       style={{
@@ -132,11 +148,25 @@ export const CartItem = ({ prod }) => {
       <div
         style={{
           display: 'flex',
+          position: 'relative',
           // outline: '2px solid pink',
           //  width: '736px'
         }}
       >
-        <ImgWrapper>
+        {isUnavailable && (
+          <span
+            style={{
+              position: 'absolute',
+              bottom: '5px',
+              left: '20px',
+
+              color: 'black',
+            }}
+          >
+            Доступнo {count} шт{' '}
+          </span>
+        )}
+        <ImgWrapper isUnavailable={isUnavailable}>
           <img
             style={{ objectFit: 'cover' }}
             src={mainImage}
@@ -162,7 +192,7 @@ export const CartItem = ({ prod }) => {
             }}
           >
             <Brand>{brand}</Brand>
-            <Link>
+            <Link onClick={handleClick}>
               <ProdTitle>{productName}</ProdTitle>
             </Link>
             <ShortDesc>{shortDescription}</ShortDesc>
@@ -218,7 +248,7 @@ export const CartItem = ({ prod }) => {
                   onClick={handleDecrement}
                   type="button"
                   aria-label="decrement"
-                  // disabled={cardCount < 2}
+                  // disabled={isDisabled}
                 >
                   -
                 </BtnDecrement>
@@ -227,16 +257,19 @@ export const CartItem = ({ prod }) => {
                   onClick={handleIncrement}
                   type="button"
                   aria-label="increment"
+                  disabled={cardCount > count}
                 >
                   +
                 </BtnIncrement>
               </QuintityInputWrapper>
             </div>
 
-            <TotalQuantity>
-              <span> {itemTotal.toFixed(2)}</span>
-              <span>₴</span>
-            </TotalQuantity>
+            {!isUnavailable && (
+              <TotalQuantity>
+                <span> {itemTotal.toFixed(2)}</span>
+                <span>₴</span>
+              </TotalQuantity>
+            )}
           </div>
           <button
             style={{
