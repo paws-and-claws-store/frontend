@@ -21,13 +21,12 @@ import { selectCartStore } from 'redux/selectors';
 import { CartItem } from 'components';
 
 import { CaretLeftPagination } from 'components/Icons';
-import { BuyProducts } from 'services/api';
 import { calculateTotalCost, unavailableFilterProducts } from 'helpers';
 import {
   useBuyProductsMutation,
   useFetchValidateCartItemsMutation,
 } from 'redux/operations';
-import { clearCartItems, updateCartItemCount } from 'redux/cartSlice';
+import { updateCartItemCount } from 'redux/cartSlice';
 
 export const Cart = () => {
   const cartStore = useSelector(selectCartStore);
@@ -63,15 +62,9 @@ export const Cart = () => {
     },
   ] = useFetchValidateCartItemsMutation();
 
-  const [
-    buyProductsMutate,
-    {
-      data: buyProductsData,
-      isError: buyProductsIsError,
-      error: buyProductsError,
-      // isLoading, isSuccess
-    },
-  ] = useBuyProductsMutation();
+  const [buyProductsMutate] = useBuyProductsMutation();
+
+  // console.log('useBuyProductsMutation():', useBuyProductsMutation());
 
   // useEffect(() => {
   //   if (isError) {
@@ -172,23 +165,29 @@ export const Cart = () => {
   }, [cartStore, unavailable]);
 
   const handleCheckout = async () => {
-    // Виконати перевірку товарів в кошику
-
-    const array = cartStore.map(({ productCode, cardCount }) => ({
+    const array2 = cartStore.map(({ productCode, cardCount }) => ({
       productCode,
       cardCount,
     }));
-    buyProductsMutate(array);
 
-    // Відправити дані на сервер
+    const res = await buyProductsMutate(array2);
+    console.log('res.data:', res.data);
 
-    if (!buyProductsIsError) {
-      // Перенаправити на сторінку з повідомленням про успішне оформлення замовлення
-      // document.location = '/frontend/success';
-      // dispatch(clearCartItems());
-    } else {
-      // Обробити помилку
-      console.error('Помилка оформлення замовлення');
+    if (res.error) {
+      const {
+        error: {
+          data: { data, errors },
+        },
+      } = res;
+
+      const allData = [...data, ...errors];
+
+      dispatch(updateCartItemCount(allData));
+      return;
+    }
+
+    if (res.data.code === 200) {
+      document.location = '/frontend/success';
     }
   };
 

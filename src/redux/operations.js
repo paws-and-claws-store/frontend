@@ -78,7 +78,10 @@ export const api = createApi({
         method: 'POST',
         body: { array },
       }),
-      transformResponse: response => response.data,
+      transformResponse: response => {
+        console.log('response:', response);
+        return response;
+      },
       invalidatesTags: ['Products'],
     }),
   }),
