@@ -21,7 +21,7 @@ import {
 import QuntityProduct from '../QuntityProduct/QuntityProduct';
 
 const MainInfo = ({ product, prodNameLength }) => {
-
+  
   const {
     brand,
     productName,
@@ -29,7 +29,6 @@ const MainInfo = ({ product, prodNameLength }) => {
     _country,
     items,
     favorite,
-    mainImage,
   } = product;
 
   const [prodType, setProdType] = useState(items[0]);
@@ -38,6 +37,10 @@ const MainInfo = ({ product, prodNameLength }) => {
 
   const inStock = prodType.count > 0;
   const prodNameRef = useRef(null);
+
+  useEffect(() => {
+    setProdType(items[0]);
+  }, [items]);
 
   useEffect(() => {
     if (prodNameLength !== nameHeight) setNameHeight(prodNameLength);
@@ -51,6 +54,7 @@ const MainInfo = ({ product, prodNameLength }) => {
     const newElType = items.find(el => el.productCode === productCode);
     setProdType(newElType);
   };
+
 
   return (
     <CardContainer style={{ position: 'sticky', top: '100px' }}>
@@ -153,7 +157,7 @@ const MainInfo = ({ product, prodNameLength }) => {
       />
       <QuntityProduct
         prodType={prodType}
-        prodDescription={{ brand, mainImage, productName, shortDescription }}
+        prodDescription={{ brand, productName, shortDescription }}
         inStock={inStock}
       />
     </CardContainer>
