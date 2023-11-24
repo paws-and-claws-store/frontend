@@ -51,11 +51,7 @@ export const Catalog = () => {
         <>
           <CardList
             productsList={
-              currentPage === 1
-                ? productsList
-                : loadMoreClicked
-                ? loadMoreProducts
-                : productsList
+              currentPage === 1 ? productsList : loadMoreClicked ? loadMoreProducts : productsList
             }
           />
           <Pagination
