@@ -20,3 +20,5 @@ export * from './ArrowLeft';
 export * from './Rodents';
 export * from './Fish';
 export * from './Bird';
+export * from './AttantionCicleLight';
+

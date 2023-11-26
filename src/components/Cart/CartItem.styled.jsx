@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { Link } from 'react-router-dom';
 import { theme } from 'styles';
 
 export const ImgWrapper = styled.div`
@@ -16,7 +17,7 @@ export const ProdTitle = styled.h2`
   line-height: 24px;
 `;
 
-export const Brand = styled.p`
+export const Brand = styled(Link)`
   color: ${theme.colors.orange};
   font-size: 16px;
   font-style: normal;

@@ -21,10 +21,15 @@ import {
 import QuntityProduct from '../QuntityProduct/QuntityProduct';
 
 const MainInfo = ({ product, prodNameLength }) => {
-  
+  console.log('product:', product);
   const {
+    _id,
+    _pet,
+    _variant,
+    _category,
     brand,
     productName,
+    mainImage,
     shortDescription,
     _country,
     items,
@@ -54,7 +59,6 @@ const MainInfo = ({ product, prodNameLength }) => {
     const newElType = items.find(el => el.productCode === productCode);
     setProdType(newElType);
   };
-
 
   return (
     <CardContainer style={{ position: 'sticky', top: '100px' }}>
@@ -157,7 +161,16 @@ const MainInfo = ({ product, prodNameLength }) => {
       />
       <QuntityProduct
         prodType={prodType}
-        prodDescription={{ brand, productName, shortDescription }}
+        prodDescription={{
+          _id,
+          _pet,
+          _variant,
+          _category,
+          brand,
+          productName,
+          shortDescription,
+          mainImage,
+        }}
         inStock={inStock}
       />
     </CardContainer>
