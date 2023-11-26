@@ -132,6 +132,10 @@ const QuntityProduct = ({ inStock, prodType, prodDescription }) => {
         sale: prodType.sale,
         size: prodType.size,
         cardCount: quintity,
+        pet: prodDescription._pet,
+        variant: prodDescription._variant,
+        category: prodDescription._category,
+        id: prodDescription._id,
       }),
     );
   };

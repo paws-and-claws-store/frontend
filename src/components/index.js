@@ -16,3 +16,4 @@ export * from 'components/Loader/Loader';
 export * from 'components/Pagination/Pagination';
 export * from 'components/Cart/CartItem';
 export * from 'components/ScrollToTopOnRouteChange/ScrollToTopOnRouteChange';
+export * from 'components/Modal/VerticallyCenteredModal';

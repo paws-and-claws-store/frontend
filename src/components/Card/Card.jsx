@@ -32,95 +32,6 @@ import { Notify } from 'notiflix';
 // import { HeartIcon } from 'components/Icons';
 
 export const Card = ({ el, onClick }) => {
-  // const dispatch = useDispatch();
-  // const cardCountRedux = useSelector(selectCartStore);
-  // // console.log('cardCountRedux :>> ', cardCountRedux);
-  // const [
-  //   card,
-  //   // setCard
-  // ] = useState(el);
-
-  // const [elType, setElType] = useState(el.items[0]);
-  // const { brand, mainImage, productName, shortDescription } = el;
-  // const { count, productCode, price, sale = null, size } = elType;
-
-  // const [favourite, setFavourite] = useState(el.favourite || false);
-
-  // const [cardCount, setCardCount] = useState(null);
-
-  // const productObj = {
-  //   brand,
-  //   mainImage,
-  //   productName,
-  //   shortDescription,
-  //   count,
-  //   productCode,
-  //   price,
-  //   sale,
-  //   size,
-  //   cardCount,
-  // };
-
-  // console.log('productObj:', productObj);
-  // const changeFavourite = () => {
-  //   setFavourite(!favourite);
-  // };
-
-  // // change item size
-  // const changeElType = productCode => {
-  //   const newElType = card.items.find(el => el.productCode === productCode);
-  //   setElType(newElType);
-  //   setCardCount(null);
-  // };
-
-  // useEffect(() => {
-  //   const productCount = cardCountRedux[elType.productCode];
-  //   if (productCount) {
-  //     setCardCount(productCount);
-  //   }
-  // }, [cardCountRedux, elType]);
-
-  // const handleClick = e => {
-  //   setCardCount(1);
-  //   const presentProductCode = elType.productCode;
-
-  //   if (e.currentTarget.name === 'increment') {
-  //     setCardCount(prevState => prevState + 1);
-  //     let countIncrement = cardCount + 1;
-  //     dispatch(setCartItems([presentProductCode, countIncrement]));
-  //   }
-  //   if (e.currentTarget.name === 'decrement') {
-  //     let countDecrement = cardCount - 1;
-  //     setCardCount(prevState => prevState - 1);
-
-  //     dispatch(setCartItems([presentProductCode, countDecrement]));
-  //   }
-  //   if (e.currentTarget.name === 'buy') {
-  //     dispatch(setCartItems([presentProductCode, 1]));
-  //   }
-  // };
-
-  // const handleChange = e => {
-  //   if (!e.target.validity.valid) {
-  //     return;
-  //   }
-
-  //   if (e.target.validity.valid) {
-  //     if (e.target.value === '') {
-  //       setCardCount('');
-  //       return;
-  //     }
-
-  //     setCardCount(Number(e.target.value));
-  //   }
-  // };
-
-  // const onSubmitCardHandler = e => {
-  //   e.preventDefault();
-  //   const presentProductCode = elType.productCode;
-  //   dispatch(setCartItems([presentProductCode, cardCount]));
-  // };
-
   const dispatch = useDispatch();
   const cardCountRedux = useSelector(selectCartStore);
 
@@ -163,6 +74,10 @@ export const Card = ({ el, onClick }) => {
           sale: elType.sale,
           size: elType.size,
           cardCount: 1,
+          pet: el._pet,
+          variant: el._variant,
+          category: el._category,
+          id: el._id,
         }),
       );
     } else if (cardCount < elType.count) {
@@ -197,11 +112,11 @@ export const Card = ({ el, onClick }) => {
 
     const newCount = Number(e.target.value);
 
-    // if (newCount > elType.count) {
-    //   setCardCount(elType.count);
-    //   Notify.info('На жаль, на складі відсутня необхідна кількість товару.');
-    //   return dispatch(updateCartItem({ productCode, newCount: elType.count }));
-    // }
+    if (newCount > elType.count) {
+      setCardCount(elType.count);
+      Notify.info('На жаль, на складі відсутня необхідна кількість товару.');
+      return dispatch(updateCartItem({ productCode, newCount: elType.count }));
+    }
 
     if (newCount < 1) {
       return;
@@ -235,6 +150,10 @@ export const Card = ({ el, onClick }) => {
           sale: elType.sale,
           size: elType.size,
           cardCount: 1,
+          pet: el._pet,
+          variant: el._variant,
+          category: el._category,
+          id: el._id,
         }),
       );
     } else {

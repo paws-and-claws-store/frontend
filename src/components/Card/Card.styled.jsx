@@ -31,8 +31,8 @@ export const WeightList = styled.ul`
 
 export const WidthLink = styled.button`
   height: 20px;
-  /* display: flex; */
-  /* align-items: center; */
+  display: flex;
+  align-items: center;
   background-color: ${theme.colors.beige};
   border-radius: 10px;
   border: 1px solid ${theme.colors.green};
@@ -210,7 +210,7 @@ export const Button = styled.button`
   &:disabled {
     background-color: ${theme.colors.grey};
     color: ${theme.colors.beige};
-    cursor: auto;
+    cursor: default;
     transform: scale(1);
   }
 `;
