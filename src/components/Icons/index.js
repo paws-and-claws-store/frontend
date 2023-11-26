@@ -17,3 +17,4 @@ export * from './CaretRightPagination';
 export * from './CrossToDelete';
 export * from './CheckCircle';
 export * from './ArrowLeft';
+export * from './AttantionCicleLight';

@@ -22,13 +22,10 @@ import {
 import Loader from 'components/Loader/Loader';
 import { Notify } from 'notiflix';
 
-
-
 export const ProductCard = () => {
   const { id } = useParams();
 
   const dispatch = useDispatch();
-
 
   const {
     data: response,
@@ -81,7 +78,10 @@ export const ProductCard = () => {
                 </ImageContainer>
 
                 <CardContainer style={{ position: 'relative' }}>
-                  <MainInfo product={response} prodNameLength={response.productName.length} />
+                  <MainInfo
+                    product={response}
+                    prodNameLength={response.productName.length}
+                  />
                 </CardContainer>
               </ProductContainer>
             )}

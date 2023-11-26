@@ -17,6 +17,7 @@ export const GlobalStyles = css`
     overflow-x: hidden;
 
     font-style: normal;
+    cursor: default;
   }
 
   body.scroll-lock {

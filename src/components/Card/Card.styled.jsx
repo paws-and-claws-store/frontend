@@ -210,7 +210,7 @@ export const Button = styled.button`
   &:disabled {
     background-color: ${theme.colors.grey};
     color: ${theme.colors.beige};
-    cursor: auto;
+    cursor: default;
     transform: scale(1);
   }
 `;
