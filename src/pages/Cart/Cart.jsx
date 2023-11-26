@@ -18,17 +18,20 @@ import {
 import Img from '../../images/Travel_bag.png';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectCartStore } from 'redux/selectors';
-import { CartItem } from 'components';
+import { CartItem, VerticallyCenteredModal } from 'components';
 
-import { CaretLeftPagination } from 'components/Icons';
+import { ArrowLeft } from 'components/Icons';
 import { calculateTotalCost, unavailableFilterProducts } from 'helpers';
 import {
   useBuyProductsMutation,
   useFetchValidateCartItemsMutation,
 } from 'redux/operations';
 import { updateCartItemCount } from 'redux/cartSlice';
+// import { Button } from 'react-bootstrap';
 
 export const Cart = () => {
+  const [modalShow, setModalShow] = useState(false);
+
   const cartStore = useSelector(selectCartStore);
   const [scrollY, setScrollY] = useState(0);
   const [shouldRenderComponent, setShouldRenderComponent] = useState(false);
@@ -36,22 +39,6 @@ export const Cart = () => {
   const [totalAmount, setTotalAmount] = useState(null);
 
   const dispatch = useDispatch();
-
-  // const array = cartStore.map(({ productCode, cardCount }) => ({
-  //   productCode,
-  //   cardCount,
-  // }));
-
-  // const [
-  //   mutate,
-  //   {
-  //     data,
-  //     isError,
-  //     error,
-  //     // isLoading, isSuccess
-  //   },
-  // ] = useFetchValidateCartItemsMutation();
-
   const [
     validateCartItemsMutate,
     {
@@ -64,34 +51,6 @@ export const Cart = () => {
 
   const [buyProductsMutate] = useBuyProductsMutation();
 
-  // console.log('useBuyProductsMutation():', useBuyProductsMutation());
-
-  // useEffect(() => {
-  //   if (isError) {
-  //     const {
-  //       data: { data, errors },
-  //     } = error;
-
-  //     const unavailableArrayCode = errors.map(({ productCode }) => productCode);
-  //     const productNames = unavailableFilterProducts(
-  //       cartStore,
-  //       unavailableArrayCode,
-  //     );
-
-  //     setUnavailable(productNames);
-  //     // take data from error and spray it into an array
-  //     const allData = [...data, ...errors];
-
-  //     dispatch(updateCartItemCount(allData));
-  //     return;
-  //   }
-
-  //   if (data) {
-  //     // take data from useFetchValidateCartItemsMutation
-  //     dispatch(updateCartItemCount(data));
-  //     setUnavailable([]);
-  //   }
-  // }, [isError, error, cartStore, dispatch, data]);
   useEffect(() => {
     if (validateCartItemsIsError) {
       const {
@@ -181,7 +140,7 @@ export const Cart = () => {
       } = res;
 
       const allData = [...data, ...errors];
-
+      setModalShow(true);
       dispatch(updateCartItemCount(allData));
       return;
     }
@@ -249,7 +208,7 @@ export const Cart = () => {
                 >
                   <LinkToCatalog to={'/catalog'}>
                     <span>
-                      <CaretLeftPagination />
+                      <ArrowLeft />
                     </span>
                     <span>Повернутися до каталогу</span>
                   </LinkToCatalog>
@@ -259,6 +218,15 @@ export const Cart = () => {
               </div>
             </div>
           </ListContainer>
+
+          {/* <Button variant="primary" onClick={() => setModalShow(true)}>
+            Launch vertically centered modal
+          </Button> */}
+
+          <VerticallyCenteredModal
+            show={modalShow}
+            onHide={() => setModalShow(false)}
+          />
         </CartContainer>
       ) : (
         <EmptyCartContainer>

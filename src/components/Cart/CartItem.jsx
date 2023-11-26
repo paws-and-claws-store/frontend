@@ -21,7 +21,7 @@ import {
 import { CrossToDelete } from 'components/Icons';
 import { Link } from 'react-router-dom';
 import { Notify } from 'notiflix';
-import { fetchProductsByOnePetCopy } from 'services/api';
+// import { fetchProductsByOnePetCopy } from 'services/api';
 
 export const CartItem = ({ prod, unavailable }) => {
   const {
@@ -128,14 +128,14 @@ export const CartItem = ({ prod, unavailable }) => {
     }
   };
 
-  const handleClick = async () => {
-    try {
-      const obj = await fetchProductsByOnePetCopy(productCode);
-      console.log('obj:', obj);
-    } catch (error) {
-      console.log('error:', error);
-    }
-  };
+  // const handleClick = async () => {
+  //   try {
+  //     const obj = await fetchProductsByOnePetCopy(productCode);
+  //     console.log('obj:', obj);
+  //   } catch (error) {
+  //     console.log('error:', error);
+  //   }
+  // };
 
   return (
     <div
@@ -166,13 +166,18 @@ export const CartItem = ({ prod, unavailable }) => {
             Доступнo {count} шт{' '}
           </span>
         )}
-        <ImgWrapper isUnavailable={isUnavailable}>
-          <img
-            style={{ objectFit: 'cover' }}
-            src={mainImage}
-            alt={productName}
-          />
-        </ImgWrapper>
+
+        <Link
+          to={`/catalog/${prod.pet._id}/${prod.category._id}/${prod.variant._id}/${prod.id}`}
+        >
+          <ImgWrapper isUnavailable={isUnavailable}>
+            <img
+              style={{ objectFit: 'cover' }}
+              src={mainImage}
+              alt={productName}
+            />
+          </ImgWrapper>
+        </Link>
         <div
           style={{
             width: '520px',
@@ -191,11 +196,13 @@ export const CartItem = ({ prod, unavailable }) => {
               gap: '4px',
             }}
           >
-            <Brand>{brand}</Brand>
-            <Link onClick={handleClick}>
+            <Brand to={'/brands'}>{brand}</Brand>
+            <Link
+              to={`/catalog/${prod.pet._id}/${prod.category._id}/${prod.variant._id}/${prod.id}`}
+            >
               <ProdTitle>{productName}</ProdTitle>
+              <ShortDesc>{shortDescription}</ShortDesc>
             </Link>
-            <ShortDesc>{shortDescription}</ShortDesc>
             <Size>{displaySize(size)}</Size>
           </div>
 
