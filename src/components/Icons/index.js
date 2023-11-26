@@ -17,3 +17,6 @@ export * from './CaretRightPagination';
 export * from './CrossToDelete';
 export * from './CheckCircle';
 export * from './ArrowLeft';
+export * from './Rodents';
+export * from './Fish';
+export * from './Bird';

@@ -1,4 +1,4 @@
-import { Cat, Dog, RightArrow } from 'components/Icons';
+import { Cat, Dog, Rodents, Fish, Bird, RightArrow } from 'components/Icons';
 
 import {
   AsideCatalog,
@@ -20,6 +20,215 @@ import { useDispatch } from 'react-redux';
 import { SortSelect } from 'components/SortSelect/SortSelect';
 import { flattenCategories } from 'helpers';
 // import { fetchAllStructure } from 'services/api';
+
+const defaultData = [
+  {
+    code: 'for_dogs',
+    en: 'For Dogs',
+    ua: 'Товари для собак',
+    _categories: [
+      {
+        code: 'food_for_dogs',
+        en: 'Food for Dogs',
+        ua: 'Корм для собак',
+        _id: '64cef5e853f2bc3e1c807063',
+        _pet: '64cef53b53f2bc3e1c80705e',
+        _variants: [
+          {
+            code: 'dry_dog_food',
+            en: 'Dry Dog Food',
+            ua: 'Сухий корм для собак',
+            _category: '64cef5e853f2bc3e1c807063',
+            _id: '64d0055d76de8bce9cf3eebd',
+            _pet: '64cef53b53f2bc3e1c80705e',
+          },
+          {
+            code: 'wet_dog_food',
+            en: 'Wet Dog Food',
+            ua: 'Консерви для собак',
+            _category: '64cef5e853f2bc3e1c807063',
+            _id: '64d0055d76de8bce9cf3eebe',
+            _pet: '64cef53b53f2bc3e1c80705e',
+          },
+          {
+            code: 'food_for_puppies',
+            en: 'Food for Puppies',
+            ua: 'Корм для цуценят',
+            _category: '64cef5e853f2bc3e1c807063',
+            _id: '652c447b8c1c553f533b4241',
+            _pet: '64cef53b53f2bc3e1c80705e',
+          },
+        ],
+      },
+    ],
+    _id: '64cef53b53f2bc3e1c80705e',
+  },
+  {
+    code: 'for_cats',
+    en: 'For Cats',
+    ua: 'Товари для котів',
+    _categories: [
+      {
+        code: 'food_for_cats',
+        en: 'Food for Cats',
+        ua: 'Корм для котів',
+        _id: '64cef5e853f2bc3e1c807064',
+        _pet: '64cef53b53f2bc3e1c80705f',
+        _variants: [
+          {
+            code: 'dry_cat_food',
+            en: 'Dry Cat Food',
+            ua: 'Сухий корм для котів',
+            _category: '64cef5e853f2bc3e1c807064',
+            _id: '64d0055d76de8bce9cf3eebf',
+            _pet: '64cef53b53f2bc3e1c80705f',
+          },
+          {
+            code: 'wet_cat_food',
+            en: 'Wet Cat Food',
+            ua: 'Консерви для котів',
+            _category: '64cef5e853f2bc3e1c807064',
+            _id: '64d0055d76de8bce9cf3eec0',
+            _pet: '64cef53b53f2bc3e1c80705f',
+          },
+          {
+            code: 'food_for_kittens',
+            en: 'Food for Kittens',
+            ua: 'Корм для кошенят',
+            _category: '64cef5e853f2bc3e1c807064',
+            _id: '64d0055d76de8bce9cf3eec1',
+            _pet: '64cef53b53f2bc3e1c80705f',
+          },
+        ],
+      },
+    ],
+    _id: '64cef53b53f2bc3e1c80705f',
+  },
+  {
+    code: 'for_rodents',
+    en: 'For Cats',
+    ua: 'Товари для котів',
+    _categories: [
+      {
+        code: 'food_for_cats',
+        en: 'Food for Cats',
+        ua: 'Корм для котів',
+        _id: '64cef5e853f2bc3e1c807064',
+        _pet: '64cef53b53f2bc3e1c80705f',
+        _variants: [
+          {
+            code: 'dry_cat_food',
+            en: 'Dry Cat Food',
+            ua: 'Сухий корм для котів',
+            _category: '64cef5e853f2bc3e1c807064',
+            _id: '64d0055d76de8bce9cf3eebf',
+            _pet: '64cef53b53f2bc3e1c80705f',
+          },
+          {
+            code: 'wet_cat_food',
+            en: 'Wet Cat Food',
+            ua: 'Консерви для котів',
+            _category: '64cef5e853f2bc3e1c807064',
+            _id: '64d0055d76de8bce9cf3eec0',
+            _pet: '64cef53b53f2bc3e1c80705f',
+          },
+          {
+            code: 'food_for_kittens',
+            en: 'Food for Kittens',
+            ua: 'Корм для кошенят',
+            _category: '64cef5e853f2bc3e1c807064',
+            _id: '64d0055d76de8bce9cf3eec1',
+            _pet: '64cef53b53f2bc3e1c80705f',
+          },
+        ],
+      },
+    ],
+    _id: '64cef53b53f2bc3e1c80705f',
+  },
+  {
+    code: 'for_aquarium_science',
+    en: 'For Cats',
+    ua: 'Товари для котів',
+    _categories: [
+      {
+        code: 'food_for_cats',
+        en: 'Food for Cats',
+        ua: 'Корм для котів',
+        _id: '64cef5e853f2bc3e1c807064',
+        _pet: '64cef53b53f2bc3e1c80705f',
+        _variants: [
+          {
+            code: 'dry_cat_food',
+            en: 'Dry Cat Food',
+            ua: 'Сухий корм для котів',
+            _category: '64cef5e853f2bc3e1c807064',
+            _id: '64d0055d76de8bce9cf3eebf',
+            _pet: '64cef53b53f2bc3e1c80705f',
+          },
+          {
+            code: 'wet_cat_food',
+            en: 'Wet Cat Food',
+            ua: 'Консерви для котів',
+            _category: '64cef5e853f2bc3e1c807064',
+            _id: '64d0055d76de8bce9cf3eec0',
+            _pet: '64cef53b53f2bc3e1c80705f',
+          },
+          {
+            code: 'food_for_kittens',
+            en: 'Food for Kittens',
+            ua: 'Корм для кошенят',
+            _category: '64cef5e853f2bc3e1c807064',
+            _id: '64d0055d76de8bce9cf3eec1',
+            _pet: '64cef53b53f2bc3e1c80705f',
+          },
+        ],
+      },
+    ],
+    _id: '64cef53b53f2bc3e1c80705f',
+  },
+  {
+    code: 'for_birds',
+    en: 'For Cats',
+    ua: 'Товари для котів',
+    _categories: [
+      {
+        code: 'food_for_cats',
+        en: 'Food for Cats',
+        ua: 'Корм для котів',
+        _id: '64cef5e853f2bc3e1c807064',
+        _pet: '64cef53b53f2bc3e1c80705f',
+        _variants: [
+          {
+            code: 'dry_cat_food',
+            en: 'Dry Cat Food',
+            ua: 'Сухий корм для котів',
+            _category: '64cef5e853f2bc3e1c807064',
+            _id: '64d0055d76de8bce9cf3eebf',
+            _pet: '64cef53b53f2bc3e1c80705f',
+          },
+          {
+            code: 'wet_cat_food',
+            en: 'Wet Cat Food',
+            ua: 'Консерви для котів',
+            _category: '64cef5e853f2bc3e1c807064',
+            _id: '64d0055d76de8bce9cf3eec0',
+            _pet: '64cef53b53f2bc3e1c80705f',
+          },
+          {
+            code: 'food_for_kittens',
+            en: 'Food for Kittens',
+            ua: 'Корм для кошенят',
+            _category: '64cef5e853f2bc3e1c807064',
+            _id: '64d0055d76de8bce9cf3eec1',
+            _pet: '64cef53b53f2bc3e1c80705f',
+          },
+        ],
+      },
+    ],
+    _id: '64cef53b53f2bc3e1c80705f',
+  },
+];
+
 export const CatalogLayout = () => {
   const [active, setActive] = useState('');
   const [structure, setStructure] = useState([]);
@@ -82,7 +291,8 @@ export const CatalogLayout = () => {
       // You can await here
       // const structure = await fetchAllStructure();
       //using query by redux api for cached queryies
-      setStructure(data);
+      // setStructure(data);
+      setStructure(defaultData);
 
       if (active) {
         const filter = structure
@@ -165,6 +375,69 @@ export const CatalogLayout = () => {
                             <span>
                               <Cat />
                               <span>Коти</span>
+                            </span>
+                            <span>
+                              <RightArrow />
+                            </span>
+                          </PetButton>
+                        </li>
+                      );
+                    case 'for_rodents':
+                      return (
+                        <li key={i}>
+                          <PetButton
+                            active={active}
+                            id={el.code}
+                            className={
+                              active === 'for_rodents' ? 'active' : undefined
+                            }
+                            onClick={handleClick}
+                          >
+                            <span>
+                              <Rodents />
+                              <span>Гризуни</span>
+                            </span>
+                            <span>
+                              <RightArrow />
+                            </span>
+                          </PetButton>
+                        </li>
+                      );
+                    case 'for_aquarium_science':
+                      return (
+                        <li key={i}>
+                          <PetButton
+                            active={active}
+                            id={el.code}
+                            className={
+                              active === 'for_aquarium_science' ? 'active' : undefined
+                            }
+                            onClick={handleClick}
+                          >
+                            <span>
+                              <Fish />
+                              <span>Акваріумістика</span>
+                            </span>
+                            <span>
+                              <RightArrow />
+                            </span>
+                          </PetButton>
+                        </li>
+                      );
+                    case 'for_birds':
+                      return (
+                        <li key={i}>
+                          <PetButton
+                            active={active}
+                            id={el.code}
+                            className={
+                              active === 'for_birds' ? 'active' : undefined
+                            }
+                            onClick={handleClick}
+                          >
+                            <span>
+                              <Bird />
+                              <span>Птахи</span>
                             </span>
                             <span>
                               <RightArrow />
