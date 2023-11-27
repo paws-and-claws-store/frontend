@@ -33,7 +33,7 @@ export default function Search() {
   //This is watching for changing current page, if user now on 2-nd or nore page and he change query page must be again 1
   useEffect(() => {
     setCurrentPage(1); // set page one to the new search query
-  }, [searchQuery]);
+  }, [searchQuery, sortingType]);
   if (sortingType !== '') {
     params.sortBy = sortingType; // set to params object sorting type if sorting type is exists
   }
@@ -52,22 +52,19 @@ export default function Search() {
     isFetching,
     isError,
   } = useFetchSearchQuery({
-    // query: searchQuery,
-    // sorting: sortingType ? `&sortBy=${sortingType}` : '',
     signal,
     params,
-    // pageNumber: `&page=${currentPage}`,
   }); // Utilizes a custom hook useFetchSearchQuery to fetch search results based on the params object and the abort signal. It receives data, error, isLoading, isFetching, and isError as response states.
   searchRef.current = { searchQuery: searchQuery, totalDocs: response?.totalDocs }; // set object of current search query and current response to avoid rerender unnecessary rerenders
 
-  const {
-    productsList,
-    paginationData,
-    loadMoreProducts,
-    onAddPage,
-    onPageChange,
-    loadMoreClicked,
-  } = usePagination({ response, isFetching, isError, setCurrentPage, currentPage }); // Use a custom hook usePagination to handle pagination-related functionalities such as managing product lists, pagination data, and changing pages.
+  const { productsList, paginationData, onAddPage, onPageChange } = usePagination({
+    response,
+    isFetching,
+    isError,
+    setCurrentPage,
+    currentPage,
+    sortingType,
+  }); // Use a custom hook usePagination to handle pagination-related functionalities such as managing product lists, pagination data, and changing pages.
 
   return (
     <div style={{ minHeight: '640px' }}>
@@ -95,8 +92,7 @@ export default function Search() {
               params={{
                 currentPage,
                 productsList,
-                loadMoreClicked,
-                loadMoreProducts,
+
                 paginationData,
                 onPageChange,
                 onAddPage,

@@ -5,28 +5,24 @@ import { useDispatch } from 'react-redux';
 import { setViewedProducts } from 'redux/viewedProductsSlice';
 
 export const CardList = ({ productsList }) => {
-// console.log("productsList:", productsList)
-const [isSorted, setIsSortet]= useState([])
-
+  const [isSorted, setIsSortet] = useState([]);
 
   const dispatch = useDispatch();
-  
-  useEffect(()=>{
-    setIsSortet(productsList)
 
-  },[productsList]);
+  useEffect(() => {
+    setIsSortet(productsList);
+  }, [productsList]);
 
-  const onCardClick = (el)=>{
-    dispatch(setViewedProducts(el))
-  }
-
+  const onCardClick = el => {
+    dispatch(setViewedProducts(el));
+  };
   return (
     <>
       {isSorted.length !== 0 && (
         <List>
-          {isSorted.map(el => { 
+          {isSorted.map(el => {
             return (
-              <ListItem key={el._id} onClick={()=>onCardClick(el)}>
+              <ListItem key={el._id} onClick={() => onCardClick(el)}>
                 <Card el={el} />
               </ListItem>
             );

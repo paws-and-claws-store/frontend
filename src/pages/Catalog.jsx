@@ -1,6 +1,6 @@
 import { CardList, Pagination } from 'components';
 import Loader from 'components/Loader/Loader';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useFetchAllProductsQuery } from 'redux/operations';
 import { Notify } from 'notiflix';
 import { usePagination } from 'components/CustomHooks/usePagination';
@@ -16,6 +16,10 @@ export const Catalog = () => {
     params.sortBy = sortingType;
   }
 
+  useEffect(() => {
+    setCurrentPage(1); // set page one to the new type of sorting
+  }, [sortingType]);
+
   const {
     data: response,
     error,
@@ -26,19 +30,13 @@ export const Catalog = () => {
     params,
   });
 
-  const {
-    productsList,
-    paginationData,
-    loadMoreProducts,
-    onAddPage,
-    onPageChange,
-    loadMoreClicked,
-  } = usePagination({
+  const { productsList, paginationData, onAddPage, onPageChange } = usePagination({
     response,
     isFetching,
     isError,
     setCurrentPage,
     currentPage,
+    sortingType,
   });
 
   return (
@@ -49,11 +47,7 @@ export const Catalog = () => {
         <Loader />
       ) : response?.docs.length > 0 ? (
         <>
-          <CardList
-            productsList={
-              currentPage === 1 ? productsList : loadMoreClicked ? loadMoreProducts : productsList
-            }
-          />
+          <CardList productsList={productsList} />
           <Pagination
             paginationData={paginationData}
             onPageChange={onPageChange}
