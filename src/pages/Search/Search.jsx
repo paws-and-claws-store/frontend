@@ -17,7 +17,7 @@ import { Notify } from 'notiflix';
 import SearchWrapper from './SearchWarapper';
 import SearchDescription from './SearchDescription';
 import SearchCategory from './SearchCategory';
-import { usePagination } from 'components/CustomHooks/usePagination';
+import { usePagination } from 'hooks/usePagination';
 
 export default function Search() {
   const [currentPage, setCurrentPage] = useState(1); // to track the current page of search results.

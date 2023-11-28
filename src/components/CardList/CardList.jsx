@@ -2,7 +2,7 @@ import { Card } from 'components/Card/Card';
 import React, { useEffect, useState } from 'react';
 import { List, ListItem } from './CardList.styled';
 import { useDispatch } from 'react-redux';
-import { setViewedProducts } from 'redux/viewedProductsSlice';
+import { setViewedProducts } from 'redux/slice/viewedProductsSlice';
 
 export const CardList = ({ productsList }) => {
   const [isSorted, setIsSortet] = useState([]);

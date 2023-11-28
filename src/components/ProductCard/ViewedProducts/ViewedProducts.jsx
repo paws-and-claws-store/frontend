@@ -9,7 +9,7 @@ import {
 } from './ViewedProducts.styled';
 import { selectViewedProducts } from 'redux/selectors';
 import { Card } from 'components/Card/Card';
-import { setViewedProducts } from 'redux/viewedProductsSlice';
+import { setViewedProducts } from 'redux/slice/viewedProductsSlice';
 
 export const ViewedProducts = () => {
   const [productsList, setProductsList] = useState(null);

@@ -6,7 +6,7 @@ import { useFetchProductsByOneCategoryQuery } from 'redux/operations';
 import { Notify } from 'notiflix';
 import { useSelector } from 'react-redux';
 import { selectSortingTypeStore } from 'redux/selectors';
-import { usePagination } from 'components/CustomHooks/usePagination';
+import { usePagination } from 'hooks/usePagination';
 
 export const Category = () => {
   const { category: oneCategory } = useParams();

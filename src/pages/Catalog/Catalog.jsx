@@ -3,7 +3,7 @@ import Loader from 'components/Loader/Loader';
 import { useEffect, useState } from 'react';
 import { useFetchAllProductsQuery } from 'redux/operations';
 import { Notify } from 'notiflix';
-import { usePagination } from 'components/CustomHooks/usePagination';
+import { usePagination } from 'hooks/usePagination';
 import { useSelector } from 'react-redux';
 import { selectSortingTypeStore } from 'redux/selectors';
 

@@ -2,14 +2,14 @@ import { CardList, Pagination } from 'components';
 import Loader from 'components/Loader/Loader';
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { useFetchProductsByOnePetQuery } from 'redux/operations';
+import { useFetchProductsByOneProductTypeQuery } from 'redux/operations';
 import { Notify } from 'notiflix';
 import { useSelector } from 'react-redux';
 import { selectSortingTypeStore } from 'redux/selectors';
-import { usePagination } from 'components/CustomHooks/usePagination';
+import { usePagination } from 'hooks/usePagination';
 
-export const Pet = () => {
-  const { pet } = useParams();
+export const ProductType = () => {
+  const { productType } = useParams();
   const [currentPage, setCurrentPage] = useState(1);
   const sortingType = useSelector(selectSortingTypeStore);
 
@@ -17,26 +17,25 @@ export const Pet = () => {
   if (sortingType !== '') {
     params.sortBy = sortingType;
   }
-
   const {
-    data: response = {},
+    data: response,
     isLoading,
     isError,
     error,
     isFetching,
-  } = useFetchProductsByOnePetQuery({
-    pet,
+  } = useFetchProductsByOneProductTypeQuery({
+    productType,
     params,
   });
 
-  const { productsList, paginationData, onAddPage, onPageChange } = usePagination({
-    response,
-    isFetching,
-    isError,
-    setCurrentPage,
-    currentPage,
-    sortingType,
-  });
+  const {
+    productsList,
+    paginationData,
+    loadMoreProducts,
+    onAddPage,
+    onPageChange,
+    loadMoreClicked,
+  } = usePagination({ response, isFetching, isError, setCurrentPage, currentPage });
 
   return (
     <>
@@ -46,7 +45,11 @@ export const Pet = () => {
         <Loader />
       ) : (
         <>
-          <CardList productsList={productsList} />
+          <CardList
+            productsList={
+              currentPage === 1 ? productsList : loadMoreClicked ? loadMoreProducts : productsList
+            }
+          />
           <Pagination
             paginationData={paginationData}
             onPageChange={onPageChange}
