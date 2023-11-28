@@ -16,17 +16,22 @@ export default function Breadcrumbs() {
   let languageSite = 'ua';
   const location = useLocation();
   let currentLink = '';
-  const crumbsFilter = location.pathname.split('/').filter(crumb => crumb !== '');
+  const crumbsFilter = location.pathname
+    .split('/')
+    .filter(crumb => crumb !== '');
 
   const stateBreadcrumb = useSelector(selectBreadCrumbsStore);
 
   const crumbs = crumbsFilter.map((crumb, index, array) => {
     currentLink += `/${crumb}`;
 
-    const stateBreadCrumbNameCrumb = stateBreadcrumb.find(name => name._id === crumb);
+    const stateBreadCrumbNameCrumb = stateBreadcrumb.find(
+      name => name._id === crumb,
+    );
 
     const renderToPage = stateBreadCrumbNameCrumb
-      ? stateBreadCrumbNameCrumb[languageSite] || stateBreadCrumbNameCrumb['productName']
+      ? stateBreadCrumbNameCrumb[languageSite] ||
+        stateBreadCrumbNameCrumb['productName']
       : null;
 
     return (
@@ -39,7 +44,9 @@ export default function Breadcrumbs() {
             {renderToPage}
           </BreadcrumbsLinkStyled>
         ) : (
-          <BreadcrumbsNoLinkStyled key={crumb}>{renderToPage}</BreadcrumbsNoLinkStyled>
+          <BreadcrumbsNoLinkStyled key={crumb}>
+            {renderToPage}
+          </BreadcrumbsNoLinkStyled>
         )}
       </BreadcrumbsDivStyled>
     );

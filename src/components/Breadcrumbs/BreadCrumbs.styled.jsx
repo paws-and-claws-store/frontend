@@ -51,7 +51,7 @@ export const BreadcrumbsiconStyled = styled.div`
 `;
 
 export const BreadcrumbsContainerStyled = styled.div`
-  margin-top: 28px;
+  margin-top: 30px;
   display: flex;
   align-items: center;
 `;
