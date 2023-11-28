@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { removeCartItem, updateCartItem } from 'redux/cartSlice';
+import { removeCartItem, updateCartItem } from 'redux/slice/cartSlice';
 import { displaySize } from 'helpers';
 
 import {
@@ -73,9 +73,7 @@ export const CartItem = ({ prod, unavailable }) => {
     if (cardCount < count) {
       setCardCount(Number(cardCount) + 1);
 
-      dispatch(
-        updateCartItem({ productCode, newCount: Number(cardCount) + 1 }),
-      );
+      dispatch(updateCartItem({ productCode, newCount: Number(cardCount) + 1 }));
     } else {
       setCardCount(count);
       Notify.info('На жаль, на складі відсутня необхідна кількість товару.');
@@ -115,8 +113,7 @@ export const CartItem = ({ prod, unavailable }) => {
   };
 
   const handleBlur = () => {
-    if (cardCount === '')
-      Notify.warning('Мінімальна кількість для замовлення - 1 шт');
+    if (cardCount === '') Notify.warning('Мінімальна кількість для замовлення - 1 шт');
 
     setIsFocused(false);
   };
@@ -167,15 +164,9 @@ export const CartItem = ({ prod, unavailable }) => {
           </span>
         )}
 
-        <Link
-          to={`/catalog/${prod.pet._id}/${prod.category._id}/${prod.variant._id}/${prod.id}`}
-        >
+        <Link to={`/catalog/${prod.pet._id}/${prod.category._id}/${prod.variant._id}/${prod.id}`}>
           <ImgWrapper isUnavailable={isUnavailable}>
-            <img
-              style={{ objectFit: 'cover' }}
-              src={mainImage}
-              alt={productName}
-            />
+            <img style={{ objectFit: 'cover' }} src={mainImage} alt={productName} />
           </ImgWrapper>
         </Link>
         <div
@@ -222,9 +213,7 @@ export const CartItem = ({ prod, unavailable }) => {
                     <SymbolCurrency>₴</SymbolCurrency>
                   </PriceSt>
                   <PriceSt className="line-through-text">
-                    <span className="line-through-text ">
-                      {price.toFixed(2)}
-                    </span>
+                    <span className="line-through-text ">{price.toFixed(2)}</span>
                     <SymbolCurrency>₴</SymbolCurrency>
                   </PriceSt>
                 </PriceBox>

@@ -15,7 +15,7 @@ import {
   SymbolCurrency,
   TextOutOfStock,
 } from './QuntityProduct.styled';
-import { addCartItem, updateCartItem } from 'redux/cartSlice';
+import { addCartItem, updateCartItem } from 'redux/slice/cartSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectCartStore } from 'redux/selectors';
 import { Notify } from 'notiflix';
@@ -30,9 +30,7 @@ const QuntityProduct = ({ inStock, prodType, prodDescription }) => {
   const productCode = prodType.productCode;
 
   useEffect(() => {
-    const productCount = cardCountRedux?.find(
-      item => item.productCode === productCode,
-    );
+    const productCount = cardCountRedux?.find(item => item.productCode === productCode);
     if (productCount) {
       setQuintity(productCount.cardCount);
       setInCart(true);
@@ -86,9 +84,7 @@ const QuntityProduct = ({ inStock, prodType, prodDescription }) => {
     if (newCount > prodType.count) {
       Notify.info('На жаль, на складі відсутня необхідна кількість товару.');
       setQuintity(prodType.count);
-      return dispatch(
-        updateCartItem({ productCode, newCount: prodType.count }),
-      );
+      return dispatch(updateCartItem({ productCode, newCount: prodType.count }));
     }
     setQuintity(newCount);
     dispatch(updateCartItem({ productCode, newCount }));
@@ -168,11 +164,7 @@ const QuntityProduct = ({ inStock, prodType, prodDescription }) => {
               -
             </BtnDecrement>
 
-            <BtnIncrement
-              onClick={increment}
-              type="button"
-              aria-label="increment"
-            >
+            <BtnIncrement onClick={increment} type="button" aria-label="increment">
               +
             </BtnIncrement>
           </QuintityInputWrapper>
@@ -195,11 +187,7 @@ const QuntityProduct = ({ inStock, prodType, prodDescription }) => {
             <PriceSt className="line-through-text">
               <OldPrice>{prodType.price.toFixed(2)}</OldPrice>
 
-              <SymbolCurrency
-                style={{ fontSize: '18px', lineHeight: 'normal' }}
-              >
-                ₴
-              </SymbolCurrency>
+              <SymbolCurrency style={{ fontSize: '18px', lineHeight: 'normal' }}>₴</SymbolCurrency>
             </PriceSt>
           </PriceBox>
         ) : (

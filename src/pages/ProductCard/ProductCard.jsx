@@ -2,23 +2,15 @@ import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { ProductDetailsCarousel } from 'components/ProductDetailsCarousel/ProductCarousel/ProductCarousel';
-import {
-  CardContainer,
-  ImageContainer,
-  ProductContainer,
-} from './ProductCard.styled';
+import { CardContainer, ImageContainer, ProductContainer } from './ProductCard.styled';
 
 import MainInfo from 'components/ProductCard/MainInfo/MainInfo';
 import DetailsList from 'components/ProductCard/DetailsList/DetailsList';
 
 import { ViewedProducts } from 'components/ProductCard/ViewedProducts/ViewedProducts';
-// import { CardList } from 'components';
-import { setBreadCrumbs } from 'redux/breadCrumbsSlice';
+import { setBreadCrumbs } from 'redux/slice/breadCrumbsSlice';
 import { useDispatch } from 'react-redux';
-import {
-  useFetchAllStructureQuery,
-  useFetchOneProductQuery,
-} from 'redux/operations';
+import { useFetchAllStructureQuery, useFetchOneProductQuery } from 'redux/operations';
 import Loader from 'components/Loader/Loader';
 import { Notify } from 'notiflix';
 
@@ -69,19 +61,12 @@ export const ProductCard = () => {
             {Object.keys(response).length !== 0 && (
               <ProductContainer>
                 <ImageContainer>
-                  <ProductDetailsCarousel
-                    id={id}
-                    // mainImage={response.mainImage}
-                    images={response.images}
-                  />
+                  <ProductDetailsCarousel id={id} images={response.images} />
                   <DetailsList product={response} />
                 </ImageContainer>
 
                 <CardContainer style={{ position: 'relative' }}>
-                  <MainInfo
-                    product={response}
-                    prodNameLength={response.productName.length}
-                  />
+                  <MainInfo product={response} prodNameLength={response.productName.length} />
                 </CardContainer>
               </ProductContainer>
             )}

@@ -36,6 +36,7 @@ export const SearchDesriptionResults = styled.div`
   margin-top: auto;
   margin-bottom: auto;
 
+
   color: ${theme.colors.black};
   font-variant-numeric: lining-nums proportional-nums;
   font-feature-settings: 'ss09' on;
@@ -51,6 +52,7 @@ export const SearchDesriptionResultsSuccess = styled.div`
   margin-top: 40px;
   margin-bottom: auto;
 
+
   color: ${theme.colors.black};
   font-variant-numeric: lining-nums proportional-nums;
   font-feature-settings: 'ss09' on;
@@ -60,7 +62,9 @@ export const SearchDesriptionResultsSuccess = styled.div`
   font-size: ${theme.fontSizes.s};
   font-style: normal;
   font-weight: ${theme.fontWeight.Medium};
+
   line-height: 20px; /* 125% */
+
 `;
 
 export const SearchQuery = styled.span`

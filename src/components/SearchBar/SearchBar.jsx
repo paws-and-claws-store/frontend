@@ -1,3 +1,5 @@
+// this component is used to create search input, validate inputs and add search value to redux store
+
 import { ResetButton, SearchIcon } from 'components/Icons';
 import React, { useState } from 'react';
 import { SearchBox } from './SearchBar.styled';
