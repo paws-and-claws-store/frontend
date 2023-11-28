@@ -28,15 +28,14 @@ export const Category = () => {
     oneCategory,
     params,
   });
-  const {
-    productsList,
-    paginationData,
-    loadMoreProducts,
-    onAddPage,
-    onPageChange,
-    loadMoreClicked,
-  } = usePagination({ response, isFetching, isError, setCurrentPage, currentPage });
-
+  const { productsList, paginationData, onAddPage, onPageChange } = usePagination({
+    response,
+    isFetching,
+    isError,
+    setCurrentPage,
+    currentPage,
+    sortingType,
+  });
   return (
     <>
       {isError && !isLoading ? (
@@ -45,11 +44,7 @@ export const Category = () => {
         <Loader />
       ) : (
         <>
-          <CardList
-            productsList={
-              currentPage === 1 ? productsList : loadMoreClicked ? loadMoreProducts : productsList
-            }
-          />
+          <CardList productsList={productsList} />
           <Pagination
             paginationData={paginationData}
             onPageChange={onPageChange}
