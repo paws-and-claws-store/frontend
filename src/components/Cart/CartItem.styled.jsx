@@ -32,6 +32,8 @@ export const ShortDesc = styled.p`
   font-weight: 300;
   line-height: 20px;
 
+  margin-top: ${theme.spacing.step}px;
+
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;

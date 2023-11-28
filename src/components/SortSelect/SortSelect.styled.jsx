@@ -8,7 +8,7 @@ export const BurgerContainer = styled.div`
   right: 0px;
   display: flex;
   align-items: flex-start;
-  cursor: pointer;
+  /* cursor: pointer; */
 `;
 
 export const SortingSpan = styled.span`
@@ -36,6 +36,7 @@ export const DropDownContainer = styled.div`
   padding-top: 3px;
   padding-bottom: 3px;
   z-index: ${theme.zIndexes.sortSelect};
+  cursor: pointer;
 `;
 
 export const DefaultWrapper = styled.div`
