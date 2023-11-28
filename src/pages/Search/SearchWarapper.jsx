@@ -4,10 +4,8 @@ import { memo } from 'react';
 
 export default memo(function SearchWrapper({ params }) {
   const {
-    currentPage,
     productsList,
-    loadMoreClicked,
-    loadMoreProducts,
+
     paginationData,
     onPageChange,
     onAddPage,
@@ -15,11 +13,7 @@ export default memo(function SearchWrapper({ params }) {
 
   return (
     <SearchWrapperCatalog>
-      <CardList
-        productsList={
-          currentPage === 1 ? productsList : loadMoreClicked ? loadMoreProducts : productsList
-        }
-      />
+      <CardList productsList={productsList} />
       <Pagination
         paginationData={paginationData}
         onPageChange={onPageChange}

@@ -1,3 +1,5 @@
+// this component is used for filtering by price with slider effect
+
 import {
   PriceContainer,
   PriceCurrency,
