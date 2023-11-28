@@ -21,4 +21,6 @@ export * from './Rodents';
 export * from './Fish';
 export * from './Bird';
 export * from './AttantionCicleLight';
+export * from './ArrowLeftViewedProducts';
+export * from './ArrowRightViewedProducts';
 
