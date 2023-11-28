@@ -7,19 +7,29 @@ import { Notify } from 'notiflix';
 
 export const Home = () => {
   const { data, isLoading, isError, error } = useFetchProductsQuery();
+  console.log(
+    'data, isLoading, isError, error:',
+    data,
+    isLoading,
+    isError,
+    error,
+  );
 
   return (
     <>
       <Hero>
         <ControlledCarousel />
       </Hero>
-      <Title>Aкційні пропозиції</Title>
+      {/* <Title>Aкційні пропозиції</Title> */}
       {isError && !isLoading ? (
         (Notify.failure(error.error), (<></>))
       ) : isLoading && !isError ? (
         <Loader />
       ) : (
-        <CardList productsList={data} />
+        <>
+          <Title>Aкційні пропозиції</Title>
+          <CardList productsList={data} />
+        </>
       )}
     </>
   );

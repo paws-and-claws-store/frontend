@@ -1,5 +1,7 @@
 import { updatePaginationData } from 'helpers';
 import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { selectSortingTypeStore } from 'redux/selectors';
 
 export function usePagination({
   response,
@@ -21,6 +23,7 @@ export function usePagination({
   });
   const [loadMoreProducts, setLoadMoreProducts] = useState([]); // Окремий стан для продуктів, завантажених через "Load More"
   const [loadMoreClicked, setLoadMoreClicked] = useState(false); // Окремий стан для слідкування за натисканням кнопки "Load More"
+  const sortingType = useSelector(selectSortingTypeStore);
 
   useEffect(() => {
     async function fetchInitialData() {
@@ -65,6 +68,11 @@ export function usePagination({
       fetchInitialData();
     }
   }, [isError, isFetching, loadMoreClicked, response]);
+
+  useEffect(() => {
+    setLoadMoreClicked(false);
+    setCurrentPage(1);
+  }, [setCurrentPage, sortingType]);
 
   const onPageChange = pageNumber => {
     // При кліку на номер сторінки через пагінацію, змініть стан
