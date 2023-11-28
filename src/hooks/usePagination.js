@@ -20,16 +20,17 @@ export function usePagination({
     totalPages: null,
   });
   const [loadMoreClicked, setLoadMoreClicked] = useState(false); // Окремий стан для слідкування за натисканням кнопки "Load More"
+  const [pageNumberClicked, setPageNumberClicked] = useState(false);
 
   useEffect(() => {
     async function fetchInitialData() {
-      if (loadMoreClicked && !sortingType) {
+      if (loadMoreClicked && !sortingType && !pageNumberClicked) {
         setProductsList(prevState => [...prevState, ...response.docs]);
         setPaginationData(updatePaginationData(response));
         return;
       }
 
-      if (!loadMoreClicked && currentPage === 1) {
+      if (!loadMoreClicked && currentPage === 1 && !pageNumberClicked) {
         setProductsList([...response.docs]);
         setLoadMoreClicked(false);
         setPaginationData(updatePaginationData(response));
@@ -42,10 +43,16 @@ export function usePagination({
         return;
       }
 
-      if (loadMoreClicked && sortingType && currentPage !== 1) {
+      if (loadMoreClicked && sortingType && currentPage !== 1 && !pageNumberClicked) {
         setProductsList(prevState => [...prevState, ...response.docs]);
         setPaginationData(updatePaginationData(response));
         setLoadMoreClicked(false);
+        return;
+      }
+
+      if (!loadMoreClicked && pageNumberClicked) {
+        setProductsList(response.docs);
+        setPaginationData(updatePaginationData(response));
         return;
       }
     }
@@ -53,11 +60,12 @@ export function usePagination({
     if (!isFetching && !isError) {
       fetchInitialData();
     }
-  }, [currentPage, isError, isFetching, loadMoreClicked, response, sortingType]);
+  }, [currentPage, isError, isFetching, loadMoreClicked, pageNumberClicked, response, sortingType]);
 
   const onPageChange = pageNumber => {
     // При кліку на номер сторінки через пагінацію, змініть стан
     setLoadMoreClicked(false);
+    setPageNumberClicked(true);
     setCurrentPage(pageNumber);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -65,6 +73,7 @@ export function usePagination({
   const onAddPage = pageNumber => {
     // При натисканні на кнопку "Load More", змініть стан
     setLoadMoreClicked(true);
+    setPageNumberClicked(false);
     setCurrentPage(pageNumber + 1);
   };
 
