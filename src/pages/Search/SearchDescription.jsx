@@ -1,10 +1,14 @@
-import { SearchDescriptionSpan, SearchDesriptionResults, SearchQuery } from './Search.styled';
+import {
+  SearchDescriptionSpan,
+  SearchDesriptionResultsSuccess,
+  SearchQuery,
+} from './Search.styled';
 
 export default function SearchDescription({ searchRef }) {
   return (
-    <SearchDesriptionResults>
+    <SearchDesriptionResultsSuccess>
       <SearchDescriptionSpan>За запитом </SearchDescriptionSpan>
-      <SearchQuery>{searchRef.current.searchQuery}</SearchQuery>
+      <SearchQuery> “{searchRef.current.searchQuery}” </SearchQuery>
       <SearchDescriptionSpan> знайдено </SearchDescriptionSpan>
       <SearchQuery>{searchRef.current.totalDocs} </SearchQuery>
       <SearchDescriptionSpan>
@@ -14,6 +18,6 @@ export default function SearchDescription({ searchRef }) {
           ? 'товари'
           : 'товарів'}
       </SearchDescriptionSpan>
-    </SearchDesriptionResults>
+    </SearchDesriptionResultsSuccess>
   );
 }
