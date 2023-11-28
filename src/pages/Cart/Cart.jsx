@@ -22,11 +22,8 @@ import { CartItem, VerticallyCenteredModal } from 'components';
 
 import { ArrowLeft } from 'components/Icons';
 import { calculateTotalCost, unavailableFilterProducts } from 'helpers';
-import {
-  useBuyProductsMutation,
-  useFetchValidateCartItemsMutation,
-} from 'redux/operations';
-import { updateCartItemCount } from 'redux/cartSlice';
+import { useBuyProductsMutation, useFetchValidateCartItemsMutation } from 'redux/operations';
+import { updateCartItemCount } from 'redux/slice/cartSlice';
 // import { Button } from 'react-bootstrap';
 
 export const Cart = () => {
@@ -58,10 +55,7 @@ export const Cart = () => {
       } = validateCartItemsError;
 
       const unavailableArrayCode = errors.map(({ productCode }) => productCode);
-      const productNames = unavailableFilterProducts(
-        cartStore,
-        unavailableArrayCode,
-      );
+      const productNames = unavailableFilterProducts(cartStore, unavailableArrayCode);
 
       setUnavailable(productNames);
       // take data from error and spray it into an array
@@ -159,10 +153,7 @@ export const Cart = () => {
           {validateCartItemsIsError && (
             <div style={{ color: '#f55e53' }}>
               {unavailable.length > 1 ? (
-                <p>
-                  {' '}
-                  На жаль, обраної кількості товарів вже немає в наявності.
-                </p>
+                <p> На жаль, обраної кількості товарів вже немає в наявності.</p>
               ) : (
                 <p> На жаль, обраної кількості товару вже немає в наявності.</p>
               )}
@@ -223,18 +214,13 @@ export const Cart = () => {
             Launch vertically centered modal
           </Button> */}
 
-          <VerticallyCenteredModal
-            show={modalShow}
-            onHide={() => setModalShow(false)}
-          />
+          <VerticallyCenteredModal show={modalShow} onHide={() => setModalShow(false)} />
         </CartContainer>
       ) : (
         <EmptyCartContainer>
           <div>
             <TitleCart>На жаль, ваш кошик порожній</TitleCart>
-            <BtnBackToCatalog to={'/catalog'}>
-              Перейти до каталогу
-            </BtnBackToCatalog>
+            <BtnBackToCatalog to={'/catalog'}>Перейти до каталогу</BtnBackToCatalog>
           </div>
           <div>
             <img src={Img} alt="Cart img" />

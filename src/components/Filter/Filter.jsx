@@ -1,3 +1,5 @@
+// this component is used for filtering by brands
+
 import {
   AlphabetStyled,
   BrandsCheckBoxContainer,

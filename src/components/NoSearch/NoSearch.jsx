@@ -1,3 +1,5 @@
+// this component is used for rendering page if search results are empty
+
 import {
   SearchCallToAction,
   SearchDescriptionSpan,

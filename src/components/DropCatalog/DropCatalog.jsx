@@ -1,3 +1,5 @@
+// I don`t know what this component is used for
+
 import { ButtonGroup } from 'react-bootstrap';
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';

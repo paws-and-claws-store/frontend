@@ -1,15 +1,9 @@
 import styled from '@emotion/styled';
-import Images from '../images/banner2.jpg';
+
 import { theme } from 'styles';
 
 export const Hero = styled.section`
   margin-top: ${theme.spacing.step * 4 + 2}px;
-  /*max-width: 1276px;
-  height: 660px;
-  width: 100%;
-  background-image: url(${Images});
-  background-repeat: no-repeat;
-  background-size: cover; */
 `;
 
 export const Box = styled.div`

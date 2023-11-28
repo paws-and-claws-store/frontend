@@ -1,13 +1,15 @@
+// component with custom loader
+
 import React from 'react';
-// import { ThreeCircles } from 'react-loader-spinner';
 import { PawLoaderContainerSVG } from './Loader.styled';
+import { theme } from 'styles';
 
 const Loader = () => {
   return (
     <div
       style={{
         position: 'fixed',
-        zIndex: '888',
+        zIndex: `${theme.zIndexes.backdropLoader}`,
         top: '0',
         left: '0',
         width: '100vw',
@@ -23,18 +25,6 @@ const Loader = () => {
           transform: 'translate(-50%, -50%)',
         }}
       >
-        {/* <ThreeCircles
-          height="100"
-          width="100"
-          color="#4fa94d"
-          wrapperStyle={{}}
-          wrapperClass=""
-          visible={true}
-          ariaLabel="three-circles-rotating"
-          outerCircleColor=""
-          innerCircleColor=""
-          middleCircleColor=""
-        /> */}
         <PawLoaderContainerSVG
           id="eVgZOIfRPKw1"
           xmlns="http://www.w3.org/2000/svg"
