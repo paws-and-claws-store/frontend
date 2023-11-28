@@ -17,7 +17,7 @@ import Search from 'pages/Search/Search';
 import { Route, Routes } from 'react-router-dom';
 import { Hidden } from './App.styled';
 import { CatalogLayout } from 'components/CatalogLayout/CatalogLayout';
-import { ProductType } from 'pages/ProductType';
+import { ProductType } from 'pages/Catalog/Pages/ProductType';
 import { OrderSuccessful } from 'pages/Cart/OrderSuccessful/OrderSuccessful';
 
 export const App = () => {

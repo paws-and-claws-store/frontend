@@ -13,9 +13,11 @@ import {
 } from './ViewedProducts.styled';
 import { selectViewedProducts } from 'redux/selectors';
 import { Card } from 'components/Card/Card';
+
 import { setViewedProducts } from 'redux/viewedProductsSlice';
 import { ArrowLeftViewedProducts } from 'components/Icons';
 import { ArrowRightViewedProducts } from 'components/Icons';
+
 
 export const ViewedProducts = () => {
   const [productsList, setProductsList] = useState(null);

@@ -9,12 +9,12 @@ import {
   FoodType,
   PetButton,
   WrapperCatalog,
-} from 'pages/Catalog.styled';
+} from 'pages/Catalog/Catalog.styled';
 import { TitelContainer, Sorter } from './CatalogLayout.styled';
-import { Title } from 'pages/Home.styled';
+import { Title } from 'pages/Home/Home.styled';
 import React, { useEffect, useState } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
-import { setBreadCrumbs } from 'redux/breadCrumbsSlice';
+import { setBreadCrumbs } from 'redux/slice/breadCrumbsSlice';
 import { useFetchAllStructureQuery } from 'redux/operations';
 import { useDispatch } from 'react-redux';
 import { SortSelect } from 'components/SortSelect/SortSelect';
@@ -328,9 +328,7 @@ export const CatalogLayout = () => {
         <AsideCatalog>
           {!isError && structure?.length !== 0 && (
             <CategoryList>
-              <ul
-                style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}
-              >
+              <ul style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
                 {structure.map((el, i) => {
                   // console.log('el:', el);
                   switch (el.code) {
@@ -340,9 +338,7 @@ export const CatalogLayout = () => {
                           <PetButton
                             active={active}
                             id={el.code}
-                            className={
-                              active === 'for_dogs' ? 'active' : undefined
-                            }
+                            className={active === 'for_dogs' ? 'active' : undefined}
                             onClick={handleClick}
                           >
                             <span>
@@ -361,9 +357,7 @@ export const CatalogLayout = () => {
                           <PetButton
                             active={active}
                             id={el.code}
-                            className={
-                              active === 'for_cats' ? 'active' : undefined
-                            }
+                            className={active === 'for_cats' ? 'active' : undefined}
                             onClick={handleClick}
                             // onBlur={() => {
                             //   setActive('');
@@ -388,9 +382,7 @@ export const CatalogLayout = () => {
                           <PetButton
                             active={active}
                             id={el.code}
-                            className={
-                              active === 'for_rodents' ? 'active' : undefined
-                            }
+                            className={active === 'for_rodents' ? 'active' : undefined}
                             onClick={handleClick}
                           >
                             <span>
@@ -409,9 +401,7 @@ export const CatalogLayout = () => {
                           <PetButton
                             active={active}
                             id={el.code}
-                            className={
-                              active === 'for_aquarium_science' ? 'active' : undefined
-                            }
+                            className={active === 'for_aquarium_science' ? 'active' : undefined}
                             onClick={handleClick}
                           >
                             <span>
@@ -430,9 +420,7 @@ export const CatalogLayout = () => {
                           <PetButton
                             active={active}
                             id={el.code}
-                            className={
-                              active === 'for_birds' ? 'active' : undefined
-                            }
+                            className={active === 'for_birds' ? 'active' : undefined}
                             onClick={handleClick}
                           >
                             <span>

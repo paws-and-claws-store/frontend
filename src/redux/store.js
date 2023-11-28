@@ -12,12 +12,12 @@ import {
   // REGISTER,
 } from 'redux-persist';
 
-import { cartReducer } from './cartSlice';
+import { cartReducer } from './slice/cartSlice';
 import { api } from './operations';
-import { breadCrumbsReducer } from './breadCrumbsSlice';
+import { breadCrumbsReducer } from './slice/breadCrumbsSlice';
 import { searchSliceReducer } from './searchSlice';
-import { searchSelectReducer } from './sortSelectSlice';
-import { viewedProductsReducer } from './viewedProductsSlice';
+import { searchSelectReducer } from './slice/sortSelectSlice';
+import { viewedProductsReducer } from './slice/viewedProductsSlice';
 
 const reducers = combineReducers({
   [api.reducerPath]: api.reducer,
@@ -32,12 +32,9 @@ const persistConfig = {
   key: 'root',
   version: 1,
 
-
   whitelist: ['cart', 'breadcrumbs', 'viewedProducts'],
 
   storage: sessionStorage, // to use loacalstorage only in one session
-
-
 };
 
 const persistedReducer = persistReducer(persistConfig, reducers);

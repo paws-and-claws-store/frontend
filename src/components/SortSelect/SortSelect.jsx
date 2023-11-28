@@ -1,5 +1,5 @@
+// this component is used for sorting on product pages
 import React, { useState } from 'react';
-// import { components } from 'react-select';
 
 import {
   BurgerContainer,
@@ -14,7 +14,7 @@ import {
 import { RightArrow } from 'components/Icons';
 import { theme } from 'styles';
 import { useDispatch } from 'react-redux';
-import { setValueSort } from 'redux/sortSelectSlice';
+import { setValueSort } from 'redux/slice/sortSelectSlice';
 
 export const SortSelect = () => {
   const [isClickBurger, setIsClickBurger] = useState(true);
