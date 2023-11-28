@@ -13,7 +13,6 @@ export const NoSearch = () => {
   const searchQuery = useSelector(selectSearchQueryStore); // extract search query from the Redux store
   const ref = useRef();
   ref.current = searchQuery; // used to store references to the search query.
-  let nbsp = '\u00A0';
 
   return (
     <div
