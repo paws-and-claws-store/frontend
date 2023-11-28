@@ -17,11 +17,20 @@ export const NoSearch = () => {
   ref.current = searchQuery; // used to store references to the search query.
 
   return (
-    <div style={{ display: 'flex', justifyContent: 'space-between', minHeight: '640px' }}>
-      <div style={{ marginTop: '48px' }}>
-        <SearchDesriptionResults style={{ fontSize: '24px', width: '736px' }}>
+    <div
+      style={{
+        display: 'flex',
+        justifyContent: 'space-between',
+        minHeight: '640px',
+        marginTop: '48px',
+      }}
+    >
+      <div>
+        <SearchDesriptionResults
+          style={{ fontSize: '24px', width: '702px', overflowWrap: 'break-word' }}
+        >
           <SearchDescriptionSpan>За запитом </SearchDescriptionSpan>
-          <SearchQuery>{ref.current}</SearchQuery>
+          <SearchQuery>“{ref.current}”</SearchQuery>
           <SearchDescriptionSpan> нічого не знайдено </SearchDescriptionSpan>
         </SearchDesriptionResults>
 
