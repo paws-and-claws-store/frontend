@@ -11,7 +11,7 @@ import {
   WrapperCatalog,
 } from 'pages/Catalog/Catalog.styled';
 import { TitelContainer, Sorter } from './CatalogLayout.styled';
-import { Title } from 'pages/Home.styled';
+import { Title } from 'pages/Home/Home.styled';
 import React, { useEffect, useState } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import { setBreadCrumbs } from 'redux/slice/breadCrumbsSlice';
