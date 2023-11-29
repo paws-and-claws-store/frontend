@@ -14,19 +14,18 @@ import {
 import { selectViewedProducts } from 'redux/selectors';
 import { Card } from 'components/Card/Card';
 
-import { setViewedProducts } from 'redux/viewedProductsSlice';
+import { setViewedProducts } from 'redux/slice/viewedProductsSlice';
 import { ArrowLeftViewedProducts } from 'components/Icons';
 import { ArrowRightViewedProducts } from 'components/Icons';
 
-
 export const ViewedProducts = () => {
   const [productsList, setProductsList] = useState(null);
-  console.log("productsList:", productsList?.length-1)
+  console.log('productsList:', productsList?.length - 1);
   const [imageIndex, setImageIndex] = useState(0);
-  console.log("imageIndex:", imageIndex)
+  console.log('imageIndex:', imageIndex);
 
   const viewedProducts = useSelector(selectViewedProducts);
-  console.log("viewedProducts:", viewedProducts)
+  console.log('viewedProducts:', viewedProducts);
   const dispatch = useDispatch();
 
   const viewedSwiper = useRef(null);
@@ -57,9 +56,9 @@ export const ViewedProducts = () => {
 
   return (
     <ViewedProductsContainer>
-      <div style={{display:'flex'}}>
-      <ViewedProductsTitel>Переглянуті товари</ViewedProductsTitel>
-      {productsList?.length > 4 ? (
+      <div style={{ display: 'flex' }}>
+        <ViewedProductsTitel>Переглянуті товари</ViewedProductsTitel>
+        {productsList?.length > 4 ? (
           <PrevBtn
             onClick={() => {
               handlePrevBtn();
@@ -70,7 +69,7 @@ export const ViewedProducts = () => {
           </PrevBtn>
         ) : null}
 
-      {productsList?.length > 4 ? (
+        {productsList?.length > 4 ? (
           <NextBtn
             onClick={() => {
               handleNextBtn();
@@ -80,12 +79,12 @@ export const ViewedProducts = () => {
             <ArrowRightViewedProducts />
           </NextBtn>
         ) : null}
-        </div>
+      </div>
 
       <Swiper
-      ref={viewedSwiper}
-      slidesPerView={4}
-      spaceBetween={20}
+        ref={viewedSwiper}
+        slidesPerView={4}
+        spaceBetween={20}
         // options={{
         //   perPage: 4,
         //   perMove: 4,
