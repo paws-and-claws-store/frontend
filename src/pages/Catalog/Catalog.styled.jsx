@@ -66,6 +66,15 @@ export const PetButton = styled.button`
     color: ${theme.colors.green};
     fill: ${theme.colors.green};
   }
+  & svg.rodents {
+    stroke: black;
+  }
+
+  &:active svg.rodents {
+    color: ${theme.colors.green};
+    fill: none;
+    stroke: ${theme.colors.green};
+  }
 `;
 
 export const WrapperCatalog = styled.div`
