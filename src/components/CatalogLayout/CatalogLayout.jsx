@@ -328,7 +328,9 @@ export const CatalogLayout = () => {
         <AsideCatalog>
           {!isError && structure?.length !== 0 && (
             <CategoryList>
-              <ul style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+              <ul
+                style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}
+              >
                 {structure.map((el, i) => {
                   // console.log('el:', el);
                   switch (el.code) {
@@ -338,7 +340,9 @@ export const CatalogLayout = () => {
                           <PetButton
                             active={active}
                             id={el.code}
-                            className={active === 'for_dogs' ? 'active' : undefined}
+                            className={
+                              active === 'for_dogs' ? 'active' : undefined
+                            }
                             onClick={handleClick}
                           >
                             <span>
@@ -357,7 +361,9 @@ export const CatalogLayout = () => {
                           <PetButton
                             active={active}
                             id={el.code}
-                            className={active === 'for_cats' ? 'active' : undefined}
+                            className={
+                              active === 'for_cats' ? 'active' : undefined
+                            }
                             onClick={handleClick}
                             // onBlur={() => {
                             //   setActive('');
@@ -382,7 +388,9 @@ export const CatalogLayout = () => {
                           <PetButton
                             active={active}
                             id={el.code}
-                            className={active === 'for_rodents' ? 'active' : undefined}
+                            className={
+                              active === 'for_rodents' ? 'active' : undefined
+                            }
                             onClick={handleClick}
                           >
                             <span>
@@ -401,7 +409,11 @@ export const CatalogLayout = () => {
                           <PetButton
                             active={active}
                             id={el.code}
-                            className={active === 'for_aquarium_science' ? 'active' : undefined}
+                            className={
+                              active === 'for_aquarium_science'
+                                ? 'active'
+                                : undefined
+                            }
                             onClick={handleClick}
                           >
                             <span>
@@ -420,7 +432,9 @@ export const CatalogLayout = () => {
                           <PetButton
                             active={active}
                             id={el.code}
-                            className={active === 'for_birds' ? 'active' : undefined}
+                            className={
+                              active === 'for_birds' ? 'active' : undefined
+                            }
                             onClick={handleClick}
                           >
                             <span>

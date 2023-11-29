@@ -3,13 +3,15 @@ import {
   BoxPagination,
   BtnLoadMore,
   BtnPagination,
+  PaginationArrow,
   PaginationList,
   PaginationListItem,
 } from './Pagination.styled';
 import { CaretLeftPagination, CaretRightPagination } from 'components/Icons';
 
 export const Pagination = ({ paginationData, onPageChange, onAddPage }) => {
-  const { hasNextPage, hasPrevPage, totalPages, nextPage, page, prevPage } = paginationData;
+  const { hasNextPage, hasPrevPage, totalPages, nextPage, page, prevPage } =
+    paginationData;
 
   const displayedPages = [];
 
@@ -53,34 +55,45 @@ export const Pagination = ({ paginationData, onPageChange, onAddPage }) => {
 
   return totalPages <= 1 ? null : (
     <BoxPagination>
-      {hasNextPage && <BtnLoadMore onClick={() => onAddPage(page)}>Завантажити ще</BtnLoadMore>}
+      {hasNextPage && (
+        <BtnLoadMore onClick={() => onAddPage(page)}>
+          Завантажити ще
+        </BtnLoadMore>
+      )}
       <nav>
         <PaginationList>
-          {hasPrevPage && (
-            <li>
-              <button onClick={() => onPageChange(prevPage)}>
-                <CaretLeftPagination />
-              </button>
-            </li>
-          )}
+          <li>
+            <PaginationArrow
+              onClick={() => onPageChange(prevPage)}
+              disabled={!hasPrevPage}
+            >
+              <CaretLeftPagination />
+            </PaginationArrow>
+          </li>
 
           {displayedPages.map((item, index) => (
-            <PaginationListItem key={index} className={`${item === page ? 'active' : ''}`}>
+            <PaginationListItem
+              key={index}
+              className={`${item === page ? 'active' : ''}`}
+            >
               {item === '...' ? (
                 <span>...</span>
               ) : (
-                <BtnPagination onClick={() => onPageChange(item)}>{item}</BtnPagination>
+                <BtnPagination onClick={() => onPageChange(item)}>
+                  {item}
+                </BtnPagination>
               )}
             </PaginationListItem>
           ))}
 
-          {hasNextPage && (
-            <li>
-              <button onClick={() => onPageChange(nextPage)}>
-                <CaretRightPagination />
-              </button>
-            </li>
-          )}
+          <li>
+            <PaginationArrow
+              onClick={() => onPageChange(nextPage)}
+              disabled={!hasNextPage}
+            >
+              <CaretRightPagination />
+            </PaginationArrow>
+          </li>
         </PaginationList>
       </nav>
     </BoxPagination>

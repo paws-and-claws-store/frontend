@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { Link } from 'react-router-dom';
 import { theme } from 'styles';
 
 export const BoxCard = styled.div`
@@ -72,13 +73,23 @@ export const WidthLink = styled.button`
 
 export const WeightListItem = styled.li``;
 
-export const BrandNameSt = styled.h3`
+export const BrandNameSt = styled(Link)`
+  display: block;
   margin-top: ${theme.spacing.step * 5}px;
   color: ${theme.colors.orange};
   text-transform: uppercase;
   font-weight: ${theme.fontWeight.SemiBold};
   font-size: ${theme.fontSizes.s};
   line-height: ${theme.lineHeight.s};
+
+  &:hover {
+    text-decoration: underline;
+  }
+
+  &:active {
+    color: ${theme.colors.green};
+    text-decoration: none;
+  }
 `;
 
 export const FixedBlock = styled.div`
