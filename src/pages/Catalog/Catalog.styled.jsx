@@ -56,6 +56,16 @@ export const PetButton = styled.button`
     z-index: ${theme.zIndexes.catalogPetButtons};
     background-color: ${theme.colors.beige};
   }
+
+  &:hover {
+    background-color: ${theme.colors.beige};
+  }
+
+  &:active,
+  &:active svg {
+    color: ${theme.colors.green};
+    fill: ${theme.colors.green};
+  }
 `;
 
 export const WrapperCatalog = styled.div`
@@ -95,21 +105,20 @@ export const BoxHiden = styled.div`
     flex-direction: column;
     gap: ${theme.spacing.step * 3}px;
   }
-
-  a:hover,
-  a:focus {
-    color: ${theme.colors.green};
-  }
-
-  a:active {
-    color: ${theme.colors.orange};
-  }
 `;
 
 export const Category = styled(Link)`
   font-size: ${theme.fontSizes.s};
   font-weight: ${theme.fontWeight.Medium};
   line-height: ${theme.lineHeight.l}; /* 125% */
+
+  &:hover {
+    color: ${theme.colors.green};
+  }
+
+  &:active {
+    color: ${theme.colors.orange};
+  }
 `;
 
 export const FoodTypeList = styled.ul`
@@ -122,4 +131,13 @@ export const FoodType = styled(Link)`
   font-size: ${theme.fontSizes.s};
   font-weight: ${theme.fontWeight.Light};
   line-height: ${theme.lineHeight.l};
+
+  &:hover {
+    text-decoration: underline;
+  }
+
+  &:active {
+    color: ${theme.colors.green};
+    text-decoration: none;
+  }
 `;

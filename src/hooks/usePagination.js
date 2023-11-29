@@ -43,7 +43,12 @@ export function usePagination({
         return;
       }
 
-      if (loadMoreClicked && sortingType && currentPage !== 1 && !pageNumberClicked) {
+      if (
+        loadMoreClicked &&
+        sortingType &&
+        currentPage !== 1 &&
+        !pageNumberClicked
+      ) {
         setProductsList(prevState => [...prevState, ...response.docs]);
         setPaginationData(updatePaginationData(response));
         setLoadMoreClicked(false);
@@ -60,9 +65,18 @@ export function usePagination({
     if (!isFetching && !isError) {
       fetchInitialData();
     }
-  }, [currentPage, isError, isFetching, loadMoreClicked, pageNumberClicked, response, sortingType]);
+  }, [
+    currentPage,
+    isError,
+    isFetching,
+    loadMoreClicked,
+    pageNumberClicked,
+    response,
+    sortingType,
+  ]);
 
   const onPageChange = pageNumber => {
+    console.log('pageNumber:', pageNumber);
     // При кліку на номер сторінки через пагінацію, змініть стан
     setLoadMoreClicked(false);
     setPageNumberClicked(true);

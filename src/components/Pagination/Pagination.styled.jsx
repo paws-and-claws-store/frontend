@@ -62,6 +62,22 @@ export const PaginationList = styled.ul`
   }
 `;
 
+export const PaginationArrow = styled.button`
+  &:hover svg {
+    fill: ${theme.colors.secGreen};
+  }
+  &:active svg {
+    fill: ${theme.colors.orange};
+  }
+
+  &:disabled {
+    cursor: default;
+    svg {
+      fill: ${theme.colors.beige};
+    }
+  }
+`;
+
 export const PaginationListItem = styled.li`
   width: ${theme.spacing.step * 8}px;
   height: ${theme.spacing.step * 8}px;
@@ -80,8 +96,10 @@ export const BtnPagination = styled.button`
   font-weight: 500;
   line-height: 20px;
 
-  &:hover,
-  &:focus {
+  &:hover {
+    color: ${theme.colors.secGreen};
+  }
+  &:active {
     color: ${theme.colors.orange};
   }
 
