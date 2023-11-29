@@ -63,7 +63,7 @@ const MainInfo = ({ product, prodNameLength }) => {
   return (
     <CardContainer style={{ position: 'sticky', top: '100px' }}>
       <FlexBox>
-        <BrandTitle>{brand}</BrandTitle>
+        <BrandTitle to={'/brands'}>{brand}</BrandTitle>
         <span>
           <button
             className="heartIcon"

@@ -23,7 +23,11 @@ import { Link } from 'react-router-dom';
 import { HeartIcon, StarIcon } from 'components/Icons';
 import { displaySize } from 'helpers';
 import { useDispatch, useSelector } from 'react-redux';
-import { addCartItem, removeCartItem, updateCartItem } from 'redux/slice/cartSlice';
+import {
+  addCartItem,
+  removeCartItem,
+  updateCartItem,
+} from 'redux/slice/cartSlice';
 import { selectCartStore } from 'redux/selectors';
 import { Notify } from 'notiflix';
 
@@ -51,7 +55,9 @@ export const Card = ({ el, onClick }) => {
   };
 
   useEffect(() => {
-    const productCount = cardCountRedux?.find(item => item.productCode === productCode);
+    const productCount = cardCountRedux?.find(
+      item => item.productCode === productCode,
+    );
     if (productCount) {
       setCardCount(productCount.cardCount);
     }
@@ -213,10 +219,10 @@ export const Card = ({ el, onClick }) => {
       <div>
         <div>
           <div>
-            <Link to={'/brands'}>
-              <BrandNameSt>{el.brand}</BrandNameSt>
-            </Link>
-            <Link to={`/catalog/${el._pet._id}/${el._category._id}/${el._variant._id}/${el._id}`}>
+            <BrandNameSt to={'/brands'}>{el.brand}</BrandNameSt>
+            <Link
+              to={`/catalog/${el._pet._id}/${el._category._id}/${el._variant._id}/${el._id}`}
+            >
               <FixedBlock style={{ height: '48px' }}>
                 <ProductNameSt>{el.productName}</ProductNameSt>
               </FixedBlock>
@@ -262,7 +268,9 @@ export const Card = ({ el, onClick }) => {
                 <SymbolCurrency>₴</SymbolCurrency>
               </PriceSt>
               <PriceSt className="line-through-text">
-                <span className="line-through-text">{elType.price.toFixed(2)}</span>
+                <span className="line-through-text">
+                  {elType.price.toFixed(2)}
+                </span>
                 <SymbolCurrency>₴</SymbolCurrency>
               </PriceSt>
             </PriceBox>

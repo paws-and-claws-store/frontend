@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 import { theme } from 'styles';
 
 import { ReactComponent as Heart } from '../../../svg/HeartStraight.svg';
+import { Link } from 'react-router-dom';
 
 export const CardContainer = styled.div`
   width: 520px;
@@ -19,13 +20,21 @@ export const FlexBox = styled.div`
   margin-bottom: 12px;
 `;
 
-
-export const BrandTitle = styled.h2`
+export const BrandTitle = styled(Link)`
   font-size: ${theme.fontSizes.xl};
   font-weight: ${theme.fontWeight.Medium};
   line-height: ${theme.lineHeight.xxl};
 
   color: ${theme.colors.orange};
+
+  &:hover {
+    text-decoration: underline;
+  }
+
+  &:active {
+    color: ${theme.colors.green};
+    text-decoration: none;
+  }
 `;
 
 export const ProductName = styled.h3`
@@ -49,7 +58,6 @@ export const ShortDescription = styled.h4`
 `;
 
 export const CardCodeList = styled.ul`
-
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -59,7 +67,7 @@ export const CardCodeList = styled.ul`
 
 export const CarCodeWrapper = styled.div`
   display: flex;
-  
+
   align-items: baseline;
   justify-content: space-between;
   padding-bottom: 16px;

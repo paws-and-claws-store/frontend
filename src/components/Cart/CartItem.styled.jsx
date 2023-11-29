@@ -24,6 +24,15 @@ export const Brand = styled(Link)`
   font-weight: 600;
   line-height: 16px; /* 100% */
   text-transform: uppercase;
+
+  &:hover {
+    text-decoration: underline;
+  }
+
+  &:active {
+    color: ${theme.colors.green};
+    text-decoration: none;
+  }
 `;
 
 export const ShortDesc = styled.p`

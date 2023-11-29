@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { BtnBackToCatalog, EmptyCartContainer } from '../Cart.styled';
+import { EmptyCartContainer } from '../Cart.styled';
 import { useDispatch } from 'react-redux';
 import { clearCartItems } from 'redux/slice/cartSlice';
 import { image6 } from 'images';
@@ -48,8 +48,10 @@ export const OrderSuccessful = () => {
               <CheckCircle />
             </span>
           </p>
-          <p style={{ marginTop: '8px' }}>Дякуємо за те, що обрали наш магазин!</p>
-          <BtnBackToCatalog to={'/catalog'}>Перейти до каталогу</BtnBackToCatalog>
+          <p style={{ marginTop: '8px' }}>
+            Дякуємо за те, що обрали наш магазин!
+          </p>
+          {/* <BtnBackToCatalog to={'/catalog'}>Перейти до каталогу</BtnBackToCatalog> */}
         </TitleContainer>
         <div>
           <img src={image6} alt="Cart img" />
