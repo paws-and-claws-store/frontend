@@ -43,12 +43,7 @@ export function usePagination({
         return;
       }
 
-      if (
-        loadMoreClicked &&
-        sortingType &&
-        currentPage !== 1 &&
-        !pageNumberClicked
-      ) {
+      if (loadMoreClicked && sortingType && currentPage !== 1 && !pageNumberClicked) {
         setProductsList(prevState => [...prevState, ...response.docs]);
         setPaginationData(updatePaginationData(response));
         setLoadMoreClicked(false);
@@ -65,15 +60,7 @@ export function usePagination({
     if (!isFetching && !isError) {
       fetchInitialData();
     }
-  }, [
-    currentPage,
-    isError,
-    isFetching,
-    loadMoreClicked,
-    pageNumberClicked,
-    response,
-    sortingType,
-  ]);
+  }, [currentPage, isError, isFetching, loadMoreClicked, pageNumberClicked, response, sortingType]);
 
   const onPageChange = pageNumber => {
     console.log('pageNumber:', pageNumber);
@@ -81,7 +68,12 @@ export function usePagination({
     setLoadMoreClicked(false);
     setPageNumberClicked(true);
     setCurrentPage(pageNumber);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    // console.log('window :>> ', window.scrollY);
+    setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, 50);
+
+    // window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const onAddPage = pageNumber => {
