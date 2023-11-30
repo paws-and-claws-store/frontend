@@ -9,7 +9,7 @@ import {
   TitleSearch,
   UpsideSearchContainer,
 } from './Search.styled';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { SortSelect } from 'components/SortSelect/SortSelect';
 import { selectSearchQueryStore, selectSortingTypeStore } from 'redux/selectors';
 import { NoSearch } from 'components/NoSearch/NoSearch';
@@ -18,17 +18,39 @@ import SearchWrapper from './SearchWarapper';
 import SearchDescription from './SearchDescription';
 import SearchCategory from './SearchCategory';
 import { usePagination } from 'hooks/usePagination';
+import { useSearchParams } from 'react-router-dom';
+import { setQuerySearch } from 'redux/searchSlice';
 
 export default function Search() {
   const [currentPage, setCurrentPage] = useState(1); // to track the current page of search results.
+  const [searchParams, setSearchParams] = useSearchParams();
+  const dispatch = useDispatch();
 
   const abortControllerRef = useRef(); // hooks used to store references to the AbortController.
   const searchRef = useRef(); // hooks used to store references to the search query.
 
   const searchQuery = useSelector(selectSearchQueryStore); // extract search query from the Redux store
   const sortingType = useSelector(selectSortingTypeStore); // extract sorting type from the Redux store
+  useEffect(() => {
+    if (searchQuery) {
+      setSearchParams({ query: searchQuery });
+    }
+  }, [searchQuery, setSearchParams]);
 
-  const params = { findBy: encodeURIComponent(searchQuery).toLowerCase(), page: currentPage }; // params object to be used in the API call hook useFetchSearchQuery.
+  useEffect(() => {
+    const query = searchParams.get('query');
+
+    if (query) {
+      dispatch(setQuerySearch(query));
+    }
+  }, [dispatch, searchParams]);
+
+  const params = {
+    findBy: encodeURIComponent(
+      searchParams ? searchParams.get('query') : searchQuery,
+    ).toLowerCase(),
+    page: currentPage,
+  }; // params object to be used in the API call hook useFetchSearchQuery.
 
   //This is watching for changing current page, if user now on 2-nd or nore page and he change query page must be again 1
   useEffect(() => {
@@ -38,7 +60,7 @@ export default function Search() {
     params.sortBy = sortingType; // set to params object sorting type if sorting type is exists
   }
 
-  if (abortControllerRef.current && searchQuery === '') {
+  if (abortControllerRef.current && searchParams === '') {
     abortControllerRef.current.abort('empty query'); // If there's an existing abortControllerRef.current and the searchQuery becomes empty, it aborts the ongoing fetch with a message 'empty query, to avoid abort fetch permamently
   }
 
@@ -55,7 +77,10 @@ export default function Search() {
     signal,
     params,
   }); // Utilizes a custom hook useFetchSearchQuery to fetch search results based on the params object and the abort signal. It receives data, error, isLoading, isFetching, and isError as response states.
-  searchRef.current = { searchQuery: searchQuery, totalDocs: response?.totalDocs }; // set object of current search query and current response to avoid rerender unnecessary rerenders
+  searchRef.current = {
+    searchQuery: searchParams ? searchParams.get('query') : searchQuery,
+    totalDocs: response?.totalDocs,
+  }; // set object of current search query and current response to avoid rerender unnecessary rerenders
 
   const { productsList, paginationData, onAddPage, onPageChange } = usePagination({
     response,
