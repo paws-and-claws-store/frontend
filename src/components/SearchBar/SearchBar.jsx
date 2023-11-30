@@ -1,7 +1,7 @@
 // this component is used to create search input, validate inputs and add search value to redux store
 
 import { ResetButton, SearchIcon } from 'components/Icons';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { SearchBox } from './SearchBar.styled';
 import { Notify } from 'notiflix';
 import { searchSchema } from './searchValidationSchema'; // add search schema validation
@@ -18,6 +18,10 @@ export const SearchBar = () => {
   const [resetBoolean, setResetBoolean] = useState(false); //this state needs to reset search query and show or hide reset button
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    setSearchValue(value);
+  }, [value]);
 
   const handleChage = e => {
     setSearchValue(e.currentTarget.value);
