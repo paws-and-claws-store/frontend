@@ -8,6 +8,7 @@ export function usePagination({
   setCurrentPage,
   currentPage,
   sortingType,
+  isLoading,
 }) {
   const [productsList, setProductsList] = useState([]);
   const [paginationData, setPaginationData] = useState({
@@ -40,6 +41,7 @@ export function usePagination({
       if (loadMoreClicked && sortingType && currentPage === 1) {
         setProductsList(response.docs);
         setPaginationData(updatePaginationData(response));
+
         return;
       }
 
@@ -53,6 +55,7 @@ export function usePagination({
       if (!loadMoreClicked && pageNumberClicked) {
         setProductsList(response.docs);
         setPaginationData(updatePaginationData(response));
+        setPageNumberClicked(false);
         return;
       }
     }
@@ -62,17 +65,20 @@ export function usePagination({
     }
   }, [currentPage, isError, isFetching, loadMoreClicked, pageNumberClicked, response, sortingType]);
 
+  useEffect(() => {
+    return () => {
+      if (pageNumberClicked) {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    };
+  }, [pageNumberClicked]);
+
   const onPageChange = pageNumber => {
     console.log('pageNumber:', pageNumber);
     // При кліку на номер сторінки через пагінацію, змініть стан
     setLoadMoreClicked(false);
     setPageNumberClicked(true);
     setCurrentPage(pageNumber);
-    // console.log('window :>> ', window.scrollY);
-    setTimeout(() => {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }, 50);
-
     // window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 

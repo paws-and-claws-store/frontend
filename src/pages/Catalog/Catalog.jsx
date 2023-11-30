@@ -37,6 +37,7 @@ export const Catalog = () => {
     setCurrentPage,
     currentPage,
     sortingType,
+    isLoading,
   });
 
   return (
