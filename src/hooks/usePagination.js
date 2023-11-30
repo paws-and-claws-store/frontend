@@ -8,6 +8,7 @@ export function usePagination({
   setCurrentPage,
   currentPage,
   sortingType,
+  isLoading,
 }) {
   const [productsList, setProductsList] = useState([]);
   const [paginationData, setPaginationData] = useState({
@@ -40,15 +41,11 @@ export function usePagination({
       if (loadMoreClicked && sortingType && currentPage === 1) {
         setProductsList(response.docs);
         setPaginationData(updatePaginationData(response));
+
         return;
       }
 
-      if (
-        loadMoreClicked &&
-        sortingType &&
-        currentPage !== 1 &&
-        !pageNumberClicked
-      ) {
+      if (loadMoreClicked && sortingType && currentPage !== 1 && !pageNumberClicked) {
         setProductsList(prevState => [...prevState, ...response.docs]);
         setPaginationData(updatePaginationData(response));
         setLoadMoreClicked(false);
@@ -58,6 +55,7 @@ export function usePagination({
       if (!loadMoreClicked && pageNumberClicked) {
         setProductsList(response.docs);
         setPaginationData(updatePaginationData(response));
+        setPageNumberClicked(false);
         return;
       }
     }
@@ -65,15 +63,15 @@ export function usePagination({
     if (!isFetching && !isError) {
       fetchInitialData();
     }
-  }, [
-    currentPage,
-    isError,
-    isFetching,
-    loadMoreClicked,
-    pageNumberClicked,
-    response,
-    sortingType,
-  ]);
+  }, [currentPage, isError, isFetching, loadMoreClicked, pageNumberClicked, response, sortingType]);
+
+  useEffect(() => {
+    return () => {
+      if (pageNumberClicked) {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    };
+  }, [pageNumberClicked]);
 
   const onPageChange = pageNumber => {
     console.log('pageNumber:', pageNumber);
@@ -81,7 +79,7 @@ export function usePagination({
     setLoadMoreClicked(false);
     setPageNumberClicked(true);
     setCurrentPage(pageNumber);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    // window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const onAddPage = pageNumber => {
