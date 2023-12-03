@@ -196,11 +196,17 @@ export const CartItem = ({ prod, unavailable }) => {
               gap: '4px',
             }}
           >
-            <Brand to={'/brands'}>{brand}</Brand>
+            <span>
+              <Brand to={'/brands'}>{brand}</Brand>
+            </span>
             <Link
               to={`/catalog/${prod.pet._id}/${prod.category._id}/${prod.variant._id}/${prod.id}`}
             >
               <ProdTitle>{productName}</ProdTitle>
+            </Link>
+            <Link
+              to={`/catalog/${prod.pet._id}/${prod.category._id}/${prod.variant._id}/${prod.id}`}
+            >
               <ShortDesc>{shortDescription}</ShortDesc>
             </Link>
             <Size>{displaySize(size)}</Size>
