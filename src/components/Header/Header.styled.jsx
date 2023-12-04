@@ -103,6 +103,7 @@ export const LogoWrapper = styled.div`
 `;
 
 export const LinkWrapper = styled.div`
+  position: relative;
   display: flex;
   gap: ${theme.spacing.step * 3}px;
   /* align-items: center; */

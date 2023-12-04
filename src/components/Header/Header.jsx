@@ -23,16 +23,20 @@ import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { selectCartStore } from 'redux/selectors';
 import { SearchBar } from 'components/SearchBar/SearchBar';
+import { LoginForm } from 'components/LoginForm/LoginForm';
 
 // import { Search } from './Search';
 
 export const Header = () => {
   const [scroll, setScroll] = useState('');
+  const [registrMenuTogle, setRegistrMenuTogle] = useState(false);
 
   const cartStore = useSelector(selectCartStore);
   const totalCount = cartStore.reduce((previousValue, { cardCount }) => {
     return previousValue + cardCount;
   }, 0);
+
+  
 
   const countDigits = number => {
     return number.toString().length;
@@ -48,6 +52,10 @@ export const Header = () => {
     });
   }, []);
 
+  
+
+  // const menuTogle = ()=>setRegistrMenuTogle(true)
+
   return (
     <HeaderStyled className={scroll}>
       <HeaderContainer>
@@ -57,7 +65,7 @@ export const Header = () => {
           </Link>
           <SearchBar />
           <LinkWrapper>
-            <button>
+            <button onClick={()=>setRegistrMenuTogle(true)} disabled={registrMenuTogle}>
               <ProfileIcon />
             </button>
             <button>
@@ -79,10 +87,12 @@ export const Header = () => {
                 <CartIcon />
               )}
             </Link>
+
             <Leng>
               <LengLinkStyled>Eng</LengLinkStyled>
               <LengLinkStyled className="accent">Укр</LengLinkStyled>
             </Leng>
+            {registrMenuTogle? <LoginForm  setRegistrMenuTogle={setRegistrMenuTogle}/> : null}
           </LinkWrapper>
         </HeaderWrapper>
       </HeaderContainer>
