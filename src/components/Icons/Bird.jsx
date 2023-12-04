@@ -1,8 +1,6 @@
-import { SvgStyled } from './SvgStyled.styled';
-
 export const Bird = () => {
   return (
-    <SvgStyled
+    <svg
       width="32"
       height="32"
       viewBox="0 0 32 32"
@@ -16,6 +14,6 @@ export const Bird = () => {
           fill=""
         />
       </g>
-    </SvgStyled>
+    </svg>
   );
 };

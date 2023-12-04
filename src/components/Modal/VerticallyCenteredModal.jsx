@@ -2,6 +2,7 @@
 import { AttantionCicleLight } from 'components/Icons';
 import Modal from 'react-bootstrap/Modal';
 import { theme } from 'styles';
+import { ModalText } from './VerticallyCenteredModal.styled';
 
 export const VerticallyCenteredModal = props => {
   return (
@@ -19,19 +20,19 @@ export const VerticallyCenteredModal = props => {
       <Modal.Body
         className="1111111"
         style={{
-          padding: '54px 32px',
+          padding: '32px',
           backgroundColor: `${theme.colors.beige}`,
           border: `1px solid ${theme.colors.green}`,
         }}
       >
-        <div style={{ display: 'flex', gap: '32px' }}>
+        <div style={{ display: 'flex', gap: '16px' }}>
           <span>
             <AttantionCicleLight />
           </span>
-          <span>
-            Кількість деяких товарів у вашому кошику відрізняється від обраної
-            раніше. Будь ласка, внесіть необхідні зміни перед замовленням.
-          </span>
+          <ModalText>
+            Кількість товарів у вашому кошику відрізняється від доступної на
+            складі. Будь ласка, внесіть необхідні зміни перед замовленням.
+          </ModalText>
         </div>
       </Modal.Body>
       {/* <Modal.Footer>
