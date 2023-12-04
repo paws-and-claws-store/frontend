@@ -63,6 +63,8 @@ export const GlobalStyles = css`
     color: inherit;
     margin: 0;
     padding: 0;
+    text-decoration-skip-ink: auto;
+    text-underline-offset: 4px;
   }
 
   code {
@@ -70,5 +72,10 @@ export const GlobalStyles = css`
   }
   main {
     min-height: 930px;
+  }
+
+  .modal-lg {
+    --bs-modal-width: 702px;
+    /* width: 700px; */
   }
 `;
