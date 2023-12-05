@@ -8,6 +8,8 @@ export function usePagination({
   setCurrentPage,
   currentPage,
   sortingType,
+  isPriceRangeSet,
+  priceValue,
 }) {
   const [productsList, setProductsList] = useState([]);
   const [paginationData, setPaginationData] = useState({
@@ -21,34 +23,45 @@ export function usePagination({
   });
   const [loadMoreClicked, setLoadMoreClicked] = useState(false); // Окремий стан для слідкування за натисканням кнопки "Load More"
   const [pageNumberClicked, setPageNumberClicked] = useState(false);
+  const [priceRangeSet, setPriceRangeSet] = useState(isPriceRangeSet); // internal state to price range setted
 
   useEffect(() => {
     async function fetchInitialData() {
+      if (isPriceRangeSet) {
+        // if price range setted get only clear resppone data without previous state
+        // console.log('1');
+        setProductsList(response.docs);
+        setPaginationData(updatePaginationData(response));
+        setPriceRangeSet(false); // set price range to default state "false"
+        return;
+      }
+
       if (loadMoreClicked && !sortingType && !pageNumberClicked) {
+        // console.log('2');
         setProductsList(prevState => [...prevState, ...response.docs]);
         setPaginationData(updatePaginationData(response));
+        // setPriceRangeSet(true);
         return;
       }
 
       if (!loadMoreClicked && currentPage === 1 && !pageNumberClicked) {
+        // console.log('3');
         setProductsList([...response.docs]);
         setLoadMoreClicked(false);
         setPaginationData(updatePaginationData(response));
         return;
       }
+      // maybe this condition are not needed
+      // if (loadMoreClicked && sortingType && currentPage === 1) {
+      //   console.log('4');
+      //   setProductsList(response.docs);
+      //   setPaginationData(updatePaginationData(response));
+      //   setPriceRangeSet(false);
+      //   return;
+      // }
 
-      if (loadMoreClicked && sortingType && currentPage === 1) {
-        setProductsList(response.docs);
-        setPaginationData(updatePaginationData(response));
-        return;
-      }
-
-      if (
-        loadMoreClicked &&
-        sortingType &&
-        currentPage !== 1 &&
-        !pageNumberClicked
-      ) {
+      if (loadMoreClicked && sortingType && currentPage !== 1 && !pageNumberClicked) {
+        //console.log('5');
         setProductsList(prevState => [...prevState, ...response.docs]);
         setPaginationData(updatePaginationData(response));
         setLoadMoreClicked(false);
@@ -56,6 +69,7 @@ export function usePagination({
       }
 
       if (!loadMoreClicked && pageNumberClicked) {
+        //console.log('6');
         setProductsList(response.docs);
         setPaginationData(updatePaginationData(response));
         return;
@@ -69,14 +83,16 @@ export function usePagination({
     currentPage,
     isError,
     isFetching,
+    isPriceRangeSet,
     loadMoreClicked,
     pageNumberClicked,
+    priceRangeSet,
     response,
     sortingType,
   ]);
 
   const onPageChange = pageNumber => {
-    console.log('pageNumber:', pageNumber);
+    // console.log('pageNumber:', pageNumber);
     // При кліку на номер сторінки через пагінацію, змініть стан
     setLoadMoreClicked(false);
     setPageNumberClicked(true);
@@ -98,5 +114,6 @@ export function usePagination({
     onPageChange,
     currentPage,
     loadMoreClicked,
+    priceRangeSet,
   };
 }
