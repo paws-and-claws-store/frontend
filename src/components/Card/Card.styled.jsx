@@ -14,10 +14,11 @@ export const BoxCard = styled.div`
     top: 20px;
     right: 20px;
     fill: ${theme.colors.orange};
+  }
 
-    /* & .active {
-      fill: ${theme.colors.orange};
-    } */
+  &:hover {
+    transform: scale(1.01);
+    box-shadow: 0px 16px 48px 0px rgba(0, 0, 0, 0.176);
   }
 `;
 
