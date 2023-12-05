@@ -11,7 +11,10 @@ import {
 } from './Search.styled';
 import { useDispatch, useSelector } from 'react-redux';
 import { SortSelect } from 'components/SortSelect/SortSelect';
-import { selectSearchQueryStore, selectSortingTypeStore } from 'redux/selectors';
+import {
+  selectSearchQueryStore,
+  selectSortingTypeStore,
+} from 'redux/selectors';
 import { NoSearch } from 'components/NoSearch/NoSearch';
 import { Notify } from 'notiflix';
 import SearchWrapper from './SearchWarapper';
@@ -22,20 +25,27 @@ import { useSearchParams } from 'react-router-dom';
 import { setQuerySearch } from 'redux/searchSlice';
 
 export default function Search() {
+  const searchQuery = useSelector(selectSearchQueryStore); // extract search query from the Redux store
+  const sortingType = useSelector(selectSortingTypeStore); // extract sorting type from the Redux store
+  console.log('sortingType:', sortingType);
   const [currentPage, setCurrentPage] = useState(1); // to track the current page of search results.
   const [searchParams, setSearchParams] = useSearchParams();
+  console.log('searchParams:', searchParams);
   const dispatch = useDispatch();
 
   const abortControllerRef = useRef(); // hooks used to store references to the AbortController.
   const searchRef = useRef(); // hooks used to store references to the search query.
 
-  const searchQuery = useSelector(selectSearchQueryStore); // extract search query from the Redux store
-  const sortingType = useSelector(selectSortingTypeStore); // extract sorting type from the Redux store
   useEffect(() => {
     if (searchQuery) {
       setSearchParams({ query: searchQuery });
     }
-  }, [searchQuery, setSearchParams]);
+
+    if (searchQuery && sortingType) {
+      setSearchParams({ query: searchQuery, sortBy: sortingType });
+      return;
+    }
+  }, [searchQuery, setSearchParams, sortingType]);
 
   useEffect(() => {
     const query = searchParams.get('query');
@@ -45,17 +55,19 @@ export default function Search() {
     }
   }, [dispatch, searchParams]);
 
-  const params = {
-    findBy: encodeURIComponent(
-      searchParams ? searchParams.get('query') : searchQuery,
-    ).toLowerCase(),
-    page: currentPage,
-  }; // params object to be used in the API call hook useFetchSearchQuery.
-
   //This is watching for changing current page, if user now on 2-nd or nore page and he change query page must be again 1
   useEffect(() => {
     setCurrentPage(1); // set page one to the new search query
   }, [searchQuery, sortingType]);
+
+  const params = {
+    findBy: encodeURIComponent(
+      searchParams.size ? searchParams.get('query') : searchQuery,
+    ).toLowerCase(),
+    page: currentPage,
+  }; // params object to be used in the API call hook useFetchSearchQuery.
+  console.log('params:', params);
+
   if (sortingType !== '') {
     params.sortBy = sortingType; // set to params object sorting type if sorting type is exists
   }
@@ -77,19 +89,21 @@ export default function Search() {
     signal,
     params,
   }); // Utilizes a custom hook useFetchSearchQuery to fetch search results based on the params object and the abort signal. It receives data, error, isLoading, isFetching, and isError as response states.
+
   searchRef.current = {
     searchQuery: searchParams ? searchParams.get('query') : searchQuery,
     totalDocs: response?.totalDocs,
   }; // set object of current search query and current response to avoid rerender unnecessary rerenders
 
-  const { productsList, paginationData, onAddPage, onPageChange } = usePagination({
-    response,
-    isFetching,
-    isError,
-    setCurrentPage,
-    currentPage,
-    sortingType,
-  }); // Use a custom hook usePagination to handle pagination-related functionalities such as managing product lists, pagination data, and changing pages.
+  const { productsList, paginationData, onAddPage, onPageChange } =
+    usePagination({
+      response,
+      isFetching,
+      isError,
+      setCurrentPage,
+      currentPage,
+      sortingType,
+    }); // Use a custom hook usePagination to handle pagination-related functionalities such as managing product lists, pagination data, and changing pages.
 
   return (
     <div style={{ minHeight: '640px' }}>
