@@ -23,6 +23,7 @@ import SearchCategory from './SearchCategory';
 import { usePagination } from 'hooks/usePagination';
 import { useSearchParams } from 'react-router-dom';
 import { setQuerySearch } from 'redux/searchSlice';
+import { setValueSort } from 'redux/slice/sortSelectSlice';
 
 export default function Search() {
   const searchQuery = useSelector(selectSearchQueryStore); // extract search query from the Redux store
@@ -49,9 +50,14 @@ export default function Search() {
 
   useEffect(() => {
     const query = searchParams.get('query');
+    const sortBy = searchParams.get('sortBy');
 
     if (query) {
       dispatch(setQuerySearch(query));
+    }
+
+    if (sortBy) {
+      dispatch(setValueSort(sortBy));
     }
   }, [dispatch, searchParams]);
 
