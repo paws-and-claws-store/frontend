@@ -45,18 +45,15 @@ export default function Search() {
     }
   }, [searchQuery, setSearchParams]);
 
+  const query = searchParams.get('query');
   useEffect(() => {
-    const query = searchParams.get('query');
-
-    if (query) {
+    if (query || query !== null) {
       dispatch(setQuerySearch(query));
     }
-  }, [dispatch, searchParams]);
+  }, [dispatch, query, searchParams]);
 
   const params = {
-    findBy: encodeURIComponent(
-      searchParams ? searchParams.get('query') : searchQuery,
-    ).toLowerCase(),
+    findBy: encodeURIComponent(query ? query : searchQuery).toLowerCase(),
     page: currentPage,
     minPrice: priceValue[0], // set min price for query
     maxPrice: priceValue[1], // set max price for query
