@@ -313,31 +313,6 @@ export const Card = ({ el, onClick }) => {
               <button type="submit" style={{ display: 'none' }}></button>
             </QTYBox>
           )}
-          {/* {!cardCount || cardCount !== '' ? (
-            <Button name="buy" disabled={false} onClick={handleClick}>
-              Купити
-            </Button>
-          ) : (
-            <QTYBox onSubmit={onSubmitCardHandler}>
-              <BTNDec name="decrement" onClick={handleClick} type="button">
-                <span>-</span>
-              </BTNDec>
-              <input
-                id={card._id}
-                type="text"
-                minLength={1}
-                maxLength={3}
-                size={3}
-                pattern="[0-9]*"
-                onChange={handleChange}
-                value={cardCount}
-              />
-              <BTNInc name="increment" onClick={handleClick} type="button">
-                <span>+</span>
-              </BTNInc>
-              <button type="submit" style={{ display: 'none' }}></button>
-            </QTYBox>
-          )} */}
         </Wrapper>
       </div>
     </BoxCard>

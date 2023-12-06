@@ -8,6 +8,15 @@ export const ImgWrapper = styled.div`
   /* filter: grayscale(0.7); */
   border: 1px solid ${theme.colors.green};
   width: 196px;
+  transition: all 0.3s;
+
+  &:hover {
+    transform: scale(1.05);
+  }
+
+  &:active {
+    transform: scale(1);
+  }
 `;
 
 export const ProdTitle = styled.h2`
@@ -15,9 +24,17 @@ export const ProdTitle = styled.h2`
   font-style: normal;
   font-weight: 500;
   line-height: 24px;
+
+  &:hover {
+    font-size: calc(20px * 1.1);
+  }
 `;
 
 export const Brand = styled(Link)`
+  position: relative;
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: baseline;
   color: ${theme.colors.orange};
   font-size: 16px;
   font-style: normal;
@@ -25,13 +42,28 @@ export const Brand = styled(Link)`
   line-height: 16px; /* 100% */
   text-transform: uppercase;
 
-  &:hover {
-    text-decoration: underline;
+  &:after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -2px;
+    height: 1px;
+    background-color: ${theme.colors.orange};
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+  }
+
+  &:hover::after {
+    transform: scaleX(1);
   }
 
   &:active {
     color: ${theme.colors.green};
     text-decoration: none;
+  }
+  &:active::after {
+    transform: scaleX(0);
   }
 `;
 
@@ -41,11 +73,15 @@ export const ShortDesc = styled.p`
   font-weight: 300;
   line-height: 20px;
 
-  margin-top: ${theme.spacing.step}px;
+  /* margin-top: ${theme.spacing.step}px; */
 
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+
+  &:hover {
+    font-size: calc(16px * 1.1);
+  }
 `;
 
 export const Size = styled.p`

@@ -45,6 +45,14 @@ export const PetButton = styled.button`
 
   border: 1px solid ${theme.colors.green};
 
+  svg {
+    fill: black;
+  }
+
+  svg.rodents {
+    fill: none;
+  }
+
   & span {
     display: flex;
     align-items: center;
@@ -143,6 +151,7 @@ export const FoodType = styled(Link)`
 
   &:hover {
     text-decoration: underline;
+    text-decoration-thickness: 1px;
   }
 
   &:active {
