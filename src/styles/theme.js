@@ -55,7 +55,7 @@ export const theme = Object.freeze({
     step: 4,
   },
   zIndexes: {
-    header: 6,
+    header: 800,
     filterSearch: 12,
     scrollToTop: 20,
     foldedContainer: 13,

@@ -3,4 +3,7 @@ export const selectBreadCrumbsStore = state => state.breadcrumbs.breadcrumbs;
 export const selectSearchQueryStore = state => state.search.query;
 export const selectSortingTypeStore = state => state.sorting.type;
 export const selectViewedProducts = state => state.viewedProducts.viewedList;
-
+export const selectMinPriceRange = state => state.priceRange.minPriceRange;
+export const selectMaxPriceRange = state => state.priceRange.maxPriceRange;
+export const selectPriceValue = state => state.priceRange.value;
+export const selectIsPriceRangeSet = state => state.priceRange.isPriceRangeSet;

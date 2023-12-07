@@ -1,5 +1,4 @@
 // this component is used for filtering by price with slider effect
-
 import {
   PriceContainer,
   PriceCurrency,
@@ -8,19 +7,25 @@ import {
   StyledRangeSlider,
 } from './PriceSlider.styled';
 import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectMaxPriceRange, selectMinPriceRange, selectPriceValue } from 'redux/selectors';
+import { setPriceChange, setPriceValue } from 'redux/slice/priceRangeSlice';
 import { theme } from 'styles';
 
 export const PriceSlider = ({ active }) => {
+  const minPriceRange = useSelector(selectMinPriceRange); // min price range for slider
+  const maxPriceRange = useSelector(selectMaxPriceRange); // max price range for slider
+  const priceValue = useSelector(selectPriceValue); // value of setted price range
   const [state, setState] = useState({
-    lowerBound: 20,
-    upperBound: 40,
-    min: 0,
-    max: 500,
-    value: [10, 50],
+    // lowerBound: 20,
+    // upperBound: 40,
+    min: minPriceRange,
+    max: maxPriceRange,
+    value: priceValue,
   });
+  const dispatch = useDispatch();
 
   const onSliderChange = value => {
-    log(value);
     setState(prevState => {
       return { ...prevState, value };
     });
@@ -32,6 +37,10 @@ export const PriceSlider = ({ active }) => {
         allowCross={false}
         value={state.value}
         onChange={onSliderChange}
+        onBlur={() => {
+          dispatch(setPriceValue(state.value)); // set on focus lost price value to redux state
+          dispatch(setPriceChange(true)); // set to redux store that is price rnage are setted
+        }}
         range
         min={state.min}
         max={state.max}
@@ -54,7 +63,3 @@ export const PriceSlider = ({ active }) => {
     </PriceContainer>
   );
 };
-
-function log(value) {
-  console.log(value); //eslint-disable-line
-}

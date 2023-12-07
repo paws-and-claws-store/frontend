@@ -1,23 +1,20 @@
+import { memo } from 'react';
 import {
   SearchDescriptionSpan,
   SearchDesriptionResultsSuccess,
   SearchQuery,
 } from './Search.styled';
 
-export default function SearchDescription({ searchRef }) {
+export default memo(function SearchDescription({ totalDocs, searchQuery }) {
   return (
     <SearchDesriptionResultsSuccess>
       <SearchDescriptionSpan>За запитом </SearchDescriptionSpan>
-      <SearchQuery> “{searchRef.current.searchQuery}” </SearchQuery>
+      <SearchQuery> “{searchQuery}” </SearchQuery>
       <SearchDescriptionSpan> знайдено </SearchDescriptionSpan>
-      <SearchQuery>{searchRef.current.totalDocs} </SearchQuery>
+      <SearchQuery>{totalDocs} </SearchQuery>
       <SearchDescriptionSpan>
-        {searchRef.current.totalDocs === 1
-          ? 'товар'
-          : searchRef.current.totalDocs < 5
-          ? 'товари'
-          : 'товарів'}
+        {totalDocs === 1 ? 'товар' : totalDocs < 5 ? 'товари' : 'товарів'}
       </SearchDescriptionSpan>
     </SearchDesriptionResultsSuccess>
   );
-}
+});
