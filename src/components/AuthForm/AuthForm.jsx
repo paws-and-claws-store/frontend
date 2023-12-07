@@ -1,7 +1,10 @@
-import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import {
+  useState,
+  //  useEffect
+} from 'react';
+// import { useNavigate } from 'react-router-dom';
 import { Form, Formik } from 'formik';
-import { useDispatch } from 'react-redux';
+// import { useDispatch } from 'react-redux';
 import { registerSchema } from 'utils/shemas/AuthSchema';
 import { useRegisrationMutation } from 'redux/operations';
 import {
@@ -12,16 +15,16 @@ import {
   InputEmailWraper,
   InputPasswordWraper,
   InputForm,
-//   IconWraper,
-//   IconCheck,
-//   IconCross,
+  //   IconWraper,
+  //   IconCheck,
+  //   IconCross,
   ErrorMess,
   SuccessMessage,
   Button,
-//   OnIconPass,
-//   OffIconPass,
-//   OnIconConPass,
-//   OffIconConPass,
+  //   OnIconPass,
+  //   OffIconPass,
+  //   OnIconConPass,
+  //   OffIconConPass,
 } from './AuthForm.styled';
 import { theme } from 'styles';
 // import { Check, Cross } from 'components/icons';
@@ -34,38 +37,44 @@ const initialValues = {
 };
 
 export function AuthForm() {
-  const [passwordShow, setPasswordShow] = useState(false);
-  const [confirmPasswordShow, setConfirmPasswordShow] = useState(false);
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-//   const { isRegistered } = useAuth();
+  const [
+    passwordShow,
+    // setPasswordShow
+  ] = useState(false);
+  const [
+    confirmPasswordShow,
+    // setConfirmPasswordShow
+  ] = useState(false);
+  // const dispatch = useDispatch();
+  // const navigate = useNavigate();
+  //   const { isRegistered } = useAuth();
 
-  const togglePassword = () => setPasswordShow(prevState => !prevState);
-  const toggleConfirmPassword = () =>
-    setConfirmPasswordShow(prevState => !prevState);
+  // const togglePassword = () => setPasswordShow(prevState => !prevState);
+  // const toggleConfirmPassword = () =>
+  //   setConfirmPasswordShow(prevState => !prevState);
 
-    const [registration, responsed] = useRegisrationMutation();
-    console.log("responsed:", responsed)
-    console.log("useRegisrationMutation():", useRegisrationMutation())
+  const [registration, responsed] = useRegisrationMutation();
+  console.log('responsed:', responsed);
+  console.log('useRegisrationMutation():', useRegisrationMutation());
 
-  const handleSubmit =  (values, { resetForm }) => {
+  const handleSubmit = (values, { resetForm }) => {
     const newUser = {
       name: values.name,
       email: values.email,
       password: values.password,
     };
-    
-    registration(newUser)
+
+    registration(newUser);
     if (responsed) {
       resetForm();
     }
   };
 
-//   useEffect(() => {
-//     if (isRegistered) {
-//       navigate('/user');
-//     }
-//   }, [isRegistered, navigate]);
+  //   useEffect(() => {
+  //     if (isRegistered) {
+  //       navigate('/user');
+  //     }
+  //   }, [isRegistered, navigate]);
 
   return (
     <FormContainer>
@@ -260,7 +269,6 @@ export function AuthForm() {
                 Registration
               </Button>
             </div>
-
           </Form>
         )}
       </Formik>

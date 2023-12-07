@@ -1,8 +1,8 @@
 import { useState, useEffect, useRef } from 'react';
 import { Form, Formik } from 'formik';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 import { loginSchema } from 'utils/shemas/AuthSchema';
-import { useDispatch } from 'react-redux';
+// import { useDispatch } from 'react-redux';
 // import { login } from 'redux/auth/auth-operations';
 // import { useAuth } from 'hooks/useAuth';
 
@@ -32,20 +32,23 @@ const initialValues = {
   password: '',
 };
 
-export function LoginForm({setRegistrMenuTogle}) {
-  const [passwordShow, setPasswordShow] = useState(false);
-  const togglePassword = () => setPasswordShow(prevState => !prevState);
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+export function LoginForm({ setRegistrMenuTogle }) {
+  const [
+    passwordShow,
+    //  setPasswordShow
+  ] = useState(false);
+  // const togglePassword = () => setPasswordShow(prevState => !prevState);
+  // const dispatch = useDispatch();
+  // const navigate = useNavigate();
 
-  const loginMenuRef = useRef(null)
-  console.log("loginMenuRef:", loginMenuRef?.current)
+  const loginMenuRef = useRef(null);
+  console.log('loginMenuRef:', loginMenuRef?.current);
 
   const handleSubmit = (values, { resetForm }) => {
-    const data = {
-      email: values.email,
-      password: values.password,
-    };
+    // const data = {
+    //   email: values.email,
+    //   password: values.password,
+    // };
     // dispatch(login(data));
     resetForm();
   };
@@ -57,16 +60,15 @@ export function LoginForm({setRegistrMenuTogle}) {
       window.removeEventListener('keydown', handleKeyDown);
       document.removeEventListener('mousedown', handleKeyDown);
     };
-    
   });
 
   const handleKeyDown = e => {
     if (e.code === 'Escape') {
       setRegistrMenuTogle(false);
-    };
+    }
     if (loginMenuRef.current && !loginMenuRef.current.contains(e.target)) {
-        setRegistrMenuTogle(false);
-      }
+      setRegistrMenuTogle(false);
+    }
   };
 
   //   useEffect(() => {
@@ -186,8 +188,17 @@ export function LoginForm({setRegistrMenuTogle}) {
             </div>
 
             <ToRegister>
-             <button style={{fontSize: '20px', color: 'black'}}>Забули пароль?</button> 
-              <LinkStyled to="/registration" onClick={()=>{setRegistrMenuTogle(false)}}>Register</LinkStyled>
+              <button style={{ fontSize: '20px', color: 'black' }}>
+                Забули пароль?
+              </button>
+              <LinkStyled
+                to="/registration"
+                onClick={() => {
+                  setRegistrMenuTogle(false);
+                }}
+              >
+                Register
+              </LinkStyled>
             </ToRegister>
           </Form>
         )}
