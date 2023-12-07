@@ -57,9 +57,12 @@ export const CartItem = ({ prod, unavailable }) => {
   });
 
   const handleDecrement = () => {
-    if (cardCount > count) {
+    if (cardCount > count && count !== 0) {
       setCardCount(count);
       dispatch(updateCartItem({ productCode, newCount: count }));
+    } else if (cardCount > count && count === 0) {
+      setCardCount(null);
+      dispatch(removeCartItem(productCode));
     } else if (cardCount > 1) {
       setCardCount(cardCount - 1);
       dispatch(updateCartItem({ productCode, newCount: cardCount - 1 }));
@@ -115,8 +118,10 @@ export const CartItem = ({ prod, unavailable }) => {
   };
 
   const handleBlur = () => {
-    if (cardCount === '')
+    if (cardCount === '') {
       Notify.warning('Мінімальна кількість для замовлення - 1 шт');
+      setCardCount(1);
+    }
 
     setIsFocused(false);
   };
@@ -196,11 +201,17 @@ export const CartItem = ({ prod, unavailable }) => {
               gap: '4px',
             }}
           >
-            <Brand to={'/brands'}>{brand}</Brand>
+            <span>
+              <Brand to={'/brands'}>{brand}</Brand>
+            </span>
             <Link
               to={`/catalog/${prod.pet._id}/${prod.category._id}/${prod.variant._id}/${prod.id}`}
             >
               <ProdTitle>{productName}</ProdTitle>
+            </Link>
+            <Link
+              to={`/catalog/${prod.pet._id}/${prod.category._id}/${prod.variant._id}/${prod.id}`}
+            >
               <ShortDesc>{shortDescription}</ShortDesc>
             </Link>
             <Size>{displaySize(size)}</Size>
