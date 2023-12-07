@@ -55,16 +55,19 @@ export const DefaultValue = styled.p`
   cursor: inherit;
 `;
 
-export const IndicatorWrapper = styled.div`
+export const IndicatorWrapper = styled.ul`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   padding-top: 8px;
   padding-bottom: 8px;
   gap: 8px;
+  width: 100%;
 `;
 
-export const IndicatorValue = styled.p`
+export const IndicatorValue = styled.li`
+  display: inline-block;
+  width: 100%;
   color: ${theme.colors.black};
   font-size: 14px;
   font-weight: ${theme.fontWeight.Light};
