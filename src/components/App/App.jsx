@@ -12,7 +12,9 @@ import {
   Pet,
   PricesDrop,
   ProductCard,
+  Registration,
 } from 'pages';
+
 import Search from 'pages/Search/Search';
 import { Route, Routes } from 'react-router-dom';
 import { Hidden } from './App.styled';
@@ -26,6 +28,7 @@ export const App = () => {
       <Routes>
         <Route path="/" element={<SharedLayout />}>
           <Route index element={<Home />} />
+          <Route path="registration" element={<Registration />} />
           <Route path="catalog" element={<CatalogLayout />}>
             <Route index element={<Catalog />} />
             <Route path=":pet" element={<Pet />} />

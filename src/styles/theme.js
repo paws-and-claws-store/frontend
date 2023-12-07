@@ -63,8 +63,9 @@ export const theme = Object.freeze({
     carousel: 5,
     app: 6,
     priceSlider: 12,
-    sortSelect: 6,
+    sortSelect: 5,
     catalogPetButtons: 10,
     backdropLoader: 888,
+    loginMenu: 10,
   },
 });
