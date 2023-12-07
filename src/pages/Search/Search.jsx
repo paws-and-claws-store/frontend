@@ -25,7 +25,6 @@ import SearchCategory from './SearchCategory';
 import { usePagination } from 'hooks/usePagination';
 import { useSearchParams } from 'react-router-dom';
 import { setQuerySearch } from 'redux/slice/searchSlice';
-import { setPriceChange } from 'redux/slice/priceRangeSlice';
 
 export default function Search() {
   const [currentPage, setCurrentPage] = useState(1); // to track the current page of search results.
@@ -33,7 +32,6 @@ export default function Search() {
   const dispatch = useDispatch();
 
   const abortControllerRef = useRef(); // hooks used to store references to the AbortController.
-  const searchRef = useRef(); // hooks used to store references to the search query.
 
   const searchQuery = useSelector(selectSearchQueryStore); // extract search query from the Redux store
   const sortingType = useSelector(selectSortingTypeStore); // extract sorting type from the Redux store
@@ -59,7 +57,6 @@ export default function Search() {
     maxPrice: priceValue[1], // set max price for query
   }; // params object to be used in the API call hook useFetchSearchQuery.
 
-  //This is watching for changing current page, if user now on 2-nd or nore page and he change query page must be again 1
   useEffect(() => {
     setCurrentPage(1); // set page one to the new search query, sorting type or price calue from price slider
   }, [searchQuery, sortingType, priceValue]);
@@ -84,33 +81,20 @@ export default function Search() {
     signal,
     params,
   }); // Utilizes a custom hook useFetchSearchQuery to fetch search results based on the params object and the abort signal. It receives data, error, isLoading, isFetching, and isError as response states.
-  searchRef.current = {
-    searchQuery: searchParams ? searchParams.get('query') : searchQuery,
-    totalDocs: response?.totalDocs,
-  }; // set object of current search query and current response to avoid rerender unnecessary rerenders
 
-  const { productsList, paginationData, onAddPage, onPageChange, priceRangeSet } = usePagination({
+  const { productsList, paginationData, onAddPage, onPageChange } = usePagination({
     response,
     isFetching,
     isError,
     setCurrentPage,
     currentPage,
     sortingType,
-    priceValue,
     isPriceRangeSet,
   }); // Use a custom hook usePagination to handle pagination-related functionalities such as managing product lists, pagination data, and changing pages.
 
   const totalDocs = response?.totalDocs;
-  useEffect(() => {
-    // return () => {
-    //   dispatch(setPriceChange(true)); // set to redux store state of setted price range from hook usePagination
-    // };
-  }, [totalDocs]);
+  useEffect(() => {}, [totalDocs]); // rerender search component when total docs are changed
 
-  // useEffect(() => {
-  //   console.log('priceRangeSet saxdsdcs :>> ', priceRangeSet);
-  //   dispatch(setPriceChange(priceRangeSet)); // set to redux store state of setted price range from hook usePagination
-  // }, [dispatch, priceRangeSet]);
   return (
     <div style={{ minHeight: '640px' }}>
       {error?.status >= 500 ? (
@@ -123,7 +107,10 @@ export default function Search() {
         <>
           <UpsideSearchContainer>
             <TitleSearch>Результати пошуку</TitleSearch>
-            <SearchDescription searchRef={searchRef} />
+            <SearchDescription
+              totalDocs={response?.totalDocs}
+              searchQuery={searchParams ? query : searchQuery}
+            />
             <SortingContainer>
               <SortSelect />
             </SortingContainer>

@@ -41,10 +41,6 @@ export const PriceSlider = ({ active }) => {
           dispatch(setPriceValue(state.value)); // set on focus lost price value to redux state
           dispatch(setPriceChange(true)); // set to redux store that is price rnage are setted
         }}
-        onFocus={() => {
-          // console.log('onfocus');
-          dispatch(setPriceChange(false)); // set to redux store that is price rnage are setted
-        }}
         range
         min={state.min}
         max={state.max}
