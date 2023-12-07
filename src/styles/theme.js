@@ -55,7 +55,7 @@ export const theme = Object.freeze({
     step: 4,
   },
   zIndexes: {
-    header: 6,
+    header: 800,
     filterSearch: 12,
     scrollToTop: 20,
     foldedContainer: 13,
@@ -63,8 +63,9 @@ export const theme = Object.freeze({
     carousel: 5,
     app: 6,
     priceSlider: 12,
-    sortSelect: 6,
+    sortSelect: 5,
     catalogPetButtons: 10,
     backdropLoader: 888,
+    loginMenu: 10,
   },
 });

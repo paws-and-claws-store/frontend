@@ -33,13 +33,12 @@ export const PrevBtn = styled.button`
   &:hover {
     border-color: ${props =>
       props.disabled ? 'lightgray' : theme.colors.orange};
+    > svg {
+      fill: ${props => (props.disabled ? 'lightgray' : theme.colors.orange)};
+    }
   }
   > svg {
     fill: ${props => (props.disabled ? 'lightgray' : theme.colors.green)};
-
-    &:hover {
-      fill: ${props => (props.disabled ? 'lightgray' : theme.colors.orange)};
-    }
   }
 `;
 
@@ -58,12 +57,11 @@ export const NextBtn = styled.button`
   &:hover {
     border-color: ${props =>
       props.disabled ? 'lightgray' : theme.colors.orange};
+    > svg {
+      fill: ${props => (props.disabled ? 'lightgray' : theme.colors.orange)};
+    }
   }
   > svg {
     fill: ${props => (props.disabled ? 'lightgray' : theme.colors.green)};
-
-    &:hover {
-      fill: ${props => (props.disabled ? 'lightgray' : theme.colors.orange)};
-    }
   }
 `;

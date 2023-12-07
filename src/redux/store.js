@@ -15,9 +15,10 @@ import {
 import { cartReducer } from './slice/cartSlice';
 import { api } from './operations';
 import { breadCrumbsReducer } from './slice/breadCrumbsSlice';
-import { searchSliceReducer } from './searchSlice';
+import { searchSliceReducer } from './slice/searchSlice';
 import { searchSelectReducer } from './slice/sortSelectSlice';
 import { viewedProductsReducer } from './slice/viewedProductsSlice';
+import { priceRangeReducer } from './slice/priceRangeSlice';
 
 const reducers = combineReducers({
   [api.reducerPath]: api.reducer,
@@ -26,6 +27,7 @@ const reducers = combineReducers({
   search: searchSliceReducer,
   sorting: searchSelectReducer,
   viewedProducts: viewedProductsReducer,
+  priceRange: priceRangeReducer,
 });
 
 const persistConfig = {

@@ -8,6 +8,7 @@ export function usePagination({
   setCurrentPage,
   currentPage,
   sortingType,
+  isPriceRangeSet,
   isLoading,
 }) {
   const [productsList, setProductsList] = useState([]);
@@ -22,23 +23,40 @@ export function usePagination({
   });
   const [loadMoreClicked, setLoadMoreClicked] = useState(false); // Окремий стан для слідкування за натисканням кнопки "Load More"
   const [pageNumberClicked, setPageNumberClicked] = useState(false);
+  const [priceRangeSet, setPriceRangeSet] = useState(isPriceRangeSet); // internal state to price range setted
 
   useEffect(() => {
     async function fetchInitialData() {
+      // console.groupCollapsed();
+      // console.log('loadMoreClicked :>> ', loadMoreClicked);
+      // console.log('pageNumberClicked :>> ', pageNumberClicked);
+      // console.log('sortingType :>> ', sortingType);
+      // console.log('currentPage :>> ', currentPage);
+      // console.log('isPriceRangeSet :>> ', isPriceRangeSet);
+      // console.log('priceRangeSet :>> ', priceRangeSet);
+      // console.groupEnd();
+
       if (loadMoreClicked && !sortingType && !pageNumberClicked) {
+        // console.log('1');
         setProductsList(prevState => [...prevState, ...response.docs]);
         setPaginationData(updatePaginationData(response));
+        //setPriceRangeSet(false);
         return;
       }
 
       if (!loadMoreClicked && currentPage === 1 && !pageNumberClicked) {
-        setProductsList([...response.docs]);
+        // console.log('2');
+        setProductsList(response.docs);
         setLoadMoreClicked(false);
         setPaginationData(updatePaginationData(response));
+        if (priceRangeSet) {
+          setPriceRangeSet(false);
+        }
         return;
       }
 
       if (loadMoreClicked && sortingType && currentPage === 1) {
+        console.log('3');
         setProductsList(response.docs);
         setPaginationData(updatePaginationData(response));
 
@@ -46,6 +64,7 @@ export function usePagination({
       }
 
       if (loadMoreClicked && sortingType && currentPage !== 1 && !pageNumberClicked) {
+
         setProductsList(prevState => [...prevState, ...response.docs]);
         setPaginationData(updatePaginationData(response));
         setLoadMoreClicked(false);
@@ -53,6 +72,7 @@ export function usePagination({
       }
 
       if (!loadMoreClicked && pageNumberClicked) {
+        // console.log('5');
         setProductsList(response.docs);
         setPaginationData(updatePaginationData(response));
         setPageNumberClicked(false);
@@ -63,7 +83,20 @@ export function usePagination({
     if (!isFetching && !isError) {
       fetchInitialData();
     }
-  }, [currentPage, isError, isFetching, loadMoreClicked, pageNumberClicked, response, sortingType]);
+
+  }, [
+    currentPage,
+    isError,
+    isFetching,
+    loadMoreClicked,
+    pageNumberClicked,
+    priceRangeSet,
+    response,
+    sortingType,
+    isPriceRangeSet,
+  ]);
+
+
 
   useEffect(() => {
     return () => {
@@ -73,8 +106,9 @@ export function usePagination({
     };
   }, [pageNumberClicked]);
 
+
   const onPageChange = pageNumber => {
-    console.log('pageNumber:', pageNumber);
+    // console.log('pageNumber:', pageNumber);
     // При кліку на номер сторінки через пагінацію, змініть стан
     setLoadMoreClicked(false);
     setPageNumberClicked(true);
@@ -96,5 +130,6 @@ export function usePagination({
     onPageChange,
     currentPage,
     loadMoreClicked,
+    priceRangeSet,
   };
 }
