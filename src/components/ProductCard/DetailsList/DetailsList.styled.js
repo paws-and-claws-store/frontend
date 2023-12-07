@@ -27,7 +27,7 @@ export const CustomNavLink = styled.button`
     bottom: 0;
     height: 1px;
     background-color: ${theme.colors.green};
-    /* transform: scaleX(0); */
+    transform: scaleX(0);
     transition: transform 0.3s ease;
   }
   &:hover::after {
