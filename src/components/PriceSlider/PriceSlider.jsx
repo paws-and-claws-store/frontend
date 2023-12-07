@@ -1,5 +1,4 @@
 // this component is used for filtering by price with slider effect
-
 import {
   PriceContainer,
   PriceCurrency,
@@ -41,6 +40,10 @@ export const PriceSlider = ({ active }) => {
         onBlur={() => {
           dispatch(setPriceValue(state.value)); // set on focus lost price value to redux state
           dispatch(setPriceChange(true)); // set to redux store that is price rnage are setted
+        }}
+        onFocus={() => {
+          // console.log('onfocus');
+          dispatch(setPriceChange(false)); // set to redux store that is price rnage are setted
         }}
         range
         min={state.min}

@@ -102,8 +102,15 @@ export default function Search() {
 
   const totalDocs = response?.totalDocs;
   useEffect(() => {
-    dispatch(setPriceChange(priceRangeSet)); // set to redux store state of setted price range from hook usePagination
-  }, [dispatch, priceRangeSet, totalDocs]);
+    // return () => {
+    //   dispatch(setPriceChange(true)); // set to redux store state of setted price range from hook usePagination
+    // };
+  }, [totalDocs]);
+
+  // useEffect(() => {
+  //   console.log('priceRangeSet saxdsdcs :>> ', priceRangeSet);
+  //   dispatch(setPriceChange(priceRangeSet)); // set to redux store state of setted price range from hook usePagination
+  // }, [dispatch, priceRangeSet]);
   return (
     <div style={{ minHeight: '640px' }}>
       {error?.status >= 500 ? (

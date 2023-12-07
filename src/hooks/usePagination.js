@@ -27,41 +27,46 @@ export function usePagination({
 
   useEffect(() => {
     async function fetchInitialData() {
-      if (isPriceRangeSet) {
-        // if price range setted get only clear resppone data without previous state
-        // console.log('1');
+      console.log('loadMoreClicked :>> ', loadMoreClicked);
+      console.log('pageNumberClicked :>> ', pageNumberClicked);
+      console.log('sortingType :>> ', sortingType);
+      console.log('currentPage :>> ', currentPage);
+      // console.log('isPriceRangeSet :>> ', isPriceRangeSet);
+      console.log('priceRangeSet :>> ', priceRangeSet);
+
+      if (loadMoreClicked && !sortingType && !pageNumberClicked && priceRangeSet) {
+        console.log('1');
         setProductsList(response.docs);
         setPaginationData(updatePaginationData(response));
-        setPriceRangeSet(false); // set price range to default state "false"
+        // setPriceRangeSet(false);
         return;
       }
 
       if (loadMoreClicked && !sortingType && !pageNumberClicked) {
-        // console.log('2');
+        console.log('2');
         setProductsList(prevState => [...prevState, ...response.docs]);
         setPaginationData(updatePaginationData(response));
-        // setPriceRangeSet(true);
         return;
       }
 
       if (!loadMoreClicked && currentPage === 1 && !pageNumberClicked) {
-        // console.log('3');
-        setProductsList([...response.docs]);
+        console.log('3');
+        setProductsList(response.docs);
         setLoadMoreClicked(false);
         setPaginationData(updatePaginationData(response));
         return;
       }
-      // maybe this condition are not needed
-      // if (loadMoreClicked && sortingType && currentPage === 1) {
-      //   console.log('4');
-      //   setProductsList(response.docs);
-      //   setPaginationData(updatePaginationData(response));
-      //   setPriceRangeSet(false);
-      //   return;
-      // }
+
+      if (loadMoreClicked && sortingType && currentPage === 1) {
+        console.log('4');
+        setProductsList(response.docs);
+        setPaginationData(updatePaginationData(response));
+        setPriceRangeSet(false);
+        return;
+      }
 
       if (loadMoreClicked && sortingType && currentPage !== 1 && !pageNumberClicked) {
-        //console.log('5');
+        console.log('5');
         setProductsList(prevState => [...prevState, ...response.docs]);
         setPaginationData(updatePaginationData(response));
         setLoadMoreClicked(false);
@@ -69,7 +74,7 @@ export function usePagination({
       }
 
       if (!loadMoreClicked && pageNumberClicked) {
-        //console.log('6');
+        console.log('6');
         setProductsList(response.docs);
         setPaginationData(updatePaginationData(response));
         return;
@@ -83,12 +88,12 @@ export function usePagination({
     currentPage,
     isError,
     isFetching,
-    isPriceRangeSet,
     loadMoreClicked,
     pageNumberClicked,
     priceRangeSet,
     response,
     sortingType,
+    isPriceRangeSet,
   ]);
 
   const onPageChange = pageNumber => {

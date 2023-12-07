@@ -18,7 +18,7 @@ import { setValueSort } from 'redux/slice/sortSelectSlice';
 
 export const SortSelect = () => {
   const [isClickBurger, setIsClickBurger] = useState(true);
-  const [indicator, setIndicator] = useState('обрати');
+  const [indicator, setIndicator] = useState('спочатку дешеві');
   const dispatch = useDispatch();
 
   const indicatorHandler = value => {
