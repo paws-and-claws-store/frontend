@@ -4,10 +4,13 @@ import { removeCartItem, updateCartItem } from 'redux/slice/cartSlice';
 import { displaySize } from 'helpers';
 
 import {
+  Availability,
   Brand,
   BtnDecrement,
   BtnIncrement,
   ImgWrapper,
+  MessageContainer,
+  MessageText,
   PriceBox,
   PriceSt,
   ProdTitle,
@@ -18,7 +21,7 @@ import {
   SymbolCurrency,
   TotalQuantity,
 } from './CartItem.styled';
-import { CrossToDelete } from 'components/Icons';
+import { AttantionCicleLight, CrossToDelete } from 'components/Icons';
 import { Link } from 'react-router-dom';
 import { Notify } from 'notiflix';
 // import { fetchProductsByOnePetCopy } from 'services/api';
@@ -57,7 +60,12 @@ export const CartItem = ({ prod, unavailable }) => {
   });
 
   const handleDecrement = () => {
-    if (cardCount > count && count !== 0) {
+    if (count === 0) {
+      setCardCount(null);
+      dispatch(removeCartItem(productCode));
+    }
+
+    if (cardCount > count) {
       setCardCount(count);
       dispatch(updateCartItem({ productCode, newCount: count }));
     } else if (cardCount > count && count === 0) {
@@ -158,24 +166,16 @@ export const CartItem = ({ prod, unavailable }) => {
           //  width: '736px'
         }}
       >
-        {isUnavailable && (
-          <span
-            style={{
-              position: 'absolute',
-              bottom: '5px',
-              left: '20px',
-
-              color: 'black',
-            }}
-          >
-            Доступнo {count} шт{' '}
-          </span>
-        )}
-
         <Link
           to={`/catalog/${prod.pet._id}/${prod.category._id}/${prod.variant._id}/${prod.id}`}
         >
-          <ImgWrapper isUnavailable={isUnavailable}>
+          <ImgWrapper className="imgContainer" count={count}>
+            {isUnavailable && count !== 0 && (
+              <Availability>
+                <span>Доступнo {count} шт </span>
+              </Availability>
+            )}
+
             <img
               style={{ objectFit: 'cover' }}
               src={mainImage}
@@ -287,6 +287,24 @@ export const CartItem = ({ prod, unavailable }) => {
                 <span> {itemTotal.toFixed(2)}</span>
                 <span>₴</span>
               </TotalQuantity>
+            )}
+
+            {isUnavailable && (
+              <MessageContainer>
+                <span>
+                  {' '}
+                  <AttantionCicleLight />
+                </span>
+                {count === 0 ? (
+                  <MessageText>
+                    На жаль, цього товару вже немає в наявності
+                  </MessageText>
+                ) : (
+                  <MessageText>
+                    На жаль, обраної кількості товару немає на складі
+                  </MessageText>
+                )}
+              </MessageContainer>
             )}
           </div>
           <button
