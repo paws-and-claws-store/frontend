@@ -13,6 +13,8 @@ export const theme = Object.freeze({
     secGreen: '#D8D4B8',
     secGrey: '#D8D8D8',
     secBlack: '#4F4F4F',
+
+    filterImg: 'rgba(178, 178, 178, 0.60)',
   },
   fontSizes: {
     xs: '12px',
