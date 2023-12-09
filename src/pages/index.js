@@ -11,3 +11,4 @@ export * from 'pages/PageNotFound';
 export * from 'pages/PricesDrop';
 export * from 'pages/Contacts';
 export * from 'pages/PageUnderConstruction';
+export * from 'pages/Registration/Registration'

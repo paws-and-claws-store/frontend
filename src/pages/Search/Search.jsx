@@ -12,6 +12,8 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import { SortSelect } from 'components/SortSelect/SortSelect';
 import {
+  // selectIsPriceRangeSet,
+  selectPriceValue,
   selectSearchQueryStore,
   selectSortingTypeStore,
 } from 'redux/selectors';
@@ -22,8 +24,8 @@ import SearchDescription from './SearchDescription';
 import SearchCategory from './SearchCategory';
 import { usePagination } from 'hooks/usePagination';
 import { useSearchParams } from 'react-router-dom';
-import { setQuerySearch } from 'redux/searchSlice';
 import { setValueSort } from 'redux/slice/sortSelectSlice';
+import { setQuerySearch } from 'redux/slice/searchSlice';
 
 export default function Search() {
   const searchQuery = useSelector(selectSearchQueryStore); // extract search query from the Redux store
@@ -35,8 +37,8 @@ export default function Search() {
   const dispatch = useDispatch();
 
   const abortControllerRef = useRef(); // hooks used to store references to the AbortController.
-  const searchRef = useRef(); // hooks used to store references to the search query.
-
+  const priceValue = useSelector(selectPriceValue); // get price value from price slider
+  // const isPriceRangeSet = useSelector(selectIsPriceRangeSet); // get price range set state from price slider
   useEffect(() => {
     if (searchQuery) {
       setSearchParams({ query: searchQuery });
@@ -48,6 +50,7 @@ export default function Search() {
     }
   }, [searchQuery, setSearchParams, sortingType]);
 
+  const query = searchParams.get('query');
   useEffect(() => {
     const query = searchParams.get('query');
     const sortBy = searchParams.get('sortBy');
@@ -59,20 +62,22 @@ export default function Search() {
     if (sortBy) {
       dispatch(setValueSort(sortBy));
     }
-  }, [dispatch, searchParams]);
 
-  //This is watching for changing current page, if user now on 2-nd or nore page and he change query page must be again 1
+    if (query || query !== null) {
+      dispatch(setQuerySearch(query));
+    }
+  }, [dispatch, query, searchParams]);
+
+  const params = {
+    findBy: encodeURIComponent(query ? query : searchQuery).toLowerCase(),
+    page: currentPage,
+    minPrice: priceValue[0], // set min price for query
+    maxPrice: priceValue[1], // set max price for query
+  }; // params object to be used in the API call hook useFetchSearchQuery.
+
   useEffect(() => {
     setCurrentPage(1); // set page one to the new search query
   }, [searchQuery, sortingType]);
-
-  const params = {
-    findBy: encodeURIComponent(
-      searchParams.size ? searchParams.get('query') : searchQuery,
-    ).toLowerCase(),
-    page: currentPage,
-  }; // params object to be used in the API call hook useFetchSearchQuery.
-  console.log('params:', params);
 
   if (sortingType !== '') {
     params.sortBy = sortingType; // set to params object sorting type if sorting type is exists
@@ -96,10 +101,10 @@ export default function Search() {
     params,
   }); // Utilizes a custom hook useFetchSearchQuery to fetch search results based on the params object and the abort signal. It receives data, error, isLoading, isFetching, and isError as response states.
 
-  searchRef.current = {
-    searchQuery: searchParams ? searchParams.get('query') : searchQuery,
-    totalDocs: response?.totalDocs,
-  }; // set object of current search query and current response to avoid rerender unnecessary rerenders
+  // searchRef.current = {
+  //   searchQuery: searchParams ? searchParams.get('query') : searchQuery,
+  //   totalDocs: response?.totalDocs,
+  // }; // set object of current search query and current response to avoid rerender unnecessary rerenders
 
   const { productsList, paginationData, onAddPage, onPageChange } =
     usePagination({
@@ -110,6 +115,9 @@ export default function Search() {
       currentPage,
       sortingType,
     }); // Use a custom hook usePagination to handle pagination-related functionalities such as managing product lists, pagination data, and changing pages.
+
+  const totalDocs = response?.totalDocs;
+  useEffect(() => {}, [totalDocs]); // rerender search component when total docs are changed
 
   return (
     <div style={{ minHeight: '640px' }}>
@@ -123,7 +131,10 @@ export default function Search() {
         <>
           <UpsideSearchContainer>
             <TitleSearch>Результати пошуку</TitleSearch>
-            <SearchDescription searchRef={searchRef} />
+            <SearchDescription
+              totalDocs={response?.totalDocs}
+              searchQuery={searchParams ? query : searchQuery}
+            />
             <SortingContainer>
               <SortSelect />
             </SortingContainer>

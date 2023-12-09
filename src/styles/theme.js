@@ -13,6 +13,8 @@ export const theme = Object.freeze({
     secGreen: '#D8D4B8',
     secGrey: '#D8D8D8',
     secBlack: '#4F4F4F',
+
+    filterImg: 'rgba(178, 178, 178, 0.60)',
   },
   fontSizes: {
     xs: '12px',
@@ -55,7 +57,7 @@ export const theme = Object.freeze({
     step: 4,
   },
   zIndexes: {
-    header: 13,
+    header: 800,
     filterSearch: 12,
     scrollToTop: 20,
     foldedContainer: 12,
@@ -66,5 +68,6 @@ export const theme = Object.freeze({
     sortSelect: 12,
     catalogPetButtons: 15,
     backdropLoader: 888,
+    loginMenu: 10,
   },
 });

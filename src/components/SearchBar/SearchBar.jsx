@@ -7,7 +7,7 @@ import { Notify } from 'notiflix';
 import { searchSchema } from './searchValidationSchema'; // add search schema validation
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { setQuerySearch } from 'redux/searchSlice';
+import { setQuerySearch } from 'redux/slice/searchSlice';
 import { selectSearchQueryStore } from 'redux/selectors';
 
 export const SearchBar = () => {
