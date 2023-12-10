@@ -4,7 +4,8 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 export const api = createApi({
   reducerPath: 'api',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'https://paws-and-claws-store-backend.onrender.com',
+    // baseUrl: 'https://paws-and-claws-store-backend.onrender.com',
+    baseUrl: 'https://paws-and-claws-store.onrender.com',
     // baseUrl: 'http://localhost:4000',
   }),
   //   tagTypes: ['Products'],
@@ -95,7 +96,7 @@ export const api = createApi({
     }),
 
     regisration: builder.mutation({
-      query: ( newUser ) => ({
+      query: newUser => ({
         url: `/api/auth/register`,
         method: 'POST',
         body: newUser,
