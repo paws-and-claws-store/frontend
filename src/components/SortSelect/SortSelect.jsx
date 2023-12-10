@@ -1,5 +1,8 @@
 // this component is used for sorting on product pages
-import React, { useEffect, useState } from 'react';
+import React, {
+  // useEffect,
+  useState,
+} from 'react';
 
 import {
   BurgerContainer,
@@ -13,15 +16,18 @@ import {
 } from './SortSelect.styled';
 import { RightArrow } from 'components/Icons';
 import { theme } from 'styles';
-import { useDispatch, useSelector } from 'react-redux';
+import {
+  useDispatch,
+  // useSelector
+} from 'react-redux';
 import { setValueSort } from 'redux/slice/sortSelectSlice';
-import { selectSortingTypeStore } from 'redux/selectors';
-import { useSearchParams } from 'react-router-dom';
+// import { selectSortingTypeStore } from 'redux/selectors';
+// import { useSearchParams } from 'react-router-dom';
 
 export const SortSelect = () => {
   // const sortingType = useSelector(selectSortingTypeStore);
-  const [searchParams] = useSearchParams();
-  const sortingType = searchParams.get('sortBy');
+  // const [searchParams] = useSearchParams();
+  // const sortingType = searchParams.get('sortBy');
 
   const [isClickBurger, setIsClickBurger] = useState(true);
   const [indicator, setIndicator] = useState('обрати');
@@ -52,13 +58,13 @@ export const SortSelect = () => {
     setIsClickBurger(!isClickBurger);
   };
 
-  useEffect(() => {
-    // Викликати indicatorHandler при ініціалізації, якщо sortingType вже існує
-    if (sortingType) {
-      indicatorHandler(sortingType);
-      setIsClickBurger(true);
-    }
-  }, []);
+  // useEffect(() => {
+  //   // Викликати indicatorHandler при ініціалізації, якщо sortingType вже існує
+  //   if (sortingType) {
+  //     indicatorHandler(sortingType);
+  //     setIsClickBurger(true);
+  //   }
+  // }, [indicatorHandler, sortingType]);
 
   const onButtonHandler = () => setIsClickBurger(!isClickBurger);
   const onBlurHandler = () => setIsClickBurger(true);
