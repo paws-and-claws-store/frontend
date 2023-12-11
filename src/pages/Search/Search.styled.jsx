@@ -36,7 +36,6 @@ export const SearchDesriptionResults = styled.div`
   margin-top: auto;
   margin-bottom: auto;
 
-
   color: ${theme.colors.black};
   font-variant-numeric: lining-nums proportional-nums;
   font-feature-settings: 'ss09' on;
@@ -52,7 +51,6 @@ export const SearchDesriptionResultsSuccess = styled.div`
   margin-top: 40px;
   margin-bottom: auto;
 
-
   color: ${theme.colors.black};
   font-variant-numeric: lining-nums proportional-nums;
   font-feature-settings: 'ss09' on;
@@ -64,7 +62,6 @@ export const SearchDesriptionResultsSuccess = styled.div`
   font-weight: ${theme.fontWeight.Medium};
 
   line-height: 20px; /* 125% */
-
 `;
 
 export const SearchQuery = styled.span`
@@ -90,6 +87,20 @@ export const SearchCategoryList = styled.div`
 
 export const SearchAsideCatalog = styled.aside`
   /* width: ${theme.spacing.step * 76}px; */
+`;
+
+export const SearchClearFilter = styled.div`
+  margin-bottom: 4px;
+  color: ${theme.colors.green};
+  font-variant-numeric: lining-nums proportional-nums;
+  font-feature-settings: 'ss09' on;
+  font-family: Inter;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: ${theme.fontWeight.Light};
+  line-height: ${theme.lineHeight.s}; /* 114.286% */
+  text-decoration-line: underline;
+  cursor: pointer;
 `;
 
 export const SearchFilter = styled.div`

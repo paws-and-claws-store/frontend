@@ -11,6 +11,8 @@ const PriceRangeInitialState = {
 PriceRangeInitialState.value.push(PriceRangeInitialState.minPriceRange);
 PriceRangeInitialState.value.push(PriceRangeInitialState.maxPriceRange);
 
+const PriceRangeInitialStateModified = PriceRangeInitialState;
+
 const priceRangeSlice = createSlice({
   name: 'priceRange',
   initialState: PriceRangeInitialState,
@@ -27,9 +29,20 @@ const priceRangeSlice = createSlice({
     setPriceChange(state, action) {
       state.isPriceRangeSet = action.payload;
     },
+    resetPriceRange(state, action) {
+      state.value = PriceRangeInitialStateModified.value;
+      state.isPriceRangeSet = PriceRangeInitialStateModified.isPriceRangeSet;
+      state.minPriceRange = PriceRangeInitialStateModified.minPriceRange;
+      state.maxPriceRange = PriceRangeInitialStateModified.maxPriceRange;
+    },
   },
 });
 
 export const priceRangeReducer = priceRangeSlice.reducer;
-export const { setMinPriceRange, setMaxPriceRange, setPriceValue, setPriceChange } =
-  priceRangeSlice.actions;
+export const {
+  setMinPriceRange,
+  setMaxPriceRange,
+  setPriceValue,
+  setPriceChange,
+  resetPriceRange,
+} = priceRangeSlice.actions;

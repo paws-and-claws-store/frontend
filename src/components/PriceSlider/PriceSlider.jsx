@@ -6,7 +6,7 @@ import {
   PriceValue,
   StyledRangeSlider,
 } from './PriceSlider.styled';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectMaxPriceRange, selectMinPriceRange, selectPriceValue } from 'redux/selectors';
 import { setPriceChange, setPriceValue } from 'redux/slice/priceRangeSlice';
@@ -30,6 +30,14 @@ export const PriceSlider = ({ active }) => {
       return { ...prevState, value };
     });
   };
+  useEffect(() => {
+    const reduxStatePriceRange = {
+      min: minPriceRange,
+      max: maxPriceRange,
+      value: priceValue,
+    };
+    setState(reduxStatePriceRange);
+  }, [maxPriceRange, minPriceRange, priceValue]); // rerender component if price range changed at redux store
 
   return (
     <PriceContainer active={active}>
