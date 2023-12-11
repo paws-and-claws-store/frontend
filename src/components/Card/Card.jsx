@@ -24,7 +24,7 @@ import { HeartIcon, StarIcon } from 'components/Icons';
 import { displaySize } from 'helpers';
 import { useDispatch, useSelector } from 'react-redux';
 import { addCartItem, removeCartItem, updateCartItem } from 'redux/slice/cartSlice';
-import { selectCartStore, selectIsPriceRangeSet } from 'redux/selectors';
+import { selectCartStore, selectIsPriceRangeSet, selectSortingTypeStore } from 'redux/selectors';
 import { Notify } from 'notiflix';
 
 // import { CardList } from 'components';
@@ -40,6 +40,7 @@ export const Card = ({ el, onClick }) => {
   const [favourite, setFavourite] = useState(el.favourite || false);
   const [cardCount, setCardCount] = useState(null);
   const isPriceRangeSet = useSelector(selectIsPriceRangeSet); // redux state of price range is setted
+  const sortingType = useSelector(selectSortingTypeStore); // extract sorting type from the Redux store
 
   const changeFavourite = () => {
     setFavourite(!favourite);
@@ -63,6 +64,10 @@ export const Card = ({ el, onClick }) => {
       setElType(el.items[0]);
     }
   }, [el.items, isPriceRangeSet]); // if price range is setted, rerender component
+
+  useEffect(() => {
+    setElType(el.items[0]);
+  }, [el.items, sortingType]); // if sorting type is changed, rerender component
 
   const handleIncrement = () => {
     if (cardCount === null) {
