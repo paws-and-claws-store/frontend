@@ -299,7 +299,7 @@ export const StyledRangeSlider = styled(Slider)`
   }
 `;
 
-export const PriceRangeStyle = styled.div`
+export const PriceRangeStyle = styled.form`
   display: flex;
   align-items: end;
 
@@ -308,7 +308,7 @@ export const PriceRangeStyle = styled.div`
   justify-content: center;
 `;
 
-export const PriceValue = styled.div`
+export const PriceValue = styled.input`
   min-width: 22px;
   color: ${theme.colors.orange};
   font-variant-numeric: lining-nums proportional-nums;
