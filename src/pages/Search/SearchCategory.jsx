@@ -1,17 +1,30 @@
 import { RightArrow } from 'components/Icons';
-import { FoldedContainer, SearchBrands, SearchCategoryList, SearchFilter } from './Search.styled';
+import {
+  FoldedContainer,
+  SearchBrands,
+  SearchCategoryList,
+  SearchClearFilter,
+  SearchFilter,
+} from './Search.styled';
 import { PriceSlider } from 'components/PriceSlider/PriceSlider';
 import { Filter } from 'components/Filter/Filter';
 import { theme } from 'styles';
 import { memo, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { resetPriceRange } from 'redux/slice/priceRangeSlice';
 
 export default memo(function SearchCategory() {
   const [active, setActive] = useState({ price: false, brands: false });
+  const dispatch = useDispatch();
 
   const handleClickToggle = e => {
     active[e.currentTarget.attributes.name.value]
       ? setActive({ ...active, [e.currentTarget.attributes.name.value]: false })
       : setActive({ ...active, [e.currentTarget.attributes.name.value]: true });
+  };
+
+  const handleClickClearFilters = () => {
+    dispatch(resetPriceRange());
   };
   return (
     <SearchCategoryList>
@@ -22,6 +35,15 @@ export default memo(function SearchCategory() {
           gap: '4px',
         }}
       >
+        <li key={0}>
+          <SearchClearFilter
+            onClick={() => {
+              handleClickClearFilters();
+            }}
+          >
+            Очистити все
+          </SearchClearFilter>
+        </li>
         <li key={1}>
           <SearchFilter active={active['price']}>
             <FoldedContainer
