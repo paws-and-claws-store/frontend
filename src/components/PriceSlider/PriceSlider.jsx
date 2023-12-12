@@ -137,7 +137,7 @@ export const PriceSlider = ({ active }) => {
         allowCross={false}
         value={[priceValueInput.minValue, priceValueInput.maxValue]}
         onChange={onSliderChange}
-        onBlur={onSubmitHandler}
+        // onBlur={onSubmitHandler}
         range
         min={minPriceRange}
         max={maxPriceRange}
@@ -171,7 +171,7 @@ export const PriceSlider = ({ active }) => {
         />
 
         <PriceCurrency>₴</PriceCurrency>
-        <button type="submit" style={{ display: 'none' }}></button>
+        <button type="submit">OK</button>
       </PriceRangeStyle>
     </PriceContainer>
   );

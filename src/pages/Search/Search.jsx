@@ -112,7 +112,8 @@ export default function Search() {
     ); // Show a loader if data is loading (isLoading && !isError).
   }
 
-  if (response?.totalDocs > 0 || (response?.totalDocs === 0 && isPriceRangeSet)) {
+  if (totalDocs > 0 || (totalDocs === 0 && isPriceRangeSet)) {
+    // console.log('totalDocs :>> ', totalDocs);
     return (
       <div style={{ minHeight: '640px' }}>
         {
@@ -121,7 +122,7 @@ export default function Search() {
             <UpsideSearchContainer>
               <TitleSearch>Результати пошуку</TitleSearch>
               <SearchDescription
-                totalDocs={response?.totalDocs}
+                totalDocs={totalDocs}
                 searchQuery={searchParams ? query : searchQuery}
               />
               <SortingContainer>
@@ -150,7 +151,7 @@ export default function Search() {
     ); // If there's a server error (status >= 500), it triggers a failure notification using Notify.failure(error.error).
   }
 
-  if (response?.totalDocs === 0) {
+  if (totalDocs === 0) {
     return (
       <div style={{ minHeight: '640px' }}>
         <NoSearch />
