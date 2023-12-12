@@ -14,12 +14,7 @@ import {
   selectMinPriceRange,
   selectPriceValue,
 } from 'redux/selectors';
-import {
-  resetPriceRange,
-  setPriceChange,
-  setPriceValue,
-  setValueInput,
-} from 'redux/slice/priceRangeSlice';
+import { resetPriceRange, setPriceChange, setPriceValue } from 'redux/slice/priceRangeSlice';
 import { theme } from 'styles';
 
 export const PriceSlider = ({ active }) => {
@@ -56,13 +51,11 @@ export const PriceSlider = ({ active }) => {
 
     if (nameField === 'maxValue') {
       setPriceValueInput(prevState => ({ ...prevState, maxValue: newCount }));
-      dispatch(setValueInput({ maxValue: newCount }));
       return;
     }
 
     if (nameField === 'minValue') {
       setPriceValueInput(prevState => ({ ...prevState, minValue: newCount }));
-      dispatch(setValueInput({ minValue: newCount }));
       return;
     }
   };
@@ -88,8 +81,6 @@ export const PriceSlider = ({ active }) => {
   };
 
   useEffect(() => {
-    // console.log('resetStatus :>> ', resetStatus);
-
     if (resetStatus === true) {
       setPriceValueInput({
         minValue: minPriceRange,
