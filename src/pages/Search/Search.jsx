@@ -25,6 +25,7 @@ import SearchCategory from './SearchCategory';
 import { usePagination } from 'hooks/usePagination';
 import { useSearchParams } from 'react-router-dom';
 import { setQuerySearch } from 'redux/slice/searchSlice';
+import { setPriceChange } from 'redux/slice/priceRangeSlice';
 
 export default function Search() {
   const [currentPage, setCurrentPage] = useState(1); // to track the current page of search results.
@@ -42,6 +43,10 @@ export default function Search() {
       setSearchParams({ query: searchQuery });
     }
   }, [searchQuery, setSearchParams]);
+
+  useEffect(() => {
+    dispatch(setPriceChange(false));
+  }, [dispatch, searchQuery]);
 
   const query = searchParams.get('query');
   useEffect(() => {
@@ -95,44 +100,61 @@ export default function Search() {
   const totalDocs = response?.totalDocs;
   useEffect(() => {}, [totalDocs]); // rerender search component when total docs are changed
 
-  return (
-    <div style={{ minHeight: '640px' }}>
-      {error?.status >= 500 ? (
-        (Notify.failure(error.error), (<></>)) // If there's a server error (status >= 500), it triggers a failure notification using Notify.failure(error.error).
-      ) : isLoading && !isError ? (
-        <Loader /> // Show a loader if data is loading (isLoading && !isError).
-      ) : response?.totalDocs === 0 ? (
-        <NoSearch /> // Show a component indicating no search results (<NoSearch />) if there's an error with status less than 500.
-      ) : response?.totalDocs > 0 ? ( // Display search results (response) with appropriate components for sorting, descriptions, categories, and pagination.
-        <>
-          <UpsideSearchContainer>
-            <TitleSearch>Результати пошуку</TitleSearch>
-            <SearchDescription
-              totalDocs={response?.totalDocs}
-              searchQuery={searchParams ? query : searchQuery}
-            />
-            <SortingContainer>
-              <SortSelect />
-            </SortingContainer>
-          </UpsideSearchContainer>
+  if (error?.status >= 500) {
+    return <div style={{ minHeight: '640px' }}>{(Notify.failure(error.error), (<></>))}</div>; // If there's a server error (status >= 500), it triggers a failure notification using Notify.failure(error.error).
+  }
 
-          <SearchContainer>
-            <SearchAsideCatalog>
-              <SearchCategory />
-            </SearchAsideCatalog>
-            <SearchWrapper
-              params={{
-                currentPage,
-                productsList,
+  if (isLoading && !isError) {
+    return (
+      <div style={{ minHeight: '640px' }}>
+        <Loader />
+      </div>
+    ); // Show a loader if data is loading (isLoading && !isError).
+  }
 
-                paginationData,
-                onPageChange,
-                onAddPage,
-              }}
-            />
-          </SearchContainer>
-        </>
-      ) : null}
-    </div>
-  );
+  if (response?.totalDocs > 0 || (response?.totalDocs === 0 && isPriceRangeSet)) {
+    return (
+      <div style={{ minHeight: '640px' }}>
+        {
+          // Display search results (response) with appropriate components for sorting, descriptions, categories, and pagination.
+          <>
+            <UpsideSearchContainer>
+              <TitleSearch>Результати пошуку</TitleSearch>
+              <SearchDescription
+                totalDocs={response?.totalDocs}
+                searchQuery={searchParams ? query : searchQuery}
+              />
+              <SortingContainer>
+                <SortSelect />
+              </SortingContainer>
+            </UpsideSearchContainer>
+
+            <SearchContainer>
+              <SearchAsideCatalog>
+                <SearchCategory />
+              </SearchAsideCatalog>
+              <SearchWrapper
+                params={{
+                  currentPage,
+                  productsList,
+
+                  paginationData,
+                  onPageChange,
+                  onAddPage,
+                }}
+              />
+            </SearchContainer>
+          </>
+        }
+      </div>
+    ); // If there's a server error (status >= 500), it triggers a failure notification using Notify.failure(error.error).
+  }
+
+  if (response?.totalDocs === 0) {
+    return (
+      <div style={{ minHeight: '640px' }}>
+        <NoSearch />
+      </div>
+    ); // Show a component indicating no search results (<NoSearch />) if there's an error with status less than 500.
+  }
 }
