@@ -6,7 +6,7 @@ export const api = createApi({
   baseQuery: fetchBaseQuery({
     // baseUrl: 'https://paws-and-claws-store-backend.onrender.com',
     baseUrl: 'https://paws-and-claws-store.onrender.com',
-    // baseUrl: 'http://localhost:4000',
+    //baseUrl: 'http://localhost:4000',
   }),
   //   tagTypes: ['Products'],
   endpoints: builder => ({

@@ -11,7 +11,7 @@ import { Filter } from 'components/Filter/Filter';
 import { theme } from 'styles';
 import { memo, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { resetPriceRange } from 'redux/slice/priceRangeSlice';
+import { setClearSetStatus } from 'redux/slice/priceRangeSlice';
 
 export default memo(function SearchCategory() {
   const [active, setActive] = useState({ price: false, brands: false });
@@ -24,7 +24,7 @@ export default memo(function SearchCategory() {
   };
 
   const handleClickClearFilters = () => {
-    dispatch(resetPriceRange());
+    dispatch(setClearSetStatus(true));
   };
   return (
     <SearchCategoryList>
