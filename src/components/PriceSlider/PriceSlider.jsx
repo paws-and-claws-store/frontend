@@ -30,26 +30,7 @@ export const PriceSlider = ({ active }) => {
   const dispatch = useDispatch();
 
   const onSliderChange = value => {
-    if (value[1] - value[0] <= 200) {
-      if (value[0] === 0) {
-        setPriceValueInput({
-          minValue: value[0],
-          maxValue: value[1] + 200,
-        });
-        return;
-      }
-      setPriceValueInput({
-        minValue: value[0] - 100,
-        maxValue: value[1] + 100,
-      });
-    }
-
     if (value[0] < value[1]) {
-      // setPriceValueInput(prevState => ({
-      //   ...prevState,
-      //   minValue: value[0],
-      //   maxValue: value[1],
-      // }));
       setPriceValueInput({
         minValue: value[0],
         maxValue: value[1],
@@ -100,11 +81,11 @@ export const PriceSlider = ({ active }) => {
   const onSubmitHandler = e => {
     e.preventDefault();
 
-    if (priceValueInput.maxValue - priceValueInput.minValue <= 100) {
+    if (priceValueInput.maxValue === priceValueInput.minValue) {
       setPriceValueInput(prevState => ({
         ...prevState,
-        maxValue: priceValueInput.maxValue + 100,
-        minValue: priceValueInput.minValue - 100,
+        minValue: minPriceRange,
+        maxValue: maxPriceRange,
       }));
     }
 
