@@ -7,3 +7,5 @@ export const selectMinPriceRange = state => state.priceRange.minPriceRange;
 export const selectMaxPriceRange = state => state.priceRange.maxPriceRange;
 export const selectPriceValue = state => state.priceRange.value;
 export const selectIsPriceRangeSet = state => state.priceRange.isPriceRangeSet;
+export const selectPriceValueInput = state => state.priceRange.valueInput;
+export const selectIsClearSet = state => state.priceRange.isClearSet;
