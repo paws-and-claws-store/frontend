@@ -33,7 +33,21 @@ export const LetterStyled = styled.li`
   font-size: 16px;
   font-style: normal;
   font-weight: 300;
-  line-height: 20px; /* 125% */
+  line-height: 20px;
+  /* 125% */
+`;
+
+export const ButtonLetterStyled = styled.button`
+  &:disabled {
+    color: ${theme.colors.black};
+    cursor: default;
+    &:hover {
+      color: ${theme.colors.black};
+    }
+  }
+  &:hover {
+    color: orange;
+  }
 `;
 export const BrandsCheckBoxContainer = styled.ul`
   display: grid;
