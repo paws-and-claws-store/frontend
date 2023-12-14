@@ -86,15 +86,17 @@ export const CheckBoxStyled = styled.input`
     content: '';
     width: 0.65em;
     height: 0.65em;
-    transform: scale(0);
-    transition: 120ms transform ${theme.animations.cubicBezier};
+    //transform: scale(0);
+
+    transform: ${props => (props.checked ? 'scale(1)' : 'scale(0)')};
+    // transition: 120ms transform ${theme.animations.cubicBezier};
     box-shadow: inset 1em 1em ${theme.colors.green};
     transform-origin: bottom left;
     clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
   }
-  &:checked::before {
+  /* &:checked::before {
     transform: scale(1);
-  }
+  } */
 `;
 
 export const CheckBoxLabelStyled = styled.label`

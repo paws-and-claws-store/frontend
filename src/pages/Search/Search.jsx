@@ -12,6 +12,7 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import { SortSelect } from 'components/SortSelect/SortSelect';
 import {
+  selectBrandsFilter,
   selectIsPriceRangeSet,
   selectPriceValue,
   selectSearchQueryStore,
@@ -38,6 +39,10 @@ export default function Search() {
   const sortingType = useSelector(selectSortingTypeStore); // extract sorting type from the Redux store
   const priceValue = useSelector(selectPriceValue); // get price value from price slider
   const isPriceRangeSet = useSelector(selectIsPriceRangeSet); // get price range set state from price slider
+
+  const brandsString = useSelector(selectBrandsFilter);
+
+  console.log('brandsString :>> ', brandsString);
   useEffect(() => {
     if (searchQuery) {
       setSearchParams({ query: searchQuery });
@@ -68,7 +73,9 @@ export default function Search() {
   if (sortingType !== '') {
     params.sortBy = sortingType; // set to params object sorting type if sorting type is exists
   }
-
+  if (brandsString !== '') {
+    params.brands = brandsString; // set brands to query
+  }
   if (abortControllerRef.current && searchParams === '') {
     abortControllerRef.current.abort('empty query'); // If there's an existing abortControllerRef.current and the searchQuery becomes empty, it aborts the ongoing fetch with a message 'empty query, to avoid abort fetch permamently
   }

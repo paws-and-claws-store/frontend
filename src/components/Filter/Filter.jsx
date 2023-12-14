@@ -1,5 +1,4 @@
 // this component is used for filtering by brands
-
 import { useFetchBrandsQuery } from 'redux/operations';
 import {
   AlphabetStyled,
@@ -12,26 +11,69 @@ import {
   LetterStyled,
   QuantityBrands,
 } from './Filter.styled';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { setBrands } from 'redux/slice/brandsFilterSlice';
 
 export const Filter = ({ active }) => {
   // Generates an alphabet array
   const alphabet = [...Array(26)].map((_, i) => String.fromCharCode(i + 97));
+  const dispatch = useDispatch();
+  const [checkedBrands, setCheckedBrands] = useState([]);
+  const [checkboxStates, setCheckboxStates] = useState({});
 
+  // Fetches brands using a custom hook
   const { data: brands } = useFetchBrandsQuery();
+
+  // Object to store refs to brands
+  const brandRefs = {};
+
+  const handleCheckboxChange = (name, checked) => {
+    setCheckboxStates(prevState => ({
+      ...prevState,
+      [name]: checked,
+    }));
+
+    setCheckedBrands(prevBrands => {
+      const updatedBrands = new Set(prevBrands);
+      if (checked) {
+        updatedBrands.add(name);
+      } else {
+        updatedBrands.delete(name);
+      }
+      return [...updatedBrands];
+    });
+  };
+  const brandsString = checkedBrands.toString(); // set to redux store string with brands filter parametres
+
+  useEffect(() => {
+    dispatch(setBrands(brandsString));
+  }, [brandsString, dispatch]);
 
   return (
     <FilterContainer active={active}>
+      {/* Render alphabet buttons */}
       <AlphabetStyled>
         {alphabet.map(item => {
+          // Checks if the letter is enabled based on available brands
           const enabledLetter = brands?.find(i => i[0].toUpperCase() === item.toUpperCase());
 
           return (
             <LetterStyled key={item}>
+              {/* Render alphabet buttons with click functionality */}
               <ButtonLetterStyled
                 disabled={!enabledLetter}
                 onClick={() => {
-                  console.log('click');
+                  // Scrolls to the first brand starting with the clicked letter
+                  if (enabledLetter) {
+                    const firstBrandRef = brandRefs[enabledLetter];
+                    if (firstBrandRef) {
+                      firstBrandRef.current.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'center',
+                      });
+                    }
+                  }
                 }}
               >
                 {item.toUpperCase()}
@@ -40,17 +82,31 @@ export const Filter = ({ active }) => {
           );
         })}
       </AlphabetStyled>
+      {/* Render brand checkboxes */}
       <BrandsCheckBoxContainer>
         {brands?.map(item => {
+          // Create ref for current brand
+          brandRefs[item] = React.createRef();
           return (
-            <BrandsCheckBoxStyled key={item + Math.random()}>
+            <BrandsCheckBoxStyled key={item + Math.random()} ref={brandRefs[item]}>
               <CheckBoxLabelStyled>
+                {/* Render checkboxes for each brand */}
                 <CheckBoxStyled
                   type="checkbox"
                   name={item}
                   onChange={e => {
-                    console.log(e.currentTarget.name);
+                    handleCheckboxChange(e.target.name, e.target.checked);
+
+                    // // if (checked) {
+                    // //   setCheckedBrands(prevState => [...prevState, name]);
+                    // // } else {
+                    // //   const indexBrand = checkedBrands.findIndex(item => item === name);
+                    // //   const spliceBrands = [...checkedBrands];
+                    // //   spliceBrands.splice(indexBrand, 1);
+                    // //   setCheckedBrands(spliceBrands);
+                    // // }
                   }}
+                  checked={!!checkboxStates[item]} // Отмечен ли чекбокс
                 />
 
                 {item}
