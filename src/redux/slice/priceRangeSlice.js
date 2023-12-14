@@ -25,6 +25,7 @@ const priceRangeSlice = createSlice({
     },
     setPriceValue(state, action) {
       state.value = action.payload;
+      state.isPriceRangeSet = true;
     },
     setPriceChange(state, action) {
       state.isPriceRangeSet = action.payload;
@@ -35,6 +36,7 @@ const priceRangeSlice = createSlice({
       state.minPriceRange = PriceRangeInitialStateModified.minPriceRange;
       state.maxPriceRange = PriceRangeInitialStateModified.maxPriceRange;
       state.isClearSet = false;
+      state.isPriceRangeSet = false;
     },
     setClearSetStatusPriceRange(state, action) {
       state.isClearSet = action.payload;

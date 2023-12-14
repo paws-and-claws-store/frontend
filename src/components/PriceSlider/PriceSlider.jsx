@@ -99,7 +99,7 @@ export const PriceSlider = ({ active }) => {
     }
 
     dispatch(setPriceValue([priceValueInput.minValue, priceValueInput.maxValue])); // set on focus lost price value to redux state
-    dispatch(setPriceChange(true)); // set to redux store that is price range are setted
+    // dispatch(setPriceChange(true)); // set to redux store that is price range are setted
   };
 
   useEffect(() => {

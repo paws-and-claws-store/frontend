@@ -6,7 +6,8 @@ export const selectViewedProducts = state => state.viewedProducts.viewedList;
 export const selectMinPriceRange = state => state.priceRange.minPriceRange;
 export const selectMaxPriceRange = state => state.priceRange.maxPriceRange;
 export const selectPriceValue = state => state.priceRange.value;
-export const selectIsPriceRangeSet = state => state.priceRange.isPriceRangeSet;
+export const selectIsPriceRangeSet = state => state.priceRange.isPriceRangeSet; // select to get setted or not price range filter now
+export const selectIsBrandsFilterSet = state => state.brandsFilter.isBrandsSet; // select to get setted or not brands filter now
 export const selectPriceValueInput = state => state.priceRange.valueInput;
 export const selectIsClearSetPriceRange = state => state.priceRange.isClearSet; // status of clear button set on Price Range filter
 export const selectIsClearSetBrandsFilter = state => state.brandsFilter.isClearSet; // status of clear button set on Brands filter

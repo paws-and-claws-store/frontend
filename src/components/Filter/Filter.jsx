@@ -46,11 +46,12 @@ export const Filter = ({ active }) => {
       return [...updatedBrands];
     });
   };
-  const brandsString = checkedBrands.toString(); // set to redux store string with brands filter parametres
 
   useEffect(() => {
-    dispatch(setBrands(brandsString));
-  }, [brandsString, dispatch]);
+    if (checkedBrands.length > 0) {
+      dispatch(setBrands(checkedBrands.toString()));
+    }
+  }, [checkedBrands, dispatch]);
 
   useEffect(() => {
     if (resetStatus === true) {
