@@ -42,7 +42,6 @@ export default function Search() {
 
   const brandsString = useSelector(selectBrandsFilter);
 
-  console.log('brandsString :>> ', brandsString);
   useEffect(() => {
     if (searchQuery) {
       setSearchParams({ query: searchQuery });
@@ -70,6 +69,7 @@ export default function Search() {
   useEffect(() => {
     setCurrentPage(1); // set page one to the new search query, sorting type or price calue from price slider
   }, [searchQuery, sortingType, priceValue]);
+
   if (sortingType !== '') {
     params.sortBy = sortingType; // set to params object sorting type if sorting type is exists
   }
@@ -106,6 +106,8 @@ export default function Search() {
 
   const totalDocs = response?.totalDocs;
   useEffect(() => {}, [totalDocs]); // rerender search component when total docs are changed
+
+  // Render Section
 
   if (error?.status >= 500) {
     return <div style={{ minHeight: '640px' }}>{(Notify.failure(error.error), (<></>))}</div>; // If there's a server error (status >= 500), it triggers a failure notification using Notify.failure(error.error).

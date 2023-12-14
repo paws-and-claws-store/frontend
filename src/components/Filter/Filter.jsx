@@ -12,8 +12,9 @@ import {
   QuantityBrands,
 } from './Filter.styled';
 import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { setBrands } from 'redux/slice/brandsFilterSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { setBrands, setResetBrands } from 'redux/slice/brandsFilterSlice';
+import { selectIsClearSetBrandsFilter } from 'redux/selectors';
 
 export const Filter = ({ active }) => {
   // Generates an alphabet array
@@ -21,6 +22,7 @@ export const Filter = ({ active }) => {
   const dispatch = useDispatch();
   const [checkedBrands, setCheckedBrands] = useState([]);
   const [checkboxStates, setCheckboxStates] = useState({});
+  const resetStatus = useSelector(selectIsClearSetBrandsFilter);
 
   // Fetches brands using a custom hook
   const { data: brands } = useFetchBrandsQuery();
@@ -49,6 +51,13 @@ export const Filter = ({ active }) => {
   useEffect(() => {
     dispatch(setBrands(brandsString));
   }, [brandsString, dispatch]);
+
+  useEffect(() => {
+    if (resetStatus === true) {
+      setCheckboxStates({}); // flush checkbox status state for render on curent page
+      dispatch(setResetBrands()); // flush checkbox status at redux store for coorect query
+    }
+  }, [dispatch, resetStatus]);
 
   return (
     <FilterContainer active={active}>

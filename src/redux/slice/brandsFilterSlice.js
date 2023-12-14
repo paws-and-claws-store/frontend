@@ -18,11 +18,11 @@ const brandFilterSlice = createSlice({
       state.isBrandsSet = action.payload;
     },
     setResetBrands(state, action) {
-      state.brands = undefined;
+      state.brands = '';
       state.isBrandsSet = false;
       state.isClearSet = false;
     },
-    setClearSetStatus(state, action) {
+    setClearSetStatusBrandsFilter(state, action) {
       state.isClearSet = action.payload;
     },
   },
@@ -30,5 +30,5 @@ const brandFilterSlice = createSlice({
 
 export const brandsFilterReducer = brandFilterSlice.reducer;
 
-export const { setBrands, setBrandsSet, setClearSetStatus, setResetBrands } =
+export const { setBrands, setBrandsSet, setClearSetStatusBrandsFilter, setResetBrands } =
   brandFilterSlice.actions;
