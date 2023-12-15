@@ -141,7 +141,7 @@ export default function Search() {
 
             <SearchContainer>
               <SearchAsideCatalog>
-                <SearchCategory />
+                <SearchCategory brandsCount={response?.brands} />
               </SearchAsideCatalog>
               <SearchWrapper
                 params={{
