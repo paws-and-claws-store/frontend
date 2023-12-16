@@ -14,7 +14,11 @@ import {
   selectMinPriceRange,
   selectPriceValue,
 } from 'redux/selectors';
-import { resetPriceRange, setPriceChange, setPriceValue } from 'redux/slice/priceRangeSlice';
+import {
+  resetPriceRange,
+  // setPriceChange,
+  setPriceValue,
+} from 'redux/slice/priceRangeSlice';
 import { theme } from 'styles';
 
 export const PriceSlider = ({ active }) => {
@@ -69,12 +73,18 @@ export const PriceSlider = ({ active }) => {
     const nameField = e.target.name;
 
     if (e.target.value === '' && nameField === 'minValue') {
-      setPriceValueInput(prevState => ({ ...prevState, minValue: minPriceRange }));
+      setPriceValueInput(prevState => ({
+        ...prevState,
+        minValue: minPriceRange,
+      }));
       return;
     }
 
     if (e.target.value === '' && nameField === 'maxValue') {
-      setPriceValueInput(prevState => ({ ...prevState, maxValue: maxPriceRange }));
+      setPriceValueInput(prevState => ({
+        ...prevState,
+        maxValue: maxPriceRange,
+      }));
       return;
     }
   };
@@ -89,16 +99,30 @@ export const PriceSlider = ({ active }) => {
       }));
     }
 
-    if (priceValueInput.maxValue === '' || priceValueInput.minValue > priceValueInput.maxValue) {
-      setPriceValueInput(prevState => ({ ...prevState, maxValue: maxPriceRange }));
+    if (
+      priceValueInput.maxValue === '' ||
+      priceValueInput.minValue > priceValueInput.maxValue
+    ) {
+      setPriceValueInput(prevState => ({
+        ...prevState,
+        maxValue: maxPriceRange,
+      }));
       return;
     }
-    if (priceValueInput.minValue === '' || priceValueInput.maxValue < priceValueInput.minValue) {
-      setPriceValueInput(prevState => ({ ...prevState, minValue: minPriceRange }));
+    if (
+      priceValueInput.minValue === '' ||
+      priceValueInput.maxValue < priceValueInput.minValue
+    ) {
+      setPriceValueInput(prevState => ({
+        ...prevState,
+        minValue: minPriceRange,
+      }));
       return;
     }
 
-    dispatch(setPriceValue([priceValueInput.minValue, priceValueInput.maxValue])); // set on focus lost price value to redux state
+    dispatch(
+      setPriceValue([priceValueInput.minValue, priceValueInput.maxValue]),
+    ); // set on focus lost price value to redux state
     // dispatch(setPriceChange(true)); // set to redux store that is price range are setted
   };
 
