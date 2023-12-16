@@ -33,7 +33,21 @@ export const LetterStyled = styled.li`
   font-size: 16px;
   font-style: normal;
   font-weight: 300;
-  line-height: 20px; /* 125% */
+  line-height: 20px;
+  /* 125% */
+`;
+
+export const ButtonLetterStyled = styled.button`
+  &:disabled {
+    color: ${theme.colors.black};
+    cursor: default;
+    &:hover {
+      color: ${theme.colors.black};
+    }
+  }
+  &:hover {
+    color: orange;
+  }
 `;
 export const BrandsCheckBoxContainer = styled.ul`
   display: grid;
@@ -65,21 +79,24 @@ export const CheckBoxStyled = styled.input`
   color: currentColor;
   width: 17px;
   height: 17px;
-  border: 1px solid ${theme.colors.green};
+  border: 1px solid ${props => (props.checked ? `${theme.colors.black}` : `${theme.colors.green}`)};
   border-radius: 0.1em;
   transform: translateY(2px);
   &::before {
     content: '';
     width: 0.65em;
     height: 0.65em;
-    transform: scale(0);
-    transition: 120ms transform ${theme.animations.cubicBezier};
-    box-shadow: inset 1em 1em ${theme.colors.green};
+    //transform: scale(0);
+
+    transform: ${props => (props.checked ? 'scale(1)' : 'scale(0)')};
+    // transition: 120ms transform ${theme.animations.cubicBezier};
+    box-shadow: inset 1em 1em ${theme.colors.black};
     transform-origin: bottom left;
-    clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+    // clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+    clip-path: polygon(38% 68%, 94% 14%, 100% 24%, 40% 83%, 12% 59%, 19% 51%);
   }
-  &:checked::before {
-    transform: scale(1);
+  &:hover {
+    border: 1px solid ${theme.colors.black};
   }
 `;
 

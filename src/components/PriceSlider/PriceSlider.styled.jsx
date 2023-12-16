@@ -16,7 +16,7 @@ export const PriceContainer = styled.div`
 `;
 export const StyledRangeSlider = styled(Slider)`
   position: relative;
-  padding-top: 24px;
+  padding-top: 18px;
   padding-bottom: 22px;
   margin-right: 20px;
   margin-left: 20px;
@@ -299,18 +299,19 @@ export const StyledRangeSlider = styled(Slider)`
   }
 `;
 
-export const PriceRangeStyle = styled.div`
+export const PriceRangeStyle = styled.form`
   display: flex;
   align-items: end;
-
-  width: 100%;
+  width: auto;
   height: 16px;
   justify-content: center;
 `;
 
-export const PriceValue = styled.div`
-  min-width: 22px;
+export const PriceValue = styled.input`
+  width: ${props => props.value.toString().length + 'ch'};
+  height: 16px;
   color: ${theme.colors.orange};
+  background-color: ${theme.colors.mainBackground};
   font-variant-numeric: lining-nums proportional-nums;
   font-feature-settings: 'ss09' on;
   font-family: Inter;
@@ -319,6 +320,8 @@ export const PriceValue = styled.div`
   font-weight: ${theme.fontWeight.SemiBold};
   line-height: 100%; /* 16px */
   text-transform: uppercase;
+  border: none;
+  padding: 0;
 `;
 
 export const PriceCurrency = styled.span`
