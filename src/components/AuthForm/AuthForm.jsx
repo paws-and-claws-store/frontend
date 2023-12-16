@@ -1,12 +1,12 @@
 import {
   useState,
-  //  useEffect
+   useEffect
 } from 'react';
-// import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Form, Formik } from 'formik';
-// import { useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { registerSchema } from 'utils/shemas/AuthSchema';
-import { useRegisrationMutation } from 'redux/operations';
+// import { useRegisrationMutation } from 'redux/operations';
 import {
   FormContainer,
   Titel,
@@ -26,6 +26,9 @@ import {
   //   OnIconConPass,
   //   OffIconConPass,
 } from './AuthForm.styled';
+
+import { signup } from 'redux/api/auth-operations';
+
 import { theme } from 'styles';
 // import { Check, Cross } from 'components/icons';
 
@@ -45,36 +48,36 @@ export function AuthForm() {
     confirmPasswordShow,
     // setConfirmPasswordShow
   ] = useState(false);
-  // const dispatch = useDispatch();
-  // const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   //   const { isRegistered } = useAuth();
 
   // const togglePassword = () => setPasswordShow(prevState => !prevState);
   // const toggleConfirmPassword = () =>
   //   setConfirmPasswordShow(prevState => !prevState);
 
-  const [registration, responsed] = useRegisrationMutation();
-  console.log('responsed:', responsed);
-  console.log('useRegisrationMutation():', useRegisrationMutation());
 
-  const handleSubmit = (values, { resetForm }) => {
+  const handleSubmit = async(values, { resetForm }) => {
     const newUser = {
       name: values.name,
       email: values.email,
       password: values.password,
     };
 
-    registration(newUser);
-    if (responsed) {
+   dispatch(signup(newUser))
+
+
+    if ('') {
       resetForm();
+      navigate('/user');
     }
   };
 
-  //   useEffect(() => {
-  //     if (isRegistered) {
-  //       navigate('/user');
-  //     }
-  //   }, [isRegistered, navigate]);
+    // useEffect(() => {
+    //   if (responsed?.data?.data?.user) {
+    //     navigate('/user');
+    //   }
+    // }, [responsed?.data?.data?.user, navigate]);
 
   return (
     <FormContainer>
@@ -85,7 +88,7 @@ export function AuthForm() {
       >
         {({ values, errors, touched, setFieldValue, isSubmitting }) => (
           <Form>
-            <Titel>Registration</Titel>
+            <Titel>Реєстрація</Titel>
             <FormField>
               <InputNameWraper
                 style={{
@@ -99,7 +102,7 @@ export function AuthForm() {
                 <InputForm
                   name="name"
                   type="name"
-                  placeholder="Name"
+                  placeholder="Ім'я"
                   autoComplete="on"
                 />
               </InputNameWraper>
@@ -141,7 +144,7 @@ export function AuthForm() {
                 <InputForm
                   name="email"
                   type="email"
-                  placeholder="Email"
+                  placeholder="Електронна пошта "
                   autoComplete="on"
                 />
               </InputEmailWraper>
@@ -183,7 +186,7 @@ export function AuthForm() {
                 <InputForm
                   name="password"
                   type={passwordShow ? 'text' : 'password'}
-                  placeholder="Password"
+                  placeholder="Пароль"
                   autoComplete="off"
                 />
               </InputPasswordWraper>
@@ -229,7 +232,7 @@ export function AuthForm() {
                 <InputForm
                   name="confirmPassword"
                   type={confirmPasswordShow ? 'text' : 'password'}
-                  placeholder="Confirm password"
+                  placeholder="Повтор пароля"
                   autoComplete="off"
                 />
               </InputPasswordWraper>
@@ -266,7 +269,12 @@ export function AuthForm() {
 
             <div>
               <Button type="submit" disabled={isSubmitting}>
-                Registration
+                 Реєстрація
+              </Button>
+            </div>
+            <div>
+              <Button type="button" >
+                 Вхід через Google
               </Button>
             </div>
           </Form>

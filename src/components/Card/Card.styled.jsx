@@ -17,8 +17,8 @@ export const BoxCard = styled.div`
   }
 
   &:hover {
-    transform: scale(1.01);
-    box-shadow: 0px 16px 48px 0px rgba(0, 0, 0, 0.176);
+    transform:${props => props.offScale ? 'scale(1)' : 'scale(1.01)'};
+    box-shadow: ${props => props.offScale ? null : '0px 16px 48px 0px rgba(0, 0, 0, 0.176)'};
   }
 `;
 

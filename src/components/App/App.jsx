@@ -13,6 +13,7 @@ import {
   PricesDrop,
   ProductCard,
   Registration,
+  UserPage,
 } from 'pages';
 
 import Search from 'pages/Search/Search';
@@ -21,14 +22,25 @@ import { Hidden } from './App.styled';
 import { CatalogLayout } from 'components/CatalogLayout/CatalogLayout';
 import { ProductType } from 'pages/Catalog/Pages/ProductType';
 import { OrderSuccessful } from 'pages/Cart/OrderSuccessful/OrderSuccessful';
+import { useEffect } from 'react';
+import { getCurrentUser } from 'redux/api/auth-operations';
+import { useDispatch } from 'react-redux';
 
 export const App = () => {
+
+  const dispatch = useDispatch();
+  
+  useEffect(() => {
+    dispatch(getCurrentUser());
+  }, [dispatch]);
+
   return (
     <>
       <Routes>
         <Route path="/" element={<SharedLayout />}>
           <Route index element={<Home />} />
           <Route path="registration" element={<Registration />} />
+          <Route path="user" element={<UserPage />} />
           <Route path="catalog" element={<CatalogLayout />}>
             <Route index element={<Catalog />} />
             <Route path=":pet" element={<Pet />} />

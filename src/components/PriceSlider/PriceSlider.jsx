@@ -8,7 +8,7 @@ import {
 } from './PriceSlider.styled';
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectMaxPriceRange, selectMinPriceRange, selectPriceValue } from 'redux/selectors';
+import { selectMaxPriceRange, selectMinPriceRange, selectPriceValue } from 'redux/selectors/selectors';
 import { setPriceChange, setPriceValue } from 'redux/slice/priceRangeSlice';
 import { theme } from 'styles';
 

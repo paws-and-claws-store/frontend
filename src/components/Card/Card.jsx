@@ -24,7 +24,7 @@ import { HeartIcon, StarIcon } from 'components/Icons';
 import { displaySize } from 'helpers';
 import { useDispatch, useSelector } from 'react-redux';
 import { addCartItem, removeCartItem, updateCartItem } from 'redux/slice/cartSlice';
-import { selectCartStore, selectIsPriceRangeSet } from 'redux/selectors';
+import { selectCartStore, selectIsPriceRangeSet } from 'redux/selectors/selectors';
 import { Notify } from 'notiflix';
 
 // import { CardList } from 'components';

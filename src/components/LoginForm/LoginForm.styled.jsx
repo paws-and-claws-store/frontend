@@ -40,7 +40,7 @@ export const Titel = styled.h1`
     font-weight: 500;
     line-height: normal;
     letter-spacing: 1.44px;
-    margin-bottom: 40px;
+    margin-bottom: 20px;
   }
   @media (min-width: 1280px) {
     font-style: normal;

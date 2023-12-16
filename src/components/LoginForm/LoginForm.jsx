@@ -2,9 +2,10 @@ import { useState, useEffect, useRef } from 'react';
 import { Form, Formik } from 'formik';
 // import { useNavigate } from 'react-router-dom';
 import { loginSchema } from 'utils/shemas/AuthSchema';
-// import { useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 // import { login } from 'redux/auth/auth-operations';
 // import { useAuth } from 'hooks/useAuth';
+import { login } from 'redux/api/auth-operations';
 
 import {
   LogFormContainer,
@@ -38,18 +39,17 @@ export function LoginForm({ setRegistrMenuTogle }) {
     //  setPasswordShow
   ] = useState(false);
   // const togglePassword = () => setPasswordShow(prevState => !prevState);
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
   // const navigate = useNavigate();
 
   const loginMenuRef = useRef(null);
-  console.log('loginMenuRef:', loginMenuRef?.current);
 
   const handleSubmit = (values, { resetForm }) => {
-    // const data = {
-    //   email: values.email,
-    //   password: values.password,
-    // };
-    // dispatch(login(data));
+    const data = {
+      email: values.email,
+      password: values.password,
+    };
+     dispatch(login(data));
     resetForm();
   };
 
@@ -93,7 +93,7 @@ export function LoginForm({ setRegistrMenuTogle }) {
           isSubmitting,
         }) => (
           <Form>
-            <Titel>Login</Titel>
+            <Titel>Вхід до мого профілю</Titel>
             <FormField>
               <InputEmailWraper
                 style={{
@@ -107,7 +107,7 @@ export function LoginForm({ setRegistrMenuTogle }) {
                 <InputForm
                   name="email"
                   type="email"
-                  placeholder="Email"
+                  placeholder="Електронна пошта "
                   autoComplete="on"
                 />
               </InputEmailWraper>
@@ -149,7 +149,7 @@ export function LoginForm({ setRegistrMenuTogle }) {
                 <InputForm
                   name="password"
                   type={passwordShow ? 'text' : 'password'}
-                  placeholder="Password"
+                  placeholder="Пароль"
                   autoComplete="on"
                 />
               </InputPasswordWraper>
@@ -183,7 +183,7 @@ export function LoginForm({ setRegistrMenuTogle }) {
             </FormField>
             <div>
               <Button type="submit" disabled={isSubmitting}>
-                Login
+                Увійти
               </Button>
             </div>
 
@@ -197,7 +197,7 @@ export function LoginForm({ setRegistrMenuTogle }) {
                   setRegistrMenuTogle(false);
                 }}
               >
-                Register
+                Реєстрація
               </LinkStyled>
             </ToRegister>
           </Form>

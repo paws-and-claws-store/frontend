@@ -21,7 +21,7 @@ import {
 } from 'components/Icons';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { selectCartStore } from 'redux/selectors';
+import { selectCartStore } from 'redux/selectors/selectors';
 import { SearchBar } from 'components/SearchBar/SearchBar';
 import { LoginForm } from 'components/LoginForm/LoginForm';
 
