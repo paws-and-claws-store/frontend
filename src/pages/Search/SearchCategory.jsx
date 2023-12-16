@@ -10,12 +10,16 @@ import { PriceSlider } from 'components/PriceSlider/PriceSlider';
 import { Filter } from 'components/Filter/Filter';
 import { theme } from 'styles';
 import { memo, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { setClearSetStatus } from 'redux/slice/priceRangeSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { setClearSetStatusPriceRange } from 'redux/slice/priceRangeSlice';
+import { setClearSetStatusBrandsFilter } from 'redux/slice/brandsFilterSlice';
+import { selectIsBrandsFilterSet, selectIsPriceRangeSet } from 'redux/selectors';
 
-export default memo(function SearchCategory() {
+export default memo(function SearchCategory({ brandsCount }) {
   const [active, setActive] = useState({ price: false, brands: false });
   const dispatch = useDispatch();
+  const isPriceRangeSet = useSelector(selectIsPriceRangeSet);
+  const isBrandsFilterSet = useSelector(selectIsBrandsFilterSet);
 
   const handleClickToggle = e => {
     active[e.currentTarget.attributes.name.value]
@@ -24,7 +28,8 @@ export default memo(function SearchCategory() {
   };
 
   const handleClickClearFilters = () => {
-    dispatch(setClearSetStatus(true));
+    dispatch(setClearSetStatusPriceRange(true)); // reset status to price range ewdux store
+    dispatch(setClearSetStatusBrandsFilter(true)); // reset status to Brands filter redux store
   };
   return (
     <SearchCategoryList>
@@ -35,15 +40,17 @@ export default memo(function SearchCategory() {
           gap: '4px',
         }}
       >
-        <li key={0}>
-          <SearchClearFilter
-            onClick={() => {
-              handleClickClearFilters();
-            }}
-          >
-            Очистити все
-          </SearchClearFilter>
-        </li>
+        {isBrandsFilterSet || isPriceRangeSet ? (
+          <li key={0}>
+            <SearchClearFilter
+              onClick={() => {
+                handleClickClearFilters();
+              }}
+            >
+              Очистити все
+            </SearchClearFilter>
+          </li>
+        ) : null}
         <li key={1}>
           <SearchFilter active={active['price']}>
             <FoldedContainer
@@ -76,7 +83,7 @@ export default memo(function SearchCategory() {
                 <RightArrow direction={active['brands'] ? 'rotate(90)' : 'rotate(-90)'} />
               </button>
             </FoldedContainer>
-            <Filter active={active['brands']} />
+            <Filter active={active['brands']} brandsCount={brandsCount} />
           </SearchBrands>
         </li>
       </ul>

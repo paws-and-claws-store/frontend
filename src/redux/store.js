@@ -19,6 +19,7 @@ import { searchSliceReducer } from './slice/searchSlice';
 import { searchSelectReducer } from './slice/sortSelectSlice';
 import { viewedProductsReducer } from './slice/viewedProductsSlice';
 import { priceRangeReducer } from './slice/priceRangeSlice';
+import { brandsFilterReducer } from './slice/brandsFilterSlice';
 
 const reducers = combineReducers({
   [api.reducerPath]: api.reducer,
@@ -28,6 +29,7 @@ const reducers = combineReducers({
   sorting: searchSelectReducer,
   viewedProducts: viewedProductsReducer,
   priceRange: priceRangeReducer,
+  brandsFilter: brandsFilterReducer,
 });
 
 const persistConfig = {

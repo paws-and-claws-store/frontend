@@ -107,6 +107,12 @@ export const api = createApi({
       },
       invalidatesTags: ['Auth'],
     }),
+
+    fetchBrands: builder.query({
+      query: () => ({
+        url: `/api/products/brands`,
+      }),
+    }),
   }),
 });
 
@@ -122,4 +128,5 @@ export const {
   useFetchValidateCartItemsMutation,
   useBuyProductsMutation,
   useRegisrationMutation,
+  useFetchBrandsQuery,
 } = api;
