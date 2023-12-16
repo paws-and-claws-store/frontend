@@ -24,7 +24,7 @@ export const AlphabetStyled = styled.ul`
 export const LetterStyled = styled.li`
   display: inline-block;
   text-align: center;
-  color: ${theme.colors.green};
+  color: ${theme.colors.black};
   font-variant-numeric: lining-nums proportional-nums;
   font-feature-settings: 'ss09' on;
 
@@ -39,10 +39,10 @@ export const LetterStyled = styled.li`
 
 export const ButtonLetterStyled = styled.button`
   &:disabled {
-    color: ${theme.colors.black};
+    color: ${theme.colors.green};
     cursor: default;
     &:hover {
-      color: ${theme.colors.black};
+      color: ${theme.colors.green};
     }
   }
   &:hover {
@@ -58,7 +58,7 @@ export const BrandsCheckBoxStyled = styled.li`
   /* text-align: left; */
   display: flex;
   margin-bottom: 8px;
-  color: ${theme.colors.black};
+  color: ${props => (props.disabled ? `${theme.colors.green}` : `${theme.colors.black}`)};
   font-variant-numeric: lining-nums proportional-nums;
   font-feature-settings: 'ss09' on;
 
@@ -96,7 +96,8 @@ export const CheckBoxStyled = styled.input`
     clip-path: polygon(38% 68%, 94% 14%, 100% 24%, 40% 83%, 12% 59%, 19% 51%);
   }
   &:hover {
-    border: 1px solid ${theme.colors.black};
+    border: 1px solid
+      ${props => (props.disabled ? `${theme.colors.green}` : `${theme.colors.black}`)};
   }
 `;
 

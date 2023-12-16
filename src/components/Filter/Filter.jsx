@@ -96,7 +96,11 @@ export const Filter = ({ active, brandsCount }) => {
           // Create ref for current brand
           brandRefs[item] = React.createRef();
           return (
-            <BrandsCheckBoxStyled key={item + Math.random()} ref={brandRefs[item]}>
+            <BrandsCheckBoxStyled
+              key={item + Math.random()}
+              ref={brandRefs[item]}
+              disabled={brandsCount[item] === undefined ? true : false}
+            >
               <CheckBoxLabelStyled>
                 {/* Render checkboxes for each brand */}
                 <CheckBoxStyled
@@ -122,8 +126,8 @@ export const Filter = ({ active, brandsCount }) => {
                     // }
                   }}
                   checked={!!checkboxStates[item]} // Отмечен ли чекбокс
+                  disabled={brandsCount[item] === undefined ? true : false}
                 />
-
                 {item}
                 <QuantityBrands>
                   {brandsCount[item] ? `(${brandsCount[item]})` : '(0)'}
