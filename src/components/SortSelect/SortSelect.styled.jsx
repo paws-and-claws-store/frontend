@@ -59,15 +59,17 @@ export const IndicatorWrapper = styled.ul`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  padding-top: 8px;
-  padding-bottom: 8px;
-  gap: 8px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  /* gap: 8px; */
   width: 100%;
 `;
 
 export const IndicatorValue = styled.li`
   display: inline-block;
   width: 100%;
+
+  padding: 4px 0 4px 0;
   color: ${theme.colors.black};
   font-size: 14px;
   font-weight: ${theme.fontWeight.Light};
