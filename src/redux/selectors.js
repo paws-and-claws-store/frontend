@@ -1,7 +1,8 @@
 export const selectCartStore = state => state.cart.cartItems;
 export const selectBreadCrumbsStore = state => state.breadcrumbs.breadcrumbs;
 export const selectSearchQueryStore = state => state.search.query;
-export const selectSortingTypeStore = state => state.sorting.type;
+export const selectSortingTypeStore = state => state.sorting.type; // select current type of sorting
+export const selectSortingTypeStoreDefault = state => state.sorting.defaultType; // select default type of sorting
 export const selectViewedProducts = state => state.viewedProducts.viewedList;
 export const selectMinPriceRange = state => state.priceRange.minPriceRange;
 export const selectMaxPriceRange = state => state.priceRange.maxPriceRange;
