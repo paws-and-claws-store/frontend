@@ -65,12 +65,14 @@ export const Filter = ({ active, brandsCount }) => {
         {alphabet.map(item => {
           // Checks if the letter is enabled based on available brands
           const enabledLetter = brands?.find(i => i[0].toUpperCase() === item.toUpperCase());
+          const activeLetter = checkedBrands.some(i => i[0].toUpperCase() === item.toUpperCase());
 
           return (
             <LetterStyled key={item}>
               {/* Render alphabet buttons with click functionality */}
               <ButtonLetterStyled
                 disabled={!enabledLetter}
+                activeLetter={activeLetter}
                 onClick={() => {
                   // Scrolls to the first brand starting with the clicked letter
                   if (enabledLetter) {
