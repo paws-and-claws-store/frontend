@@ -9,19 +9,19 @@ import {
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-  selectIsClearSet,
+  selectIsClearSetPriceRange,
   selectMaxPriceRange,
   selectMinPriceRange,
   selectPriceValue,
 } from 'redux/selectors';
-import { resetPriceRange, setPriceChange, setPriceValue } from 'redux/slice/priceRangeSlice';
+import { resetPriceRange, setPriceValue } from 'redux/slice/priceRangeSlice';
 import { theme } from 'styles';
 
 export const PriceSlider = ({ active }) => {
   const minPriceRange = useSelector(selectMinPriceRange); // min price range for slider
   const maxPriceRange = useSelector(selectMaxPriceRange); // max price range for slider
   const priceValue = useSelector(selectPriceValue); // value of setted price range
-  const resetStatus = useSelector(selectIsClearSet);
+  const resetStatus = useSelector(selectIsClearSetPriceRange);
   const [priceValueInput, setPriceValueInput] = useState({
     minValue: priceValue[0],
     maxValue: priceValue[1],
@@ -99,7 +99,7 @@ export const PriceSlider = ({ active }) => {
     }
 
     dispatch(setPriceValue([priceValueInput.minValue, priceValueInput.maxValue])); // set on focus lost price value to redux state
-    dispatch(setPriceChange(true)); // set to redux store that is price range are setted
+    // dispatch(setPriceChange(true)); // set to redux store that is price range are setted
   };
 
   useEffect(() => {
