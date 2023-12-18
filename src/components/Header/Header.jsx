@@ -36,8 +36,6 @@ export const Header = () => {
     return previousValue + cardCount;
   }, 0);
 
-  
-
   const countDigits = number => {
     return number.toString().length;
   };
@@ -52,8 +50,6 @@ export const Header = () => {
     });
   }, []);
 
-  
-
   // const menuTogle = ()=>setRegistrMenuTogle(true)
 
   return (
@@ -65,7 +61,10 @@ export const Header = () => {
           </Link>
           <SearchBar />
           <LinkWrapper>
-            <button onClick={()=>setRegistrMenuTogle(true)} disabled={registrMenuTogle}>
+            <button
+              onClick={() => setRegistrMenuTogle(true)}
+              disabled={registrMenuTogle}
+            >
               <ProfileIcon />
             </button>
             <button>
@@ -92,7 +91,9 @@ export const Header = () => {
               <LengLinkStyled>Eng</LengLinkStyled>
               <LengLinkStyled className="accent">Укр</LengLinkStyled>
             </Leng>
-            {registrMenuTogle? <LoginForm  setRegistrMenuTogle={setRegistrMenuTogle}/> : null}
+            {registrMenuTogle ? (
+              <LoginForm setRegistrMenuTogle={setRegistrMenuTogle} />
+            ) : null}
           </LinkWrapper>
         </HeaderWrapper>
       </HeaderContainer>

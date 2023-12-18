@@ -75,7 +75,7 @@ export const GlobalStyles = css`
   }
 
   .modal-lg {
-    --bs-modal-width: 702px;
+    --bs-modal-width: 704px;
     /* width: 700px; */
   }
 `;
