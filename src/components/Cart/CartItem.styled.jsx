@@ -98,10 +98,6 @@ export const ShortDesc = styled.p`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-
-  &:hover {
-    text-decoration: underline;
-  }
 `;
 
 export const Size = styled.p`
