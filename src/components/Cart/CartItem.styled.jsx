@@ -109,24 +109,23 @@ export const Size = styled.p`
 
 export const TotalQuantity = styled.p`
   display: flex;
-  align-items: end;
+  align-items: baseline;
+  justify-content: end;
+
   gap: 4px;
   color: ${theme.colors.orange};
+  font-size: 28px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 32px;
 
   margin-top: auto;
-
-  & span:first-of-type {
-    font-size: 28px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: 32px;
-  }
 
   & span {
     font-size: 24px;
     font-style: normal;
     font-weight: 500;
-    line-height: 32px; /* 133.333% */
+    line-height: normal;
     text-transform: uppercase;
   }
 `;
@@ -259,7 +258,7 @@ export const SymbolCurrency = styled.span`
 export const MessageContainer = styled.div`
   /* outline: 1px solid black; */
   margin-top: auto;
-  width: 266px;
+  width: ${props => (props.count > 0 ? 259 : 240)}px;
   height: 40px;
   display: flex;
   gap: 5px;

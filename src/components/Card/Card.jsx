@@ -148,7 +148,7 @@ export const Card = ({ el, onClick }) => {
 
   const handleBlur = () => {
     if (cardCount === '') {
-      Notify.warning('Мінімальна кількість для замовлення - 1 шт');
+      Notify.warning('Мінімальна кількість для замовлення - 1 шт.');
       setCardCount(null);
       dispatch(removeCartItem(productCode));
     }
