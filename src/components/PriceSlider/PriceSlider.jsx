@@ -14,11 +14,7 @@ import {
   selectMinPriceRange,
   selectPriceValue,
 } from 'redux/selectors';
-import {
-  resetPriceRange,
-  // setPriceChange,
-  setPriceValue,
-} from 'redux/slice/priceRangeSlice';
+import { resetPriceRange, setPriceValue } from 'redux/slice/priceRangeSlice';
 import { theme } from 'styles';
 
 export const PriceSlider = ({ active }) => {
