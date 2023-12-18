@@ -75,6 +75,11 @@ export const BtnIncrement = styled.button`
   &:hover {
     color: ${theme.colors.orange};
   }
+
+  &:disabled {
+    color: ${theme.colors.secGreen};
+    cursor: default;
+  }
 `;
 
 export const CountContainer = styled.div`
