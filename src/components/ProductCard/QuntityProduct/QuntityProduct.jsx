@@ -98,7 +98,9 @@ const QuntityProduct = ({ inStock, prodType, prodDescription }) => {
   const handleBlur = () => {
     if (quintity === '') {
       // setQuintity(1);
-      Notify.warning('Мінімальна кількість для замовлення - 1 шт');
+      Notify.warning('Мінімальна кількість для замовлення - 1 шт.');
+
+      dispatch(updateCartItem({ productCode, newCount: 1 }));
       setIsFocused(false);
       return;
     }
@@ -117,7 +119,7 @@ const QuntityProduct = ({ inStock, prodType, prodDescription }) => {
   const clickToBuy = () => {
     if (quintity > 0) {
       return handleClickBuy();
-    } else return Notify.warning('Мінімальна кількість для замовлення - 1 шт');
+    } else return Notify.warning('Мінімальна кількість для замовлення - 1 шт.');
   };
 
   const handleClickBuy = () => {
