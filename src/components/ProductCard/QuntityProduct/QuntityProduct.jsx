@@ -97,15 +97,14 @@ const QuntityProduct = ({ inStock, prodType, prodDescription }) => {
 
   const handleBlur = () => {
     if (quintity === '') {
-      // setQuintity(1);
       Notify.warning('Мінімальна кількість для замовлення - 1 шт.');
-
+      setQuintity(1);
       dispatch(updateCartItem({ productCode, newCount: 1 }));
       setIsFocused(false);
-      return;
+      // return;
     }
-    setIsFocused(false);
-    dispatch(updateCartItem({ productCode, newCount: quintity }));
+    // setIsFocused(false);
+    // dispatch(updateCartItem({ productCode, newCount: quintity }));
   };
 
   const handleKeyPres = e => {
