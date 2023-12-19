@@ -6,13 +6,9 @@ import { ErrorMessage, Field } from 'formik';
 import { theme } from 'styles';
 
 export const LogFormContainer = styled.div`
-  position: absolute;
-  top: 80px;
-  right: 0px;
   margin: 0 auto;
   padding: 40px 12px;
   text-align: center;
-  justify-content: center;
   background-color: ${theme.colors.white};
   border-radius: 10px;
   width: 280px;
@@ -24,7 +20,6 @@ export const LogFormContainer = styled.div`
     width: 458px;
     height: 481px;
     border-radius: 10px;
-    /* z-index: 99; */
   }
   @media screen and (min-width: 1280px) {
     height: 481px;

@@ -6,7 +6,9 @@ import { useNavigate } from 'react-router-dom';
 import { Form, Formik } from 'formik';
 import { useDispatch } from 'react-redux';
 import { registerSchema } from 'utils/shemas/AuthSchema';
-// import { useRegisrationMutation } from 'redux/operations';
+
+import { ConfirmationRegistration } from 'components/ConfirmationRegistration/ConfirmationRegistration';
+
 import {
   FormContainer,
   Titel,
@@ -27,9 +29,10 @@ import {
   //   OffIconConPass,
 } from './AuthForm.styled';
 
-import { signup } from 'redux/api/auth-operations';
+import { register } from 'redux/api/auth-operations';
 
 import { theme } from 'styles';
+import { useAuth } from 'hooks/useAuth';
 // import { Check, Cross } from 'components/icons';
 
 const initialValues = {
@@ -48,9 +51,10 @@ export function AuthForm() {
     confirmPasswordShow,
     // setConfirmPasswordShow
   ] = useState(false);
+  const [showConfirmModal, setShowConfirmModal] = useState(true)
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  //   const { isRegistered } = useAuth();
+    const { isActive } = useAuth();
 
   // const togglePassword = () => setPasswordShow(prevState => !prevState);
   // const toggleConfirmPassword = () =>
@@ -64,23 +68,20 @@ export function AuthForm() {
       password: values.password,
     };
 
-   dispatch(signup(newUser))
-
-
-    if ('') {
-      resetForm();
-      navigate('/user');
-    }
+   dispatch(register(newUser))
+   setShowConfirmModal(!showConfirmModal);
+   resetForm();
   };
 
-    // useEffect(() => {
-    //   if (responsed?.data?.data?.user) {
-    //     navigate('/user');
-    //   }
-    // }, [responsed?.data?.data?.user, navigate]);
+    useEffect(() => {
+      if (isActive) {
+        navigate('/');
+      }
+    }, [navigate, isActive]);
 
   return (
     <FormContainer>
+      {showConfirmModal ?
       <Formik
         validationSchema={registerSchema}
         initialValues={initialValues}
@@ -280,6 +281,8 @@ export function AuthForm() {
           </Form>
         )}
       </Formik>
+      : <ConfirmationRegistration/>
+      }
     </FormContainer>
   );
 }

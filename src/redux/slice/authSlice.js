@@ -1,9 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
 import {
-  signup,
+  register,
   login,
   logout,
   getCurrentUser,
+  resendVerifyEmail,
 } from '../api/auth-operations';
 
 const handlePending = state => {
@@ -16,13 +17,11 @@ const handleRejected = (state, action) => {
 };
 
 const initialState = {
-  user: {
-    name: null,
-    email: null,
-  },
-  accessToken: null,
+  user: {},
+  // accessToken: null,
   // refreshToken: null,
   isLoading: false,
+  isActive: false,
   isRegistered: false,
   error: null,
   isLoggedIn: false,
@@ -31,46 +30,56 @@ const initialState = {
 const authSlice = createSlice({
   name: 'auth',
   initialState,
+  reducers: {
+    userActivated (state, action) {
+    state.isActive = true;
+  },
+  showUserPage (state, action) {
+    state.isRegistered = false;
+    state.isLoading = true;
+  }
+},
   extraReducers: builder => {
     builder
-      .addCase(signup.fulfilled, (state, action) => {
-        console.log('action:', action);
+      .addCase(register.fulfilled, (state, action) => {
         state.user = action.payload.user;
-        state.accessToken = action.payload.user.accessToken;
-        state.isLoggedIn = true;
         state.isRegistered = true;
         state.isLoading = false;
       })
+      
       .addCase(login.fulfilled, (state, action) => {
-        console.log("action:", action)
-        state.accessToken = action.payload.accessToken;
         state.isLoggedIn = true;
+        state.isActive = true;
         state.isLoading = false;
       })
       .addCase(logout.fulfilled, (state, action) => {
-        state.user = { name: null, email: null };
+        state.user = {};
         state.accessToken = null;
         state.isLoggedIn = false;
         state.isRegistered = false;
         state.isLoading = false;
+        state.isActive = false;
       })
       .addCase(getCurrentUser.fulfilled, (state, action) => {
-        console.log("action:", action)
-        state.user.name = action.payload.name;
-        state.user.email = action.payload.email;
+        state.user = action.payload;
         state.isLoggedIn = true;
+        state.isActive = true;
         state.isLoading = false;
       })
-
-      .addCase(signup.pending, handlePending)
+      .addCase(resendVerifyEmail.fulfilled, (state, action)=>{
+        // console.log("action:", action)
+      })
+     
+      .addCase(register.pending, handlePending)
       .addCase(login.pending, handlePending)
       .addCase(logout.pending, handlePending)
       .addCase(getCurrentUser.pending, handlePending)
-      .addCase(signup.rejected, handleRejected)
+      .addCase(register.rejected, handleRejected)
       .addCase(logout.rejected, handleRejected)
       .addCase(getCurrentUser.rejected, handleRejected)
       .addCase(login.rejected, handleRejected);
   },
 });
 
+export const {userActivated, showUserPage} = authSlice.actions;
 export const authReducer = authSlice.reducer;

@@ -1,5 +1,5 @@
 // this component is used for filtering by brands
-import { useFetchBrandsQuery } from 'redux/operations';
+import { useFetchBrandsQuery } from 'redux/api/operations';
 import {
   AlphabetStyled,
   BrandsCheckBoxContainer,
@@ -14,7 +14,7 @@ import {
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setBrands, setResetBrands } from 'redux/slice/brandsFilterSlice';
-import { selectIsClearSetBrandsFilter } from 'redux/selectors';
+import { selectIsClearSetBrandsFilter } from 'redux/selectors/selectors';
 
 export const Filter = ({ active, brandsCount }) => {
   // Generates an alphabet array

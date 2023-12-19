@@ -13,7 +13,7 @@ import {
   selectMaxPriceRange,
   selectMinPriceRange,
   selectPriceValue,
-} from 'redux/selectors';
+} from 'redux/selectors/selectors';
 import { resetPriceRange, setPriceChange, setPriceValue } from 'redux/slice/priceRangeSlice';
 import { theme } from 'styles';
 

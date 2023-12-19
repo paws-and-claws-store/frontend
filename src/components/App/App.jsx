@@ -22,18 +22,9 @@ import { Hidden } from './App.styled';
 import { CatalogLayout } from 'components/CatalogLayout/CatalogLayout';
 import { ProductType } from 'pages/Catalog/Pages/ProductType';
 import { OrderSuccessful } from 'pages/Cart/OrderSuccessful/OrderSuccessful';
-import { useEffect } from 'react';
-import { getCurrentUser } from 'redux/api/auth-operations';
-import { useDispatch } from 'react-redux';
+
 
 export const App = () => {
-
-  const dispatch = useDispatch();
-  
-  useEffect(() => {
-    dispatch(getCurrentUser());
-  }, [dispatch]);
-
   return (
     <>
       <Routes>

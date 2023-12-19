@@ -33,7 +33,7 @@ const initialValues = {
   password: '',
 };
 
-export function LoginForm({ setRegistrMenuTogle }) {
+export function LoginForm({ setUserMenuTogle }) {
   const [
     passwordShow,
     //  setPasswordShow
@@ -42,7 +42,6 @@ export function LoginForm({ setRegistrMenuTogle }) {
   const dispatch = useDispatch();
   // const navigate = useNavigate();
 
-  const loginMenuRef = useRef(null);
 
   const handleSubmit = (values, { resetForm }) => {
     const data = {
@@ -53,23 +52,6 @@ export function LoginForm({ setRegistrMenuTogle }) {
     resetForm();
   };
 
-  useEffect(() => {
-    window.addEventListener('keydown', handleKeyDown);
-    document.addEventListener('mousedown', handleKeyDown);
-    return () => {
-      window.removeEventListener('keydown', handleKeyDown);
-      document.removeEventListener('mousedown', handleKeyDown);
-    };
-  });
-
-  const handleKeyDown = e => {
-    if (e.code === 'Escape') {
-      setRegistrMenuTogle(false);
-    }
-    if (loginMenuRef.current && !loginMenuRef.current.contains(e.target)) {
-      setRegistrMenuTogle(false);
-    }
-  };
 
   //   useEffect(() => {
   //     if (isLoggedIn) {
@@ -78,7 +60,7 @@ export function LoginForm({ setRegistrMenuTogle }) {
   //   }, [isLoggedIn, navigate]);
 
   return (
-    <LogFormContainer ref={loginMenuRef}>
+    <LogFormContainer >
       <Formik
         validationSchema={loginSchema}
         initialValues={initialValues}
@@ -194,7 +176,7 @@ export function LoginForm({ setRegistrMenuTogle }) {
               <LinkStyled
                 to="/registration"
                 onClick={() => {
-                  setRegistrMenuTogle(false);
+                  setUserMenuTogle(false);
                 }}
               >
                 Реєстрація
