@@ -15,7 +15,7 @@ import { Title } from 'pages/Home/Home.styled';
 import React, { useEffect, useState } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import { setBreadCrumbs } from 'redux/slice/breadCrumbsSlice';
-import { useFetchAllStructureQuery } from 'redux/operations';
+import { useFetchAllStructureQuery } from 'redux/api/operations';
 import { useDispatch } from 'react-redux';
 import { SortSelect } from 'components/SortSelect/SortSelect';
 import { flattenCategories } from 'helpers';

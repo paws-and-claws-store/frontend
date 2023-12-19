@@ -17,7 +17,7 @@ import {
 } from './QuntityProduct.styled';
 import { addCartItem, updateCartItem } from 'redux/slice/cartSlice';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectCartStore } from 'redux/selectors';
+import { selectCartStore } from 'redux/selectors/selectors';
 import { Notify } from 'notiflix';
 
 const QuntityProduct = ({ inStock, prodType, prodDescription }) => {

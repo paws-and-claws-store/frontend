@@ -13,7 +13,7 @@ import { memo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setClearSetStatusPriceRange } from 'redux/slice/priceRangeSlice';
 import { setClearSetStatusBrandsFilter } from 'redux/slice/brandsFilterSlice';
-import { selectIsBrandsFilterSet, selectIsPriceRangeSet } from 'redux/selectors';
+import { selectIsBrandsFilterSet, selectIsPriceRangeSet } from 'redux/selectors/selectors';
 
 export default memo(function SearchCategory({ brandsCount }) {
   const [active, setActive] = useState({ price: false, brands: false });

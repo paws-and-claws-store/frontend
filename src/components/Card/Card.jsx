@@ -23,16 +23,8 @@ import { Link } from 'react-router-dom';
 import { HeartIcon, StarIcon } from 'components/Icons';
 import { displaySize } from 'helpers';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  addCartItem,
-  removeCartItem,
-  updateCartItem,
-} from 'redux/slice/cartSlice';
-import {
-  selectCartStore,
-  selectIsPriceRangeSet,
-  selectSortingTypeStore,
-} from 'redux/selectors';
+import { addCartItem, removeCartItem, updateCartItem } from 'redux/slice/cartSlice';
+import { selectCartStore, selectIsPriceRangeSet, selectSortingTypeStore } from 'redux/selectors/selectors';
 import { Notify } from 'notiflix';
 
 // import { CardList } from 'components';

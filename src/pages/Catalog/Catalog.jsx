@@ -1,11 +1,11 @@
 import { CardList, Pagination } from 'components';
 import Loader from 'components/Loader/Loader';
 import { useEffect, useState } from 'react';
-import { useFetchAllProductsQuery } from 'redux/operations';
+import { useFetchAllProductsQuery } from 'redux/api/operations';
 import { Notify } from 'notiflix';
 import { usePagination } from 'hooks/usePagination';
 import { useSelector } from 'react-redux';
-import { selectSortingTypeStore } from 'redux/selectors';
+import { selectSortingTypeStore } from 'redux/selectors/selectors';
 
 export const Catalog = () => {
   const [currentPage, setCurrentPage] = useState(1);

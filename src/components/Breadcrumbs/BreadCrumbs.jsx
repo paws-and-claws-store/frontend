@@ -10,7 +10,7 @@ import {
 import { Vector } from 'components/Icons/Vector';
 import { nanoid } from 'nanoid';
 import { useSelector } from 'react-redux';
-import { selectBreadCrumbsStore } from 'redux/selectors';
+import { selectBreadCrumbsStore } from 'redux/selectors/selectors';
 
 export default function Breadcrumbs() {
   let languageSite = 'ua';

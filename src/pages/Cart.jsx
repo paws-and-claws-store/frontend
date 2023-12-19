@@ -17,7 +17,7 @@ import {
 } from './Cart.styled';
 import Img from '../images/Travel_bag.png';
 import { useSelector } from 'react-redux';
-import { selectCartStore } from 'redux/selectors';
+import { selectCartStore } from 'redux/selectors/selectors';
 import { CartItem } from 'components';
 
 import { ArrowLeft } from 'components/Icons';

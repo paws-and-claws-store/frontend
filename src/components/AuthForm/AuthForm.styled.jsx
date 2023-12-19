@@ -31,7 +31,7 @@ export const Titel = styled.h1`
   margin-bottom: 20px;
   @media (min-width: 768px) {
     font-size: ${theme.fontSizes.xxl};
-    margin-bottom: 40px;
+    margin-bottom: 30px;
   }
 `;
 
@@ -44,7 +44,7 @@ export const InputNameWraper = styled.div`
   border-radius: 15px;
   border: 1px solid;
   @media (min-width: 768px) {
-    margin-bottom: 32px;
+    margin-bottom: 22px;
   }
 `;
 
@@ -53,7 +53,7 @@ export const InputEmailWraper = styled.div`
   border-radius: 15px;
   border: 1px solid;
   @media (min-width: 768px) {
-    margin-bottom: 32px;
+    margin-bottom: 22px;
   }
 `;
 
@@ -62,7 +62,7 @@ export const InputPasswordWraper = styled.div`
   border-radius: 15px;
   border: 1px solid;
   @media (min-width: 768px) {
-    margin-bottom: 32px;
+    margin-bottom: 22px;
   }
 `;
 
@@ -71,7 +71,7 @@ export const InputConfirmPasswordWraper = styled.div`
   border-radius: 15px;
   border: 1px solid;
   @media (min-width: 768px) {
-    margin-bottom: 32px;
+    margin-bottom: 22px;
   }
 `;
 
@@ -189,9 +189,10 @@ export const IconCross = styled.span`
 export const Button = styled.button`
   width: 100%;
   height: 48px;
-  margin-top: 26px;
-  margin-bottom: 8px;
+  margin-top: 21px;
+  /* margin-bottom: 8px; */
   font-size: ${theme.fontSizes.l};
+  font-weight: 600;
   color: ${theme.colors.black};
   border-radius: 15px;
   background-color: ${theme.colors.secGreen};

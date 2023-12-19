@@ -2,10 +2,10 @@ import { CardList, Pagination } from 'components';
 import Loader from 'components/Loader/Loader';
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { useFetchProductsByOneProductTypeQuery } from 'redux/operations';
+import { useFetchProductsByOneProductTypeQuery } from 'redux/api/operations';
 import { Notify } from 'notiflix';
 import { useSelector } from 'react-redux';
-import { selectSortingTypeStore } from 'redux/selectors';
+import { selectSortingTypeStore } from 'redux/selectors/selectors';
 import { usePagination } from 'hooks/usePagination';
 
 export const ProductType = () => {

@@ -1,12 +1,14 @@
 import {
   useState,
-  //  useEffect
+   useEffect
 } from 'react';
-// import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Form, Formik } from 'formik';
-// import { useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { registerSchema } from 'utils/shemas/AuthSchema';
-import { useRegisrationMutation } from 'redux/operations';
+
+import { ConfirmationRegistration } from 'components/ConfirmationRegistration/ConfirmationRegistration';
+
 import {
   FormContainer,
   Titel,
@@ -26,7 +28,11 @@ import {
   //   OnIconConPass,
   //   OffIconConPass,
 } from './AuthForm.styled';
+
+import { register } from 'redux/api/auth-operations';
+
 import { theme } from 'styles';
+import { useAuth } from 'hooks/useAuth';
 // import { Check, Cross } from 'components/icons';
 
 const initialValues = {
@@ -45,39 +51,37 @@ export function AuthForm() {
     confirmPasswordShow,
     // setConfirmPasswordShow
   ] = useState(false);
-  // const dispatch = useDispatch();
-  // const navigate = useNavigate();
-  //   const { isRegistered } = useAuth();
+  const [showConfirmModal, setShowConfirmModal] = useState(true)
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+    const { isActive } = useAuth();
 
   // const togglePassword = () => setPasswordShow(prevState => !prevState);
   // const toggleConfirmPassword = () =>
   //   setConfirmPasswordShow(prevState => !prevState);
 
-  const [registration, responsed] = useRegisrationMutation();
-  console.log('responsed:', responsed);
-  console.log('useRegisrationMutation():', useRegisrationMutation());
 
-  const handleSubmit = (values, { resetForm }) => {
+  const handleSubmit = async(values, { resetForm }) => {
     const newUser = {
       name: values.name,
       email: values.email,
       password: values.password,
     };
 
-    registration(newUser);
-    if (responsed) {
-      resetForm();
-    }
+   dispatch(register(newUser))
+   setShowConfirmModal(!showConfirmModal);
+   resetForm();
   };
 
-  //   useEffect(() => {
-  //     if (isRegistered) {
-  //       navigate('/user');
-  //     }
-  //   }, [isRegistered, navigate]);
+    useEffect(() => {
+      if (isActive) {
+        navigate('/');
+      }
+    }, [navigate, isActive]);
 
   return (
     <FormContainer>
+      {showConfirmModal ?
       <Formik
         validationSchema={registerSchema}
         initialValues={initialValues}
@@ -85,7 +89,7 @@ export function AuthForm() {
       >
         {({ values, errors, touched, setFieldValue, isSubmitting }) => (
           <Form>
-            <Titel>Registration</Titel>
+            <Titel>Реєстрація</Titel>
             <FormField>
               <InputNameWraper
                 style={{
@@ -99,7 +103,7 @@ export function AuthForm() {
                 <InputForm
                   name="name"
                   type="name"
-                  placeholder="Name"
+                  placeholder="Ім'я"
                   autoComplete="on"
                 />
               </InputNameWraper>
@@ -141,7 +145,7 @@ export function AuthForm() {
                 <InputForm
                   name="email"
                   type="email"
-                  placeholder="Email"
+                  placeholder="Електронна пошта "
                   autoComplete="on"
                 />
               </InputEmailWraper>
@@ -183,7 +187,7 @@ export function AuthForm() {
                 <InputForm
                   name="password"
                   type={passwordShow ? 'text' : 'password'}
-                  placeholder="Password"
+                  placeholder="Пароль"
                   autoComplete="off"
                 />
               </InputPasswordWraper>
@@ -229,7 +233,7 @@ export function AuthForm() {
                 <InputForm
                   name="confirmPassword"
                   type={confirmPasswordShow ? 'text' : 'password'}
-                  placeholder="Confirm password"
+                  placeholder="Повтор пароля"
                   autoComplete="off"
                 />
               </InputPasswordWraper>
@@ -266,12 +270,19 @@ export function AuthForm() {
 
             <div>
               <Button type="submit" disabled={isSubmitting}>
-                Registration
+                 Реєстрація
+              </Button>
+            </div>
+            <div>
+              <Button type="button" >
+                 Вхід через Google
               </Button>
             </div>
           </Form>
         )}
       </Formik>
+      : <ConfirmationRegistration/>
+      }
     </FormContainer>
   );
 }

@@ -13,6 +13,7 @@ import {
   PricesDrop,
   ProductCard,
   Registration,
+  UserPage,
 } from 'pages';
 
 import Search from 'pages/Search/Search';
@@ -22,6 +23,7 @@ import { CatalogLayout } from 'components/CatalogLayout/CatalogLayout';
 import { ProductType } from 'pages/Catalog/Pages/ProductType';
 import { OrderSuccessful } from 'pages/Cart/OrderSuccessful/OrderSuccessful';
 
+
 export const App = () => {
   return (
     <>
@@ -29,6 +31,7 @@ export const App = () => {
         <Route path="/" element={<SharedLayout />}>
           <Route index element={<Home />} />
           <Route path="registration" element={<Registration />} />
+          <Route path="user" element={<UserPage />} />
           <Route path="catalog" element={<CatalogLayout />}>
             <Route index element={<Catalog />} />
             <Route path=":pet" element={<Pet />} />
