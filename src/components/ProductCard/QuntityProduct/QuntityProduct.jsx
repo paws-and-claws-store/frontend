@@ -99,6 +99,8 @@ const QuntityProduct = ({ inStock, prodType, prodDescription }) => {
     if (quintity === '') {
       // setQuintity(1);
       Notify.warning('Мінімальна кількість для замовлення - 1 шт.');
+
+      dispatch(updateCartItem({ productCode, newCount: 1 }));
       setIsFocused(false);
       return;
     }
