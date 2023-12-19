@@ -8,24 +8,17 @@ import {
 } from './PriceSlider.styled';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  selectIsClearSetPriceRange,
-  selectMaxPriceRange,
-  selectMinPriceRange,
-  selectPriceValue,
-} from 'redux/selectors';
+import { selectDefaultPriceRange, selectIsClearSetPriceRange } from 'redux/selectors';
 import { resetPriceRange, setPriceValue } from 'redux/slice/priceRangeSlice';
 import { theme } from 'styles';
 
-export const PriceSlider = ({ active }) => {
-  const minPriceRange = useSelector(selectMinPriceRange); // min price range for slider
-  const maxPriceRange = useSelector(selectMaxPriceRange); // max price range for slider
-  const priceValue = useSelector(selectPriceValue); // value of setted price range
+export const PriceSlider = ({ active, minMax }) => {
   const resetStatus = useSelector(selectIsClearSetPriceRange);
+  const defaultPriceRange = useSelector(selectDefaultPriceRange);
   const [priceValueInput, setPriceValueInput] = useState({
-    minValue: priceValue[0],
-    maxValue: priceValue[1],
-  });
+    minValue: defaultPriceRange[0],
+    maxValue: defaultPriceRange[1],
+  }); // set initial data to inputs fileds
 
   const dispatch = useDispatch();
 
@@ -69,18 +62,12 @@ export const PriceSlider = ({ active }) => {
     const nameField = e.target.name;
 
     if (e.target.value === '' && nameField === 'minValue') {
-      setPriceValueInput(prevState => ({
-        ...prevState,
-        minValue: minPriceRange,
-      }));
+      setPriceValueInput(prevState => ({ ...prevState, minValue: defaultPriceRange[0] }));
       return;
     }
 
     if (e.target.value === '' && nameField === 'maxValue') {
-      setPriceValueInput(prevState => ({
-        ...prevState,
-        maxValue: maxPriceRange,
-      }));
+      setPriceValueInput(prevState => ({ ...prevState, maxValue: defaultPriceRange[1] }));
       return;
     }
   };
@@ -90,47 +77,40 @@ export const PriceSlider = ({ active }) => {
     if (priceValueInput.maxValue === priceValueInput.minValue) {
       setPriceValueInput(prevState => ({
         ...prevState,
-        minValue: minPriceRange,
-        maxValue: maxPriceRange,
+        minValue: defaultPriceRange[0],
+        maxValue: defaultPriceRange[1],
       }));
     }
 
-    if (
-      priceValueInput.maxValue === '' ||
-      priceValueInput.minValue > priceValueInput.maxValue
-    ) {
-      setPriceValueInput(prevState => ({
-        ...prevState,
-        maxValue: maxPriceRange,
-      }));
+    if (priceValueInput.maxValue === '' || priceValueInput.minValue > priceValueInput.maxValue) {
+      setPriceValueInput(prevState => ({ ...prevState, maxValue: defaultPriceRange[1] }));
       return;
     }
-    if (
-      priceValueInput.minValue === '' ||
-      priceValueInput.maxValue < priceValueInput.minValue
-    ) {
-      setPriceValueInput(prevState => ({
-        ...prevState,
-        minValue: minPriceRange,
-      }));
+    if (priceValueInput.minValue === '' || priceValueInput.maxValue < priceValueInput.minValue) {
+      setPriceValueInput(prevState => ({ ...prevState, minValue: defaultPriceRange[0] }));
       return;
     }
 
-    dispatch(
-      setPriceValue([priceValueInput.minValue, priceValueInput.maxValue]),
-    ); // set on focus lost price value to redux state
+    dispatch(setPriceValue([priceValueInput.minValue, priceValueInput.maxValue])); // set on focus lost price value to redux state
     // dispatch(setPriceChange(true)); // set to redux store that is price range are setted
   };
 
   useEffect(() => {
     if (resetStatus === true) {
       setPriceValueInput({
-        minValue: minPriceRange,
-        maxValue: maxPriceRange,
+        minValue: defaultPriceRange[0],
+        maxValue: defaultPriceRange[1],
       });
       dispatch(resetPriceRange());
     }
-  }, [dispatch, maxPriceRange, minPriceRange, resetStatus]);
+  }, [defaultPriceRange, dispatch, resetStatus]);
+
+  useEffect(() => {
+    setPriceValueInput({
+      minValue: defaultPriceRange[0],
+      maxValue: defaultPriceRange[1],
+    });
+  }, [defaultPriceRange]); // update data in input fields if default price range for query is updated
 
   return (
     <PriceContainer active={active}>
@@ -140,13 +120,13 @@ export const PriceSlider = ({ active }) => {
         onChange={onSliderChange}
         // onBlur={onSubmitHandler}
         range
-        min={minPriceRange}
-        max={maxPriceRange}
+        min={defaultPriceRange[0]}
+        max={defaultPriceRange[1]}
       />
       <PriceRangeStyle onSubmit={onSubmitHandler}>
         <PriceValue
           value={priceValueInput.minValue}
-          pattern="[0-9]*"
+          // pattern="[0-9]*"
           onChange={handleChangePriceValue}
           name="minValue"
           onBlur={handleChangeOnBlurValue}
@@ -165,7 +145,7 @@ export const PriceSlider = ({ active }) => {
         <PriceValue
           style={{ marginLeft: '12px' }}
           value={priceValueInput.maxValue}
-          pattern="[0-9]*"
+          //pattern="[0-9]*"
           onChange={handleChangePriceValue}
           name="maxValue"
           onBlur={handleChangeOnBlurValue}
