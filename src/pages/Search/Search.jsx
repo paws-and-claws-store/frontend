@@ -13,6 +13,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { SortSelect } from 'components/SortSelect/SortSelect';
 import {
   selectBrandsFilter,
+  selectDefaultPriceRange,
+  selectIsBrandsFilterSet,
   selectIsPriceRangeSet,
   selectPriceValue,
   selectSearchQueryStore,
@@ -26,7 +28,11 @@ import SearchCategory from './SearchCategory';
 import { usePagination } from 'hooks/usePagination';
 import { useSearchParams } from 'react-router-dom';
 import { setQuerySearch } from 'redux/slice/searchSlice';
-import { setClearSetStatusPriceRange, setPriceChange } from 'redux/slice/priceRangeSlice';
+import {
+  setClearSetStatusPriceRange,
+  setDefaultPriceRange,
+  setPriceChange,
+} from 'redux/slice/priceRangeSlice';
 import { setClearSetStatusBrandsFilter } from 'redux/slice/brandsFilterSlice';
 
 export default function Search() {
@@ -39,7 +45,9 @@ export default function Search() {
   const searchQuery = useSelector(selectSearchQueryStore); // extract search query from the Redux store
   const sortingType = useSelector(selectSortingTypeStore); // extract sorting type from the Redux store
   const priceValue = useSelector(selectPriceValue); // get price value from price slider
+  const defaultPriceRange = useSelector(selectDefaultPriceRange); // get default price range data
   const isPriceRangeSet = useSelector(selectIsPriceRangeSet); // get price range set state from price slider
+  const isBrandsSet = useSelector(selectIsBrandsFilterSet);
 
   const brandsString = useSelector(selectBrandsFilter);
 
@@ -65,13 +73,19 @@ export default function Search() {
   const params = {
     findBy: encodeURIComponent(query ? query : searchQuery).toLowerCase(),
     page: currentPage,
-    minPrice: priceValue[0], // set min price for query
-    maxPrice: priceValue[1], // set max price for query
+    //   minPrice: priceValue[0], // set min price for query
+    //   maxPrice: priceValue[1], // set max price for query
   }; // params object to be used in the API call hook useFetchSearchQuery.
+
+  // add price value data if defaultValue is updated in priceRangeSlice
+  if (priceValue[1] !== 1000000) {
+    params.minPrice = priceValue[0];
+    params.maxPrice = priceValue[1];
+  }
 
   useEffect(() => {
     setCurrentPage(1); // set page one to the new search query, sorting type or price calue from price slider
-  }, [searchQuery, sortingType, priceValue]);
+  }, [searchQuery, sortingType, defaultPriceRange]);
 
   if (sortingType !== '') {
     params.sortBy = sortingType; // set to params object sorting type if sorting type is exists
@@ -110,6 +124,14 @@ export default function Search() {
   const totalDocs = response?.totalDocs;
   useEffect(() => {}, [totalDocs]); // rerender search component when total docs are changed
 
+  useEffect(() => {
+    if (!isPriceRangeSet && !isBrandsSet) {
+      if (response?.minMax) {
+        dispatch(setDefaultPriceRange(response?.minMax));
+      }
+    }
+  }, [dispatch, isBrandsSet, isPriceRangeSet, query, response?.minMax]); // update default price range value only if query are changed and response are exists, not selected filters
+
   // Render Section
 
   if (error?.status >= 500) {
@@ -125,7 +147,6 @@ export default function Search() {
   }
 
   if (totalDocs > 0 || (totalDocs === 0 && isPriceRangeSet)) {
-    // console.log('totalDocs :>> ', totalDocs);
     return (
       <div style={{ minHeight: '640px' }}>
         {
