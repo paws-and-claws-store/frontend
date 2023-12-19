@@ -26,7 +26,8 @@ import SearchCategory from './SearchCategory';
 import { usePagination } from 'hooks/usePagination';
 import { useSearchParams } from 'react-router-dom';
 import { setQuerySearch } from 'redux/slice/searchSlice';
-import { setPriceChange } from 'redux/slice/priceRangeSlice';
+import { setClearSetStatusPriceRange, setPriceChange } from 'redux/slice/priceRangeSlice';
+import { setClearSetStatusBrandsFilter } from 'redux/slice/brandsFilterSlice';
 
 export default function Search() {
   const [currentPage, setCurrentPage] = useState(1); // to track the current page of search results.
@@ -50,7 +51,9 @@ export default function Search() {
 
   useEffect(() => {
     dispatch(setPriceChange(false));
-  }, [dispatch, searchQuery]);
+    dispatch(setClearSetStatusPriceRange(true)); // reset status to price range redux store
+    dispatch(setClearSetStatusBrandsFilter(true)); // reset status to Brands filter redux store
+  }, [dispatch, searchQuery]); // reset filters if search query was changed
 
   const query = searchParams.get('query');
   useEffect(() => {

@@ -127,11 +127,12 @@ export const CountWrapper = styled.div`
   border-radius: 50%;
   position: absolute;
   top: 2px;
-  right: 1.5px;
+  right: 2px;
 `;
 
 export const Count = styled.span`
-  font-size: ${props => (props.countDigits > 2 ? 8 : props.countDigits > 1 ? 10 : 12)}px;
+  font-size: ${props =>
+    props.countDigits > 2 ? 8 : props.countDigits > 1 ? 10 : 12}px;
   /* font-size: 10px; */
   font-style: normal;
   font-weight: 500;

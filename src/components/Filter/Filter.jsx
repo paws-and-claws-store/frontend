@@ -65,12 +65,14 @@ export const Filter = ({ active, brandsCount }) => {
         {alphabet.map(item => {
           // Checks if the letter is enabled based on available brands
           const enabledLetter = brands?.find(i => i[0].toUpperCase() === item.toUpperCase());
+          const activeLetter = checkedBrands.some(i => i[0].toUpperCase() === item.toUpperCase());
 
           return (
             <LetterStyled key={item}>
               {/* Render alphabet buttons with click functionality */}
               <ButtonLetterStyled
                 disabled={!enabledLetter}
+                activeLetter={activeLetter}
                 onClick={() => {
                   // Scrolls to the first brand starting with the clicked letter
                   if (enabledLetter) {
@@ -96,7 +98,11 @@ export const Filter = ({ active, brandsCount }) => {
           // Create ref for current brand
           brandRefs[item] = React.createRef();
           return (
-            <BrandsCheckBoxStyled key={item + Math.random()} ref={brandRefs[item]}>
+            <BrandsCheckBoxStyled
+              key={item + Math.random()}
+              ref={brandRefs[item]}
+              disabled={brandsCount[item] === undefined ? true : false}
+            >
               <CheckBoxLabelStyled>
                 {/* Render checkboxes for each brand */}
                 <CheckBoxStyled
@@ -122,8 +128,8 @@ export const Filter = ({ active, brandsCount }) => {
                     // }
                   }}
                   checked={!!checkboxStates[item]} // Отмечен ли чекбокс
+                  disabled={brandsCount[item] === undefined ? true : false}
                 />
-
                 {item}
                 <QuantityBrands>
                   {brandsCount[item] ? `(${brandsCount[item]})` : '(0)'}

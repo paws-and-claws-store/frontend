@@ -38,6 +38,7 @@ export const LetterStyled = styled.li`
 `;
 
 export const ButtonLetterStyled = styled.button`
+  color: ${props => (props.activeLetter ? theme.colors.orange : theme.colors.green)};
   &:disabled {
     color: ${theme.colors.black};
     cursor: default;
@@ -58,7 +59,7 @@ export const BrandsCheckBoxStyled = styled.li`
   /* text-align: left; */
   display: flex;
   margin-bottom: 8px;
-  color: ${theme.colors.black};
+  color: ${props => (props.disabled ? `${theme.colors.black}` : `${theme.colors.green}`)};
   font-variant-numeric: lining-nums proportional-nums;
   font-feature-settings: 'ss09' on;
 
@@ -96,7 +97,8 @@ export const CheckBoxStyled = styled.input`
     clip-path: polygon(38% 68%, 94% 14%, 100% 24%, 40% 83%, 12% 59%, 19% 51%);
   }
   &:hover {
-    border: 1px solid ${theme.colors.black};
+    border: 1px solid
+      ${props => (props.disabled ? `${theme.colors.green}` : `${theme.colors.black}`)};
   }
 `;
 

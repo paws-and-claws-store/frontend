@@ -36,8 +36,6 @@ export const Header = () => {
     return previousValue + cardCount;
   }, 0);
 
-  
-
   const countDigits = number => {
     return number.toString().length;
   };
@@ -51,8 +49,6 @@ export const Header = () => {
       }
     });
   }, []);
-
-  
 
   // const menuTogle = ()=>setRegistrMenuTogle(true)
 

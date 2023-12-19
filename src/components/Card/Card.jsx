@@ -53,7 +53,9 @@ export const Card = ({ el, onClick }) => {
   };
 
   useEffect(() => {
-    const productCount = cardCountRedux?.find(item => item.productCode === productCode);
+    const productCount = cardCountRedux?.find(
+      item => item.productCode === productCode,
+    );
     if (productCount) {
       setCardCount(productCount.cardCount);
     }
@@ -138,9 +140,9 @@ export const Card = ({ el, onClick }) => {
 
   const handleBlur = () => {
     if (cardCount === '') {
-      Notify.warning('Мінімальна кількість для замовлення - 1 шт');
-      setCardCount(null);
-      dispatch(removeCartItem(productCode));
+      Notify.warning('Мінімальна кількість для замовлення - 1 шт.');
+      setCardCount(1);
+      dispatch(updateCartItem({ productCode, newCount: 1 }));
     }
   };
 
@@ -226,7 +228,9 @@ export const Card = ({ el, onClick }) => {
         <div>
           <div>
             <BrandNameSt to={'/brands'}>{el.brand}</BrandNameSt>
-            <Link to={`/catalog/${el._pet._id}/${el._category._id}/${el._variant._id}/${el._id}`}>
+            <Link
+              to={`/catalog/${el._pet._id}/${el._category._id}/${el._variant._id}/${el._id}`}
+            >
               <FixedBlock style={{ height: '48px' }}>
                 <ProductNameSt>{el.productName}</ProductNameSt>
               </FixedBlock>
@@ -272,7 +276,9 @@ export const Card = ({ el, onClick }) => {
                 <SymbolCurrency>₴</SymbolCurrency>
               </PriceSt>
               <PriceSt className="line-through-text">
-                <span className="line-through-text">{elType.price.toFixed(2)}</span>
+                <span className="line-through-text">
+                  {elType.price.toFixed(2)}
+                </span>
                 <SymbolCurrency>₴</SymbolCurrency>
               </PriceSt>
             </PriceBox>
