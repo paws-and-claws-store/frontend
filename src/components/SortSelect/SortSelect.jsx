@@ -15,7 +15,7 @@ import { RightArrow } from 'components/Icons';
 import { theme } from 'styles';
 import { useDispatch, useSelector } from 'react-redux';
 import { setValueSort } from 'redux/slice/sortSelectSlice';
-import { selectSortingTypeStoreDefault } from 'redux/selectors';
+import { selectSortingTypeStoreDefault } from 'redux/selectors/selectors';
 
 export const SortSelect = () => {
   const [isClickBurger, setIsClickBurger] = useState(true);
