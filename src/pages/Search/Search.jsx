@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import Loader from 'components/Loader/Loader';
 import { useRef, useState } from 'react';
-import { useFetchSearchQuery } from 'redux/operations';
+import { useFetchSearchQuery } from 'redux/api/operations';
 import {
   SearchAsideCatalog,
   SearchContainer,
@@ -19,7 +19,7 @@ import {
   selectPriceValue,
   selectSearchQueryStore,
   selectSortingTypeStore,
-} from 'redux/selectors';
+} from 'redux/selectors/selectors';
 import { NoSearch } from 'components/NoSearch/NoSearch';
 import { Notify } from 'notiflix';
 import SearchWrapper from './SearchWarapper';

@@ -11,7 +11,7 @@ import {
   PrevBtn,
   NextBtn,
 } from './ViewedProducts.styled';
-import { selectViewedProducts } from 'redux/selectors';
+import { selectViewedProducts } from 'redux/selectors/selectors';
 import { Card } from 'components/Card/Card';
 
 import { setViewedProducts } from 'redux/slice/viewedProductsSlice';
@@ -20,12 +20,10 @@ import { ArrowRightViewedProducts } from 'components/Icons';
 
 export const ViewedProducts = () => {
   const [productsList, setProductsList] = useState(null);
-  console.log('productsList:', productsList?.length - 1);
   const [imageIndex, setImageIndex] = useState(0);
-  console.log('imageIndex:', imageIndex);
+  const [offScale]=useState(true)
 
   const viewedProducts = useSelector(selectViewedProducts);
-  console.log('viewedProducts:', viewedProducts);
   const dispatch = useDispatch();
 
   const viewedSwiper = useRef(null);
@@ -37,6 +35,7 @@ export const ViewedProducts = () => {
   }, [productsList, viewedProducts]);
 
   const onCardClick = el => {
+    
     dispatch(setViewedProducts(el));
   };
 
@@ -85,24 +84,20 @@ export const ViewedProducts = () => {
         ref={viewedSwiper}
         slidesPerView={4}
         spaceBetween={20}
-        // options={{
-        //   perPage: 4,
-        //   perMove: 4,
-        //   pagination: false,
-        //   arrows: productsList && productsList.length <= 4 ? false : true, // включаем кнопки переключения
-        //   gap: 20,
-        //   speed: 800,
-        // }}
       >
+        <ul>
         {productsList
           ? productsList.map(el => (
               <SwiperSlide key={el._id}>
-                <ViewedProductsItem onClick={() => onCardClick(el)}>
-                  <Card el={el} />
-                </ViewedProductsItem>
+                {/* <ViewedProductsItem > */}
+                < >
+                  <Card el={el} offScale={offScale} onCardClick={onCardClick}/>
+                  </>
+                {/* </ViewedProductsItem> */}
               </SwiperSlide>
             ))
           : null}
+          </ul>
       </Swiper>
     </ViewedProductsContainer>
   );

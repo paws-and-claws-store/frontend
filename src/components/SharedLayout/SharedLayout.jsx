@@ -14,8 +14,16 @@ import {
 } from 'components';
 import ScrollToTop from 'components/ScrollToTop/ScrollToTop';
 import Breadcrumbs from 'components/Breadcrumbs/BreadCrumbs';
+import { useEffect } from 'react';
+import { getCurrentUser } from 'redux/api/auth-operations';
+import { useDispatch } from 'react-redux';
 
 const SharedLayout = () => {
+  const dispatch = useDispatch();
+  
+  useEffect(() => {
+    dispatch(getCurrentUser());
+  }, [dispatch]);
   return (
     <SharedLayoutBox className="SharedLayoutBox">
       <ScrollToTopOnRouteChange />

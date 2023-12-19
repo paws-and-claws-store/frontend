@@ -8,7 +8,7 @@ import {
 } from './PriceSlider.styled';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectDefaultPriceRange, selectIsClearSetPriceRange } from 'redux/selectors';
+import { selectDefaultPriceRange, selectIsClearSetPriceRange } from 'redux/selectors/selectors';
 import { resetPriceRange, setPriceValue } from 'redux/slice/priceRangeSlice';
 import { theme } from 'styles';
 

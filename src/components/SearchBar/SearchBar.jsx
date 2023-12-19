@@ -8,7 +8,7 @@ import { searchSchema } from './searchValidationSchema'; // add search schema va
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { setQuerySearch } from 'redux/slice/searchSlice';
-import { selectSearchQueryStore } from 'redux/selectors';
+import { selectSearchQueryStore } from 'redux/selectors/selectors';
 
 export const SearchBar = () => {
   const value = useSelector(selectSearchQueryStore); // extract search value from the Redux store
