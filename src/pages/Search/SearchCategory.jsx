@@ -14,6 +14,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setClearSetStatusPriceRange } from 'redux/slice/priceRangeSlice';
 import { setClearSetStatusBrandsFilter } from 'redux/slice/brandsFilterSlice';
 import { selectIsBrandsFilterSet, selectIsPriceRangeSet } from 'redux/selectors/selectors';
+import { FilterSelectionLayout } from 'components/FilterParametersLayout/FilterSelectionLayout';
 
 export default memo(function SearchCategory({ brandsCount }) {
   const [active, setActive] = useState({ price: false, brands: false });
@@ -33,6 +34,16 @@ export default memo(function SearchCategory({ brandsCount }) {
   };
   return (
     <SearchCategoryList>
+      <FilterSelectionLayout />
+      {isBrandsFilterSet || isPriceRangeSet ? (
+        <SearchClearFilter
+          onClick={() => {
+            handleClickClearFilters();
+          }}
+        >
+          Очистити все
+        </SearchClearFilter>
+      ) : null}
       <ul
         style={{
           display: 'flex',
@@ -40,17 +51,6 @@ export default memo(function SearchCategory({ brandsCount }) {
           gap: '4px',
         }}
       >
-        {isBrandsFilterSet || isPriceRangeSet ? (
-          <li key={0}>
-            <SearchClearFilter
-              onClick={() => {
-                handleClickClearFilters();
-              }}
-            >
-              Очистити все
-            </SearchClearFilter>
-          </li>
-        ) : null}
         <li key={1}>
           <SearchFilter active={active['price']}>
             <FoldedContainer
