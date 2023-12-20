@@ -7,7 +7,7 @@ import 'swiper/css';
 import {
   ViewedProductsContainer,
   ViewedProductsTitel,
-  ViewedProductsItem,
+  // ViewedProductsItem,
   PrevBtn,
   NextBtn,
 } from './ViewedProducts.styled';
@@ -21,7 +21,7 @@ import { ArrowRightViewedProducts } from 'components/Icons';
 export const ViewedProducts = () => {
   const [productsList, setProductsList] = useState(null);
   const [imageIndex, setImageIndex] = useState(0);
-  const [offScale]=useState(true)
+  const [offScale] = useState(true);
 
   const viewedProducts = useSelector(selectViewedProducts);
   const dispatch = useDispatch();
@@ -35,7 +35,6 @@ export const ViewedProducts = () => {
   }, [productsList, viewedProducts]);
 
   const onCardClick = el => {
-    
     dispatch(setViewedProducts(el));
   };
 
@@ -80,24 +79,24 @@ export const ViewedProducts = () => {
         ) : null}
       </div>
 
-      <Swiper
-        ref={viewedSwiper}
-        slidesPerView={4}
-        spaceBetween={20}
-      >
+      <Swiper ref={viewedSwiper} slidesPerView={4} spaceBetween={20}>
         <ul>
-        {productsList
-          ? productsList.map(el => (
-              <SwiperSlide key={el._id}>
-                {/* <ViewedProductsItem > */}
-                < >
-                  <Card el={el} offScale={offScale} onCardClick={onCardClick}/>
+          {productsList
+            ? productsList.map(el => (
+                <SwiperSlide key={el._id}>
+                  {/* <ViewedProductsItem > */}
+                  <>
+                    <Card
+                      el={el}
+                      offScale={offScale}
+                      onCardClick={onCardClick}
+                    />
                   </>
-                {/* </ViewedProductsItem> */}
-              </SwiperSlide>
-            ))
-          : null}
-          </ul>
+                  {/* </ViewedProductsItem> */}
+                </SwiperSlide>
+              ))
+            : null}
+        </ul>
       </Swiper>
     </ViewedProductsContainer>
   );

@@ -1,4 +1,7 @@
-import { useState, useEffect, useRef } from 'react';
+import {
+  useState,
+  // useEffect, useRef
+} from 'react';
 import { Form, Formik } from 'formik';
 // import { useNavigate } from 'react-router-dom';
 import { loginSchema } from 'utils/shemas/AuthSchema';
@@ -42,16 +45,14 @@ export function LoginForm({ setUserMenuTogle }) {
   const dispatch = useDispatch();
   // const navigate = useNavigate();
 
-
   const handleSubmit = (values, { resetForm }) => {
     const data = {
       email: values.email,
       password: values.password,
     };
-     dispatch(login(data));
+    dispatch(login(data));
     resetForm();
   };
-
 
   //   useEffect(() => {
   //     if (isLoggedIn) {
@@ -60,7 +61,7 @@ export function LoginForm({ setUserMenuTogle }) {
   //   }, [isLoggedIn, navigate]);
 
   return (
-    <LogFormContainer >
+    <LogFormContainer>
       <Formik
         validationSchema={loginSchema}
         initialValues={initialValues}
