@@ -141,6 +141,12 @@ export const Count = styled.span`
   color: ${theme.colors.orange};
 `;
 
+export const ProfilBtn = styled.button`
+> svg{
+  fill: ${props => props.isActive ? theme.colors.orange : theme.colors.black};
+}
+`;
+
 export const LinkItemWrapper = styled.div`
   display: flex;
   align-items: center;

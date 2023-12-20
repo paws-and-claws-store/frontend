@@ -1,8 +1,6 @@
 import {
   useState,
-   useEffect
 } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { Form, Formik } from 'formik';
 import { useDispatch } from 'react-redux';
 import { registerSchema } from 'utils/shemas/AuthSchema';
@@ -32,7 +30,6 @@ import {
 import { register } from 'redux/api/auth-operations';
 
 import { theme } from 'styles';
-import { useAuth } from 'hooks/useAuth';
 // import { Check, Cross } from 'components/icons';
 
 const initialValues = {
@@ -53,8 +50,6 @@ export function AuthForm() {
   ] = useState(false);
   const [showConfirmModal, setShowConfirmModal] = useState(true)
   const dispatch = useDispatch();
-  const navigate = useNavigate();
-    const { isActive } = useAuth();
 
   // const togglePassword = () => setPasswordShow(prevState => !prevState);
   // const toggleConfirmPassword = () =>
@@ -73,11 +68,7 @@ export function AuthForm() {
    resetForm();
   };
 
-    useEffect(() => {
-      if (isActive) {
-        navigate('/');
-      }
-    }, [navigate, isActive]);
+    
 
   return (
     <FormContainer>
