@@ -16,15 +16,16 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setBrands, setResetBrands } from 'redux/slice/brandsFilterSlice';
 import {
   selectCheckboxStates,
-  //  selectCheckedBrands,
+  selectDefaultBrands,
   selectIsClearSetBrandsFilter,
 } from 'redux/selectors/selectors';
 
-export const BrandsFilter = ({ active, brandsCount }) => {
+export const BrandsFilter = ({ active }) => {
   // Generates an alphabet array
   const alphabet = [...Array(26)].map((_, i) => String.fromCharCode(i + 97));
   const dispatch = useDispatch();
-  //const checkedBrands = useSelector(selectCheckedBrands);
+
+  const defaultBrands = useSelector(selectDefaultBrands);
   const checkboxStates = useSelector(selectCheckboxStates);
   const resetStatus = useSelector(selectIsClearSetBrandsFilter);
   const [activeLetter, setActiveLetter] = useState('');
@@ -89,7 +90,7 @@ export const BrandsFilter = ({ active, brandsCount }) => {
             <BrandsCheckBoxStyled
               key={item + Math.random()}
               ref={brandRefs[item]}
-              disabled={brandsCount[item] === undefined ? true : false}
+              disabled={defaultBrands[item] === undefined ? true : false}
             >
               <CheckBoxLabelStyled>
                 {/* Render checkboxes for each brand */}
@@ -120,7 +121,7 @@ export const BrandsFilter = ({ active, brandsCount }) => {
                 />
                 {item.toLowerCase()}
                 <QuantityBrands>
-                  {brandsCount[item] ? `(${brandsCount[item]})` : '(0)'}
+                  {defaultBrands[item] ? `(${defaultBrands[item]})` : '(0)'}
                 </QuantityBrands>
               </CheckBoxLabelStyled>
             </BrandsCheckBoxStyled>

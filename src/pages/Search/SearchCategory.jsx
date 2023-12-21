@@ -16,7 +16,7 @@ import { setClearSetStatusBrandsFilter } from 'redux/slice/brandsFilterSlice';
 import { selectIsBrandsFilterSet, selectIsPriceRangeSet } from 'redux/selectors/selectors';
 import { FilterSelectionLayout } from 'components/FilterParametersLayout/FilterSelectionLayout';
 
-export default memo(function SearchCategory({ brandsCount }) {
+export default memo(function SearchCategory() {
   const [active, setActive] = useState({ price: false, brands: false });
   const dispatch = useDispatch();
   const isPriceRangeSet = useSelector(selectIsPriceRangeSet);
@@ -83,7 +83,7 @@ export default memo(function SearchCategory({ brandsCount }) {
                 <RightArrow direction={active['brands'] ? 'rotate(90)' : 'rotate(-90)'} />
               </button>
             </FoldedContainer>
-            <BrandsFilter active={active['brands']} brandsCount={brandsCount} />
+            <BrandsFilter active={active['brands']} />
           </SearchBrands>
         </li>
       </ul>

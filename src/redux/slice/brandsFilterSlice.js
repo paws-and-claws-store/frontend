@@ -6,7 +6,10 @@ const brandsFilterInitialState = {
   isClearSet: false,
   checkboxStates: {},
   checkedBrands: [],
+  defaultBrands: '',
 };
+
+brandsFilterInitialState.defaultBrands = brandsFilterInitialState.brands;
 
 const brandFilterSlice = createSlice({
   name: 'brands',
@@ -41,10 +44,19 @@ const brandFilterSlice = createSlice({
     setClearSetStatusBrandsFilter(state, action) {
       state.isClearSet = action.payload;
     },
+
+    setDefaultBrands(state, action) {
+      state.defaultBrands = action.payload;
+    },
   },
 });
 
 export const brandsFilterReducer = brandFilterSlice.reducer;
 
-export const { setBrands, setBrandsSet, setClearSetStatusBrandsFilter, setResetBrands } =
-  brandFilterSlice.actions;
+export const {
+  setBrands,
+  setBrandsSet,
+  setClearSetStatusBrandsFilter,
+  setResetBrands,
+  setDefaultBrands,
+} = brandFilterSlice.actions;
