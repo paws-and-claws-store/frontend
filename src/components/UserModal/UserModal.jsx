@@ -1,13 +1,17 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { ModalOverlay, ModalContent, CloseButton } from './UserModal.styled';
 import { useAuth } from 'hooks/useAuth';
 import { showUserPage } from 'redux/slice/authSlice';
 import { useDispatch } from 'react-redux';
+import { getCurrentUser } from 'redux/api/auth-operations';
 
 export const UserModal = ({ setShowModal }) => {
     const dispatch = useDispatch();
     const { user } = useAuth();
+    useEffect(() => {
+        dispatch(getCurrentUser());
+      }, [dispatch]);
 const closeModal = () =>{
     setShowModal(false)
     dispatch(showUserPage())
