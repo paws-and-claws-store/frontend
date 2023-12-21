@@ -32,11 +32,12 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     userActivated (state, action) {
+    // state.isRegistered = true;
     state.isActive = true;
   },
   showUserPage (state, action) {
     state.isRegistered = false;
-    state.isLoading = true;
+    state.isLoggedIn = true;
   }
 },
   extraReducers: builder => {
@@ -48,6 +49,7 @@ const authSlice = createSlice({
       })
       
       .addCase(login.fulfilled, (state, action) => {
+        state.user = action.payload;
         state.isLoggedIn = true;
         state.isActive = true;
         state.isLoading = false;

@@ -10,6 +10,7 @@ import {
   Leng,
   LengLinkStyled,
   LinkWrapper,
+  ProfilBtn,
   // SearchBox,
 } from './Header.styled';
 import {
@@ -24,6 +25,7 @@ import { useSelector } from 'react-redux';
 import { selectCartStore } from 'redux/selectors/selectors';
 import { SearchBar } from 'components/SearchBar/SearchBar';
 import { UserMenu } from 'components/UserMenu/UserMenu';
+import { useAuth } from 'hooks/useAuth';
 
 // import { Search } from './Search';
 
@@ -31,6 +33,7 @@ export const Header = () => {
   const [scroll, setScroll] = useState('');
   const [userMenuTogle, setUserMenuTogle] = useState(false);
 
+  const {isActive} = useAuth();
   const cartStore = useSelector(selectCartStore);
   const totalCount = cartStore.reduce((previousValue, { cardCount }) => {
     return previousValue + cardCount;
@@ -61,9 +64,9 @@ export const Header = () => {
           </Link>
           <SearchBar />
           <LinkWrapper>
-            <button onClick={()=>setUserMenuTogle(true)} disabled={userMenuTogle}>
+            <ProfilBtn onClick={()=>setUserMenuTogle(true)} disabled={userMenuTogle} isActive={isActive}>
               <ProfileIcon />
-            </button>
+            </ProfilBtn>
             <button>
               <HeartIcon />
             </button>
