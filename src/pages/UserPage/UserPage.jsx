@@ -13,11 +13,8 @@ export const UserPage = () => {
       const dispatch = useDispatch();
 
       useEffect(()=>{
-        if(!isRegistered){
           dispatch(userActivated())
-        }
-        
-      },[dispatch, isRegistered]);
+      },[dispatch]);
 
     return (
       <UserPageContainer>

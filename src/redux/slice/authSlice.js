@@ -37,7 +37,7 @@ const authSlice = createSlice({
   },
   showUserPage (state, action) {
     state.isRegistered = false;
-    state.isLoading = true;
+    state.isLoggedIn = true;
   }
 },
   extraReducers: builder => {

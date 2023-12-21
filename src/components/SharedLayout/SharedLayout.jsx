@@ -1,5 +1,5 @@
 import { Outlet } from 'react-router-dom';
-import { Suspense } from 'react';
+import { Suspense, useEffect } from 'react';
 import Loader from 'components/Loader/Loader';
 import {
   BoxMT,
@@ -14,16 +14,17 @@ import {
 } from 'components';
 import ScrollToTop from 'components/ScrollToTop/ScrollToTop';
 import Breadcrumbs from 'components/Breadcrumbs/BreadCrumbs';
-import { useEffect } from 'react';
 import { getCurrentUser } from 'redux/api/auth-operations';
 import { useDispatch } from 'react-redux';
+import { useAuth } from 'hooks/useAuth';
 
 const SharedLayout = () => {
   const dispatch = useDispatch();
-  
+  const { user } = useAuth();
+
   useEffect(() => {
-    dispatch(getCurrentUser());
-  }, [dispatch]);
+   if(!user.name){ dispatch(getCurrentUser());}
+  }, [dispatch, user]);
   return (
     <SharedLayoutBox className="SharedLayoutBox">
       <ScrollToTopOnRouteChange />
