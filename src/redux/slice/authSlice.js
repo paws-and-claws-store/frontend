@@ -18,10 +18,7 @@ const handleRejected = (state, action) => {
 
 const initialState = {
   user: {},
-  // accessToken: null,
-  // refreshToken: null,
   isLoading: false,
-  isActive: false,
   isRegistered: false,
   error: null,
   isLoggedIn: false,
@@ -31,15 +28,11 @@ const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    userActivated (state, action) {
-    // state.isRegistered = true;
-    state.isActive = true;
+    showUserPage(state, action) {
+      state.isRegistered = false;
+      state.isLoggedIn = true;
+    },
   },
-  showUserPage (state, action) {
-    state.isRegistered = false;
-    state.isLoggedIn = true;
-  }
-},
   extraReducers: builder => {
     builder
       .addCase(register.fulfilled, (state, action) => {
@@ -47,31 +40,27 @@ const authSlice = createSlice({
         state.isRegistered = true;
         state.isLoading = false;
       })
-      
+
       .addCase(login.fulfilled, (state, action) => {
         state.user = action.payload;
         state.isLoggedIn = true;
-        state.isActive = true;
         state.isLoading = false;
       })
       .addCase(logout.fulfilled, (state, action) => {
         state.user = {};
-        state.accessToken = null;
         state.isLoggedIn = false;
         state.isRegistered = false;
         state.isLoading = false;
-        state.isActive = false;
       })
       .addCase(getCurrentUser.fulfilled, (state, action) => {
         state.user = action.payload;
         state.isLoggedIn = true;
-        state.isActive = true;
         state.isLoading = false;
       })
-      .addCase(resendVerifyEmail.fulfilled, (state, action)=>{
+      .addCase(resendVerifyEmail.fulfilled, (state, action) => {
         // console.log("action:", action)
       })
-     
+
       .addCase(register.pending, handlePending)
       .addCase(login.pending, handlePending)
       .addCase(logout.pending, handlePending)
@@ -83,5 +72,5 @@ const authSlice = createSlice({
   },
 });
 
-export const {userActivated, showUserPage} = authSlice.actions;
+export const { userActivated, showUserPage } = authSlice.actions;
 export const authReducer = authSlice.reducer;
