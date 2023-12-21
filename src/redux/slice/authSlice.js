@@ -32,7 +32,7 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     userActivated (state, action) {
-    state.isRegistered = true;
+    // state.isRegistered = true;
     state.isActive = true;
   },
   showUserPage (state, action) {
