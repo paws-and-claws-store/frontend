@@ -20,11 +20,11 @@ import { useAuth } from 'hooks/useAuth';
 
 const SharedLayout = () => {
   const dispatch = useDispatch();
-  const { user } = useAuth();
+  const { user, isActive} = useAuth();
 
   useEffect(() => {
-   if(!user.name){ dispatch(getCurrentUser());}
-  }, [dispatch, user]);
+   if(isActive&&!user.name){ dispatch(getCurrentUser());}
+  }, [dispatch, user, isActive]);
   return (
     <SharedLayoutBox className="SharedLayoutBox">
       <ScrollToTopOnRouteChange />
