@@ -21,8 +21,6 @@ export const FilterSelectionLayout = renderdata => {
   const priceValue = useSelector(selectPriceValueInput);
 
   const isPriceRangeSet = useSelector(selectIsPriceRangeSet);
-  console.log('priceValueInput :>> ', priceValue);
-  console.log('isPriceRangeSet :>> ', isPriceRangeSet);
   function renderBlock(data, type) {
     return (
       <FilterSelectionOption key={data}>
