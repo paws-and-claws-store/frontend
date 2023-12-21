@@ -11,12 +11,12 @@ import {
   LetterStyled,
   QuantityBrands,
 } from './BrandsFilter.styled';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setBrands, setResetBrands } from 'redux/slice/brandsFilterSlice';
 import {
   selectCheckboxStates,
-  selectCheckedBrands,
+  //  selectCheckedBrands,
   selectIsClearSetBrandsFilter,
 } from 'redux/selectors/selectors';
 
@@ -24,9 +24,10 @@ export const BrandsFilter = ({ active, brandsCount }) => {
   // Generates an alphabet array
   const alphabet = [...Array(26)].map((_, i) => String.fromCharCode(i + 97));
   const dispatch = useDispatch();
-  const checkedBrands = useSelector(selectCheckedBrands);
+  //const checkedBrands = useSelector(selectCheckedBrands);
   const checkboxStates = useSelector(selectCheckboxStates);
   const resetStatus = useSelector(selectIsClearSetBrandsFilter);
+  const [activeLetter, setActiveLetter] = useState('');
 
   // Fetches brands using a custom hook
   const { data: brands } = useFetchBrandsQuery();
@@ -52,14 +53,13 @@ export const BrandsFilter = ({ active, brandsCount }) => {
         {alphabet.map(item => {
           // Checks if the letter is enabled based on available brands
           const enabledLetter = brands?.find(i => i[0].toUpperCase() === item.toUpperCase());
-          const activeLetter = checkedBrands.some(i => i[0].toUpperCase() === item.toUpperCase());
 
           return (
             <LetterStyled key={item}>
               {/* Render alphabet buttons with click functionality */}
               <ButtonLetterStyled
                 disabled={!enabledLetter}
-                activeLetter={activeLetter}
+                activeLetter={activeLetter === item.toUpperCase() ? true : false}
                 onClick={() => {
                   // Scrolls to the first brand starting with the clicked letter
                   if (enabledLetter) {
@@ -70,6 +70,7 @@ export const BrandsFilter = ({ active, brandsCount }) => {
                         block: 'center',
                       });
                     }
+                    setActiveLetter(item.toUpperCase());
                   }
                 }}
               >
@@ -115,7 +116,7 @@ export const BrandsFilter = ({ active, brandsCount }) => {
                     // }
                   }}
                   checked={!!checkboxStates[item]} // Отмечен ли чекбокс
-                  disabled={brandsCount[item] === undefined ? true : false}
+                  //disabled={brandsCount[item] === undefined ? true : false}
                 />
                 {item}
                 <QuantityBrands>
