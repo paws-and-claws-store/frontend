@@ -13,8 +13,6 @@ const brandFilterSlice = createSlice({
   initialState: brandsFilterInitialState,
   reducers: {
     setBrands(state, action) {
-      // state.brands = action.payload;
-
       const updatedBrands = new Set(state.checkedBrands);
       if (action.payload.checked) {
         updatedBrands.add(action.payload.name);
