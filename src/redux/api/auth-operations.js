@@ -31,7 +31,7 @@ export const register = createAsyncThunk(
 export const login = createAsyncThunk('auth/login', async (user, thunkAPI) => {
   try {
     const { data } = await api.login(user);
-    return data.user.accessToken;
+    return {name: data.user.name, email: data.user.email}
 
   } catch (error) {
     const message = [409, 401, 400].includes(error?.response?.status)
@@ -39,7 +39,7 @@ export const login = createAsyncThunk('auth/login', async (user, thunkAPI) => {
       : `Request was failed with code ${error?.response?.status}`;
 
     Notify.failure(`Registration is not completed. ${message}`, {
-      timeout: 5000,
+      timeout: 3000,
     });
     return thunkAPI.rejectWithValue({
       message: error?.response?.data?.message,

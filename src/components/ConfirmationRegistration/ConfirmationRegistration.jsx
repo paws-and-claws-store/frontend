@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { ResendVerifyEmail } from 'components/ResendVerifyEmail/ResendVerifyEmail';
-
+import { useAuth } from 'hooks/useAuth';
 import {
   ConfirmationRegistrationContainer,
   Titel,
@@ -11,6 +11,16 @@ import {
 
 export const ConfirmationRegistration = () => {
   const [showResendEmail, setShowResendEmail] = useState(false);
+
+  const navigate = useNavigate();
+  const { isActive } = useAuth();
+
+
+  useEffect(() => {
+    if (isActive) {
+      navigate('/');
+    }
+  }, [navigate, isActive]);
 
   return (
     <>
