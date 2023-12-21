@@ -118,7 +118,7 @@ export const BrandsFilter = ({ active, brandsCount }) => {
                   checked={!!checkboxStates[item]} // Отмечен ли чекбокс
                   //disabled={brandsCount[item] === undefined ? true : false}
                 />
-                {item}
+                {item.toLowerCase()}
                 <QuantityBrands>
                   {brandsCount[item] ? `(${brandsCount[item]})` : '(0)'}
                 </QuantityBrands>

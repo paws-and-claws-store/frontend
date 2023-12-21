@@ -109,6 +109,7 @@ export const CheckBoxLabelStyled = styled.label`
   grid-column-gap: 4px;
 
   /* gap: 10px; */
+  text-transform: capitalize;
 `;
 
 export const QuantityBrands = styled.span`
