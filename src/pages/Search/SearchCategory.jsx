@@ -29,7 +29,7 @@ export default memo(function SearchCategory({ brandsCount }) {
   };
 
   const handleClickClearFilters = () => {
-    dispatch(setClearSetStatusPriceRange(true)); // reset status to price range ewdux store
+    dispatch(setClearSetStatusPriceRange(true)); // reset status to price range redux store
     dispatch(setClearSetStatusBrandsFilter(true)); // reset status to Brands filter redux store
   };
   return (

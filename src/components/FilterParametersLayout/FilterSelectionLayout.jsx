@@ -5,13 +5,24 @@ import {
   FilterSelectionOption,
   FilterSelectionText,
 } from './FilterSelectionLayout.styled';
-import { selectCheckboxStates, selectCheckedBrands } from 'redux/selectors/selectors';
+import {
+  selectCheckboxStates,
+  selectCheckedBrands,
+  selectIsPriceRangeSet,
+  selectPriceValueInput,
+} from 'redux/selectors/selectors';
 import { setBrands } from 'redux/slice/brandsFilterSlice';
+import { setClearSetStatusPriceRange } from 'redux/slice/priceRangeSlice';
 
 export const FilterSelectionLayout = renderdata => {
   const dispatch = useDispatch();
   const checkedBrands = useSelector(selectCheckedBrands);
   const checkboxStates = useSelector(selectCheckboxStates);
+  const priceValue = useSelector(selectPriceValueInput);
+
+  const isPriceRangeSet = useSelector(selectIsPriceRangeSet);
+  console.log('priceValueInput :>> ', priceValue);
+  console.log('isPriceRangeSet :>> ', isPriceRangeSet);
   function renderBlock(data, type) {
     return (
       <FilterSelectionOption key={data}>
@@ -20,7 +31,11 @@ export const FilterSelectionLayout = renderdata => {
         </FilterSelectionText>
         <FilterSelectionButton
           onClick={() => {
-            handleClickUnset({ name: data, checked: checkboxStates[data] });
+            if (type === 'brand') {
+              handleClickUnset({ name: data, checked: checkboxStates[data] });
+            } else {
+              dispatch(setClearSetStatusPriceRange(true)); // reset status to price range ewdux store
+            }
           }}
           key={data + 'button'}
         />
@@ -32,9 +47,11 @@ export const FilterSelectionLayout = renderdata => {
     dispatch(setBrands({ name, checked: !checked }));
   };
 
+  // const handleClickUnsetPriceValue =
   return (
     <FilterSelectionContainer>
       {checkedBrands ? checkedBrands.map(item => renderBlock(item, 'brand')) : null}
+      {isPriceRangeSet ? renderBlock(priceValue, 'price') : null}
     </FilterSelectionContainer>
   );
 };
