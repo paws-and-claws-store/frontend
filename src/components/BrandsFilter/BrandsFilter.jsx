@@ -10,18 +10,22 @@ import {
   FilterContainer,
   LetterStyled,
   QuantityBrands,
-} from './Filter.styled';
-import React, { useEffect, useState } from 'react';
+} from './BrandsFilter.styled';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setBrands, setResetBrands } from 'redux/slice/brandsFilterSlice';
-import { selectIsClearSetBrandsFilter } from 'redux/selectors/selectors';
+import {
+  selectCheckboxStates,
+  selectCheckedBrands,
+  selectIsClearSetBrandsFilter,
+} from 'redux/selectors/selectors';
 
-export const Filter = ({ active, brandsCount }) => {
+export const BrandsFilter = ({ active, brandsCount }) => {
   // Generates an alphabet array
   const alphabet = [...Array(26)].map((_, i) => String.fromCharCode(i + 97));
   const dispatch = useDispatch();
-  const [checkedBrands, setCheckedBrands] = useState([]);
-  const [checkboxStates, setCheckboxStates] = useState({});
+  const checkedBrands = useSelector(selectCheckedBrands);
+  const checkboxStates = useSelector(selectCheckboxStates);
   const resetStatus = useSelector(selectIsClearSetBrandsFilter);
 
   // Fetches brands using a custom hook
@@ -31,29 +35,12 @@ export const Filter = ({ active, brandsCount }) => {
   const brandRefs = {};
 
   const handleCheckboxChange = (name, checked) => {
-    setCheckboxStates(prevState => ({
-      ...prevState,
-      [name]: checked, // Update checkbox state by name
-    }));
-
-    setCheckedBrands(prevBrands => {
-      const updatedBrands = new Set(prevBrands);
-      if (checked) {
-        updatedBrands.add(name);
-      } else {
-        updatedBrands.delete(name);
-      }
-      return [...updatedBrands];
-    });
+    dispatch(setBrands({ name, checked }));
   };
 
   useEffect(() => {
-    dispatch(setBrands(checkedBrands.toString()));
-  }, [checkedBrands, dispatch]);
-
-  useEffect(() => {
     if (resetStatus === true) {
-      setCheckboxStates({}); // flush checkbox status state for render on curent page
+      // setCheckboxStates({}); // flush checkbox status state for render on curent page
       dispatch(setResetBrands()); // flush checkbox status at redux store for coorect query
     }
   }, [dispatch, resetStatus]);

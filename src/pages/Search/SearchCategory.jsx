@@ -7,7 +7,7 @@ import {
   SearchFilter,
 } from './Search.styled';
 import { PriceSlider } from 'components/PriceSlider/PriceSlider';
-import { Filter } from 'components/Filter/Filter';
+import { BrandsFilter } from 'components/BrandsFilter/BrandsFilter';
 import { theme } from 'styles';
 import { memo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -83,7 +83,7 @@ export default memo(function SearchCategory({ brandsCount }) {
                 <RightArrow direction={active['brands'] ? 'rotate(90)' : 'rotate(-90)'} />
               </button>
             </FoldedContainer>
-            <Filter active={active['brands']} brandsCount={brandsCount} />
+            <BrandsFilter active={active['brands']} brandsCount={brandsCount} />
           </SearchBrands>
         </li>
       </ul>

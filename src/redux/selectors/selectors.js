@@ -12,3 +12,5 @@ export const selectIsClearSetPriceRange = state => state.priceRange.isClearSet; 
 export const selectIsClearSetBrandsFilter = state => state.brandsFilter.isClearSet; // status of clear button set on Brands filter
 export const selectBrandsFilter = state => state.brandsFilter.brands; // select list of selectrd brands in Brands filter
 export const selectDefaultPriceRange = state => state.priceRange.defaultPriceRange; // select default price range for query
+export const selectCheckedBrands = state => state.brandsFilter.checkedBrands;
+export const selectCheckboxStates = state => state.brandsFilter.checkboxStates;

@@ -4,6 +4,8 @@ const brandsFilterInitialState = {
   brands: '',
   isBrandsSet: false,
   isClearSet: false,
+  checkboxStates: {},
+  checkedBrands: [],
 };
 
 const brandFilterSlice = createSlice({
@@ -11,7 +13,21 @@ const brandFilterSlice = createSlice({
   initialState: brandsFilterInitialState,
   reducers: {
     setBrands(state, action) {
-      state.brands = action.payload;
+      // state.brands = action.payload;
+
+      const updatedBrands = new Set(state.checkedBrands);
+      if (action.payload.checked) {
+        updatedBrands.add(action.payload.name);
+      } else {
+        updatedBrands.delete(action.payload.name);
+      }
+
+      state.checkedBrands = [...updatedBrands];
+      state.brands = state.checkedBrands.toString();
+      state.checkboxStates = {
+        ...state.checkboxStates,
+        [action.payload.name]: action.payload.checked,
+      };
       state.isBrandsSet = true;
     },
     setBrandsSet(state, action) {
@@ -21,6 +37,8 @@ const brandFilterSlice = createSlice({
       state.brands = '';
       state.isBrandsSet = false;
       state.isClearSet = false;
+      state.checkedBrands = [];
+      state.checkboxStates = {};
     },
     setClearSetStatusBrandsFilter(state, action) {
       state.isClearSet = action.payload;
