@@ -13,7 +13,7 @@ import { selectDefaultPriceRange, selectIsClearSetPriceRange } from 'redux/selec
 import { resetPriceRange, setPriceValue } from 'redux/slice/priceRangeSlice';
 import { theme } from 'styles';
 
-export const PriceSlider = ({ active, minMax }) => {
+export const PriceSlider = ({ active }) => {
   const resetStatus = useSelector(selectIsClearSetPriceRange);
   const defaultPriceRange = useSelector(selectDefaultPriceRange);
   const [priceValueInput, setPriceValueInput] = useState({

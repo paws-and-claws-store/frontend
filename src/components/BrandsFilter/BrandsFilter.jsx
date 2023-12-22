@@ -1,5 +1,5 @@
 // this component is used for filtering by brands
-import { useFetchBrandsQuery } from 'redux/api/operations';
+// import { useFetchBrandsQuery } from 'redux/api/operations';
 import {
   AlphabetStyled,
   BrandsCheckBoxContainer,
@@ -31,7 +31,7 @@ export const BrandsFilter = ({ active }) => {
   const [activeLetter, setActiveLetter] = useState('');
 
   // Fetches brands using a custom hook
-  const { data: brands } = useFetchBrandsQuery();
+  //const { data: brands } = useFetchBrandsQuery();
 
   // Object to store refs to brands
   const brandRefs = {};
@@ -53,7 +53,9 @@ export const BrandsFilter = ({ active }) => {
       <AlphabetStyled>
         {alphabet.map(item => {
           // Checks if the letter is enabled based on available brands
-          const enabledLetter = brands?.find(i => i[0].toUpperCase() === item.toUpperCase());
+          const enabledLetter = Object.keys(defaultBrands)?.find(
+            i => i[0].toUpperCase() === item.toUpperCase(),
+          );
 
           return (
             <LetterStyled key={item}>
@@ -83,7 +85,7 @@ export const BrandsFilter = ({ active }) => {
       </AlphabetStyled>
       {/* Render brand checkboxes */}
       <BrandsCheckBoxContainer>
-        {brands?.map(item => {
+        {Object.keys(defaultBrands)?.map(item => {
           // Create ref for current brand
           brandRefs[item] = React.createRef();
           return (
