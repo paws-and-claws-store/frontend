@@ -90,7 +90,7 @@ export const BrandsFilter = ({ active }) => {
             <BrandsCheckBoxStyled
               key={item + Math.random()}
               ref={brandRefs[item]}
-              disabled={defaultBrands[item] === undefined ? true : false}
+              //    disabled={defaultBrands[item] === undefined ? true : false}
             >
               <CheckBoxLabelStyled>
                 {/* Render checkboxes for each brand */}

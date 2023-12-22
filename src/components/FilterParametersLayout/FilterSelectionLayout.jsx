@@ -8,6 +8,7 @@ import {
 import {
   selectCheckboxStates,
   selectCheckedBrands,
+  selectIsBrandsFilterSet,
   selectIsPriceRangeSet,
   selectPriceValueInput,
 } from 'redux/selectors/selectors';
@@ -21,6 +22,7 @@ export const FilterSelectionLayout = renderdata => {
   const priceValue = useSelector(selectPriceValueInput);
 
   const isPriceRangeSet = useSelector(selectIsPriceRangeSet);
+  const isBrandsSet = useSelector(selectIsBrandsFilterSet);
   function renderBlock(data, type) {
     return (
       <FilterSelectionOption key={data}>
@@ -45,10 +47,22 @@ export const FilterSelectionLayout = renderdata => {
     dispatch(setBrands({ name, checked: !checked }));
   };
 
-  // const handleClickUnsetPriceValue =
   return (
     <FilterSelectionContainer>
-      {checkedBrands ? checkedBrands.map(item => renderBlock(item.toLowerCase(), 'brand')) : null}
+      {/* {isBrandsSet ? checkedBrands.map(item => renderBlock(item.toLowerCase(), 'brand')) : null} */}
+      {isBrandsSet
+        ? checkedBrands.map(item => (
+            <FilterSelectionOption key={item}>
+              <FilterSelectionText key={item + 'text'}>{item.toLowerCase()}</FilterSelectionText>
+              <FilterSelectionButton
+                onClick={() => {
+                  handleClickUnset({ name: item, checked: checkboxStates[item] });
+                }}
+                key={item + 'button'}
+              />
+            </FilterSelectionOption>
+          ))
+        : null}
       {isPriceRangeSet ? renderBlock(priceValue, 'price') : null}
     </FilterSelectionContainer>
   );
