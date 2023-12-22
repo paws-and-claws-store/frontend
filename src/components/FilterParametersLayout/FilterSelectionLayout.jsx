@@ -48,7 +48,7 @@ export const FilterSelectionLayout = renderdata => {
   // const handleClickUnsetPriceValue =
   return (
     <FilterSelectionContainer>
-      {checkedBrands ? checkedBrands.map(item => renderBlock(item, 'brand')) : null}
+      {checkedBrands ? checkedBrands.map(item => renderBlock(item.toLowerCase(), 'brand')) : null}
       {isPriceRangeSet ? renderBlock(priceValue, 'price') : null}
     </FilterSelectionContainer>
   );

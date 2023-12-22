@@ -9,6 +9,7 @@ export const FilterSelectionContainer = styled.div`
   flex-wrap: wrap;
   gap: 8px;
   margin-bottom: 16px;
+  text-transform: capitalize;
 `;
 export const FilterSelectionOption = styled.div`
   padding: 4px 8px;

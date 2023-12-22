@@ -5,6 +5,7 @@ import {
   PriceRangeStyle,
   PriceValue,
   StyledRangeSlider,
+  SubmitBtnPriceSlider,
 } from './PriceSlider.styled';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -36,18 +37,11 @@ export const PriceSlider = ({ active, minMax }) => {
       return;
     }
 
-    const { value } = e.target;
-    const dotCount = value.split('.');
     const nameField = e.target.name;
     const newCount = Number(e.target.value);
 
     if (e.target.value === '') {
       setPriceValueInput(prevState => ({ ...prevState, [nameField]: '' }));
-      return;
-    }
-
-    if (dotCount[dotCount.length - 1] === '') {
-      setPriceValueInput(prevState => ({ ...prevState, [nameField]: newCount + '.' }));
       return;
     }
 
@@ -57,13 +51,8 @@ export const PriceSlider = ({ active, minMax }) => {
   const handleChangeOnBlurValue = e => {
     const nameField = e.target.name;
 
-    if (e.target.value === '' && nameField === 'minValue') {
-      setPriceValueInput(prevState => ({ ...prevState, minValue: defaultPriceRange[0] }));
-      return;
-    }
-
-    if (e.target.value === '' && nameField === 'maxValue') {
-      setPriceValueInput(prevState => ({ ...prevState, maxValue: defaultPriceRange[1] }));
+    if (e.target.value === '') {
+      setPriceValueInput(prevState => ({ ...prevState, [nameField]: defaultPriceRange[0] }));
       return;
     }
   };
@@ -81,21 +70,11 @@ export const PriceSlider = ({ active, minMax }) => {
       currentPriceValue.maxValue === currentPriceValue.minValue ||
       currentPriceValue.minValue > currentPriceValue.maxValue
     ) {
-      console.log('0');
       setPriceValueInput(prevState => ({
         ...prevState,
         minValue: defaultPriceRange[0],
         maxValue: defaultPriceRange[1],
       }));
-      return;
-    }
-
-    if (isNaN(currentPriceValue.minValue)) {
-      setPriceValueInput(prevState => ({ ...prevState, minValue: defaultPriceRange[0] }));
-      return;
-    }
-    if (isNaN(currentPriceValue.maxValue)) {
-      setPriceValueInput(prevState => ({ ...prevState, maxValue: defaultPriceRange[1] }));
       return;
     }
 
@@ -133,35 +112,35 @@ export const PriceSlider = ({ active, minMax }) => {
         max={defaultPriceRange[1]}
       />
       <PriceRangeStyle onSubmit={onSubmitHandler}>
-        <PriceValue
-          value={priceValueInput.minValue}
-          pattern="[0-9]*\.?[0-9]*"
-          onChange={handleChangePriceValue}
-          name="minValue"
-          onBlur={handleChangeOnBlurValue}
-        />
-
-        <PriceCurrency style={{ marginRight: '12px' }}>₴</PriceCurrency>
-        <span
-          style={{
-            color: theme.colors.orange,
-            fontSize: theme.fontSizes.s,
-            fontWeight: theme.fontWeight.SemiBold,
-          }}
-        >
-          -
-        </span>
-        <PriceValue
-          style={{ marginLeft: '12px' }}
-          value={priceValueInput.maxValue}
-          pattern="[0-9]*\.?[0-9]*"
-          onChange={handleChangePriceValue}
-          name="maxValue"
-          onBlur={handleChangeOnBlurValue}
-        />
-
-        <PriceCurrency>₴</PriceCurrency>
-        <button type="submit">OK</button>
+        <div>
+          <PriceValue
+            value={priceValueInput.minValue}
+            pattern="[0-9]*"
+            onChange={handleChangePriceValue}
+            name="minValue"
+            onBlur={handleChangeOnBlurValue}
+          />
+          <PriceCurrency style={{ marginRight: '8px' }}>₴</PriceCurrency>
+          <span
+            style={{
+              color: theme.colors.orange,
+              fontSize: theme.fontSizes.s,
+              fontWeight: theme.fontWeight.SemiBold,
+            }}
+          >
+            -
+          </span>
+          <PriceValue
+            style={{ marginLeft: '8px' }}
+            value={priceValueInput.maxValue}
+            pattern="[0-9]*"
+            onChange={handleChangePriceValue}
+            name="maxValue"
+            onBlur={handleChangeOnBlurValue}
+          />
+          <PriceCurrency>₴</PriceCurrency>
+        </div>
+        <SubmitBtnPriceSlider type="submit">Застосувати</SubmitBtnPriceSlider>
       </PriceRangeStyle>
     </PriceContainer>
   );
