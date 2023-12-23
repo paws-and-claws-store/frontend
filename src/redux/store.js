@@ -12,7 +12,7 @@ import {
   // REGISTER,
 } from 'redux-persist';
 
-// import storage from 'redux-persist/lib/storage';
+import storage from 'redux-persist/lib/storage';
 
 import { cartReducer } from './slice/cartSlice';
 import { api } from './api/operations';
@@ -24,14 +24,14 @@ import { priceRangeReducer } from './slice/priceRangeSlice';
 import { authReducer } from './slice/authSlice';
 import { brandsFilterReducer } from './slice/brandsFilterSlice';
 
-// const persistedAuthReducer = persistReducer(
-//   {
-//    key: 'auth',
-//    storage,
-//    whitelist: ['accessToken'],
-//    },
-//    authReducer,
-// );
+const persistedAuthReducer = persistReducer(
+  {
+   key: 'auth',
+   storage,
+   whitelist: ['isRegistered'],
+   },
+   authReducer,
+);
 
 const persistConfig = {
   key: 'root',
@@ -43,7 +43,7 @@ const persistConfig = {
 
 const reducers = combineReducers({
   [api.reducerPath]: api.reducer,
-  auth: authReducer,
+  auth: persistedAuthReducer,
   cart: cartReducer,
   breadcrumbs: breadCrumbsReducer,
   search: searchSliceReducer,

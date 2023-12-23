@@ -10,12 +10,13 @@ export const register = createAsyncThunk(
     try {
       const result = await api.register(data);
 
-      return result.data;
+      return {name: result.data.user.name, email: result.data.user.email};
+      
     } catch (error) {
       const message = [409, 401, 400].includes(error?.response?.status)
         ? error?.response?.data?.message
         : `Request was failed with code ${error?.response?.status}`;
-      console.log(' message:', message);
+      // console.log(' message:', message);
       Notify.failure(`Registration is not completed. ${message}`, {
         timeout: 5000,
       });
@@ -50,8 +51,9 @@ export const login = createAsyncThunk('auth/login', async (user, thunkAPI) => {
 
 // ---------------------------------------LOGOUT----------------------------------------------
 export const logout = createAsyncThunk('auth/logOut', async (_, thunkAPI) => {
+  const accessToken = localStorage.getItem('accessToken');
   try {
-    const data = await api.logout();
+    const data = await api.logout(accessToken);
     Notify.success(`${data.message}`);
 
     return data;

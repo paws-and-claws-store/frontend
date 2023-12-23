@@ -3,6 +3,7 @@ import {
 } from 'react';
 import { Form, Formik } from 'formik';
 import { useDispatch } from 'react-redux';
+// import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import { registerSchema } from 'utils/shemas/AuthSchema';
 
 import { ConfirmationRegistration } from 'components/ConfirmationRegistration/ConfirmationRegistration';
@@ -30,6 +31,7 @@ import {
 import { register } from 'redux/api/auth-operations';
 
 import { theme } from 'styles';
+// import { useAuth } from 'hooks/useAuth';
 // import { Check, Cross } from 'components/icons';
 
 const initialValues = {
@@ -48,8 +50,9 @@ export function AuthForm() {
     confirmPasswordShow,
     // setConfirmPasswordShow
   ] = useState(false);
-  const [showConfirmModal, setShowConfirmModal] = useState(true)
+  const [showConfirmModal, setShowConfirmModal] = useState(true);
   const dispatch = useDispatch();
+  // const {isError} = useAuth()
 
   // const togglePassword = () => setPasswordShow(prevState => !prevState);
   // const toggleConfirmPassword = () =>
@@ -62,8 +65,12 @@ export function AuthForm() {
       email: values.email,
       password: values.password,
     };
-
-   dispatch(register(newUser))
+    dispatch(register(newUser));
+  //  if(isError?.status === 409){
+  //   Notify.failure(`Email ${values.email} already in use`);
+  //   return
+  //  }
+   
    setShowConfirmModal(!showConfirmModal);
    resetForm();
   };
