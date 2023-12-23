@@ -33,7 +33,7 @@ export const Header = () => {
   const [scroll, setScroll] = useState('');
   const [userMenuTogle, setUserMenuTogle] = useState(false);
 
-  const {isActive} = useAuth();
+  const {isLoggedIn} = useAuth();
   const cartStore = useSelector(selectCartStore);
   const totalCount = cartStore.reduce((previousValue, { cardCount }) => {
     return previousValue + cardCount;
@@ -64,7 +64,7 @@ export const Header = () => {
           </Link>
           <SearchBar />
           <LinkWrapper>
-            <ProfilBtn onClick={()=>setUserMenuTogle(true)} disabled={userMenuTogle} isActive={isActive}>
+            <ProfilBtn onClick={()=>setUserMenuTogle(true)} disabled={userMenuTogle} isLoggedIn={isLoggedIn}>
               <ProfileIcon />
             </ProfilBtn>
             <button>
