@@ -5,7 +5,6 @@ const PrivateRoute = ({ children }) => {
   const { isLoggedIn } = useAuth();
 
   const location = useLocation();
-  console.log("location:", location)
   return (
     <>
 
