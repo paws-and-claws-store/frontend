@@ -15,12 +15,12 @@ export const UserPage = () => {
     if (!user.name) {
       dispatch(getCurrentUser());
     }
-  }, [dispatch, user]);
+  }, [dispatch, user.name]);
 
   return (
     <UserPageContainer>
       {isRegistered && showModal && <UserModal setShowModal={setShowModal} />}
-      {isLoggedIn & user.name && <UserInfo />}
+      {isLoggedIn && user.name && <UserInfo />}
     </UserPageContainer>
   );
 };

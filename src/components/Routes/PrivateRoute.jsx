@@ -12,7 +12,7 @@ const PrivateRoute = ({ children }) => {
       {isLoggedIn ? (
         children
       ) : (
-        <Navigate to="/" state={location} />
+        <Navigate to="/user" />
       )}
     </>
   );

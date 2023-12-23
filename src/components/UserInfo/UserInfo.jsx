@@ -1,10 +1,10 @@
+import React from "react";
 import { useAuth } from "hooks/useAuth";
 import { UserInfoContainer } from "./UserInfo.styled";
 
 export const UserInfo = () => {
 
 const {user} = useAuth()
-console.log("user:", user)
 
     return (
       <UserInfoContainer>

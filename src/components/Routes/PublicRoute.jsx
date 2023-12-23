@@ -1,14 +1,13 @@
 import { useAuth } from "hooks/useAuth";
-import { Navigate, useLocation } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 
 const PublicRoute = ({ children }) => {
   const { isLoggedIn } = useAuth();
-  const {state}  = useLocation();
-  console.log("state:", state)
+//   const {state}  = useLocation();
 
   return (
     <>
-{!isLoggedIn ? children : <Navigate to={state ? state : '/'} />} </>
+{!isLoggedIn ? children : <Navigate to={'/'} />} </>
   );
 };
 
