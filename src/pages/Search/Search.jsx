@@ -13,7 +13,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { SortSelect } from 'components/SortSelect/SortSelect';
 import {
   selectBrandsFilter,
-  selectDefaultPriceRange,
+  selectCheckedBrands,
   selectIsBrandsFilterSet,
   selectIsPriceRangeSet,
   selectPriceValue,
@@ -33,7 +33,7 @@ import {
   setDefaultPriceRange,
   setPriceChange,
 } from 'redux/slice/priceRangeSlice';
-import { setClearSetStatusBrandsFilter } from 'redux/slice/brandsFilterSlice';
+import { setClearSetStatusBrandsFilter, setDefaultBrands } from 'redux/slice/brandsFilterSlice';
 
 export default function Search() {
   const [currentPage, setCurrentPage] = useState(1); // to track the current page of search results.
@@ -45,9 +45,9 @@ export default function Search() {
   const searchQuery = useSelector(selectSearchQueryStore); // extract search query from the Redux store
   const sortingType = useSelector(selectSortingTypeStore); // extract sorting type from the Redux store
   const priceValue = useSelector(selectPriceValue); // get price value from price slider
-  const defaultPriceRange = useSelector(selectDefaultPriceRange); // get default price range data
   const isPriceRangeSet = useSelector(selectIsPriceRangeSet); // get price range set state from price slider
   const isBrandsSet = useSelector(selectIsBrandsFilterSet);
+  const checkedBrands = useSelector(selectCheckedBrands);
 
   const brandsString = useSelector(selectBrandsFilter);
 
@@ -73,8 +73,6 @@ export default function Search() {
   const params = {
     findBy: encodeURIComponent(query ? query : searchQuery).toLowerCase(),
     page: currentPage,
-    //   minPrice: priceValue[0], // set min price for query
-    //   maxPrice: priceValue[1], // set max price for query
   }; // params object to be used in the API call hook useFetchSearchQuery.
 
   // add price value data if defaultValue is updated in priceRangeSlice
@@ -85,7 +83,7 @@ export default function Search() {
 
   useEffect(() => {
     setCurrentPage(1); // set page one to the new search query, sorting type or price calue from price slider
-  }, [searchQuery, sortingType, defaultPriceRange]);
+  }, [searchQuery, sortingType, checkedBrands]);
 
   if (sortingType !== '') {
     params.sortBy = sortingType; // set to params object sorting type if sorting type is exists
@@ -129,8 +127,11 @@ export default function Search() {
       if (response?.minMax) {
         dispatch(setDefaultPriceRange(response?.minMax));
       }
+      if (response?.brands) {
+        dispatch(setDefaultBrands(response?.brands));
+      }
     }
-  }, [dispatch, isBrandsSet, isPriceRangeSet, query, response?.minMax]); // update default price range value only if query are changed and response are exists, not selected filters
+  }, [dispatch, isBrandsSet, isPriceRangeSet, query, response?.brands, response?.minMax]); // update default price range value only if query are changed and response are exists, not selected filters
 
   // Render Section
 
@@ -146,7 +147,7 @@ export default function Search() {
     ); // Show a loader if data is loading (isLoading && !isError).
   }
 
-  if (totalDocs > 0 || (totalDocs === 0 && isPriceRangeSet)) {
+  if (totalDocs > 0 || (totalDocs === 0 && isPriceRangeSet) || (totalDocs === 0 && isBrandsSet)) {
     return (
       <div style={{ minHeight: '640px' }}>
         {
@@ -165,7 +166,7 @@ export default function Search() {
 
             <SearchContainer>
               <SearchAsideCatalog>
-                <SearchCategory brandsCount={response?.brands} />
+                <SearchCategory />
               </SearchAsideCatalog>
               <SearchWrapper
                 params={{

@@ -7,7 +7,7 @@ import { useEffect, useRef } from "react";
 
 export const UserMenu = ({setUserMenuTogle}) => {
 
-    const {isActive, isLoggedIn} = useAuth();
+    const {isLoggedIn} = useAuth();
 
     const userMenuRef = useRef(null);
 
@@ -32,7 +32,7 @@ export const UserMenu = ({setUserMenuTogle}) => {
     
         return (
           <UserMenuContainer ref={userMenuRef}>
-            {isActive || isLoggedIn 
+            {isLoggedIn 
             ? <UserNav setUserMenuTogle={setUserMenuTogle}/>
             : <LoginForm setUserMenuTogle={setUserMenuTogle}/>
             }

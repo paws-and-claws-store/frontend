@@ -59,7 +59,8 @@ export const BrandsCheckBoxStyled = styled.li`
   /* text-align: left; */
   display: flex;
   margin-bottom: 8px;
-  color: ${props => (props.disabled ? `${theme.colors.black}` : `${theme.colors.green}`)};
+  /* color: ${props => (props.disabled ? `${theme.colors.black}` : `${theme.colors.green}`)}; */
+  color: ${theme.colors.black};
   font-variant-numeric: lining-nums proportional-nums;
   font-feature-settings: 'ss09' on;
 
@@ -108,6 +109,7 @@ export const CheckBoxLabelStyled = styled.label`
   grid-column-gap: 4px;
 
   /* gap: 10px; */
+  text-transform: capitalize;
 `;
 
 export const QuantityBrands = styled.span`

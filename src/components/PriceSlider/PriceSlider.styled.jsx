@@ -304,7 +304,9 @@ export const PriceRangeStyle = styled.form`
   align-items: end;
   width: auto;
   height: 16px;
-  justify-content: center;
+  justify-content: space-between;
+  margin-left: 23px;
+  margin-right: 21px;
 `;
 
 export const PriceValue = styled.input`
@@ -335,4 +337,16 @@ export const PriceCurrency = styled.span`
   font-style: normal;
   font-weight: ${theme.fontWeight.SemiBold};
   line-height: 100%; /* 12px */
+`;
+
+export const SubmitBtnPriceSlider = styled.button`
+  color: ${theme.colors.orange};
+  font-variant-numeric: lining-nums proportional-nums;
+  font-feature-settings: 'ss09' on;
+  font-family: Inter;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: 16px; /* 114.286% */
+  text-decoration-line: underline;
 `;
