@@ -1,5 +1,5 @@
 // this component is used for filtering by brands
-import { useFetchBrandsQuery } from 'redux/api/operations';
+// import { useFetchBrandsQuery } from 'redux/api/operations';
 import {
   AlphabetStyled,
   BrandsCheckBoxContainer,
@@ -10,50 +10,39 @@ import {
   FilterContainer,
   LetterStyled,
   QuantityBrands,
-} from './Filter.styled';
+} from './BrandsFilter.styled';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setBrands, setResetBrands } from 'redux/slice/brandsFilterSlice';
-import { selectIsClearSetBrandsFilter } from 'redux/selectors/selectors';
+import {
+  selectCheckboxStates,
+  selectDefaultBrands,
+  selectIsClearSetBrandsFilter,
+} from 'redux/selectors/selectors';
 
-export const Filter = ({ active, brandsCount }) => {
+export const BrandsFilter = ({ active }) => {
   // Generates an alphabet array
   const alphabet = [...Array(26)].map((_, i) => String.fromCharCode(i + 97));
   const dispatch = useDispatch();
-  const [checkedBrands, setCheckedBrands] = useState([]);
-  const [checkboxStates, setCheckboxStates] = useState({});
+
+  const defaultBrands = useSelector(selectDefaultBrands);
+  const checkboxStates = useSelector(selectCheckboxStates);
   const resetStatus = useSelector(selectIsClearSetBrandsFilter);
+  const [activeLetter, setActiveLetter] = useState('');
 
   // Fetches brands using a custom hook
-  const { data: brands } = useFetchBrandsQuery();
+  //const { data: brands } = useFetchBrandsQuery();
 
   // Object to store refs to brands
   const brandRefs = {};
 
   const handleCheckboxChange = (name, checked) => {
-    setCheckboxStates(prevState => ({
-      ...prevState,
-      [name]: checked, // Update checkbox state by name
-    }));
-
-    setCheckedBrands(prevBrands => {
-      const updatedBrands = new Set(prevBrands);
-      if (checked) {
-        updatedBrands.add(name);
-      } else {
-        updatedBrands.delete(name);
-      }
-      return [...updatedBrands];
-    });
+    dispatch(setBrands({ name, checked }));
   };
 
   useEffect(() => {
-    dispatch(setBrands(checkedBrands.toString()));
-  }, [checkedBrands, dispatch]);
-
-  useEffect(() => {
     if (resetStatus === true) {
-      setCheckboxStates({}); // flush checkbox status state for render on curent page
+      // setCheckboxStates({}); // flush checkbox status state for render on curent page
       dispatch(setResetBrands()); // flush checkbox status at redux store for coorect query
     }
   }, [dispatch, resetStatus]);
@@ -64,15 +53,16 @@ export const Filter = ({ active, brandsCount }) => {
       <AlphabetStyled>
         {alphabet.map(item => {
           // Checks if the letter is enabled based on available brands
-          const enabledLetter = brands?.find(i => i[0].toUpperCase() === item.toUpperCase());
-          const activeLetter = checkedBrands.some(i => i[0].toUpperCase() === item.toUpperCase());
+          const enabledLetter = Object.keys(defaultBrands)?.find(
+            i => i[0].toUpperCase() === item.toUpperCase(),
+          );
 
           return (
             <LetterStyled key={item}>
               {/* Render alphabet buttons with click functionality */}
               <ButtonLetterStyled
                 disabled={!enabledLetter}
-                activeLetter={activeLetter}
+                activeLetter={activeLetter === item.toUpperCase() ? true : false}
                 onClick={() => {
                   // Scrolls to the first brand starting with the clicked letter
                   if (enabledLetter) {
@@ -83,6 +73,7 @@ export const Filter = ({ active, brandsCount }) => {
                         block: 'center',
                       });
                     }
+                    setActiveLetter(item.toUpperCase());
                   }
                 }}
               >
@@ -94,14 +85,14 @@ export const Filter = ({ active, brandsCount }) => {
       </AlphabetStyled>
       {/* Render brand checkboxes */}
       <BrandsCheckBoxContainer>
-        {brands?.map(item => {
+        {Object.keys(defaultBrands)?.map(item => {
           // Create ref for current brand
           brandRefs[item] = React.createRef();
           return (
             <BrandsCheckBoxStyled
               key={item + Math.random()}
               ref={brandRefs[item]}
-              disabled={brandsCount[item] === undefined ? true : false}
+              //    disabled={defaultBrands[item] === undefined ? true : false}
             >
               <CheckBoxLabelStyled>
                 {/* Render checkboxes for each brand */}
@@ -128,11 +119,11 @@ export const Filter = ({ active, brandsCount }) => {
                     // }
                   }}
                   checked={!!checkboxStates[item]} // Отмечен ли чекбокс
-                  disabled={brandsCount[item] === undefined ? true : false}
+                  //disabled={brandsCount[item] === undefined ? true : false}
                 />
-                {item}
+                {item.toLowerCase()}
                 <QuantityBrands>
-                  {brandsCount[item] ? `(${brandsCount[item]})` : '(0)'}
+                  {defaultBrands[item] ? `(${defaultBrands[item]})` : '(0)'}
                 </QuantityBrands>
               </CheckBoxLabelStyled>
             </BrandsCheckBoxStyled>

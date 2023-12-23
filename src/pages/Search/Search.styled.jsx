@@ -83,6 +83,7 @@ export const SearchCategoryList = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+  width: 304px;
 `;
 
 export const SearchAsideCatalog = styled.aside`
@@ -90,7 +91,7 @@ export const SearchAsideCatalog = styled.aside`
 `;
 
 export const SearchClearFilter = styled.div`
-  margin-bottom: 4px;
+  margin-bottom: 8px;
   color: ${theme.colors.green};
   font-variant-numeric: lining-nums proportional-nums;
   font-feature-settings: 'ss09' on;
