@@ -49,7 +49,7 @@ const authSlice = createSlice({
       .addCase(logout.fulfilled, (state, action) => {
         state.user = {};
         state.isLoggedIn = false;
-        state.isRegistered = false;
+        // state.isRegistered = false;
         state.isLoading = false;
       })
       .addCase(getCurrentUser.fulfilled, (state, action) => {

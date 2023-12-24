@@ -143,7 +143,7 @@ export const Count = styled.span`
 
 export const ProfilBtn = styled.button`
 > svg{
-  fill: ${props => props.isActive ? theme.colors.orange : theme.colors.black};
+  fill: ${props => props.isLoggedIn ? theme.colors.orange : theme.colors.black};
 }
 `;
 

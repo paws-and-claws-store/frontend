@@ -16,7 +16,7 @@ const closeModal = () =>{
   return (
     <ModalOverlay onClick={closeModal}>
       <ModalContent>
-        <p>Вітаємо, {user?.name}!</p>
+        <p>Вітаємо, {user.name}!</p>
         <p>Ваш обліковий запис успішно створено.</p>
         <p> Тепер ви можете</p>
         <p>- переглядати історію своїх замовлень</p>

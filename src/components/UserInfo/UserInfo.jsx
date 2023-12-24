@@ -1,3 +1,4 @@
+import React from "react";
 import { useAuth } from "hooks/useAuth";
 import { UserInfoContainer } from "./UserInfo.styled";
 
@@ -7,8 +8,8 @@ const {user} = useAuth()
 
     return (
       <UserInfoContainer>
-        <div>{user?.name}</div>
-        <div>{user?.email}</div>
+        <div>{user.name}</div>
+        <div>{user.email}</div>
       </UserInfoContainer>
     );
   };
