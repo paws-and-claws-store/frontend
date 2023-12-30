@@ -13,14 +13,14 @@ export const ConfirmationRegistration = () => {
   const [showResendEmail, setShowResendEmail] = useState(false);
 
   const navigate = useNavigate();
-  const { isActive } = useAuth();
+  const { isLoggedIn } = useAuth();
 
 
   useEffect(() => {
-    if (isActive) {
+    if (isLoggedIn) {
       navigate('/');
     }
-  }, [navigate, isActive]);
+  }, [navigate, isLoggedIn]);
 
   return (
     <>
