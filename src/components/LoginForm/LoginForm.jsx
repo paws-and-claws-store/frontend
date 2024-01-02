@@ -172,9 +172,11 @@ export function LoginForm({ setUserMenuTogle }) {
                 Увійти
               </Button>
             </div>
-
-            <ToRegister>
-              <button style={{ fontSize: '20px', color: 'black' }} onClick={()=>setShowWindouwRecoveryPass(true)}>
+          </Form>
+        )}
+      </Formik>
+      <ToRegister>
+              <button type='button' style={{ fontSize: '20px', color: 'black' }} onClick={()=>setShowWindouwRecoveryPass(true)}>
                 Забули пароль?
               </button>
               <LinkStyled
@@ -186,9 +188,6 @@ export function LoginForm({ setUserMenuTogle }) {
                 Реєстрація
               </LinkStyled>
             </ToRegister>
-          </Form>
-        )}
-      </Formik>
     </LogFormContainer>
   );
 }
