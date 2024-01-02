@@ -9,6 +9,7 @@ import { useDispatch } from 'react-redux';
 // import { login } from 'redux/auth/auth-operations';
 // import { useAuth } from 'hooks/useAuth';
 import { login } from 'redux/api/auth-operations';
+import { PasswordRecovery } from 'components/PasswordRecovery/PasswordRecovery';
 
 import {
   LogFormContainer,
@@ -37,6 +38,7 @@ const initialValues = {
 };
 
 export function LoginForm({ setUserMenuTogle }) {
+  const [showWindouwRecoveryPass, setShowWindouwRecoveryPass] = useState(false)
   const [
     passwordShow,
     //  setPasswordShow
@@ -60,8 +62,9 @@ export function LoginForm({ setUserMenuTogle }) {
   //     }
   //   }, [isLoggedIn, navigate]);
 
-  return (
-    <LogFormContainer>
+  return ( showWindouwRecoveryPass
+    ? <PasswordRecovery setShowWindouwRecoveryPass={setShowWindouwRecoveryPass}/>
+   : <LogFormContainer>
       <Formik
         validationSchema={loginSchema}
         initialValues={initialValues}
@@ -169,9 +172,11 @@ export function LoginForm({ setUserMenuTogle }) {
                 Увійти
               </Button>
             </div>
-
-            <ToRegister>
-              <button style={{ fontSize: '20px', color: 'black' }}>
+          </Form>
+        )}
+      </Formik>
+      <ToRegister>
+              <button type='button' style={{ fontSize: '20px', color: 'black' }} onClick={()=>setShowWindouwRecoveryPass(true)}>
                 Забули пароль?
               </button>
               <LinkStyled
@@ -183,9 +188,6 @@ export function LoginForm({ setUserMenuTogle }) {
                 Реєстрація
               </LinkStyled>
             </ToRegister>
-          </Form>
-        )}
-      </Formik>
     </LogFormContainer>
   );
 }
