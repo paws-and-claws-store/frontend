@@ -310,7 +310,8 @@ export const PriceRangeStyle = styled.form`
 `;
 
 export const PriceValue = styled.input`
-  width: ${props => (props.value ? props.value?.toString().length + 'ch' : 5 + 'ch')};
+  width: ${props =>
+    props.value ? props.value?.toString().length + 'ch' : 5 + 'ch'};
   height: 16px;
   color: ${theme.colors.orange};
   background-color: ${theme.colors.mainBackground};
@@ -323,6 +324,7 @@ export const PriceValue = styled.input`
   line-height: 100%; /* 16px */
   text-transform: uppercase;
   border: none;
+  outline: none;
   padding: 0;
 `;
 
@@ -349,4 +351,6 @@ export const SubmitBtnPriceSlider = styled.button`
   font-weight: 300;
   line-height: 16px; /* 114.286% */
   text-decoration-line: underline;
+  text-decoration-skip-ink: auto;
+  text-underline-offset: 3px;
 `;
