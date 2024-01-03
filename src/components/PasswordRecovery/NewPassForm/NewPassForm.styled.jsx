@@ -1,11 +1,11 @@
 import styled from '@emotion/styled';
-import { NavLink } from 'react-router-dom';
+// import { NavLink } from 'react-router-dom';
 import { ErrorMessage, Field } from 'formik';
 // import VisibilityIcon from '@mui/icons-material/Visibility';
 // import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import { theme } from 'styles';
 
-export const LogFormContainer = styled.div`
+export const NewPassFormContainer = styled.div`
   margin: 0 auto;
   padding: 40px 12px;
   text-align: center;
@@ -46,23 +46,24 @@ export const Titel = styled.h1`
 
 export const FormField = styled.div`
   position: relative;
+  margin-bottom: 42px;
 `;
 
-export const InputEmailWraper = styled.div`
+export const InputNewPasswordWraper = styled.div`
   margin-bottom: 14px;
   border-radius: 10px;
   border: 1px solid ${theme.colors.blue};
   @media (min-width: 768px) {
-    margin-bottom: 32px;
+    /* margin-bottom: 32px; */
   }
 `;
 
-export const InputPasswordWraper = styled.div`
+export const InputRepeatPasswordWraper = styled.div`
   margin-bottom: 14px;
   border-radius: 10px;
   border: 1px solid ${theme.colors.blue};
   @media (min-width: 768px) {
-    margin-bottom: 32px;
+    /* margin-bottom: 32px; */
   }
 `;
 
@@ -188,53 +189,9 @@ export const Button = styled.button`
     background-color: rgb(133, 135, 136);
   }
   @media screen and (min-width: 768px) {
-    margin-top: 28px;
+    margin-top: 18px;
     margin-bottom: 20px;
   }
   @media screen and (min-width: 1280px) {
   }
-`;
-
-export const ToRegister = styled.span`
-display: flex;
-gap:50px;
-justify-content: center;
-align-items: center;
-  color: ${theme.colors.grey};
-  font-size: ${theme.fontSizes.xs};
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
-  letter-spacing: 0.48px;
-`;
-
-export const PassRecoveryBtn = styled.button`
-font-size: '20px'; 
-color: 'black';
-`;
-
-
-export const LinkStyled = styled(NavLink)`
-position: relative;
-  color: ${theme.colors.black};
-  font-size: 20px;
-  margin-left: 3px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
-  letter-spacing: 0.48px;
-  &::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    height: 1px;
-    background-color: ${theme.colors.black};
-    transform: scaleX(0);
-    transition: transform 0.3s ease;
-  };
-  &:hover::after {
-    transform: scaleX(1)
-  };
 `;
