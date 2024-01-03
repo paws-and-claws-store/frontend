@@ -7,6 +7,21 @@ const passwordReq =
   // eslint-disable-next-line no-useless-escape
   /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/;
 
+  export const newPasswordSchema = Yup.object({
+    newPassword: Yup.string()
+    .required('New password is required!')
+    .min(6, 'New password is too short. The minimum 6 symbols')
+    .max(16, 'New password is too long. The maximum 16 symbols')
+    .matches(
+      passwordReq,
+      'The must contain 6 characters, 1 uppercase, numbers, 1 special case character'
+    ),
+  
+    repeatPassword: Yup.string()
+    .required('Repeated password is required!')
+    .oneOf([Yup.ref('newPassword'), ''], 'Repeated password must match'),
+  });  
+
 export const loginSchema = Yup.object({
   email: Yup.string()
     .required('Email field is required!')

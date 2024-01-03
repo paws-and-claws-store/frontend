@@ -14,6 +14,7 @@ import {
   ProductCard,
   Registration,
   UserPage,
+  CreateNewPass,
 } from 'pages';
 
 import PrivateRoute from 'components/Routes/PrivateRoute';
@@ -36,6 +37,7 @@ export const App = () => {
           <Route index element={<Home />} />
           <Route path="registration" element={<PublicRoute><Registration /></PublicRoute>} />
           <Route path="user" element={<PrivateRoute ><UserPage /></PrivateRoute>} />
+          <Route path="newpass" element={<CreateNewPass />}/>
           <Route path="catalog" element={<CatalogLayout />}>
             <Route index element={<Catalog />} />
             <Route path=":pet" element={<Pet />} />
