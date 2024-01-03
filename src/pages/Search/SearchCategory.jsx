@@ -13,7 +13,10 @@ import { memo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setClearSetStatusPriceRange } from 'redux/slice/priceRangeSlice';
 import { setClearSetStatusBrandsFilter } from 'redux/slice/brandsFilterSlice';
-import { selectIsBrandsFilterSet, selectIsPriceRangeSet } from 'redux/selectors/selectors';
+import {
+  selectIsBrandsFilterSet,
+  selectIsPriceRangeSet,
+} from 'redux/selectors/selectors';
 import { FilterSelectionLayout } from 'components/FilterParametersLayout/FilterSelectionLayout';
 
 export default memo(function SearchCategory() {
@@ -32,10 +35,11 @@ export default memo(function SearchCategory() {
     dispatch(setClearSetStatusPriceRange(true)); // reset status to price range redux store
     dispatch(setClearSetStatusBrandsFilter(true)); // reset status to Brands filter redux store
   };
+
   return (
     <SearchCategoryList>
-      <FilterSelectionLayout />
-      {isBrandsFilterSet || isPriceRangeSet ? (
+      {(isBrandsFilterSet || isPriceRangeSet) && <FilterSelectionLayout />}
+      {(isBrandsFilterSet || isPriceRangeSet) && (
         <SearchClearFilter
           onClick={() => {
             handleClickClearFilters();
@@ -43,7 +47,7 @@ export default memo(function SearchCategory() {
         >
           Очистити все
         </SearchClearFilter>
-      ) : null}
+      )}
       <ul
         style={{
           display: 'flex',
@@ -56,33 +60,44 @@ export default memo(function SearchCategory() {
             <FoldedContainer
               active={active['price']}
               style={{
-                backgroundColor: active['price'] ? theme.colors.secGreen : theme.colors.beige,
+                backgroundColor: active['price']
+                  ? theme.colors.secGreen
+                  : theme.colors.beige,
               }}
               onClick={handleClickToggle}
               name="price"
             >
               <span>Ціна</span>
               <button name="price">
-                <RightArrow direction={active['price'] ? 'rotate(90)' : 'rotate(-90)'} />
+                <RightArrow
+                  direction={active['price'] ? 'rotate(90)' : 'rotate(-90)'}
+                />
               </button>
             </FoldedContainer>
             <PriceSlider active={active['price']} />
           </SearchFilter>
         </li>
+
         <li key={2}>
           <SearchBrands activeBrands={active['brands']}>
             <FoldedContainer
+              className="brand"
               style={{
-                backgroundColor: active['brands'] ? theme.colors.secGreen : theme.colors.beige,
+                backgroundColor: active['brands']
+                  ? theme.colors.secGreen
+                  : theme.colors.beige,
               }}
               onClick={handleClickToggle}
               name="brands"
             >
               <span>Бренди</span>
               <button name="brands">
-                <RightArrow direction={active['brands'] ? 'rotate(90)' : 'rotate(-90)'} />
+                <RightArrow
+                  direction={active['brands'] ? 'rotate(90)' : 'rotate(-90)'}
+                />
               </button>
             </FoldedContainer>
+
             <BrandsFilter active={active['brands']} />
           </SearchBrands>
         </li>

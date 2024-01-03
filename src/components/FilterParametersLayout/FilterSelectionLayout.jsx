@@ -12,8 +12,9 @@ import {
   selectIsPriceRangeSet,
   selectPriceValueInput,
 } from 'redux/selectors/selectors';
-import { setBrands } from 'redux/slice/brandsFilterSlice';
+import { setBrands, setBrandsSet } from 'redux/slice/brandsFilterSlice';
 import { setClearSetStatusPriceRange } from 'redux/slice/priceRangeSlice';
+import { useEffect } from 'react';
 
 export const FilterSelectionLayout = renderdata => {
   const dispatch = useDispatch();
@@ -23,6 +24,13 @@ export const FilterSelectionLayout = renderdata => {
 
   const isPriceRangeSet = useSelector(selectIsPriceRangeSet);
   const isBrandsSet = useSelector(selectIsBrandsFilterSet);
+
+  useEffect(() => {
+    if (checkedBrands.length === 0) {
+      dispatch(setBrandsSet(false));
+    }
+  }, [checkedBrands, dispatch]);
+
   function renderBlock(data, type) {
     return (
       <FilterSelectionOption key={data}>
@@ -30,6 +38,7 @@ export const FilterSelectionLayout = renderdata => {
           {type === 'brand' ? `${data}` : `  ${data[0]} ₴ - ${data[1]} ₴`}
         </FilterSelectionText>
         <FilterSelectionButton
+          className="111"
           onClick={() => {
             if (type === 'brand') {
               handleClickUnset({ name: data, checked: checkboxStates[data] });
@@ -53,10 +62,15 @@ export const FilterSelectionLayout = renderdata => {
       {isBrandsSet
         ? checkedBrands.map(item => (
             <FilterSelectionOption key={item}>
-              <FilterSelectionText key={item + 'text'}>{item.toLowerCase()}</FilterSelectionText>
+              <FilterSelectionText key={item + 'text'}>
+                {item.toLowerCase()}
+              </FilterSelectionText>
               <FilterSelectionButton
                 onClick={() => {
-                  handleClickUnset({ name: item, checked: checkboxStates[item] });
+                  handleClickUnset({
+                    name: item,
+                    checked: checkboxStates[item],
+                  });
                 }}
                 key={item + 'button'}
               />
