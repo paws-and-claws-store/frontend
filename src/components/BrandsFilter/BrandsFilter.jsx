@@ -48,7 +48,7 @@ export const BrandsFilter = ({ active }) => {
   }, [dispatch, resetStatus]);
 
   return (
-    <FilterContainer active={active}>
+    <>
       {/* Render alphabet buttons */}
       <AlphabetStyled>
         {alphabet.map(item => {
@@ -62,17 +62,28 @@ export const BrandsFilter = ({ active }) => {
               {/* Render alphabet buttons with click functionality */}
               <ButtonLetterStyled
                 disabled={!enabledLetter}
-                activeLetter={activeLetter === item.toUpperCase() ? true : false}
-                onClick={() => {
+                activeLetter={
+                  activeLetter === item.toUpperCase() ? true : false
+                }
+                onClick={event => {
+                  event.preventDefault();
+                  const brandContainer =
+                    document.querySelector('.BrandContainer');
+                  const offsetTop = brandContainer.offsetTop;
+                  brandContainer.scrollTo({ top: offsetTop });
+
                   // Scrolls to the first brand starting with the clicked letter
                   if (enabledLetter) {
                     const firstBrandRef = brandRefs[enabledLetter];
+
                     if (firstBrandRef) {
                       firstBrandRef.current.scrollIntoView({
                         behavior: 'smooth',
-                        block: 'center',
+                        block: 'start',
+                        top: 0,
                       });
                     }
+
                     setActiveLetter(item.toUpperCase());
                   }
                 }}
@@ -83,53 +94,56 @@ export const BrandsFilter = ({ active }) => {
           );
         })}
       </AlphabetStyled>
-      {/* Render brand checkboxes */}
-      <BrandsCheckBoxContainer>
-        {Object.keys(defaultBrands)?.map(item => {
-          // Create ref for current brand
-          brandRefs[item] = React.createRef();
-          return (
-            <BrandsCheckBoxStyled
-              key={item + Math.random()}
-              ref={brandRefs[item]}
-              //    disabled={defaultBrands[item] === undefined ? true : false}
-            >
-              <CheckBoxLabelStyled>
-                {/* Render checkboxes for each brand */}
-                <CheckBoxStyled
-                  type="checkbox"
-                  name={item}
-                  onChange={e => {
-                    handleCheckboxChange(e.target.name, e.target.checked);
 
-                    // const { name, checked } = e.target;
+      <FilterContainer active={active} className="BrandContainer">
+        {/* Render brand checkboxes */}
+        <BrandsCheckBoxContainer>
+          {Object.keys(defaultBrands)?.map(item => {
+            // Create ref for current brand
+            brandRefs[item] = React.createRef();
+            return (
+              <BrandsCheckBoxStyled
+                key={item + Math.random()}
+                ref={brandRefs[item]}
+                //    disabled={defaultBrands[item] === undefined ? true : false}
+              >
+                <CheckBoxLabelStyled>
+                  {/* Render checkboxes for each brand */}
+                  <CheckBoxStyled
+                    type="checkbox"
+                    name={item}
+                    onChange={e => {
+                      handleCheckboxChange(e.target.name, e.target.checked);
 
-                    // setCheckboxStates(prevState => ({
-                    //   ...prevState,
-                    //   [name]: checked, // Обновление состояния чекбокса по имени
-                    // }));
+                      // const { name, checked } = e.target;
 
-                    // if (checked) {
-                    //   setCheckedBrands(prevState => [...prevState, name]);
-                    // } else {
-                    //   const indexBrand = checkedBrands.findIndex(item => item === name);
-                    //   const spliceBrands = [...checkedBrands];
-                    //   spliceBrands.splice(indexBrand, 1);
-                    //   setCheckedBrands(spliceBrands);
-                    // }
-                  }}
-                  checked={!!checkboxStates[item]} // Отмечен ли чекбокс
-                  //disabled={brandsCount[item] === undefined ? true : false}
-                />
-                {item.toLowerCase()}
-                <QuantityBrands>
-                  {defaultBrands[item] ? `(${defaultBrands[item]})` : '(0)'}
-                </QuantityBrands>
-              </CheckBoxLabelStyled>
-            </BrandsCheckBoxStyled>
-          );
-        })}
-      </BrandsCheckBoxContainer>
-    </FilterContainer>
+                      // setCheckboxStates(prevState => ({
+                      //   ...prevState,
+                      //   [name]: checked, // Обновление состояния чекбокса по имени
+                      // }));
+
+                      // if (checked) {
+                      //   setCheckedBrands(prevState => [...prevState, name]);
+                      // } else {
+                      //   const indexBrand = checkedBrands.findIndex(item => item === name);
+                      //   const spliceBrands = [...checkedBrands];
+                      //   spliceBrands.splice(indexBrand, 1);
+                      //   setCheckedBrands(spliceBrands);
+                      // }
+                    }}
+                    checked={!!checkboxStates[item]} // Отмечен ли чекбокс
+                    //disabled={brandsCount[item] === undefined ? true : false}
+                  />
+                  {item.toLowerCase()}
+                  <QuantityBrands>
+                    {defaultBrands[item] ? `(${defaultBrands[item]})` : '(0)'}
+                  </QuantityBrands>
+                </CheckBoxLabelStyled>
+              </BrandsCheckBoxStyled>
+            );
+          })}
+        </BrandsCheckBoxContainer>
+      </FilterContainer>
+    </>
   );
 };

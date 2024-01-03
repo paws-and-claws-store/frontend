@@ -83,6 +83,7 @@ export const SearchCategoryList = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+  align-items: flex-start;
   width: 304px;
 `;
 
@@ -90,7 +91,7 @@ export const SearchAsideCatalog = styled.aside`
   /* width: ${theme.spacing.step * 76}px; */
 `;
 
-export const SearchClearFilter = styled.div`
+export const SearchClearFilter = styled.button`
   margin-bottom: 8px;
   color: ${theme.colors.green};
   font-variant-numeric: lining-nums proportional-nums;
@@ -100,8 +101,9 @@ export const SearchClearFilter = styled.div`
   font-style: normal;
   font-weight: ${theme.fontWeight.Light};
   line-height: ${theme.lineHeight.s}; /* 114.286% */
-  text-decoration-line: underline;
-  cursor: pointer;
+  text-decoration: underline;
+  text-decoration-skip-ink: auto;
+  text-underline-offset: 4px;
 `;
 
 export const SearchFilter = styled.div`
@@ -119,9 +121,10 @@ export const SearchFilter = styled.div`
   transition-property: max-height, background-color;
   transition-duration: ${theme.animations.transitionDuration};
   transition-timing-function: ${props => props.theme.animations.cubicBezier};
-  background-color: ${props => (props.active ? theme.colors.secGreen : theme.colors.beige)};
+  background-color: ${props =>
+    props.active ? theme.colors.secGreen : theme.colors.beige};
 
-  outline: 1px solid ${theme.colors.green};
+  border: 1px solid ${theme.colors.green};
 `;
 export const SearchBrands = styled.div`
   overflow: hidden;
@@ -137,9 +140,10 @@ export const SearchBrands = styled.div`
   transition-property: max-height, background-color;
   transition-duration: ${theme.animations.transitionDuration};
   transition-timing-function: ${props => props.theme.animations.cubicBezier};
-  background-color: ${props => (props.activeBrands ? theme.colors.secGreen : theme.colors.beige)};
+  background-color: ${props =>
+    props.activeBrands ? theme.colors.secGreen : theme.colors.beige};
 
-  outline: 1px solid ${theme.colors.green};
+  border: 1px solid ${theme.colors.green};
 `;
 
 export const SearchWrapperCatalog = styled.div`
@@ -172,10 +176,18 @@ export const FoldedContainer = styled.div`
   align-items: center;
   transition: background-color 0.5s;
   justify-content: space-between;
-  padding: ${theme.spacing.step + 2}px ${theme.spacing.step * 2}px;
+  padding: ${theme.spacing.step + 1}px ${theme.spacing.step * 2 - 1}px;
   cursor: pointer;
   &:hover {
     fill: ${theme.colors.green};
+  }
+
+  & span {
+    font-family: Inter;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 20px; /* 125% */
   }
 `;
 

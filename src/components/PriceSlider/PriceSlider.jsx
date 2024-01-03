@@ -9,7 +9,10 @@ import {
 } from './PriceSlider.styled';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectDefaultPriceRange, selectIsClearSetPriceRange } from 'redux/selectors/selectors';
+import {
+  selectDefaultPriceRange,
+  selectIsClearSetPriceRange,
+} from 'redux/selectors/selectors';
 import { resetPriceRange, setPriceValue } from 'redux/slice/priceRangeSlice';
 import { theme } from 'styles';
 
@@ -52,7 +55,10 @@ export const PriceSlider = ({ active }) => {
     const nameField = e.target.name;
 
     if (e.target.value === '') {
-      setPriceValueInput(prevState => ({ ...prevState, [nameField]: defaultPriceRange[0] }));
+      setPriceValueInput(prevState => ({
+        ...prevState,
+        [nameField]: defaultPriceRange[0],
+      }));
       return;
     }
   };
@@ -78,7 +84,9 @@ export const PriceSlider = ({ active }) => {
       return;
     }
 
-    dispatch(setPriceValue([currentPriceValue.minValue, currentPriceValue.maxValue])); // set on submit price value to redux state
+    dispatch(
+      setPriceValue([currentPriceValue.minValue, currentPriceValue.maxValue]),
+    ); // set on submit price value to redux state
     setPriceValueInput(currentPriceValue);
   };
 
@@ -114,6 +122,7 @@ export const PriceSlider = ({ active }) => {
       <PriceRangeStyle onSubmit={onSubmitHandler}>
         <div>
           <PriceValue
+            className="PriceValue"
             value={priceValueInput.minValue}
             pattern="[0-9]*"
             onChange={handleChangePriceValue}
