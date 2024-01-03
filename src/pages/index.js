@@ -13,3 +13,4 @@ export * from 'pages/Contacts';
 export * from 'pages/PageUnderConstruction';
 export * from 'pages/Registration/Registration';
 export * from 'pages/UserPage/UserPage';
+export * from 'pages/CreateNewPass/CreateNewPass'

@@ -8,8 +8,8 @@ import {
   ResendInput,
   Button,
   CloseButton,
-} from './PasswordRecovery.styled';
-import { PasswordConfirmation } from 'components/PasswordConfirmation/PasswordConfirmation';
+} from './PasswordRecoveryWindow.styled';
+import { PasswordConfirmation } from 'components/PasswordRecovery/PasswordConfirmation/PasswordConfirmation';
 
 export const PasswordRecovery = ({ setShowWindouwRecoveryPass }) => {
   const [email, setEmail] = useState('');

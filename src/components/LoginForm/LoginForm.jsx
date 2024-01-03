@@ -9,7 +9,7 @@ import { useDispatch } from 'react-redux';
 // import { login } from 'redux/auth/auth-operations';
 // import { useAuth } from 'hooks/useAuth';
 import { login } from 'redux/api/auth-operations';
-import { PasswordRecovery } from 'components/PasswordRecovery/PasswordRecovery';
+import { PasswordRecovery } from 'components/PasswordRecovery/PasswordRecoveryWindow/PasswordRecoveryWindow';
 
 import {
   LogFormContainer,
@@ -28,6 +28,7 @@ import {
   LinkStyled,
   //   OnIcon,
   //   OffIcon,
+  PassRecoveryBtn,
 } from './LoginForm.styled';
 import { theme } from 'styles';
 // import { Check, Cross } from 'components/icons';
@@ -176,9 +177,9 @@ export function LoginForm({ setUserMenuTogle }) {
         )}
       </Formik>
       <ToRegister>
-              <button type='button' style={{ fontSize: '20px', color: 'black' }} onClick={()=>setShowWindouwRecoveryPass(true)}>
+              <PassRecoveryBtn type='button' style={{ fontSize: '20px', color: 'black' }} onClick={()=>setShowWindouwRecoveryPass(true)}>
                 Забули пароль?
-              </button>
+              </PassRecoveryBtn>
               <LinkStyled
                 to="/registration"
                 onClick={() => {
