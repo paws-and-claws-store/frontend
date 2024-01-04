@@ -7,7 +7,7 @@ export const ViewedProductsContainer = styled.div`
 
 export const ViewedProductsTitel = styled.p`
   margin-top: 48px;
-  margin-bottom: 28px;
+  margin-bottom: 4px;
   font-size: 24px;
   font-style: normal;
   font-weight: 500;

@@ -52,7 +52,7 @@ export const ButtonLetterStyled = styled.button`
     }
   }
   &:hover {
-    color: orange;
+    color: ${theme.colors.orange};
   }
 `;
 export const BrandsCheckBoxContainer = styled.ul`
