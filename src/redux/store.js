@@ -12,32 +12,46 @@ import {
   // REGISTER,
 } from 'redux-persist';
 
+import storage from 'redux-persist/lib/storage';
+
 import { cartReducer } from './slice/cartSlice';
-import { api } from './operations';
+import { api } from './api/operations';
 import { breadCrumbsReducer } from './slice/breadCrumbsSlice';
 import { searchSliceReducer } from './slice/searchSlice';
 import { searchSelectReducer } from './slice/sortSelectSlice';
 import { viewedProductsReducer } from './slice/viewedProductsSlice';
 import { priceRangeReducer } from './slice/priceRangeSlice';
+import { authReducer } from './slice/authSlice';
+import { brandsFilterReducer } from './slice/brandsFilterSlice';
+
+const persistedAuthReducer = persistReducer(
+  {
+   key: 'auth',
+   storage,
+   whitelist: ['isRegistered'],
+   },
+   authReducer,
+);
+
+const persistConfig = {
+  key: 'root',
+  version: 1,
+  whitelist: ['cart', 'breadcrumbs', 'viewedProducts'],
+
+  storage: sessionStorage, // to use loacalstorage only in one session
+};
 
 const reducers = combineReducers({
   [api.reducerPath]: api.reducer,
+  auth: persistedAuthReducer,
   cart: cartReducer,
   breadcrumbs: breadCrumbsReducer,
   search: searchSliceReducer,
   sorting: searchSelectReducer,
   viewedProducts: viewedProductsReducer,
   priceRange: priceRangeReducer,
+  brandsFilter: brandsFilterReducer,
 });
-
-const persistConfig = {
-  key: 'root',
-  version: 1,
-
-  whitelist: ['cart', 'breadcrumbs', 'viewedProducts'],
-
-  storage: sessionStorage, // to use loacalstorage only in one session
-};
 
 const persistedReducer = persistReducer(persistConfig, reducers);
 

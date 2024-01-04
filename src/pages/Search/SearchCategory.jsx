@@ -1,20 +1,53 @@
 import { RightArrow } from 'components/Icons';
-import { FoldedContainer, SearchBrands, SearchCategoryList, SearchFilter } from './Search.styled';
+import {
+  FoldedContainer,
+  SearchBrands,
+  SearchCategoryList,
+  SearchClearFilter,
+  SearchFilter,
+} from './Search.styled';
 import { PriceSlider } from 'components/PriceSlider/PriceSlider';
-import { Filter } from 'components/Filter/Filter';
+import { BrandsFilter } from 'components/BrandsFilter/BrandsFilter';
 import { theme } from 'styles';
 import { memo, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { setClearSetStatusPriceRange } from 'redux/slice/priceRangeSlice';
+import { setClearSetStatusBrandsFilter } from 'redux/slice/brandsFilterSlice';
+import {
+  selectIsBrandsFilterSet,
+  selectIsPriceRangeSet,
+} from 'redux/selectors/selectors';
+import { FilterSelectionLayout } from 'components/FilterParametersLayout/FilterSelectionLayout';
 
 export default memo(function SearchCategory() {
   const [active, setActive] = useState({ price: false, brands: false });
+  const dispatch = useDispatch();
+  const isPriceRangeSet = useSelector(selectIsPriceRangeSet);
+  const isBrandsFilterSet = useSelector(selectIsBrandsFilterSet);
 
   const handleClickToggle = e => {
     active[e.currentTarget.attributes.name.value]
       ? setActive({ ...active, [e.currentTarget.attributes.name.value]: false })
       : setActive({ ...active, [e.currentTarget.attributes.name.value]: true });
   };
+
+  const handleClickClearFilters = () => {
+    dispatch(setClearSetStatusPriceRange(true)); // reset status to price range redux store
+    dispatch(setClearSetStatusBrandsFilter(true)); // reset status to Brands filter redux store
+  };
+
   return (
     <SearchCategoryList>
+      {(isBrandsFilterSet || isPriceRangeSet) && <FilterSelectionLayout />}
+      {(isBrandsFilterSet || isPriceRangeSet) && (
+        <SearchClearFilter
+          onClick={() => {
+            handleClickClearFilters();
+          }}
+        >
+          Очистити все
+        </SearchClearFilter>
+      )}
       <ul
         style={{
           display: 'flex',
@@ -27,34 +60,45 @@ export default memo(function SearchCategory() {
             <FoldedContainer
               active={active['price']}
               style={{
-                backgroundColor: active['price'] ? theme.colors.secGreen : theme.colors.beige,
+                backgroundColor: active['price']
+                  ? theme.colors.secGreen
+                  : theme.colors.beige,
               }}
               onClick={handleClickToggle}
               name="price"
             >
               <span>Ціна</span>
               <button name="price">
-                <RightArrow direction={active['price'] ? 'rotate(90)' : 'rotate(-90)'} />
+                <RightArrow
+                  direction={active['price'] ? 'rotate(90)' : 'rotate(-90)'}
+                />
               </button>
             </FoldedContainer>
             <PriceSlider active={active['price']} />
           </SearchFilter>
         </li>
+
         <li key={2}>
           <SearchBrands activeBrands={active['brands']}>
             <FoldedContainer
+              className="brand"
               style={{
-                backgroundColor: active['brands'] ? theme.colors.secGreen : theme.colors.beige,
+                backgroundColor: active['brands']
+                  ? theme.colors.secGreen
+                  : theme.colors.beige,
               }}
               onClick={handleClickToggle}
               name="brands"
             >
               <span>Бренди</span>
               <button name="brands">
-                <RightArrow direction={active['brands'] ? 'rotate(90)' : 'rotate(-90)'} />
+                <RightArrow
+                  direction={active['brands'] ? 'rotate(90)' : 'rotate(-90)'}
+                />
               </button>
             </FoldedContainer>
-            <Filter active={active['brands']} />
+
+            <BrandsFilter active={active['brands']} />
           </SearchBrands>
         </li>
       </ul>

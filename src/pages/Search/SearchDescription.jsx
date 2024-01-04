@@ -4,6 +4,7 @@ import {
   SearchDesriptionResultsSuccess,
   SearchQuery,
 } from './Search.styled';
+import { goodsSpan } from 'helpers/goodsSpan';
 
 export default memo(function SearchDescription({ totalDocs, searchQuery }) {
   return (
@@ -12,9 +13,7 @@ export default memo(function SearchDescription({ totalDocs, searchQuery }) {
       <SearchQuery> “{searchQuery}” </SearchQuery>
       <SearchDescriptionSpan> знайдено </SearchDescriptionSpan>
       <SearchQuery>{totalDocs} </SearchQuery>
-      <SearchDescriptionSpan>
-        {totalDocs === 1 ? 'товар' : totalDocs < 5 ? 'товари' : 'товарів'}
-      </SearchDescriptionSpan>
+      <SearchDescriptionSpan>{goodsSpan(totalDocs)}</SearchDescriptionSpan>
     </SearchDesriptionResultsSuccess>
   );
 });

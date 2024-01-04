@@ -56,7 +56,7 @@ export function usePagination({
       }
 
       if (loadMoreClicked && sortingType && currentPage === 1) {
-        console.log('3');
+        // console.log('3');
         setProductsList(response.docs);
         setPaginationData(updatePaginationData(response));
 
@@ -64,7 +64,7 @@ export function usePagination({
       }
 
       if (loadMoreClicked && sortingType && currentPage !== 1 && !pageNumberClicked) {
-
+        // console.log('4');
         setProductsList(prevState => [...prevState, ...response.docs]);
         setPaginationData(updatePaginationData(response));
         setLoadMoreClicked(false);
@@ -83,7 +83,6 @@ export function usePagination({
     if (!isFetching && !isError) {
       fetchInitialData();
     }
-
   }, [
     currentPage,
     isError,
@@ -96,8 +95,6 @@ export function usePagination({
     isPriceRangeSet,
   ]);
 
-
-
   useEffect(() => {
     return () => {
       if (pageNumberClicked) {
@@ -105,7 +102,6 @@ export function usePagination({
       }
     };
   }, [pageNumberClicked]);
-
 
   const onPageChange = pageNumber => {
     // console.log('pageNumber:', pageNumber);

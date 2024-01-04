@@ -4,7 +4,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 export const api = createApi({
   reducerPath: 'api',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'https://paws-and-claws-store-backend.onrender.com',
+    baseUrl: 'https://paws-and-claws-store.onrender.com',
     // baseUrl: 'http://localhost:4000',
   }),
   //   tagTypes: ['Products'],
@@ -94,17 +94,10 @@ export const api = createApi({
       invalidatesTags: ['Products'],
     }),
 
-    regisration: builder.mutation({
-      query: ( newUser ) => ({
-        url: `/api/auth/register`,
-        method: 'POST',
-        body: newUser,
+    fetchBrands: builder.query({
+      query: () => ({
+        url: `/api/products/brands`,
       }),
-      transformResponse: response => {
-        console.log('RegisrationResponse:', response.data);
-        return response;
-      },
-      invalidatesTags: ['Auth'],
     }),
   }),
 });
@@ -120,5 +113,5 @@ export const {
   useFetchProductsQuery,
   useFetchValidateCartItemsMutation,
   useBuyProductsMutation,
-  useRegisrationMutation,
+  useFetchBrandsQuery,
 } = api;

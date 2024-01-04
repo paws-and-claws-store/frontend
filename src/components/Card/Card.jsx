@@ -24,7 +24,7 @@ import { HeartIcon, StarIcon } from 'components/Icons';
 import { displaySize } from 'helpers';
 import { useDispatch, useSelector } from 'react-redux';
 import { addCartItem, removeCartItem, updateCartItem } from 'redux/slice/cartSlice';
-import { selectCartStore, selectIsPriceRangeSet } from 'redux/selectors';
+import { selectCartStore, selectIsPriceRangeSet, selectSortingTypeStore } from 'redux/selectors/selectors';
 import { Notify } from 'notiflix';
 
 // import { CardList } from 'components';
@@ -40,6 +40,7 @@ export const Card = ({ el, onClick }) => {
   const [favourite, setFavourite] = useState(el.favourite || false);
   const [cardCount, setCardCount] = useState(null);
   const isPriceRangeSet = useSelector(selectIsPriceRangeSet); // redux state of price range is setted
+  const sortingType = useSelector(selectSortingTypeStore); // extract sorting type from the Redux store
 
   const changeFavourite = () => {
     setFavourite(!favourite);
@@ -52,7 +53,9 @@ export const Card = ({ el, onClick }) => {
   };
 
   useEffect(() => {
-    const productCount = cardCountRedux?.find(item => item.productCode === productCode);
+    const productCount = cardCountRedux?.find(
+      item => item.productCode === productCode,
+    );
     if (productCount) {
       setCardCount(productCount.cardCount);
     }
@@ -63,6 +66,10 @@ export const Card = ({ el, onClick }) => {
       setElType(el.items[0]);
     }
   }, [el.items, isPriceRangeSet]); // if price range is setted, rerender component
+
+  useEffect(() => {
+    setElType(el.items[0]);
+  }, [el.items, sortingType]); // if sorting type is changed, rerender component
 
   const handleIncrement = () => {
     if (cardCount === null) {
@@ -133,9 +140,9 @@ export const Card = ({ el, onClick }) => {
 
   const handleBlur = () => {
     if (cardCount === '') {
-      Notify.warning('Мінімальна кількість для замовлення - 1 шт');
-      setCardCount(null);
-      dispatch(removeCartItem(productCode));
+      Notify.warning('Мінімальна кількість для замовлення - 1 шт.');
+      setCardCount(1);
+      dispatch(updateCartItem({ productCode, newCount: 1 }));
     }
   };
 
@@ -221,7 +228,9 @@ export const Card = ({ el, onClick }) => {
         <div>
           <div>
             <BrandNameSt to={'/brands'}>{el.brand}</BrandNameSt>
-            <Link to={`/catalog/${el._pet._id}/${el._category._id}/${el._variant._id}/${el._id}`}>
+            <Link
+              to={`/catalog/${el._pet._id}/${el._category._id}/${el._variant._id}/${el._id}`}
+            >
               <FixedBlock style={{ height: '48px' }}>
                 <ProductNameSt>{el.productName}</ProductNameSt>
               </FixedBlock>
@@ -267,7 +276,9 @@ export const Card = ({ el, onClick }) => {
                 <SymbolCurrency>₴</SymbolCurrency>
               </PriceSt>
               <PriceSt className="line-through-text">
-                <span className="line-through-text">{elType.price.toFixed(2)}</span>
+                <span className="line-through-text">
+                  {elType.price.toFixed(2)}
+                </span>
                 <SymbolCurrency>₴</SymbolCurrency>
               </PriceSt>
             </PriceBox>

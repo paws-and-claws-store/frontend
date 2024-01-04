@@ -1,35 +1,45 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const PriceRangeInitialState = {
-  minPriceRange: 0,
-  maxPriceRange: 10000,
   value: [],
   isPriceRangeSet: false,
+  isClearSet: false,
+  defaultPriceRange: [0, 1000000],
 };
-// PriceRangeInitialState.minPriceValue = PriceRangeInitialState.minPriceRange;
-// PriceRangeInitialState.maxPriceValue = PriceRangeInitialState.maxPriceRange;
-PriceRangeInitialState.value.push(PriceRangeInitialState.minPriceRange);
-PriceRangeInitialState.value.push(PriceRangeInitialState.maxPriceRange);
+
+PriceRangeInitialState.value = PriceRangeInitialState.defaultPriceRange; // set default data to value
+const PriceRangeInitialStateModified = PriceRangeInitialState;
 
 const priceRangeSlice = createSlice({
   name: 'priceRange',
   initialState: PriceRangeInitialState,
   reducers: {
-    setMinPriceRange(state, action) {
-      state.minPriceRange = action.payload;
-    },
-    setMaxPriceRange(state, action) {
-      state.maxPriceRange = action.payload;
-    },
     setPriceValue(state, action) {
       state.value = action.payload;
+      state.isPriceRangeSet = true;
     },
     setPriceChange(state, action) {
       state.isPriceRangeSet = action.payload;
+    },
+    resetPriceRange(state, action) {
+      state.value = PriceRangeInitialStateModified.value;
+      state.isClearSet = false;
+      state.isPriceRangeSet = false;
+    },
+    setClearSetStatusPriceRange(state, action) {
+      state.isClearSet = action.payload;
+    },
+    setDefaultPriceRange(state, action) {
+      state.defaultPriceRange = action.payload;
     },
   },
 });
 
 export const priceRangeReducer = priceRangeSlice.reducer;
-export const { setMinPriceRange, setMaxPriceRange, setPriceValue, setPriceChange } =
-  priceRangeSlice.actions;
+export const {
+  setPriceValue,
+  setPriceChange,
+  resetPriceRange,
+  setClearSetStatusPriceRange,
+  setDefaultPriceRange,
+} = priceRangeSlice.actions;

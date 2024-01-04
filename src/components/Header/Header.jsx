@@ -10,6 +10,7 @@ import {
   Leng,
   LengLinkStyled,
   LinkWrapper,
+  ProfilBtn,
   // SearchBox,
 } from './Header.styled';
 import {
@@ -21,22 +22,22 @@ import {
 } from 'components/Icons';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { selectCartStore } from 'redux/selectors';
+import { selectCartStore } from 'redux/selectors/selectors';
 import { SearchBar } from 'components/SearchBar/SearchBar';
-import { LoginForm } from 'components/LoginForm/LoginForm';
+import { UserMenu } from 'components/UserMenu/UserMenu';
+import { useAuth } from 'hooks/useAuth';
 
 // import { Search } from './Search';
 
 export const Header = () => {
   const [scroll, setScroll] = useState('');
-  const [registrMenuTogle, setRegistrMenuTogle] = useState(false);
+  const [userMenuTogle, setUserMenuTogle] = useState(false);
 
+  const {isLoggedIn} = useAuth();
   const cartStore = useSelector(selectCartStore);
   const totalCount = cartStore.reduce((previousValue, { cardCount }) => {
     return previousValue + cardCount;
   }, 0);
-
-  
 
   const countDigits = number => {
     return number.toString().length;
@@ -52,8 +53,6 @@ export const Header = () => {
     });
   }, []);
 
-  
-
   // const menuTogle = ()=>setRegistrMenuTogle(true)
 
   return (
@@ -65,9 +64,9 @@ export const Header = () => {
           </Link>
           <SearchBar />
           <LinkWrapper>
-            <button onClick={()=>setRegistrMenuTogle(true)} disabled={registrMenuTogle}>
+            <ProfilBtn onClick={()=>setUserMenuTogle(true)} disabled={userMenuTogle} isLoggedIn={isLoggedIn}>
               <ProfileIcon />
-            </button>
+            </ProfilBtn>
             <button>
               <HeartIcon />
             </button>
@@ -92,7 +91,9 @@ export const Header = () => {
               <LengLinkStyled>Eng</LengLinkStyled>
               <LengLinkStyled className="accent">Укр</LengLinkStyled>
             </Leng>
-            {registrMenuTogle? <LoginForm  setRegistrMenuTogle={setRegistrMenuTogle}/> : null}
+            {userMenuTogle
+            ? <UserMenu  setUserMenuTogle={setUserMenuTogle}/> 
+            : null}
           </LinkWrapper>
         </HeaderWrapper>
       </HeaderContainer>

@@ -1,10 +1,15 @@
-import { useState, useEffect, useRef } from 'react';
+import {
+  useState,
+  // useEffect, useRef
+} from 'react';
 import { Form, Formik } from 'formik';
 // import { useNavigate } from 'react-router-dom';
 import { loginSchema } from 'utils/shemas/AuthSchema';
-// import { useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 // import { login } from 'redux/auth/auth-operations';
 // import { useAuth } from 'hooks/useAuth';
+import { login } from 'redux/api/auth-operations';
+import { PasswordRecovery } from 'components/PasswordRecovery/PasswordRecoveryWindow/PasswordRecoveryWindow';
 
 import {
   LogFormContainer,
@@ -23,6 +28,7 @@ import {
   LinkStyled,
   //   OnIcon,
   //   OffIcon,
+  PassRecoveryBtn,
 } from './LoginForm.styled';
 import { theme } from 'styles';
 // import { Check, Cross } from 'components/icons';
@@ -32,43 +38,23 @@ const initialValues = {
   password: '',
 };
 
-export function LoginForm({ setRegistrMenuTogle }) {
+export function LoginForm({ setUserMenuTogle }) {
+  const [showWindouwRecoveryPass, setShowWindouwRecoveryPass] = useState(false)
   const [
     passwordShow,
     //  setPasswordShow
   ] = useState(false);
   // const togglePassword = () => setPasswordShow(prevState => !prevState);
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
   // const navigate = useNavigate();
 
-  const loginMenuRef = useRef(null);
-  console.log('loginMenuRef:', loginMenuRef?.current);
-
   const handleSubmit = (values, { resetForm }) => {
-    // const data = {
-    //   email: values.email,
-    //   password: values.password,
-    // };
-    // dispatch(login(data));
-    resetForm();
-  };
-
-  useEffect(() => {
-    window.addEventListener('keydown', handleKeyDown);
-    document.addEventListener('mousedown', handleKeyDown);
-    return () => {
-      window.removeEventListener('keydown', handleKeyDown);
-      document.removeEventListener('mousedown', handleKeyDown);
+    const data = {
+      email: values.email,
+      password: values.password,
     };
-  });
-
-  const handleKeyDown = e => {
-    if (e.code === 'Escape') {
-      setRegistrMenuTogle(false);
-    }
-    if (loginMenuRef.current && !loginMenuRef.current.contains(e.target)) {
-      setRegistrMenuTogle(false);
-    }
+    dispatch(login(data));
+    resetForm();
   };
 
   //   useEffect(() => {
@@ -77,8 +63,9 @@ export function LoginForm({ setRegistrMenuTogle }) {
   //     }
   //   }, [isLoggedIn, navigate]);
 
-  return (
-    <LogFormContainer ref={loginMenuRef}>
+  return ( showWindouwRecoveryPass
+    ? <PasswordRecovery setShowWindouwRecoveryPass={setShowWindouwRecoveryPass}/>
+   : <LogFormContainer>
       <Formik
         validationSchema={loginSchema}
         initialValues={initialValues}
@@ -93,7 +80,7 @@ export function LoginForm({ setRegistrMenuTogle }) {
           isSubmitting,
         }) => (
           <Form>
-            <Titel>Login</Titel>
+            <Titel>Вхід до мого профілю</Titel>
             <FormField>
               <InputEmailWraper
                 style={{
@@ -107,7 +94,7 @@ export function LoginForm({ setRegistrMenuTogle }) {
                 <InputForm
                   name="email"
                   type="email"
-                  placeholder="Email"
+                  placeholder="Електронна пошта "
                   autoComplete="on"
                 />
               </InputEmailWraper>
@@ -149,7 +136,7 @@ export function LoginForm({ setRegistrMenuTogle }) {
                 <InputForm
                   name="password"
                   type={passwordShow ? 'text' : 'password'}
-                  placeholder="Password"
+                  placeholder="Пароль"
                   autoComplete="on"
                 />
               </InputPasswordWraper>
@@ -183,26 +170,25 @@ export function LoginForm({ setRegistrMenuTogle }) {
             </FormField>
             <div>
               <Button type="submit" disabled={isSubmitting}>
-                Login
+                Увійти
               </Button>
             </div>
-
-            <ToRegister>
-              <button style={{ fontSize: '20px', color: 'black' }}>
-                Забули пароль?
-              </button>
-              <LinkStyled
-                to="/registration"
-                onClick={() => {
-                  setRegistrMenuTogle(false);
-                }}
-              >
-                Register
-              </LinkStyled>
-            </ToRegister>
           </Form>
         )}
       </Formik>
+      <ToRegister>
+              <PassRecoveryBtn type='button' style={{ fontSize: '20px', color: 'black' }} onClick={()=>setShowWindouwRecoveryPass(true)}>
+                Забули пароль?
+              </PassRecoveryBtn>
+              <LinkStyled
+                to="/registration"
+                onClick={() => {
+                  setUserMenuTogle(false);
+                }}
+              >
+                Реєстрація
+              </LinkStyled>
+            </ToRegister>
     </LogFormContainer>
   );
 }

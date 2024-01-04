@@ -10,7 +10,7 @@ import DetailsList from 'components/ProductCard/DetailsList/DetailsList';
 import { ViewedProducts } from 'components/ProductCard/ViewedProducts/ViewedProducts';
 import { setBreadCrumbs } from 'redux/slice/breadCrumbsSlice';
 import { useDispatch } from 'react-redux';
-import { useFetchAllStructureQuery, useFetchOneProductQuery } from 'redux/operations';
+import { useFetchAllStructureQuery, useFetchOneProductQuery } from 'redux/api/operations';
 import Loader from 'components/Loader/Loader';
 import { Notify } from 'notiflix';
 

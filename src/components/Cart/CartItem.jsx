@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { removeCartItem, updateCartItem } from 'redux/slice/cartSlice';
-import { displaySize } from 'helpers';
+import { displaySize, getQuantityString } from 'helpers';
 
 import {
   Availability,
@@ -126,9 +126,20 @@ export const CartItem = ({ prod, unavailable }) => {
   };
 
   const handleBlur = () => {
+    if (count === 0 && cardCount === '') {
+      Notify.warning('Товар буде видалено з кошика');
+      setTimeout(() => {
+        setCardCount(null);
+        dispatch(removeCartItem(productCode));
+      }, 3000);
+      setIsFocused(false);
+      return;
+    }
+
     if (cardCount === '') {
-      Notify.warning('Мінімальна кількість для замовлення - 1 шт');
+      Notify.warning('Мінімальна кількість для замовлення - 1 шт.');
       setCardCount(1);
+      dispatch(updateCartItem({ productCode, newCount: 1 }));
     }
 
     setIsFocused(false);
@@ -172,7 +183,7 @@ export const CartItem = ({ prod, unavailable }) => {
           <ImgWrapper className="imgContainer" count={count}>
             {isUnavailable && count !== 0 && (
               <Availability>
-                <span>Доступнo {count} шт </span>
+                <span>{getQuantityString(count)}</span>
               </Availability>
             )}
 
@@ -284,13 +295,13 @@ export const CartItem = ({ prod, unavailable }) => {
 
             {!isUnavailable && (
               <TotalQuantity>
-                <span> {itemTotal.toFixed(2)}</span>
+                {itemTotal.toFixed(2)}
                 <span>₴</span>
               </TotalQuantity>
             )}
 
             {isUnavailable && (
-              <MessageContainer>
+              <MessageContainer count={count}>
                 <span>
                   {' '}
                   <AttantionCicleLight />

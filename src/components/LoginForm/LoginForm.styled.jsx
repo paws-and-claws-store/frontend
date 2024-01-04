@@ -6,13 +6,9 @@ import { ErrorMessage, Field } from 'formik';
 import { theme } from 'styles';
 
 export const LogFormContainer = styled.div`
-  position: absolute;
-  top: 80px;
-  right: 0px;
   margin: 0 auto;
   padding: 40px 12px;
   text-align: center;
-  justify-content: center;
   background-color: ${theme.colors.white};
   border-radius: 10px;
   width: 280px;
@@ -24,7 +20,6 @@ export const LogFormContainer = styled.div`
     width: 458px;
     height: 481px;
     border-radius: 10px;
-    /* z-index: 99; */
   }
   @media screen and (min-width: 1280px) {
     height: 481px;
@@ -40,7 +35,7 @@ export const Titel = styled.h1`
     font-weight: 500;
     line-height: normal;
     letter-spacing: 1.44px;
-    margin-bottom: 40px;
+    margin-bottom: 20px;
   }
   @media (min-width: 1280px) {
     font-style: normal;
@@ -213,7 +208,14 @@ align-items: center;
   letter-spacing: 0.48px;
 `;
 
+export const PassRecoveryBtn = styled.button`
+font-size: '20px'; 
+color: 'black';
+`;
+
+
 export const LinkStyled = styled(NavLink)`
+position: relative;
   color: ${theme.colors.black};
   font-size: 20px;
   margin-left: 3px;
@@ -221,5 +223,18 @@ export const LinkStyled = styled(NavLink)`
   font-weight: 400;
   line-height: normal;
   letter-spacing: 0.48px;
-  /* text-decoration: underline; */
+  &::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 1px;
+    background-color: ${theme.colors.black};
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+  };
+  &:hover::after {
+    transform: scaleX(1)
+  };
 `;

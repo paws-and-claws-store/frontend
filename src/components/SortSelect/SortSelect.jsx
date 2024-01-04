@@ -1,8 +1,5 @@
 // this component is used for sorting on product pages
-import React, {
-  // useEffect,
-  useState,
-} from 'react';
+import React, { useEffect, useState } from 'react';
 
 import {
   BurgerContainer,
@@ -16,13 +13,9 @@ import {
 } from './SortSelect.styled';
 import { RightArrow } from 'components/Icons';
 import { theme } from 'styles';
-import {
-  useDispatch,
-  // useSelector
-} from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setValueSort } from 'redux/slice/sortSelectSlice';
-// import { selectSortingTypeStore } from 'redux/selectors';
-// import { useSearchParams } from 'react-router-dom';
+import { selectSortingTypeStoreDefault } from 'redux/selectors/selectors';
 
 export const SortSelect = () => {
   // const sortingType = useSelector(selectSortingTypeStore);
@@ -31,6 +24,8 @@ export const SortSelect = () => {
 
   const [isClickBurger, setIsClickBurger] = useState(true);
   const [indicator, setIndicator] = useState('обрати');
+  const defaultSortSelect = useSelector(selectSortingTypeStoreDefault);
+
   const dispatch = useDispatch();
 
   const indicatorHandler = value => {
@@ -68,6 +63,18 @@ export const SortSelect = () => {
 
   const onButtonHandler = () => setIsClickBurger(!isClickBurger);
   const onBlurHandler = () => setIsClickBurger(true);
+
+  useEffect(() => {
+    if (defaultSortSelect === 'cheap') {
+      setIndicator('спочатку дешеві');
+    }
+    if (defaultSortSelect === 'expensive') {
+      setIndicator('спочатку дорогі');
+    }
+    if (defaultSortSelect === 'rating') {
+      setIndicator('за рейтингом');
+    }
+  }, [defaultSortSelect]); // setting default value for layout
 
   return (
     <BurgerContainer>

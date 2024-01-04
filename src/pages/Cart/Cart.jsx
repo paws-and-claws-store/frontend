@@ -17,7 +17,7 @@ import {
 } from './Cart.styled';
 import Img from '../../images/Travel_bag.png';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectCartStore } from 'redux/selectors';
+import { selectCartStore } from 'redux/selectors/selectors';
 import { CartItem, VerticallyCenteredModal } from 'components';
 
 import { ArrowLeft } from 'components/Icons';
@@ -25,7 +25,7 @@ import { calculateTotalCost, unavailableFilterProducts } from 'helpers';
 import {
   useBuyProductsMutation,
   useFetchValidateCartItemsMutation,
-} from 'redux/operations';
+} from 'redux/api/operations';
 import { updateCartItemCount } from 'redux/slice/cartSlice';
 // import { Button } from 'react-bootstrap';
 

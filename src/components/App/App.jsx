@@ -13,7 +13,12 @@ import {
   PricesDrop,
   ProductCard,
   Registration,
+  UserPage,
+  CreateNewPass,
 } from 'pages';
+
+import PrivateRoute from 'components/Routes/PrivateRoute';
+import PublicRoute from 'components/Routes/PublicRoute';
 
 import Search from 'pages/Search/Search';
 import { Route, Routes } from 'react-router-dom';
@@ -22,13 +27,17 @@ import { CatalogLayout } from 'components/CatalogLayout/CatalogLayout';
 import { ProductType } from 'pages/Catalog/Pages/ProductType';
 import { OrderSuccessful } from 'pages/Cart/OrderSuccessful/OrderSuccessful';
 
+
+
 export const App = () => {
   return (
     <>
       <Routes>
         <Route path="/" element={<SharedLayout />}>
           <Route index element={<Home />} />
-          <Route path="registration" element={<Registration />} />
+          <Route path="registration" element={<PublicRoute><Registration /></PublicRoute>} />
+          <Route path="user" element={<PrivateRoute ><UserPage /></PrivateRoute>} />
+          <Route path="newpass" element={<CreateNewPass />}/>
           <Route path="catalog" element={<CatalogLayout />}>
             <Route index element={<Catalog />} />
             <Route path=":pet" element={<Pet />} />

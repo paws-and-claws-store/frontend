@@ -17,7 +17,7 @@ import {
 } from './QuntityProduct.styled';
 import { addCartItem, updateCartItem } from 'redux/slice/cartSlice';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectCartStore } from 'redux/selectors';
+import { selectCartStore } from 'redux/selectors/selectors';
 import { Notify } from 'notiflix';
 
 const QuntityProduct = ({ inStock, prodType, prodDescription }) => {
@@ -28,9 +28,12 @@ const QuntityProduct = ({ inStock, prodType, prodDescription }) => {
 
   const dispatch = useDispatch();
   const productCode = prodType.productCode;
+  const count = prodType.count;
 
   useEffect(() => {
-    const productCount = cardCountRedux?.find(item => item.productCode === productCode);
+    const productCount = cardCountRedux?.find(
+      item => item.productCode === productCode,
+    );
     if (productCount) {
       setQuintity(productCount.cardCount);
       setInCart(true);
@@ -84,7 +87,9 @@ const QuntityProduct = ({ inStock, prodType, prodDescription }) => {
     if (newCount > prodType.count) {
       Notify.info('На жаль, на складі відсутня необхідна кількість товару.');
       setQuintity(prodType.count);
-      return dispatch(updateCartItem({ productCode, newCount: prodType.count }));
+      return dispatch(
+        updateCartItem({ productCode, newCount: prodType.count }),
+      );
     }
     setQuintity(newCount);
     dispatch(updateCartItem({ productCode, newCount }));
@@ -92,13 +97,14 @@ const QuntityProduct = ({ inStock, prodType, prodDescription }) => {
 
   const handleBlur = () => {
     if (quintity === '') {
-      // setQuintity(1);
-      Notify.warning('Мінімальна кількість для замовлення - 1 шт');
+      Notify.warning('Мінімальна кількість для замовлення - 1 шт.');
+      setQuintity(1);
+      dispatch(updateCartItem({ productCode, newCount: 1 }));
       setIsFocused(false);
-      return;
+      // return;
     }
-    setIsFocused(false);
-    dispatch(updateCartItem({ productCode, newCount: quintity }));
+    // setIsFocused(false);
+    // dispatch(updateCartItem({ productCode, newCount: quintity }));
   };
 
   const handleKeyPres = e => {
@@ -112,7 +118,7 @@ const QuntityProduct = ({ inStock, prodType, prodDescription }) => {
   const clickToBuy = () => {
     if (quintity > 0) {
       return handleClickBuy();
-    } else return Notify.warning('Мінімальна кількість для замовлення - 1 шт');
+    } else return Notify.warning('Мінімальна кількість для замовлення - 1 шт.');
   };
 
   const handleClickBuy = () => {
@@ -164,7 +170,12 @@ const QuntityProduct = ({ inStock, prodType, prodDescription }) => {
               -
             </BtnDecrement>
 
-            <BtnIncrement onClick={increment} type="button" aria-label="increment">
+            <BtnIncrement
+              onClick={increment}
+              type="button"
+              aria-label="increment"
+              disabled={quintity >= count}
+            >
               +
             </BtnIncrement>
           </QuintityInputWrapper>
@@ -187,7 +198,11 @@ const QuntityProduct = ({ inStock, prodType, prodDescription }) => {
             <PriceSt className="line-through-text">
               <OldPrice>{prodType.price.toFixed(2)}</OldPrice>
 
-              <SymbolCurrency style={{ fontSize: '18px', lineHeight: 'normal' }}>₴</SymbolCurrency>
+              <SymbolCurrency
+                style={{ fontSize: '18px', lineHeight: 'normal' }}
+              >
+                ₴
+              </SymbolCurrency>
             </PriceSt>
           </PriceBox>
         ) : (
