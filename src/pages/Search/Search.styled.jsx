@@ -104,6 +104,11 @@ export const SearchClearFilter = styled.button`
   text-decoration: underline;
   text-decoration-skip-ink: auto;
   text-underline-offset: 4px;
+
+  &:hover,
+  &:active {
+    color: ${theme.colors.orange};
+  }
 `;
 
 export const SearchFilter = styled.div`
