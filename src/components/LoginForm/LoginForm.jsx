@@ -177,7 +177,7 @@ export function LoginForm({ setUserMenuTogle }) {
         )}
       </Formik>
       <ToRegister>
-              <PassRecoveryBtn type='button' style={{ fontSize: '20px', color: 'black' }} onClick={()=>setShowWindouwRecoveryPass(true)}>
+              <PassRecoveryBtn type='button' onClick={()=>setShowWindouwRecoveryPass(true)}>
                 Забули пароль?
               </PassRecoveryBtn>
               <LinkStyled
