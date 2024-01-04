@@ -11,21 +11,28 @@ export const BoxCard = styled.div`
 
   .heartIcon svg {
     position: absolute;
-    top: 20px;
-    right: 20px;
+    top: 19px;
+    right: 19px;
     fill: ${theme.colors.orange};
   }
 
   &:hover {
-    transform:${props => props.offScale ? 'scale(1)' : 'scale(1.01)'};
-    box-shadow: ${props => props.offScale ? null : '0px 16px 48px 0px rgba(0, 0, 0, 0.176)'};
+    transform: ${props => (props.offScale ? 'scale(1)' : 'scale(1.01)')};
+    /* box-shadow: ${props =>
+      props.offScale ? null : '0px 16px 48px 0px rgba(0, 0, 0, 0.176)'}; */
+
+    /* box-shadow: 0 7px 30px -10px rgba(150, 170, 180, 0.5); */
+    /* box-shadow: 0px -25px 20px -20px rgba(0, 0, 0, 0.45),
+      0px 25px 20px -20px rgba(0, 0, 0, 0.45); */
+    box-shadow: 0px -21px 20px -20px rgba(0, 0, 0, 0.3),
+      0px 23px 20px -20px rgba(0, 0, 0, 0.3);
   }
 `;
 
 export const WeightList = styled.ul`
   position: absolute;
-  top: 20px;
-  left: 20px;
+  top: 19px;
+  left: 19px;
   display: flex;
   flex-direction: column;
   gap: ${theme.spacing.step}px;
@@ -134,7 +141,7 @@ export const Rating = styled.p`
   gap: ${theme.spacing.step * 1}px;
 
   height: ${theme.spacing.step * 5}px;
-  margin-top: ${theme.spacing.step * 2}px;
+  margin-top: ${theme.spacing.step * 2 + 1}px;
 
   color: ${theme.colors.grey};
   font-weight: ${theme.fontWeight.Regular};
@@ -151,7 +158,9 @@ export const Rating = styled.p`
 
 export const PriceBox = styled.div`
   display: flex;
+  align-items: baseline;
   flex-direction: column;
+  /* margin-top: 8px; */
   /* flex-wrap: wrap; */
 
   /* width: 94px; */
@@ -168,7 +177,7 @@ export const PriceBox = styled.div`
 
 export const PriceSt = styled.div`
   display: flex;
-  align-items: center;
+  align-items: baseline;
   color: ${theme.colors.orange};
   /* text-transform: uppercase; */
   /* font-family: 'rawline', sans-serif; */
@@ -183,7 +192,7 @@ export const SymbolCurrency = styled.span`
   font-weight: ${theme.fontWeight.medium};
   font-size: ${theme.fontSizes.s};
   line-height: ${theme.lineHeight.s};
-  align-self: flex-end;
+  /* align-self: flex-end; */
   .line-through-text & {
     color: ${theme.colors.grey};
     font-size: 12px;
