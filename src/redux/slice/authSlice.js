@@ -5,6 +5,9 @@ import {
   logout,
   getCurrentUser,
   resendVerifyEmail,
+  resetPassword,
+  verifyResetToken,
+  updatePassword,
 } from '../api/auth-operations';
 
 const handlePending = state => {
@@ -22,6 +25,9 @@ const initialState = {
   isRegistered: false,
   error: null,
   isLoggedIn: false,
+  resetTokenStatus: null,
+  newPasswordStatus: null, 
+  showMenu: false,
 };
 
 const authSlice = createSlice({
@@ -31,6 +37,9 @@ const authSlice = createSlice({
     showUserPage(state, action) {
       state.isRegistered = false;
       state.isLoggedIn = true;
+    },
+    showUserMenu(state, action) {
+      state.showMenu = true;
     },
   },
   extraReducers: builder => {
@@ -49,7 +58,6 @@ const authSlice = createSlice({
       .addCase(logout.fulfilled, (state, action) => {
         state.user = {};
         state.isLoggedIn = false;
-        // state.isRegistered = false;
         state.isLoading = false;
       })
       .addCase(getCurrentUser.fulfilled, (state, action) => {
@@ -58,19 +66,43 @@ const authSlice = createSlice({
         state.isLoading = false;
       })
       .addCase(resendVerifyEmail.fulfilled, (state, action) => {
-        // console.log("action:", action)
+      })
+      .addCase(resetPassword.fulfilled, (state, action) => {
+      })
+      .addCase(verifyResetToken.fulfilled, (state, action) => {
+        state.resetTokenStatus = action.payload
+        state.isLoading = false;
+      })
+      .addCase(updatePassword.fulfilled, (state, action) => {
+        state.newPasswordStatus = action.payload;
+        state.isLoading = false;
       })
 
       .addCase(register.pending, handlePending)
       .addCase(login.pending, handlePending)
       .addCase(logout.pending, handlePending)
       .addCase(getCurrentUser.pending, handlePending)
+      .addCase(resendVerifyEmail.pending, handlePending)
+      .addCase(resetPassword.pending, handlePending)
+      .addCase(verifyResetToken.pending, handlePending)
+      .addCase(updatePassword.pending, handlePending)
+
       .addCase(register.rejected, handleRejected)
+      .addCase(login.rejected, handleRejected)
       .addCase(logout.rejected, handleRejected)
       .addCase(getCurrentUser.rejected, handleRejected)
-      .addCase(login.rejected, handleRejected);
+      .addCase(resendVerifyEmail.rejected, handleRejected)
+      .addCase(resetPassword.rejected, handleRejected)
+      .addCase(verifyResetToken.rejected, (state, action)=>{
+        state.resetTokenStatus = action.payload;
+        state.isLoading = false;
+      })
+      .addCase(updatePassword.rejected, (state, action)=>{
+        state.newPasswordStatus = action.payload;
+        state.isLoading = false;
+      });
   },
 });
 
-export const { userActivated, showUserPage } = authSlice.actions;
+export const { showUserMenu, showUserPage } = authSlice.actions;
 export const authReducer = authSlice.reducer;

@@ -33,7 +33,7 @@ export const Header = () => {
   const [scroll, setScroll] = useState('');
   const [userMenuTogle, setUserMenuTogle] = useState(false);
 
-  const {isLoggedIn} = useAuth();
+  const {isLoggedIn, isShowUserMenu} = useAuth();
   const cartStore = useSelector(selectCartStore);
   const totalCount = cartStore.reduce((previousValue, { cardCount }) => {
     return previousValue + cardCount;
@@ -52,6 +52,12 @@ export const Header = () => {
       }
     });
   }, []);
+
+  useEffect(() => {
+      if (isShowUserMenu) {
+        setUserMenuTogle(true)
+      }
+  }, [isShowUserMenu]);
 
   // const menuTogle = ()=>setRegistrMenuTogle(true)
 

@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { resendVerifyEmail } from 'redux/api/auth-operations';
 import { ResendVerifyEmailContainer, Titel, Message, ResendForm, ResendInput, Button } from './ResendVerifyEmail.styled';
 
-export const ResendVerifyEmail = () => {
+export const ResendVerifyEmail = ({setShowResendEmail}) => {
     const [email, setEmail] = useState('')
     
     const dispatch = useDispatch();
@@ -13,6 +13,7 @@ export const ResendVerifyEmail = () => {
     const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(resendVerifyEmail(email))
+    setShowResendEmail(false)
     }
   return (
     <ResendVerifyEmailContainer>
@@ -30,7 +31,7 @@ export const ResendVerifyEmail = () => {
         placeholder="Електронна пошта "
         autoComplete="on"
         />
-      <Button type='submit'>Надіслати ще раз</Button>
+      <Button type='submit'  disabled={email===''}>Надіслати ще раз</Button>
       </ResendForm>
 
       

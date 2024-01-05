@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-// import { useDispatch } from 'react-redux';
-// import { resendVerifyEmail } from 'redux/api/auth-operations';
+import { useDispatch } from 'react-redux';
+import { resetPassword } from 'redux/api/auth-operations';
+
 import {
   PasswordRecoveryContainer,
   Titel,
@@ -13,16 +14,19 @@ import { PasswordConfirmation } from 'components/PasswordRecovery/PasswordConfir
 
 export const PasswordRecovery = ({ setShowWindouwRecoveryPass }) => {
   const [email, setEmail] = useState('');
+  
   const [showPasswordConfirmation, setShowPasswordConfirmation] =
     useState(false);
 
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
   const onChangeEmail = e => setEmail(e.currentTarget.value);
 
   const handleSubmit = e => {
     e.preventDefault();
-    // dispatch(resendVerifyEmail(email));
+    dispatch(resetPassword(email));
+    setEmail('');
+    setShowPasswordConfirmation(true)
   };
   return (
     <PasswordRecoveryContainer>
@@ -31,9 +35,8 @@ export const PasswordRecovery = ({ setShowWindouwRecoveryPass }) => {
       </CloseButton>
       {!showPasswordConfirmation ? (
         <>
-          {' '}
           <Titel>Відновлення пароля</Titel>
-          <ResendForm style={{ display: 'block' }} onSubmit={handleSubmit}>
+          <ResendForm onSubmit={handleSubmit}>
             <ResendInput
               name="email"
               type="email"
@@ -45,7 +48,7 @@ export const PasswordRecovery = ({ setShowWindouwRecoveryPass }) => {
             <Button
               type="submit"
               disabled={email === ''}
-              onClick={() => setShowPasswordConfirmation(true)}
+              // onClick={() => {setShowPasswordConfirmation(true)}}
             >
               Відновити пароль
             </Button>

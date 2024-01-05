@@ -4,6 +4,9 @@ import {
   selectIsLoggedIn,
 //   selectIsRefreshing,
   selectUser,
+  selectResetTokenStatus,
+  selectNewPasswordStatus,
+  selectShowUserMenu,
 // selectIsActive,
   selectIsLoading,
   selectError
@@ -12,6 +15,9 @@ import {
 export const useAuth = () => {
   const isRegistered = useSelector(selectIsRegistered);
   const isLoggedIn = useSelector(selectIsLoggedIn);
+  const isResetToken = useSelector(selectResetTokenStatus);
+  const isNewPassStatus = useSelector(selectNewPasswordStatus);
+  const isShowUserMenu = useSelector(selectShowUserMenu);
 //   const isRefreshing = useSelector(selectIsRefreshing);
   const user = useSelector(selectUser);
   // const isActive = useSelector(selectIsActive);
@@ -21,6 +27,9 @@ export const useAuth = () => {
   return {
     isRegistered,
     isLoggedIn,
+    isResetToken,
+    isNewPassStatus,
+    isShowUserMenu,
     // isRefreshing,
     user,
     // isActive,

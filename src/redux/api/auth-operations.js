@@ -72,7 +72,6 @@ export const getCurrentUser = createAsyncThunk(
     }
     try {
       const data = await api.getCurrent(accessToken);
-      // console.log('data:', data);
       return data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
@@ -93,4 +92,43 @@ export const resendVerifyEmail = createAsyncThunk(
   },
 );
 
+// ------------------------------------ResetPassword----------------------------------------
+export const resetPassword = createAsyncThunk(
+  'auth/resetPassword',
+  async (email, thunkAPI) => {
+    try {
+      const { data } = await api.resetPassword(email);
+      return data
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  },
+);
+
+// ------------------------------------ResendVerifyPassword----------------------------------------
+export const verifyResetToken = createAsyncThunk(
+  'auth/verifyResetToken',
+  async (token, thunkAPI) => {
+    try {
+      const  status  = await api.verifyResetToken(token);
+      return status
+    } catch (error) {      
+      return thunkAPI.rejectWithValue(error.response.status);
+    }
+  },
+);
+
+// ------------------------------------UpdatePassword----------------------------------------
+export const updatePassword = createAsyncThunk(
+  'auth/updatePassword',
+  async (newPass, thunkAPI) => {
+    try {
+      const  status  = await api.updatePassword(newPass);
+      console.log("status:", status)
+      return status
+    } catch (error) {      
+      return thunkAPI.rejectWithValue(error.response.status);
+    }
+  },
+);
 
