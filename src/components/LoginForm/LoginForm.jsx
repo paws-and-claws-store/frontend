@@ -53,8 +53,8 @@ export function LoginForm({ setUserMenuTogle }) {
       email: values.email,
       password: values.password,
     };
-    dispatch(login(data));
     resetForm();
+    dispatch(login(data));
   };
 
   //   useEffect(() => {

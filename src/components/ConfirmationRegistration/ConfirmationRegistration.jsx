@@ -17,14 +17,25 @@ export const ConfirmationRegistration = () => {
 
 
   useEffect(() => {
-    if (isLoggedIn) {
-      navigate('/');
+    const handleRegistration = () =>{
+      if (isLoggedIn) {
+        navigate('/');
+      }
+      return
     }
-  }, [navigate, isLoggedIn]);
+
+   window.addEventListener('focus', handleRegistration);
+
+   return ()=>{
+    window.removeEventListener('focus', handleRegistration);
+   }
+  }, [isLoggedIn, navigate]);
+
+  
 
   return (
-    <>
-      <ConfirmationRegistrationContainer>
+    
+      !showResendEmail ? <ConfirmationRegistrationContainer>
         <Titel>Підтвердження реєстрації</Titel>
         <Message>
           Дякуємо за реєстрацію! Щоб завершити процес, будь ласка, перевірте
@@ -35,7 +46,7 @@ export const ConfirmationRegistration = () => {
           Лист не надійшов
         </Button>
       </ConfirmationRegistrationContainer>
-      {showResendEmail ? <ResendVerifyEmail /> : null}
-    </>
+      : <ResendVerifyEmail setShowResendEmail={setShowResendEmail}/> 
+    
   );
 };
