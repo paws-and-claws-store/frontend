@@ -79,7 +79,12 @@ export const ViewedProducts = () => {
         ) : null}
       </div>
 
-      <Swiper ref={viewedSwiper} slidesPerView={4} spaceBetween={20}>
+      <Swiper
+        ref={viewedSwiper}
+        slidesPerView={4}
+        spaceBetween={20}
+        style={{ padding: '24px 2px' }}
+      >
         <ul>
           {productsList
             ? productsList.map(el => (
