@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Form, Formik } from 'formik';
 import { newPasswordSchema } from 'utils/shemas/AuthSchema';
 import { theme } from 'styles';
+import { updatePassword } from 'redux/api/auth-operations';
 
 import { NewPassFormContainer,
     Titel,
@@ -19,6 +20,7 @@ import { NewPassFormContainer,
   //   OffIcon,
 
 } from './NewPassForm.styled';
+import { useDispatch } from 'react-redux';
 
 
 const initialValues = {
@@ -27,7 +29,7 @@ const initialValues = {
   };
   
 
-export const NewPassForm = ({setShowPasswordModal}) => {
+export const NewPassForm = ({ resetPasswordToken}) => {
     const [
         newPasswordShow,
         //  setNewPasswordShow
@@ -37,18 +39,19 @@ export const NewPassForm = ({setShowPasswordModal}) => {
         repeatPasswordShow,
         //  setRepeatPasswordShow
       ] = useState(false);
+      const dispatch = useDispatch()
 
         // const toggleNewPassword = () => setNewPasswordShow(prevState => !prevState);
         // const toggleRepeatPasswordShow = () => setRepeatPasswordShow(prevState => !prevState);
     
       const handleSubmit = (values, { resetForm }) => {
-        // const data = {
-        //   newPassword: values.newPassword,
-        //   repeatPassword: values.repeatPassword,
-        // };
-        // dispatch(login(data));
+        const newPass = {
+          password: values.newPassword,
+          resetPasswordToken: resetPasswordToken,
+        };
+        dispatch(updatePassword(newPass)); 
         resetForm();
-        setShowPasswordModal(true);
+        // setShowPasswordModal(true);
       };
     
 

@@ -14,7 +14,7 @@ const setToken = token => {
 instance.interceptors.response.use(
   response => response,
   async error => {
-    if (error.response.status === 401 && !error.config._retry) {
+    if (error.response.status === 401 && !error.config._retry && error.request.responseURL !== 'https://paws-and-claws-store.onrender.com/api/auth/verifyResetToken') {
       error.config._retry = true;
       const refreshToken = localStorage.getItem('refreshToken');
       const { data } = await instance.post('/api/auth/refresh', {refreshToken});
@@ -34,7 +34,7 @@ export const register = async (newUser) => {
     localStorage.setItem("refreshToken", result.data.user.refreshToken);
     localStorage.setItem("accessToken", result.data.user.accessToken);
     return result;
-}
+};
 
 export const login = async (user) => {
     const { data: result } = await instance.post("/api/auth/login", user);
@@ -42,14 +42,14 @@ export const login = async (user) => {
     localStorage.setItem("refreshToken", result.data.user.refreshToken);
     localStorage.setItem("accessToken", result.data.user.accessToken);
     return result;
-}
+};
 
 export const logout = async (token) => {
     const { data } = await instance.get("/api/auth/logout");
     setToken(token);
     localStorage.clear()
     return data;
-}
+};
 
 export const getCurrent = async (token) => {
     try {
@@ -61,11 +61,26 @@ export const getCurrent = async (token) => {
         setToken();
         throw error;
     }
-}
+};
 
 export const resendVerifyEmail = async (email) => {
     const data = await instance.post('/api/auth/verify', {email});
     return data;
-}
+};
+
+export const resetPassword = async (email) => {
+  const data = await instance.post('/api/auth/resetPassword', {email});
+  return data;
+};
+
+export const verifyResetToken = async (resetPasswordToken) => {
+  const data = await instance.post('/api/auth/verifyResetToken', {resetPasswordToken});
+  return data.status;
+};
+
+export const updatePassword = async (newPass) => {
+  const data = await instance.patch('/api/auth/updatePassword', newPass);
+  return data.request.status
+};
 
 export default instance;

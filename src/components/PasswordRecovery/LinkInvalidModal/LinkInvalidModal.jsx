@@ -1,17 +1,16 @@
 import React, { useEffect, useRef } from 'react';
-import { showUserMenu } from 'redux/slice/authSlice';
-import {
-  PasswordModalOverlay,
-  PasswordModalContent,
-  Content,
-  CloseButton,
-} from './PasswordRecoveryModal.styled';
-import { useNavigate } from 'react-router';
-import { useDispatch } from 'react-redux';
 
-export const PasswordRecoveryModal = () => {
+import {
+  LinkInvalidModalOverlay,
+  LinkInvalidModalContent,
+  CloseButton,
+} from './LinkInvalidModal.styled';
+import { useNavigate } from 'react-router';
+
+
+export const LinkInvalidModal = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch()
+
   const modalRef = useRef(null);
 
   useEffect(() => {
@@ -33,15 +32,14 @@ export const PasswordRecoveryModal = () => {
   };
 
   const closeModal = () => {
-    dispatch(showUserMenu())
     navigate('/');
   };
   return (
-    <PasswordModalOverlay onClick={closeModal}>
-      <PasswordModalContent ref={modalRef}>
-        <Content>Ваш пароль відновлено!</Content>
-        <CloseButton onClick={closeModal}>Увійти з новим паролем</CloseButton>
-      </PasswordModalContent>
-    </PasswordModalOverlay>
+    <LinkInvalidModalOverlay onClick={closeModal}>
+      <LinkInvalidModalContent ref={modalRef}>
+        <p>На жаль посилання більше не дійсне Спробуйте ще раз відновити пароль!</p>
+        <CloseButton onClick={closeModal}>Перейти на головну сторінку</CloseButton>
+      </LinkInvalidModalContent>
+    </LinkInvalidModalOverlay>
   );
 };
