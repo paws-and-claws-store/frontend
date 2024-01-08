@@ -209,8 +209,23 @@ align-items: center;
 `;
 
 export const PassRecoveryBtn = styled.button`
+position: relative;
 font-size: '20px'; 
 color: 'black';
+&::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 1px;
+    background-color: ${theme.colors.black};
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+  };
+  &:hover::after {
+    transform: scaleX(1)
+  };
 `;
 
 
