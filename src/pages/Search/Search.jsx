@@ -41,11 +41,9 @@ import {
 
 export default function Search() {
   const searchQuery = useSelector(selectSearchQueryStore); // extract search query from the Redux store
-  const sortingType = useSelector(selectSortingTypeStore); // extract sorting type from the Redux store
-  console.log('sortingType:', sortingType);
+  // const sortingType = useSelector(selectSortingTypeStore); // extract sorting type from the Redux store
   const [currentPage, setCurrentPage] = useState(1); // to track the current page of search results.
   const [searchParams, setSearchParams] = useSearchParams();
-  console.log('searchParams:', searchParams);
   const dispatch = useDispatch();
 
   const abortControllerRef = useRef(); // hooks used to store references to the AbortController.
@@ -55,25 +53,31 @@ export default function Search() {
   const checkedBrands = useSelector(selectCheckedBrands);
 
   const brandsString = useSelector(selectBrandsFilter);
+  const sortingType = useSelector(selectSortingTypeStore); // extract sorting type from the Redux store
+  // console.log('sortingType:', sortingType);
+  const query = searchParams.get('query');
+  const sortBy = searchParams.get('sortBy');
+  // console.log('sortBy:', sortBy);
 
   useEffect(() => {
     if (searchQuery) {
+      // console.log('searchQuery:', searchQuery);
       setSearchParams({ query: searchQuery });
     }
 
-    if (searchQuery && sortingType) {
+    if (searchQuery && sortBy) {
       setSearchParams({ query: searchQuery, sortBy: sortingType });
       return;
     }
-  }, [searchQuery, setSearchParams, sortingType]);
+  }, [searchQuery, setSearchParams, sortBy, sortingType]);
 
   useEffect(() => {
     dispatch(setPriceChange(false));
     dispatch(setClearSetStatusPriceRange(true)); // reset status to price range redux store
     dispatch(setClearSetStatusBrandsFilter(true)); // reset status to Brands filter redux store
+    dispatch(setValueSort('discounts'));
   }, [dispatch, searchQuery]); // reset filters if search query was changed
 
-  const query = searchParams.get('query');
   useEffect(() => {
     const query = searchParams.get('query');
     const sortBy = searchParams.get('sortBy');

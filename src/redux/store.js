@@ -26,11 +26,11 @@ import { brandsFilterReducer } from './slice/brandsFilterSlice';
 
 const persistedAuthReducer = persistReducer(
   {
-   key: 'auth',
-   storage,
-   whitelist: ['isRegistered'],
-   },
-   authReducer,
+    key: 'auth',
+    storage,
+    whitelist: ['isRegistered'],
+  },
+  authReducer,
 );
 
 const persistConfig = {

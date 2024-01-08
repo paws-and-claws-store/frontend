@@ -16,28 +16,33 @@ import { theme } from 'styles';
 import { useDispatch, useSelector } from 'react-redux';
 import { setValueSort } from 'redux/slice/sortSelectSlice';
 import { selectSortingTypeStoreDefault } from 'redux/selectors/selectors';
+import { useSearchParams } from 'react-router-dom';
+const initialState = 'знижки та акції';
 
 export const SortSelect = () => {
   // const sortingType = useSelector(selectSortingTypeStore);
-  // const [searchParams] = useSearchParams();
-  // const sortingType = searchParams.get('sortBy');
+  const [searchParams, setSearchParams] = useSearchParams();
+  const query = searchParams.get('query');
+  const sortBy = searchParams.get('sortBy');
+  console.log('sortBy:', sortBy);
 
   const [isClickBurger, setIsClickBurger] = useState(true);
-  const [indicator, setIndicator] = useState('обрати');
+  const [indicator, setIndicator] = useState(initialState);
   const defaultSortSelect = useSelector(selectSortingTypeStoreDefault);
 
   const dispatch = useDispatch();
 
   const indicatorHandler = value => {
+    console.log('value:', value);
     switch (value) {
       case 'cheap':
         setIndicator('спочатку дешеві');
-        dispatch(setValueSort(value));
+        // dispatch(setValueSort(value));
         break;
 
       case 'expensive':
         setIndicator('спочатку дорогі');
-        dispatch(setValueSort(value));
+        // dispatch(setValueSort(value));
         break;
 
       case 'rating':
@@ -45,21 +50,31 @@ export const SortSelect = () => {
         // dispatch(setValueSort(value));
         break;
 
+      case 'discounts':
+        setIndicator('знижки та акції');
+        // dispatch(setValueSort(value));
+        break;
+
       default:
-        setIndicator('rating');
-      // dispatch(setValueSort(value));
+        setIndicator('знижки та акції');
+      // dispatch(setValueSort('discounts'));
     }
+
+    // Оновлення параметра 'sortBy' у URL
+    setSearchParams(prevSearchParams => {
+      const updatedSearchParams = new URLSearchParams(prevSearchParams);
+      updatedSearchParams.set('sortBy', value);
+      return updatedSearchParams;
+    });
 
     setIsClickBurger(!isClickBurger);
   };
 
-  // useEffect(() => {
-  //   // Викликати indicatorHandler при ініціалізації, якщо sortingType вже існує
-  //   if (sortingType) {
-  //     indicatorHandler(sortingType);
-  //     setIsClickBurger(true);
-  //   }
-  // }, [indicatorHandler, sortingType]);
+  useEffect(() => {
+    console.log('Query:', query);
+    // Викликати indicatorHandler при ініціалізації, якщо sortingType вже існує
+    setIndicator(initialState);
+  }, [query]);
 
   const onButtonHandler = () => setIsClickBurger(!isClickBurger);
   const onBlurHandler = () => setIsClickBurger(true);
@@ -73,6 +88,9 @@ export const SortSelect = () => {
     }
     if (defaultSortSelect === 'rating') {
       setIndicator('за рейтингом');
+    }
+    if (defaultSortSelect === 'discounts') {
+      setIndicator('знижки та акції');
     }
   }, [defaultSortSelect]); // setting default value for layout
 
@@ -107,6 +125,9 @@ export const SortSelect = () => {
             </IndicatorValue>
             <IndicatorValue onClick={() => indicatorHandler('rating')}>
               за рейтингом
+            </IndicatorValue>
+            <IndicatorValue onClick={() => indicatorHandler('discounts')}>
+              знижки та акції
             </IndicatorValue>
           </IndicatorWrapper>
         )}
