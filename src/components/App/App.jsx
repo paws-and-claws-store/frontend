@@ -35,7 +35,7 @@ export const App = () => {
       <Routes>
         <Route path="/" element={<SharedLayout />}>
           <Route index element={<Home />} />
-          <Route path="registration" element={<PublicRoute redirectTo="/" restricted><Registration /></PublicRoute>} />
+          <Route path="registration" element={<PublicRoute><Registration /></PublicRoute>} />
           <Route path="user" element={<PrivateRoute ><UserPage /></PrivateRoute>} />
           <Route path="newpass" element={<CreateNewPass />}/>
           <Route path="catalog" element={<CatalogLayout />}>
