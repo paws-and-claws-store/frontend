@@ -1,6 +1,6 @@
 import { useAuth } from 'hooks/useAuth';
 import { Navigate } from 'react-router-dom';
-import Loader from 'components/Loader/Loader';
+// import Loader from 'components/Loader/Loader';
 
 const PublicRoute = ({
   children,
