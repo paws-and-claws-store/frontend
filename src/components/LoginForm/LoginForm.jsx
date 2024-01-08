@@ -99,7 +99,7 @@ export function LoginForm({ setUserMenuTogle }) {
                 />
               </InputEmailWraper>
               {!errors.email && touched.email ? (
-                <SuccessMessage>Success, email is valid!</SuccessMessage>
+                <SuccessMessage>Успіх, електронна пошта дійсна!</SuccessMessage>
               ) : null}
 
               {/* <IconWraper>
@@ -142,7 +142,7 @@ export function LoginForm({ setUserMenuTogle }) {
               </InputPasswordWraper>
 
               {!errors.password && touched.password ? (
-                <SuccessMessage>Password is secure</SuccessMessage>
+                <SuccessMessage>Пароль безпечний</SuccessMessage>
               ) : null}
 
               {/* <IconWraper>
