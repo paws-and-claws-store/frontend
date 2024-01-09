@@ -178,7 +178,9 @@ export const PriceBox = styled.div`
 export const PriceSt = styled.div`
   display: flex;
   align-items: baseline;
-  color: ${theme.colors.orange};
+  /* color: ${theme.colors.orange}; */
+  color: ${props =>
+    props.count === 0 ? `${theme.colors.grey}` : `${theme.colors.orange}`};
   /* text-transform: uppercase; */
   /* font-family: 'rawline', sans-serif; */
 
@@ -317,6 +319,23 @@ export const ImageBox = styled.div`
         : 'none'};
     mix-blend-mode: ${props => (props.count === 0 ? 'luminosity' : 'normal')};
   }
+`;
+
+export const NotAvailableText = styled.span`
+  position: absolute;
+  bottom: 0;
+  left: 0;
+
+  display: block;
+  padding: 2px 12px;
+  border-radius: 10px;
+  background-color: ${theme.colors.grey};
+  color: ${theme.colors.beige};
+  font-family: Inter;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: 16px; /* 114.286% */
 `;
 
 export const HeartBox = styled.div``;
