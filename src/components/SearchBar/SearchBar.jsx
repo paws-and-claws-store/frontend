@@ -52,7 +52,6 @@ export const SearchBar = () => {
       if (location?.pathname !== 'search') {
         navigate('/search', { replace: false }); // redirect to search page after submitting and passing valiadation
       }
-      navigate('/search', { replace: false });
     }
 
     // If form is not valid, send error to UI:
