@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const SortingInitialState = {
   type: '', // current type of sorting
-  defaultType: 'cheap', // set default type for first render
+  defaultType: 'discounts', // set default type for first render
 };
 
 SortingInitialState.type = SortingInitialState.defaultType;
