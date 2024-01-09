@@ -13,27 +13,26 @@ import {
 } from './SortSelect.styled';
 import { RightArrow } from 'components/Icons';
 import { theme } from 'styles';
-import { useDispatch, useSelector } from 'react-redux';
-import { setValueSort } from 'redux/slice/sortSelectSlice';
-import { selectSortingTypeStoreDefault } from 'redux/selectors/selectors';
+// import { useSelector } from 'react-redux';
+// import { setValueSort } from 'redux/slice/sortSelectSlice';
+// import { selectSortingTypeStoreDefault } from 'redux/selectors/selectors';
 import { useSearchParams } from 'react-router-dom';
-const initialState = 'знижки та акції';
+// const initialState = 'знижки та акції';
 
 export const SortSelect = () => {
   // const sortingType = useSelector(selectSortingTypeStore);
   const [searchParams, setSearchParams] = useSearchParams();
-  const query = searchParams.get('query');
+  // const query = searchParams.get('query');
   const sortBy = searchParams.get('sortBy');
-  console.log('sortBy:', sortBy);
 
   const [isClickBurger, setIsClickBurger] = useState(true);
-  const [indicator, setIndicator] = useState(initialState);
-  const defaultSortSelect = useSelector(selectSortingTypeStoreDefault);
+  const [indicator, setIndicator] = useState(null);
 
-  const dispatch = useDispatch();
+  // const defaultSortSelect = useSelector(selectSortingTypeStoreDefault);
+
+  // const dispatch = useDispatch();
 
   const indicatorHandler = value => {
-    console.log('value:', value);
     switch (value) {
       case 'cheap':
         setIndicator('спочатку дешеві');
@@ -71,28 +70,42 @@ export const SortSelect = () => {
   };
 
   useEffect(() => {
-    console.log('Query:', query);
-    // Викликати indicatorHandler при ініціалізації, якщо sortingType вже існує
-    setIndicator(initialState);
-  }, [query]);
+    // Викликати indicatorHandler при монтажі компонента на основі значення sortBy з URLSearchParams
+    if (sortBy) {
+      indicatorHandler(sortBy);
+      setIsClickBurger(true);
+    } else {
+      // В іншому випадку встановіть значення за замовчуванням (discounts або інше, якщо потрібно)
+      indicatorHandler('discounts');
+      setIsClickBurger(true);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [sortBy]);
+
+  // useEffect(() => {
+  //   // Викликати indicatorHandler при ініціалізації, якщо sortingType вже існує
+  //   setIndicator(initialState);
+  // }, [query]);
 
   const onButtonHandler = () => setIsClickBurger(!isClickBurger);
   const onBlurHandler = () => setIsClickBurger(true);
 
-  useEffect(() => {
-    if (defaultSortSelect === 'cheap') {
-      setIndicator('спочатку дешеві');
-    }
-    if (defaultSortSelect === 'expensive') {
-      setIndicator('спочатку дорогі');
-    }
-    if (defaultSortSelect === 'rating') {
-      setIndicator('за рейтингом');
-    }
-    if (defaultSortSelect === 'discounts') {
-      setIndicator('знижки та акції');
-    }
-  }, [defaultSortSelect]); // setting default value for layout
+  // useEffect(() => {
+  //   if (!sortBy) {
+  //     if (defaultSortSelect === 'cheap') {
+  //       setIndicator('спочатку дешеві');
+  //     }
+  //     if (defaultSortSelect === 'expensive') {
+  //       setIndicator('спочатку дорогі');
+  //     }
+  //     if (defaultSortSelect === 'rating') {
+  //       setIndicator('за рейтингом');
+  //     }
+  //     if (defaultSortSelect === 'discounts') {
+  //       setIndicator('знижки та акції');
+  //     }
+  //   }
+  // }, [defaultSortSelect, sortBy]); // setting default value for layout
 
   return (
     <BurgerContainer>

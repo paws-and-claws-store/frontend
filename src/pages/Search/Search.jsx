@@ -18,7 +18,8 @@ import {
   selectIsPriceRangeSet,
   selectPriceValue,
   selectSearchQueryStore,
-  selectSortingTypeStore,
+  // selectSortingTypeStore,
+  selectSortingTypeStoreDefault,
 } from 'redux/selectors/selectors';
 import { NoSearch } from 'components/NoSearch/NoSearch';
 import { Notify } from 'notiflix';
@@ -52,11 +53,14 @@ export default function Search() {
   const isBrandsSet = useSelector(selectIsBrandsFilterSet);
   const checkedBrands = useSelector(selectCheckedBrands);
 
+  // const sortingType = useSelector(selectSortingTypeStore); // extract sorting type from the Redux store
   const brandsString = useSelector(selectBrandsFilter);
-  const sortingType = useSelector(selectSortingTypeStore); // extract sorting type from the Redux store
   // console.log('sortingType:', sortingType);
   const query = searchParams.get('query');
   const sortBy = searchParams.get('sortBy');
+  const sortingType = sortBy; // extract sorting type from the Redux store
+  const defaultSortSelect = useSelector(selectSortingTypeStoreDefault);
+
   // console.log('sortBy:', sortBy);
 
   useEffect(() => {
@@ -66,10 +70,10 @@ export default function Search() {
     }
 
     if (searchQuery && sortBy) {
-      setSearchParams({ query: searchQuery, sortBy: sortingType });
+      setSearchParams({ query: searchQuery, sortBy });
       return;
     }
-  }, [searchQuery, setSearchParams, sortBy, sortingType]);
+  }, [searchQuery, setSearchParams, sortBy]);
 
   useEffect(() => {
     dispatch(setPriceChange(false));
@@ -108,14 +112,24 @@ export default function Search() {
 
   useEffect(() => {
     setCurrentPage(1); // set page one to the new search query, sorting type or price calue from price slider
-  }, [searchQuery, sortingType, checkedBrands]);
+  }, [searchQuery, checkedBrands]);
 
-  if (sortingType !== '') {
-    params.sortBy = sortingType; // set to params object sorting type if sorting type is exists
+  // if (sortingType !== '') {
+  //   params.sortBy = sortingType; // set to params object sorting type if sorting type is exists
+  // }
+
+  if (!sortBy) {
+    params.sortBy = defaultSortSelect;
   }
+
+  if (sortBy) {
+    params.sortBy = sortBy; // set to params object sorting type if sorting type is exists
+  }
+
   if (brandsString !== '') {
     params.brands = brandsString; // set brands to query
   }
+
   if (abortControllerRef.current && searchParams === '') {
     abortControllerRef.current.abort('empty query'); // If there's an existing abortControllerRef.current and the searchQuery becomes empty, it aborts the ongoing fetch with a message 'empty query, to avoid abort fetch permamently
   }
@@ -147,6 +161,7 @@ export default function Search() {
       setCurrentPage,
       currentPage,
       sortingType,
+      // sortBy,
     }); // Use a custom hook usePagination to handle pagination-related functionalities such as managing product lists, pagination data, and changing pages.
 
   const totalDocs = response?.totalDocs;
