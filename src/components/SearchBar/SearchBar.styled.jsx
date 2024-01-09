@@ -22,14 +22,15 @@ export const SearchBox = styled.div`
     padding-left: ${theme.spacing.step * 13}px;
     background-color: ${theme.colors.beige};
 
-    font-size: ${theme.fontSizes.m};
+    font-size: ${theme.fontSizes.s};
     font-weight: ${theme.fontWeight.Light};
     line-height: 1.25; /* 125% */
     color: ${theme.colors.black};
 
     &:focus {
       border: 1px solid ${theme.colors.secGreen};
-      color: ${props => (props.searchValue !== '' ? theme.colors.black : theme.colors.green)};
+      color: ${props =>
+        props.searchValue !== '' ? theme.colors.black : theme.colors.green};
     }
 
     &::placeholder {
@@ -53,7 +54,7 @@ export const SearchBox = styled.div`
   .resetButton {
     display: ${props => (props.resetBoolean ? 'block' : 'none')};
     position: absolute;
-    right: 10px;
+    right: 17px;
     top: 50%;
     transform: translateY(-50%);
     background-color: ${theme.colors.beige};
