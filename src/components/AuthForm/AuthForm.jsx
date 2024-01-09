@@ -106,7 +106,7 @@ export function AuthForm() {
                 />
               </InputNameWraper>
               {!errors.name && touched.name ? (
-                <SuccessMessage>Success, name is valid!</SuccessMessage>
+                <SuccessMessage>Успіх, ім'я дійсне!</SuccessMessage>
               ) : null}
 
               {/* <IconWraper>
@@ -148,7 +148,7 @@ export function AuthForm() {
                 />
               </InputEmailWraper>
               {!errors.email && touched.email ? (
-                <SuccessMessage>Success, email is valid!</SuccessMessage>
+                <SuccessMessage>Успіх, електронна пошта дійсна!</SuccessMessage>
               ) : null}
 
               {/* <IconWraper>
@@ -212,7 +212,7 @@ export function AuthForm() {
               </IconWraper> */}
 
               {!errors.password && touched.password ? (
-                <SuccessMessage>Success, password is valid!</SuccessMessage>
+                <SuccessMessage>Успіх, пароль дійсний!</SuccessMessage>
               ) : null}
 
               <ErrorMess name="password" component="p" />
@@ -259,7 +259,7 @@ export function AuthForm() {
 
               {!errors.confirmPassword && touched.confirmPassword ? (
                 <SuccessMessage>
-                  Success, confirm password is valid!
+                  Успіх, пароль співпадає!
                 </SuccessMessage>
               ) : null}
 
