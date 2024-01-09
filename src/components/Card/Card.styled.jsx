@@ -17,7 +17,7 @@ export const BoxCard = styled.div`
   }
 
   &:hover {
-    transform: ${props => (props.offScale ? 'scale(1)' : 'scale(1.01)')};
+    /* transform: ${props => (props.offScale ? 'scale(1)' : 'scale(1.01)')}; */
     /* box-shadow: ${props =>
       props.offScale ? null : '0px 16px 48px 0px rgba(0, 0, 0, 0.176)'}; */
 
@@ -291,9 +291,32 @@ export const BTNInc = styled.button`
 `;
 
 export const Image = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+`;
+
+export const ImageBox = styled.div`
+  /* filter: ${props => (props.count === 0 ? 'grayscale(100%)' : 'none')};. */
+  background: ${props =>
+    props.count === 0
+      ? 'url(<path-to-image>) lightgray 50% / cover no-repeat'
+      : 'none'};
+  mix-blend-mode: ${props => (props.count === 0 ? 'luminosity' : 'normal')};
+
+  position: relative;
+  z-index: -1;
   width: ${theme.spacing.step * 66}px;
   height: ${theme.spacing.step * 66}px;
-  object-fit: cover;
+  overflow: hidden;
+
+  &:hover {
+    background: ${props =>
+      props.count === 0
+        ? 'url(<path-to-image>) lightgray 50% / cover no-repeat'
+        : 'none'};
+    mix-blend-mode: ${props => (props.count === 0 ? 'luminosity' : 'normal')};
+  }
 `;
 
 export const HeartBox = styled.div``;

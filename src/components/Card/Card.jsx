@@ -7,6 +7,7 @@ import {
   Button,
   FixedBlock,
   Image,
+  ImageBox,
   PriceBox,
   PriceSt,
   ProductNameSt,
@@ -230,8 +231,11 @@ export const Card = ({ el, onClick }) => {
         to={`/catalog/${el._pet._id}/${el._category._id}/${el._variant._id}/${el._id}`}
         // to={`${elType.productCode}`}
       >
-        <Image src={el.mainImage} alt={el.productName} />
+        <ImageBox count={elType.count}>
+          <Image src={el.mainImage} alt={el.productName} />
+        </ImageBox>
       </Link>
+
       <div>
         <div>
           <div>
