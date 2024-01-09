@@ -32,7 +32,7 @@ margin-right: auto;
 `;
 
 export const ResendInput = styled.input`
-width: 100%;
+width: 328px;
 height: 50px;
 padding: 12px 15px;
 border: 1px solid black;
@@ -41,7 +41,7 @@ margin-bottom: 25px;
 `;
 
 export const Button = styled.button`
-width: 200px;
+width: 328px;
 height: 50px;
 font-size: 20px;
 font-weight: 600;

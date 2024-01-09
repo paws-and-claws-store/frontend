@@ -21,6 +21,10 @@ export const SearchBar = () => {
 
   useEffect(() => {
     setSearchValue(value);
+
+    if (value) {
+      setResetBoolean(true);
+    }
   }, [value]);
 
   const handleChage = e => {
@@ -52,9 +56,11 @@ export const SearchBar = () => {
 
     // If form is not valid, send error to UI:
     if (!isQueryValid) {
-      searchSchema.validate({ query: searchValue }, { abortEarly: false }).catch(err => {
-        Notify.failure(`${err.message}`);
-      }, {});
+      searchSchema
+        .validate({ query: searchValue }, { abortEarly: false })
+        .catch(err => {
+          Notify.failure(`${err.message}`);
+        }, {});
       return;
     }
 

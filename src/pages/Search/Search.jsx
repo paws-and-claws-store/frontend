@@ -18,7 +18,8 @@ import {
   selectIsPriceRangeSet,
   selectPriceValue,
   selectSearchQueryStore,
-  selectSortingTypeStore,
+  // selectSortingTypeStore,
+  selectSortingTypeStoreDefault,
 } from 'redux/selectors/selectors';
 import { NoSearch } from 'components/NoSearch/NoSearch';
 import { Notify } from 'notiflix';
@@ -27,44 +28,72 @@ import SearchDescription from './SearchDescription';
 import SearchCategory from './SearchCategory';
 import { usePagination } from 'hooks/usePagination';
 import { useSearchParams } from 'react-router-dom';
+import { setValueSort } from 'redux/slice/sortSelectSlice';
 import { setQuerySearch } from 'redux/slice/searchSlice';
 import {
   setClearSetStatusPriceRange,
   setDefaultPriceRange,
   setPriceChange,
 } from 'redux/slice/priceRangeSlice';
-import { setClearSetStatusBrandsFilter, setDefaultBrands } from 'redux/slice/brandsFilterSlice';
+import {
+  setClearSetStatusBrandsFilter,
+  setDefaultBrands,
+} from 'redux/slice/brandsFilterSlice';
 
 export default function Search() {
+  const searchQuery = useSelector(selectSearchQueryStore); // extract search query from the Redux store
+  // const sortingType = useSelector(selectSortingTypeStore); // extract sorting type from the Redux store
   const [currentPage, setCurrentPage] = useState(1); // to track the current page of search results.
   const [searchParams, setSearchParams] = useSearchParams();
   const dispatch = useDispatch();
 
   const abortControllerRef = useRef(); // hooks used to store references to the AbortController.
-
-  const searchQuery = useSelector(selectSearchQueryStore); // extract search query from the Redux store
-  const sortingType = useSelector(selectSortingTypeStore); // extract sorting type from the Redux store
   const priceValue = useSelector(selectPriceValue); // get price value from price slider
   const isPriceRangeSet = useSelector(selectIsPriceRangeSet); // get price range set state from price slider
   const isBrandsSet = useSelector(selectIsBrandsFilterSet);
   const checkedBrands = useSelector(selectCheckedBrands);
 
+  // const sortingType = useSelector(selectSortingTypeStore); // extract sorting type from the Redux store
   const brandsString = useSelector(selectBrandsFilter);
+  // console.log('sortingType:', sortingType);
+  const query = searchParams.get('query');
+  const sortBy = searchParams.get('sortBy');
+  const sortingType = sortBy; // extract sorting type from the Redux store
+  const defaultSortSelect = useSelector(selectSortingTypeStoreDefault);
+
+  // console.log('sortBy:', sortBy);
 
   useEffect(() => {
     if (searchQuery) {
+      // console.log('searchQuery:', searchQuery);
       setSearchParams({ query: searchQuery });
     }
-  }, [searchQuery, setSearchParams]);
+
+    if (searchQuery && sortBy) {
+      setSearchParams({ query: searchQuery, sortBy });
+      return;
+    }
+  }, [searchQuery, setSearchParams, sortBy]);
 
   useEffect(() => {
     dispatch(setPriceChange(false));
     dispatch(setClearSetStatusPriceRange(true)); // reset status to price range redux store
     dispatch(setClearSetStatusBrandsFilter(true)); // reset status to Brands filter redux store
+    dispatch(setValueSort('discounts'));
   }, [dispatch, searchQuery]); // reset filters if search query was changed
 
-  const query = searchParams.get('query');
   useEffect(() => {
+    const query = searchParams.get('query');
+    const sortBy = searchParams.get('sortBy');
+
+    if (query) {
+      dispatch(setQuerySearch(query));
+    }
+
+    if (sortBy) {
+      dispatch(setValueSort(sortBy));
+    }
+
     if (query || query !== null) {
       dispatch(setQuerySearch(query));
     }
@@ -83,14 +112,24 @@ export default function Search() {
 
   useEffect(() => {
     setCurrentPage(1); // set page one to the new search query, sorting type or price calue from price slider
-  }, [searchQuery, sortingType, checkedBrands]);
+  }, [searchQuery, checkedBrands]);
 
-  if (sortingType !== '') {
-    params.sortBy = sortingType; // set to params object sorting type if sorting type is exists
+  // if (sortingType !== '') {
+  //   params.sortBy = sortingType; // set to params object sorting type if sorting type is exists
+  // }
+
+  if (!sortBy) {
+    params.sortBy = defaultSortSelect;
   }
+
+  if (sortBy) {
+    params.sortBy = sortBy; // set to params object sorting type if sorting type is exists
+  }
+
   if (brandsString !== '') {
     params.brands = brandsString; // set brands to query
   }
+
   if (abortControllerRef.current && searchParams === '') {
     abortControllerRef.current.abort('empty query'); // If there's an existing abortControllerRef.current and the searchQuery becomes empty, it aborts the ongoing fetch with a message 'empty query, to avoid abort fetch permamently
   }
@@ -109,15 +148,21 @@ export default function Search() {
     params,
   }); // Utilizes a custom hook useFetchSearchQuery to fetch search results based on the params object and the abort signal. It receives data, error, isLoading, isFetching, and isError as response states.
 
-  const { productsList, paginationData, onAddPage, onPageChange } = usePagination({
-    response,
-    isFetching,
-    isError,
-    setCurrentPage,
-    currentPage,
-    sortingType,
-    isPriceRangeSet,
-  }); // Use a custom hook usePagination to handle pagination-related functionalities such as managing product lists, pagination data, and changing pages.
+  // searchRef.current = {
+  //   searchQuery: searchParams ? searchParams.get('query') : searchQuery,
+  //   totalDocs: response?.totalDocs,
+  // }; // set object of current search query and current response to avoid rerender unnecessary rerenders
+
+  const { productsList, paginationData, onAddPage, onPageChange } =
+    usePagination({
+      response,
+      isFetching,
+      isError,
+      setCurrentPage,
+      currentPage,
+      sortingType,
+      // sortBy,
+    }); // Use a custom hook usePagination to handle pagination-related functionalities such as managing product lists, pagination data, and changing pages.
 
   const totalDocs = response?.totalDocs;
   useEffect(() => {}, [totalDocs]); // rerender search component when total docs are changed
@@ -131,12 +176,23 @@ export default function Search() {
         dispatch(setDefaultBrands(response?.brands));
       }
     }
-  }, [dispatch, isBrandsSet, isPriceRangeSet, query, response?.brands, response?.minMax]); // update default price range value only if query are changed and response are exists, not selected filters
+  }, [
+    dispatch,
+    isBrandsSet,
+    isPriceRangeSet,
+    query,
+    response?.brands,
+    response?.minMax,
+  ]); // update default price range value only if query are changed and response are exists, not selected filters
 
   // Render Section
 
   if (error?.status >= 500) {
-    return <div style={{ minHeight: '640px' }}>{(Notify.failure(error.error), (<></>))}</div>; // If there's a server error (status >= 500), it triggers a failure notification using Notify.failure(error.error).
+    return (
+      <div style={{ minHeight: '640px' }}>
+        {(Notify.failure(error.error), (<></>))}
+      </div>
+    ); // If there's a server error (status >= 500), it triggers a failure notification using Notify.failure(error.error).
   }
 
   if (isLoading && !isError) {
@@ -147,7 +203,11 @@ export default function Search() {
     ); // Show a loader if data is loading (isLoading && !isError).
   }
 
-  if (totalDocs > 0 || (totalDocs === 0 && isPriceRangeSet) || (totalDocs === 0 && isBrandsSet)) {
+  if (
+    totalDocs > 0 ||
+    (totalDocs === 0 && isPriceRangeSet) ||
+    (totalDocs === 0 && isBrandsSet)
+  ) {
     return (
       <div style={{ minHeight: '640px' }}>
         {
