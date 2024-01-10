@@ -22,8 +22,8 @@ export const CardList = ({ productsList }) => {
         <List>
           {isSorted.map(el => {
             return (
-              <ListItem key={el._id} onClick={() => onCardClick(el)}>
-                <Card el={el} />
+              <ListItem key={el._id}>
+                <Card el={el} onClick={() => onCardClick(el)} />
               </ListItem>
             );
           })}

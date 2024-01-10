@@ -231,6 +231,7 @@ export const Card = ({ el, onClick }) => {
       <Link
         to={`/catalog/${el._pet._id}/${el._category._id}/${el._variant._id}/${el._id}`}
         // to={`${elType.productCode}`}
+        onClick={() => onClick(el)}
       >
         <ImageBox count={elType.count}>
           {elType.count === 0 && (
@@ -246,6 +247,7 @@ export const Card = ({ el, onClick }) => {
             <BrandNameSt to={'/brands'}>{el.brand}</BrandNameSt>
             <Link
               to={`/catalog/${el._pet._id}/${el._category._id}/${el._variant._id}/${el._id}`}
+              onClick={() => onClick(el)}
             >
               <FixedBlock style={{ height: '48px' }}>
                 <ProductNameSt>{el.productName}</ProductNameSt>
