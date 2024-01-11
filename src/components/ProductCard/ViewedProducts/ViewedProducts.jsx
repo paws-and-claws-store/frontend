@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -19,7 +19,7 @@ import { ArrowLeftViewedProducts } from 'components/Icons';
 import { ArrowRightViewedProducts } from 'components/Icons';
 
 export const ViewedProducts = () => {
-  const [productsList, setProductsList] = useState(null);
+  // const [productsList, setProductsList] = useState(null);
   const [imageIndex, setImageIndex] = useState(0);
   const [offScale] = useState(true);
 
@@ -28,11 +28,11 @@ export const ViewedProducts = () => {
 
   const viewedSwiper = useRef(null);
 
-  useEffect(() => {
-    if (productsList !== viewedProducts) {
-      setProductsList(viewedProducts);
-    }
-  }, [productsList, viewedProducts]);
+  // useEffect(() => {
+  //   if (productsList !== viewedProducts) {
+  //     setProductsList(viewedProducts);
+  //   }
+  // }, [productsList, viewedProducts]);
 
   const onCardClick = el => {
     dispatch(setViewedProducts(el));
@@ -56,7 +56,7 @@ export const ViewedProducts = () => {
     <ViewedProductsContainer>
       <div style={{ display: 'flex' }}>
         <ViewedProductsTitel>Переглянуті товари</ViewedProductsTitel>
-        {productsList?.length > 4 ? (
+        {viewedProducts?.length > 4 ? (
           <PrevBtn
             onClick={() => {
               handlePrevBtn();
@@ -67,12 +67,12 @@ export const ViewedProducts = () => {
           </PrevBtn>
         ) : null}
 
-        {productsList?.length > 4 ? (
+        {viewedProducts?.length > 4 ? (
           <NextBtn
             onClick={() => {
               handleNextBtn();
             }}
-            disabled={imageIndex === productsList.length - 4}
+            disabled={imageIndex === viewedProducts.length - 4}
           >
             <ArrowRightViewedProducts />
           </NextBtn>
@@ -85,23 +85,23 @@ export const ViewedProducts = () => {
         spaceBetween={20}
         style={{ padding: '24px 2px' }}
       >
-        <ul>
-          {productsList
-            ? productsList.map(el => (
-                <SwiperSlide key={el._id}>
-                  {/* <ViewedProductsItem > */}
-                  <>
-                    <Card
-                      el={el}
-                      offScale={offScale}
-                      onCardClick={onCardClick}
-                    />
-                  </>
-                  {/* </ViewedProductsItem> */}
-                </SwiperSlide>
-              ))
-            : null}
-        </ul>
+        {/* <ul> */}
+        {viewedProducts
+          ? viewedProducts.map(el => (
+              <SwiperSlide key={el._id}>
+                {/* <ViewedProductsItem > */}
+                <>
+                  <Card
+                    el={el}
+                    offScale={offScale}
+                    onClick={() => onCardClick(el)}
+                  />
+                </>
+                {/* </ViewedProductsItem> */}
+              </SwiperSlide>
+            ))
+          : null}
+        {/* </ul> */}
       </Swiper>
     </ViewedProductsContainer>
   );

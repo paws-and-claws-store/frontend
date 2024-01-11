@@ -187,7 +187,7 @@ export const PriceSt = styled.div`
 
   font-weight: ${theme.fontWeight.Medium};
   font-size: ${theme.fontSizes.l};
-  /* line-height: ${theme.lineHeight.l}; */
+  line-height: ${theme.lineHeight.l};
 `;
 
 export const SymbolCurrency = styled.span`

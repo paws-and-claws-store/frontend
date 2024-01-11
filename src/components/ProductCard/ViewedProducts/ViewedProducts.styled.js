@@ -32,6 +32,14 @@ export const PrevBtn = styled.button`
   cursor: ${props => (props.disabled ? 'auto' : 'pointer')};
   &:hover {
     border-color: ${props =>
+      props.disabled ? 'lightgray' : theme.colors.secGreen};
+    > svg {
+      fill: ${props => (props.disabled ? 'lightgray' : theme.colors.secGreen)};
+    }
+  }
+
+  &:active {
+    border-color: ${props =>
       props.disabled ? 'lightgray' : theme.colors.orange};
     > svg {
       fill: ${props => (props.disabled ? 'lightgray' : theme.colors.orange)};
@@ -56,11 +64,20 @@ export const NextBtn = styled.button`
   cursor: ${props => (props.disabled ? 'auto' : 'pointer')};
   &:hover {
     border-color: ${props =>
+      props.disabled ? 'lightgray' : theme.colors.secGreen};
+    > svg {
+      fill: ${props => (props.disabled ? 'lightgray' : theme.colors.secGreen)};
+    }
+  }
+
+  &:active {
+    border-color: ${props =>
       props.disabled ? 'lightgray' : theme.colors.orange};
     > svg {
       fill: ${props => (props.disabled ? 'lightgray' : theme.colors.orange)};
     }
   }
+
   > svg {
     fill: ${props => (props.disabled ? 'lightgray' : theme.colors.green)};
   }
