@@ -90,13 +90,6 @@ export const CountContainer = styled.div`
   margin-top: 18px;
 `;
 
-export const TextOutOfStock = styled.span`
-  font-weight: ${theme.fontWeight.SemiBold};
-  font-size: ${theme.fontSizes.xl};
-  color: ${theme.colors.grey};
-  line-height: ${theme.lineHeight.xl};
-`;
-
 export const CountSum = styled.p`
   font-size: ${props => (props.inStock ? '40px' : `${theme.fontSizes.xl}`)};
   font-weight: ${theme.fontWeight.SemiBold};
@@ -162,7 +155,8 @@ export const OldPrice = styled.span`
 
 export const PriceSt = styled.p`
   display: flex;
-  color: ${props => props.theme.colors.orange};
+  color: ${props =>
+    props.count === 0 ? `${theme.colors.grey}` : `${theme.colors.orange}`};
   /* text-transform: uppercase; */
   /* font-family: 'rawline', sans-serif; */
   font-weight: ${props => props.theme.fontWeight.SemiBold};

@@ -13,7 +13,6 @@ import {
   OldPrice,
   PriceSt,
   SymbolCurrency,
-  TextOutOfStock,
 } from './QuntityProduct.styled';
 import { addCartItem, updateCartItem } from 'redux/slice/cartSlice';
 import { useDispatch, useSelector } from 'react-redux';
@@ -186,11 +185,9 @@ const QuntityProduct = ({ inStock, prodType, prodDescription }) => {
           {inStock ? prodType.price.toFixed(2) : 'Товар відсутній'}
         </CountSum> */}
 
-        {!inStock ? (
-          <TextOutOfStock>Товар відсутній</TextOutOfStock>
-        ) : prodType.sale ? (
+        {prodType.sale ? (
           <PriceBox>
-            <PriceSt>
+            <PriceSt count={count}>
               {prodType.sale.toFixed(2)}
 
               <SymbolCurrency>₴</SymbolCurrency>
@@ -207,7 +204,7 @@ const QuntityProduct = ({ inStock, prodType, prodDescription }) => {
           </PriceBox>
         ) : (
           <PriceBox>
-            <PriceSt>
+            <PriceSt count={count}>
               {prodType.price.toFixed(2)}
               <SymbolCurrency>₴</SymbolCurrency>
             </PriceSt>
