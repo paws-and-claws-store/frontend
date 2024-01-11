@@ -232,10 +232,10 @@ export const Card = ({ el, onClick }) => {
         to={`/catalog/${el._pet._id}/${el._category._id}/${el._variant._id}/${el._id}`}
         // to={`${elType.productCode}`}
       >
+        {elType.count === 0 && (
+          <NotAvailableText>Товар відсутній</NotAvailableText>
+        )}
         <ImageBox count={elType.count}>
-          {elType.count === 0 && (
-            <NotAvailableText>Товар відсутній</NotAvailableText>
-          )}
           <Image src={el.mainImage} alt={el.productName} />
         </ImageBox>
       </Link>
