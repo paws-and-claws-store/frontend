@@ -62,26 +62,41 @@ export const BrandsFilter = ({ active }) => {
               {/* Render alphabet buttons with click functionality */}
               <ButtonLetterStyled
                 disabled={!enabledLetter}
-                activeLetter={
-                  activeLetter === item.toUpperCase() ? true : false
-                }
+                activeLetter={activeLetter === item.toUpperCase() ? true : false}
                 onClick={event => {
                   event.preventDefault();
-                  const brandContainer =
-                    document.querySelector('.BrandContainer');
+                  const brandContainer = document.querySelector('.BrandContainer');
                   const offsetTop = brandContainer.offsetTop;
-                  brandContainer.scrollTo({ top: offsetTop });
 
                   // Scrolls to the first brand starting with the clicked letter
                   if (enabledLetter) {
                     const firstBrandRef = brandRefs[enabledLetter];
-
                     if (firstBrandRef) {
-                      firstBrandRef.current.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start',
-                        top: 0,
-                      });
+                      // Calculate the offset from the top of the container
+                      const offsetFromTop = firstBrandRef.current.offsetTop;
+
+                      // Scroll to the calculated offset with delay for acting code brandContainer.scrollIntoView first if container with brands is not visible
+                      setTimeout(() => {
+                        brandContainer.scrollTo({
+                          top: -offsetTop + offsetFromTop,
+                          behavior: 'smooth',
+                        });
+                      }, 300);
+
+                      // Check if the container is not fully visible and scroll it into view
+                      const containerRect = brandContainer.getBoundingClientRect();
+                      const isContainerVisible =
+                        containerRect.top >= 0 &&
+                        containerRect.bottom <=
+                          (window.innerHeight || document.documentElement.clientHeight);
+                      console.log(isContainerVisible);
+
+                      if (!isContainerVisible) {
+                        brandContainer.scrollIntoView({
+                          behavior: 'smooth',
+                          block: 'start',
+                        });
+                      }
                     }
 
                     setActiveLetter(item.toUpperCase());
