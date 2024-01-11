@@ -17,7 +17,7 @@ export const BoxCard = styled.div`
   }
 
   &:hover {
-    transform: ${props => (props.offScale ? 'scale(1)' : 'scale(1.01)')};
+    /* transform: ${props => (props.offScale ? 'scale(1)' : 'scale(1.01)')}; */
     /* box-shadow: ${props =>
       props.offScale ? null : '0px 16px 48px 0px rgba(0, 0, 0, 0.176)'}; */
 
@@ -65,7 +65,8 @@ export const WidthLink = styled.button`
     background-color: ${theme.colors.secGrey};
     color: ${theme.colors.secBlack};
   }
-  &.active.unavailable {
+  &.active.unavailable,
+  &.unavailable:hover {
     border-color: ${theme.colors.grey};
     color: ${theme.colors.beige};
     background-color: ${theme.colors.grey};
@@ -178,7 +179,9 @@ export const PriceBox = styled.div`
 export const PriceSt = styled.div`
   display: flex;
   align-items: baseline;
-  color: ${theme.colors.orange};
+  /* color: ${theme.colors.orange}; */
+  color: ${props =>
+    props.count === 0 ? `${theme.colors.grey}` : `${theme.colors.orange}`};
   /* text-transform: uppercase; */
   /* font-family: 'rawline', sans-serif; */
 
@@ -291,9 +294,49 @@ export const BTNInc = styled.button`
 `;
 
 export const Image = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+`;
+
+export const ImageBox = styled.div`
+  /* filter: ${props => (props.count === 0 ? 'grayscale(100%)' : 'none')};. */
+  background: ${props =>
+    props.count === 0
+      ? 'url(<path-to-image>) lightgray 50% / cover no-repeat'
+      : 'none'};
+  mix-blend-mode: ${props => (props.count === 0 ? 'luminosity' : 'normal')};
+
+  position: relative;
+  z-index: -1;
   width: ${theme.spacing.step * 66}px;
   height: ${theme.spacing.step * 66}px;
-  object-fit: cover;
+  overflow: hidden;
+
+  /* &:hover {
+    background: ${props =>
+    props.count === 0
+      ? 'url(<path-to-image>) lightgray 50% / cover no-repeat'
+      : 'none'};
+    mix-blend-mode: ${props => (props.count === 0 ? 'luminosity' : 'normal')};
+  } */
+`;
+
+export const NotAvailableText = styled.span`
+  position: absolute;
+  top: 263px;
+  left: 19px;
+
+  display: block;
+  padding: 2px 12px;
+  border-radius: 10px;
+  background-color: ${theme.colors.grey};
+  color: ${theme.colors.beige};
+  font-family: Inter;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: 16px; /* 114.286% */
 `;
 
 export const HeartBox = styled.div``;

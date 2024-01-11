@@ -7,6 +7,8 @@ import {
   Button,
   FixedBlock,
   Image,
+  ImageBox,
+  NotAvailableText,
   PriceBox,
   PriceSt,
   ProductNameSt,
@@ -230,8 +232,14 @@ export const Card = ({ el, onClick }) => {
         to={`/catalog/${el._pet._id}/${el._category._id}/${el._variant._id}/${el._id}`}
         // to={`${elType.productCode}`}
       >
-        <Image src={el.mainImage} alt={el.productName} />
+        {elType.count === 0 && (
+          <NotAvailableText>Товар відсутній</NotAvailableText>
+        )}
+        <ImageBox count={elType.count}>
+          <Image src={el.mainImage} alt={el.productName} />
+        </ImageBox>
       </Link>
+
       <div>
         <div>
           <div>
@@ -273,13 +281,9 @@ export const Card = ({ el, onClick }) => {
           )}
         </div>
         <Wrapper>
-          {elType.count === 0 ? (
-            <span style={{ fontWeight: 600, fontSize: '12px', color: 'grey' }}>
-              Товар відсутній
-            </span>
-          ) : elType.sale ? (
+          {elType.sale ? (
             <PriceBox>
-              <PriceSt>
+              <PriceSt count={elType.count}>
                 {elType.sale.toFixed(2)}
                 <SymbolCurrency>₴</SymbolCurrency>
               </PriceSt>
@@ -292,7 +296,7 @@ export const Card = ({ el, onClick }) => {
             </PriceBox>
           ) : (
             <PriceBox>
-              <PriceSt>
+              <PriceSt count={elType.count}>
                 {elType.price.toFixed(2)}
                 <SymbolCurrency>₴</SymbolCurrency>
               </PriceSt>
