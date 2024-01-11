@@ -65,7 +65,8 @@ export const WidthLink = styled.button`
     background-color: ${theme.colors.secGrey};
     color: ${theme.colors.secBlack};
   }
-  &.active.unavailable {
+  &.active.unavailable,
+  &.unavailable:hover {
     border-color: ${theme.colors.grey};
     color: ${theme.colors.beige};
     background-color: ${theme.colors.grey};
@@ -312,19 +313,19 @@ export const ImageBox = styled.div`
   height: ${theme.spacing.step * 66}px;
   overflow: hidden;
 
-  &:hover {
+  /* &:hover {
     background: ${props =>
-      props.count === 0
-        ? 'url(<path-to-image>) lightgray 50% / cover no-repeat'
-        : 'none'};
+    props.count === 0
+      ? 'url(<path-to-image>) lightgray 50% / cover no-repeat'
+      : 'none'};
     mix-blend-mode: ${props => (props.count === 0 ? 'luminosity' : 'normal')};
-  }
+  } */
 `;
 
 export const NotAvailableText = styled.span`
   position: absolute;
-  bottom: 0;
-  left: 0;
+  top: 263px;
+  left: 19px;
 
   display: block;
   padding: 2px 12px;

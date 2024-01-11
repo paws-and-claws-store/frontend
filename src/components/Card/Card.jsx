@@ -233,10 +233,10 @@ export const Card = ({ el, onClick }) => {
         // to={`${elType.productCode}`}
         onClick={() => onClick(el)}
       >
+        {elType.count === 0 && (
+          <NotAvailableText>Товар відсутній</NotAvailableText>
+        )}
         <ImageBox count={elType.count}>
-          {elType.count === 0 && (
-            <NotAvailableText>Товар відсутній</NotAvailableText>
-          )}
           <Image src={el.mainImage} alt={el.productName} />
         </ImageBox>
       </Link>
