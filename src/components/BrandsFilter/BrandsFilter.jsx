@@ -74,29 +74,34 @@ export const BrandsFilter = ({ active }) => {
                     if (firstBrandRef) {
                       // Calculate the offset from the top of the container
                       const offsetFromTop = firstBrandRef.current.offsetTop;
+                      // Scroll to the calculated offset with delay for acting code brandContainer.scrollIntoView first if container with brands is not visible
+                      brandContainer.scrollTo({
+                        top: -offsetTop + offsetFromTop,
+                        behavior: 'smooth',
+                      });
 
                       // Scroll to the calculated offset with delay for acting code brandContainer.scrollIntoView first if container with brands is not visible
-                      setTimeout(() => {
-                        brandContainer.scrollTo({
-                          top: -offsetTop + offsetFromTop,
-                          behavior: 'smooth',
-                        });
-                      }, 300);
+                      // setTimeout(() => {
+                      //   brandContainer.scrollTo({
+                      //     top: -offsetTop + offsetFromTop,
+                      //     behavior: 'smooth',
+                      //   });
+                      // }, 300);
 
                       // Check if the container is not fully visible and scroll it into view
-                      const containerRect = brandContainer.getBoundingClientRect();
-                      const isContainerVisible =
-                        containerRect.top >= 0 &&
-                        containerRect.bottom <=
-                          (window.innerHeight || document.documentElement.clientHeight);
-                      console.log(isContainerVisible);
+                      // const containerRect = brandContainer.getBoundingClientRect();
+                      // const isContainerVisible =
+                      //   containerRect.top >= 0 &&
+                      //   containerRect.bottom <=
+                      //     (window.innerHeight || document.documentElement.clientHeight);
+                      // console.log(isContainerVisible);
 
-                      if (!isContainerVisible) {
-                        brandContainer.scrollIntoView({
-                          behavior: 'smooth',
-                          block: 'start',
-                        });
-                      }
+                      // if (!isContainerVisible) {
+                      //   brandContainer.scrollIntoView({
+                      //     behavior: 'smooth',
+                      //     block: 'start',
+                      //   });
+                      // }
                     }
 
                     setActiveLetter(item.toUpperCase());
