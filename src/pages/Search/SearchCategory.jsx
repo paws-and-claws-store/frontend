@@ -56,8 +56,9 @@ export default memo(function SearchCategory() {
         }}
       >
         <li key={1}>
-          <SearchFilter active={active['price']}>
+          <SearchFilter className="searchFilter" active={active['price']}>
             <FoldedContainer
+              className="FoolderContainer"
               active={active['price']}
               style={{
                 backgroundColor: active['price']
@@ -74,6 +75,7 @@ export default memo(function SearchCategory() {
                 />
               </button>
             </FoldedContainer>
+
             <PriceSlider active={active['price']} />
           </SearchFilter>
         </li>

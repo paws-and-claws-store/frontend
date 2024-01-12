@@ -28,7 +28,7 @@ import SearchDescription from './SearchDescription';
 import SearchCategory from './SearchCategory';
 import { usePagination } from 'hooks/usePagination';
 import { useSearchParams } from 'react-router-dom';
-import { setValueSort } from 'redux/slice/sortSelectSlice';
+// import { setValueSort } from 'redux/slice/sortSelectSlice';
 import { setQuerySearch } from 'redux/slice/searchSlice';
 import {
   setClearSetStatusPriceRange,
@@ -56,48 +56,63 @@ export default function Search() {
   // const sortingType = useSelector(selectSortingTypeStore); // extract sorting type from the Redux store
   const brandsString = useSelector(selectBrandsFilter);
   // console.log('sortingType:', sortingType);
-  const query = searchParams.get('query');
-  const sortBy = searchParams.get('sortBy');
-  const sortingType = sortBy; // extract sorting type from the Redux store
   const defaultSortSelect = useSelector(selectSortingTypeStoreDefault);
+  const query = searchParams.get('query');
+  const sortBy = searchParams.get('sortBy') || defaultSortSelect;
+  const sortingType = sortBy; // extract sorting type from the Redux store
 
   // console.log('sortBy:', sortBy);
 
-  useEffect(() => {
-    if (searchQuery) {
-      // console.log('searchQuery:', searchQuery);
-      setSearchParams({ query: searchQuery });
-    }
+  // useEffect(() => {
+  //   if (searchQuery && sortBy) {
+  //     setSearchParams({ query: searchQuery, sortBy });
+  //     return;
+  //   }
+  //   if (searchQuery) {
+  //     // console.log('searchQuery:', searchQuery);
+  //     setSearchParams({ query: searchQuery });
+  //   }
+  // }, [searchQuery, setSearchParams, sortBy]);
 
-    if (searchQuery && sortBy) {
-      setSearchParams({ query: searchQuery, sortBy });
-      return;
-    }
-  }, [searchQuery, setSearchParams, sortBy]);
+  useEffect(() => {
+    setSearchParams(prevSearchParams => {
+      const updatedSearchParams = new URLSearchParams(prevSearchParams);
+
+      if (searchQuery) {
+        updatedSearchParams.set('query', searchQuery);
+      }
+
+      if (sortBy) {
+        updatedSearchParams.set('sortBy', sortBy);
+      }
+
+      return updatedSearchParams;
+    });
+  }, [searchQuery, sortBy, setSearchParams]);
 
   useEffect(() => {
     dispatch(setPriceChange(false));
     dispatch(setClearSetStatusPriceRange(true)); // reset status to price range redux store
     dispatch(setClearSetStatusBrandsFilter(true)); // reset status to Brands filter redux store
-    dispatch(setValueSort('discounts'));
+    // dispatch(setValueSort('discounts'));
   }, [dispatch, searchQuery]); // reset filters if search query was changed
 
   useEffect(() => {
-    const query = searchParams.get('query');
-    const sortBy = searchParams.get('sortBy');
+    // const query = searchParams.get('query');
+    // const sortBy = searchParams.get('sortBy');
 
     if (query) {
       dispatch(setQuerySearch(query));
     }
 
-    if (sortBy) {
-      dispatch(setValueSort(sortBy));
-    }
+    // if (sortBy) {
+    //   dispatch(setValueSort(sortBy));
+    // }
 
     if (query || query !== null) {
       dispatch(setQuerySearch(query));
     }
-  }, [dispatch, query, searchParams]);
+  }, [dispatch, query]);
 
   const params = {
     findBy: encodeURIComponent(query ? query : searchQuery).toLowerCase(),
@@ -112,7 +127,7 @@ export default function Search() {
 
   useEffect(() => {
     setCurrentPage(1); // set page one to the new search query, sorting type or price calue from price slider
-  }, [searchQuery, checkedBrands]);
+  }, [searchQuery, checkedBrands, sortBy]);
 
   // if (sortingType !== '') {
   //   params.sortBy = sortingType; // set to params object sorting type if sorting type is exists
