@@ -1,59 +1,104 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { resetPassword } from 'redux/api/auth-operations';
+import { Form, Formik } from 'formik';
+import { theme } from 'styles';
+import { CheckCircle, CrossToDelete } from 'components/Icons';
+import { sendEmailSchema } from 'utils/shemas/AuthSchema';
 
 import {
   PasswordRecoveryContainer,
   Titel,
-  ResendForm,
-  ResendInput,
+  FormField,
+  InputEmailWraper,
+  InputForm,
+  IconWraper,
+  IconCheck,
+  IconCross,
+  ErrorMess,
+  SuccessMessage,
   Button,
   CloseButton,
 } from './PasswordRecoveryWindow.styled';
 import { PasswordConfirmation } from 'components/PasswordRecovery/PasswordConfirmation/PasswordConfirmation';
 
+const initialValues = {
+  email: '',
+};
+
 export const PasswordRecovery = ({ setShowWindouwRecoveryPass }) => {
-  const [email, setEmail] = useState('');
-  
   const [showPasswordConfirmation, setShowPasswordConfirmation] =
     useState(false);
 
   const dispatch = useDispatch();
 
-  const onChangeEmail = e => setEmail(e.currentTarget.value);
-
-  const handleSubmit = e => {
-    e.preventDefault();
-    dispatch(resetPassword(email));
-    setEmail('');
-    setShowPasswordConfirmation(true)
+  const handleSubmit = (values, { resetForm }) => {
+    dispatch(resetPassword(values.email));
+    resetForm();
+    setShowPasswordConfirmation(true);
   };
   return (
     <PasswordRecoveryContainer>
       <CloseButton onClick={() => setShowWindouwRecoveryPass(false)}>
-        Закрити
+        <CrossToDelete />
       </CloseButton>
       {!showPasswordConfirmation ? (
-        <>
-          <Titel>Відновлення пароля</Titel>
-          <ResendForm onSubmit={handleSubmit}>
-            <ResendInput
-              name="email"
-              type="email"
-              value={email}
-              onChange={onChangeEmail}
-              placeholder="Електронна пошта "
-              autoComplete="on"
-            />
-            <Button
-              type="submit"
-              disabled={email === ''}
-              // onClick={() => {setShowPasswordConfirmation(true)}}
-            >
-              Відновити пароль
-            </Button>
-          </ResendForm>
-        </>
+        <Formik
+          validationSchema={sendEmailSchema}
+          initialValues={initialValues}
+          onSubmit={handleSubmit}
+        >
+          {({ errors, touched, setFieldValue, isSubmitting }) => (
+            <Form>
+              <Titel>Відновлення пароля</Titel>
+              <FormField>
+                <InputEmailWraper
+                  style={{
+                    borderColor: !touched.email
+                      ? `${theme.colors.green}`
+                      : errors.email
+                      ? `${theme.colors.brightRed}`
+                      : `${theme.colors.brightGreen}`,
+                  }}
+                >
+                  <InputForm
+                    name="email"
+                    type="email"
+                    placeholder="Електронна пошта "
+                    autoComplete="on"
+                  />
+                </InputEmailWraper>
+                {!errors.email && touched.email ? (
+                  <SuccessMessage>
+                    Успіх, електронна пошта дійсна!
+                  </SuccessMessage>
+                ) : null}
+
+                <IconWraper>
+                  {!touched.email ? null : !errors.email ? (
+                    <IconCheck style={{ marginLeft: '32px' }}>
+                      <CheckCircle />
+                    </IconCheck>
+                  ) : (
+                    <IconCross
+                      style={{ marginLeft: '32px' }}
+                      onClick={() => {
+                        setFieldValue('email', '');
+                      }}
+                    >
+                      <CrossToDelete />
+                    </IconCross>
+                  )}
+                </IconWraper>
+
+                <ErrorMess name="email" component="p" />
+              </FormField>
+              <Button type="submit" disabled={isSubmitting}>
+                Відновити пароль
+              </Button>
+            </Form>
+          )}
+        </Formik>
       ) : (
         <PasswordConfirmation />
       )}

@@ -1,7 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { ResendVerifyEmail } from 'components/ResendVerifyEmail/ResendVerifyEmail';
-import { useAuth } from 'hooks/useAuth';
+import React, { useState } from 'react';
+import { ResendVerify } from 'components/ResendVerify/ResendVerify';
 import {
   ConfirmationRegistrationContainer,
   Titel,
@@ -11,27 +9,6 @@ import {
 
 export const ConfirmationRegistration = () => {
   const [showResendEmail, setShowResendEmail] = useState(false);
-
-  const navigate = useNavigate();
-  const { isLoggedIn } = useAuth();
-
-
-  useEffect(() => {
-    const handleRegistration = () =>{
-      if (isLoggedIn) {
-        navigate('/');
-      }
-      return
-    }
-
-   window.addEventListener('focus', handleRegistration);
-
-   return ()=>{
-    window.removeEventListener('focus', handleRegistration);
-   }
-  }, [isLoggedIn, navigate]);
-
-  
 
   return (
     
@@ -46,7 +23,7 @@ export const ConfirmationRegistration = () => {
           Лист не надійшов
         </Button>
       </ConfirmationRegistrationContainer>
-      : <ResendVerifyEmail setShowResendEmail={setShowResendEmail}/> 
+      : <ResendVerify setShowResendEmail={setShowResendEmail}/> 
     
   );
 };

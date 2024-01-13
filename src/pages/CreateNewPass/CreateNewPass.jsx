@@ -16,7 +16,6 @@ export const CreateNewPass = () => {
 
   const searchParams = new URLSearchParams(location.search);
   const resetPasswordToken = searchParams.get('token');
-  console.log("resetPasswordToken:", resetPasswordToken)
   const { isResetToken, isNewPassStatus, isLoading } = useAuth();
 
   useEffect(() => {

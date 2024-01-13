@@ -1,8 +1,8 @@
 import styled from '@emotion/styled';
 import { NavLink } from 'react-router-dom';
 import { ErrorMessage, Field } from 'formik';
-// import VisibilityIcon from '@mui/icons-material/Visibility';
-// import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import { theme } from 'styles';
 
 export const LogFormContainer = styled.div`
@@ -86,7 +86,7 @@ export const InputForm = styled(Field)`
 
 export const ErrorMess = styled(ErrorMessage)`
   position: absolute;
-  color: ${theme.colors.red};
+  color: ${theme.colors.brightRed};
   
   @media (max-width: 767px) {
     font-size: 10px;
@@ -103,7 +103,7 @@ export const ErrorMess = styled(ErrorMessage)`
 export const SuccessMessage = styled.p`
   position: absolute;
   font-size: 10px;
-  color: ${theme.colors.green};
+  color: ${theme.colors.brightGreen};
   left: 10px;
   top: 47px;
   @media (min-width: 768px) {
@@ -111,63 +111,71 @@ export const SuccessMessage = styled.p`
   }
 `;
 
-// export const IconWraper = styled.div`
-//   display: flex;
-//   position: absolute;
-//   justify-content: end;
-//   width: 54px;
-//   top: 12px;
-//   left: 187px;
-//   @media (min-width: 768px) {
-//     width: 60px;
-//     top: 10px;
-//     left: 386px;
-//   }
-// `;
+export const IconWraper = styled.div`
+  display: flex;
+  position: absolute;
+  justify-content: end;
+  width: 54px;
+  top: 12px;
+  left: 187px;
+  @media (min-width: 768px) {
+    width: 60px;
+    top: 10px;
+    left: 256px;
+  }
+`;
 
-// export const IconCheck = styled.span`
-//   margin-right: auto;
-//   svg {
-//     stroke: ${theme.colors.green};
-//     &:hover {
-//       stroke: ${theme.colors.green};
-//     }
-//   }
-//   @media (min-width: 768px) {
-//     top: 12px;
-//     left: 420px;
-//   }
-// `;
+export const IconCheck = styled.span`
+  margin-right: auto;
+  svg {
+    path{
+    fill: ${theme.colors.brightGreen};
+  }
+  }
+  @media (min-width: 768px) {
+    top: 12px;
+    left: 420px;
+  }
+`;
 
-// export const IconCross = styled.span`
-//   margin-right: auto;
-//   svg {
-//     stroke: ${theme.colors.red};
-//     &:hover {
-//       stroke: ${theme.colors.red};
-//     }
-//   }
-//   @media (min-width: 768px) {
-//     top: 12px;
-//     left: 420px;
-//   }
-// `;
+export const IconCross = styled.span`
+  svg {
+    fill: ${theme.colors.brightRed};
+    &:hover {
+     cursor: pointer;
+    }
+  }
+  @media (min-width: 768px) {
+    top: 12px;
+    left: 420px;
+  }
+`;
 
-// export const OnIcon = styled(VisibilityIcon)`
-//   color: ${theme.colors.blue};
-//   @media (min-width: 768px) {
-//     top: 12px;
-//     left: 420px;
-//   }
-// `;
+export const OnIcon = styled(VisibilityIcon)`
+  color: ${theme.colors.green};
+  &:hover {
+    color: ${theme.colors.secGreen};
+     cursor: pointer;
+    }
 
-// export const OffIcon = styled(VisibilityOffIcon)`
-//   color: ${theme.colors.blue};
-//   @media (min-width: 768px) {
-//     top: 12px;
-//     left: 420px;
-//   }
-// `;
+  @media (min-width: 768px) {
+    top: 12px;
+    left: 420px;
+  }
+`;
+
+export const OffIcon = styled(VisibilityOffIcon)`
+  color: ${theme.colors.green};
+  &:hover {
+    color: ${theme.colors.secGreen};
+     cursor: pointer;
+    }
+
+  @media (min-width: 768px) {
+    top: 12px;
+    left: 420px;
+  }
+`;
 
 export const Button = styled.button`
   width: 100%;

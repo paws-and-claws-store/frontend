@@ -3,21 +3,26 @@ import { ErrorMessage, Field } from 'formik';
 import { theme } from 'styles';
 
 
-export const PasswordRecoveryContainer = styled.div`
+export const ResendVerifyEmailContainer = styled.div`
 display: flex;
 flex-direction: column;
-margin-top: 10px;
-width: 100%;
-padding: 30px;
-background-color: #ffffff;
 justify-content: center;
 align-items: center;
-text-align: center;
+width: 360px;
+height: 100%;
+padding: 10px;
+background-color: #ffffff;
+margin: 0 auto;
 `;
 
 export const Titel = styled.h2`
-margin-top: 70px;
-margin-bottom:50px;
+font-size: 35px;
+margin-bottom:10px;
+`;
+
+export const Message = styled.p`
+font-size: 20px;
+margin-bottom: 20px;
 `;
 
 export const FormField = styled.div`
@@ -88,7 +93,7 @@ export const IconWraper = styled.div`
   @media (min-width: 768px) {
     width: 60px;
     top: 10px;
-    left: 250px;
+    left: 270px;
   }
 `;
 
@@ -100,8 +105,8 @@ export const IconCheck = styled.span`
   }
   }
   @media (min-width: 768px) {
-    top: 12px;
-    left: 420px;
+    /* top: 12px; */
+    /* left: 420px; */
   }
 `;
 
@@ -137,20 +142,5 @@ export const Button = styled.button`
   @media screen and (min-width: 768px) {
   }
   @media screen and (min-width: 1280px) {
-  }
-`;
-
-
-export const CloseButton = styled.button`
-margin-left: auto;
-margin-right: 12px;
-border-radius: 4px;
-background-color: #ffffff;
-svg {
-    fill: ${theme.colors.green};
-    &:hover {
-      fill: ${theme.colors.black};
-     cursor: pointer;
-    }
   }
 `;

@@ -17,7 +17,7 @@ export const register = createAsyncThunk(
         ? error?.response?.data?.message
         : `Request was failed with code ${error?.response?.status}`;
       // console.log(' message:', message);
-      Notify.failure(`Registration is not completed. ${message}`, {
+      Notify.failure(`${message}`, {
         timeout: 5000,
       });
       return thunkAPI.rejectWithValue({
@@ -35,7 +35,7 @@ export const login = createAsyncThunk('auth/login', async (user, thunkAPI) => {
     return {name: data.user.name, email: data.user.email}
 
   } catch (error) {
-    const message = [409, 401, 400].includes(error?.response?.status)
+    const message = [401, 400].includes(error?.response?.status)
       ? error?.response?.data?.message
       : `Request was failed with code ${error?.response?.status}`;
 
@@ -98,6 +98,7 @@ export const resetPassword = createAsyncThunk(
   async (email, thunkAPI) => {
     try {
       const { data } = await api.resetPassword(email);
+      Notify.success(`${data.message}, letter sent!`);
       return data
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
