@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ResendVerify } from 'components/ResendVerify/ResendVerify';
 import {
   ConfirmationRegistrationContainer,
@@ -6,10 +6,22 @@ import {
   Message,
   Button,
 } from './ConfirmationRegistration.styled';
+import { useNavigate } from 'react-router';
 
 export const ConfirmationRegistration = () => {
   const [showResendEmail, setShowResendEmail] = useState(false);
+  const navigation = useNavigate();
+  const persistedString = localStorage.getItem('persist:auth')
+  const  isUser = JSON.parse(persistedString);
+  console.log("isUser:", isUser.isLoggedIn);
 
+
+  useEffect(()=>{
+    if(isUser?.isLoggedIn === 'true'){
+      navigation('/')
+    }
+  },[isUser, navigation])
+ 
   return (
     
       !showResendEmail ? <ConfirmationRegistrationContainer>
