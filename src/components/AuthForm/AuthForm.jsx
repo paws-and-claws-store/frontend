@@ -42,7 +42,7 @@ const initialValues = {
 export function AuthForm() {
   const [passwordShow, setPasswordShow] = useState(false);
   const [confirmPasswordShow, setConfirmPasswordShow] = useState(false);
-  const [showConfirmModal, setShowConfirmModal] = useState(false);
+  const [showConfirmModal, setShowConfirmModal] = useState(true);
 
   const dispatch = useDispatch();
 
