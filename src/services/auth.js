@@ -29,10 +29,10 @@ instance.interceptors.response.use(
 );
 
 export const register = async (newUser) => {
-    const { data: result } = await instance.post("/api/auth/register", newUser);
+    const { data: result } = await instance.post("/api/auth/register", newUser);    
     setToken(result.data.user.accessToken);
-    localStorage.setItem("refreshToken", result.data.user.refreshToken);
-    localStorage.setItem("accessToken", result.data.user.accessToken);
+    // localStorage.setItem("refreshToken", result.data.user.refreshToken);
+    // localStorage.setItem("accessToken", result.data.user.accessToken);
     return result;
 };
 

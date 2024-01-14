@@ -7,6 +7,18 @@ const passwordReq =
   // eslint-disable-next-line no-useless-escape
   /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/;
 
+  export const  sendEmailSchema = Yup.object({
+    email: Yup.string()
+      // .required('Email field is required!')
+      // .min(10)
+      // .max(30)
+      // .matches(emailReq, 'Enter a valid Email')
+      .required("Поле електронної пошти обов'язкове!")
+      .min(10)
+      .max(30)
+      .matches(emailReq, 'Введіть дійсну адресу електронної пошти!'),
+    });  
+
   export const newPasswordSchema = Yup.object({
     newPassword: Yup.string()
     // .required('New password is required!')

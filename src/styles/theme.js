@@ -14,6 +14,10 @@ export const theme = Object.freeze({
     secGrey: '#D8D8D8',
     secBlack: '#4F4F4F',
 
+    // other
+    brightGreen: '#00bd35',
+    brightRed: '#ff1515',
+
     filterImg: 'rgba(178, 178, 178, 0.60)',
   },
   fontSizes: {
