@@ -1,9 +1,7 @@
 import {
   useState,
-  // useEffect, useRef
 } from 'react';
 import { Form, Formik } from 'formik';
-// import { useNavigate } from 'react-router-dom';
 import { loginSchema } from 'utils/shemas/AuthSchema';
 import { useDispatch } from 'react-redux';
 // import { login } from 'redux/auth/auth-operations';
@@ -18,20 +16,20 @@ import {
   InputEmailWraper,
   InputPasswordWraper,
   InputForm,
-  //   IconWraper,
-  //   IconCheck,
-  //   IconCross,
+    IconWraper,
+    IconCheck,
+    IconCross,
   ErrorMess,
   SuccessMessage,
   Button,
   ToRegister,
   LinkStyled,
-  //   OnIcon,
-  //   OffIcon,
+    OnIcon,
+    OffIcon,
   PassRecoveryBtn,
 } from './LoginForm.styled';
 import { theme } from 'styles';
-// import { Check, Cross } from 'components/icons';
+import { CheckCircle, CrossToDelete } from 'components/Icons';
 
 const initialValues = {
   email: '',
@@ -42,11 +40,10 @@ export function LoginForm({ setUserMenuTogle }) {
   const [showWindouwRecoveryPass, setShowWindouwRecoveryPass] = useState(false)
   const [
     passwordShow,
-    //  setPasswordShow
+     setPasswordShow
   ] = useState(false);
-  // const togglePassword = () => setPasswordShow(prevState => !prevState);
+  const togglePassword = () => setPasswordShow(prevState => !prevState);
   const dispatch = useDispatch();
-  // const navigate = useNavigate();
 
   const handleSubmit = (values, { resetForm }) => {
     const data = {
@@ -57,12 +54,6 @@ export function LoginForm({ setUserMenuTogle }) {
     dispatch(login(data));
   };
 
-  //   useEffect(() => {
-  //     if (isLoggedIn) {
-  //       navigate('/user');
-  //     }
-  //   }, [isLoggedIn, navigate]);
-
   return ( showWindouwRecoveryPass
     ? <PasswordRecovery setShowWindouwRecoveryPass={setShowWindouwRecoveryPass}/>
    : <LogFormContainer>
@@ -72,10 +63,8 @@ export function LoginForm({ setUserMenuTogle }) {
         onSubmit={handleSubmit}
       >
         {({
-          values,
           errors,
           touched,
-          resetForm,
           setFieldValue,
           isSubmitting,
         }) => (
@@ -85,10 +74,10 @@ export function LoginForm({ setUserMenuTogle }) {
               <InputEmailWraper
                 style={{
                   borderColor: !touched.email
-                    ? `${theme.colors.blue}`
+                    ? `${theme.colors.green}`
                     : errors.email
-                    ? `${theme.colors.red}`
-                    : `${theme.colors.green}`,
+                    ? `${theme.colors.brightRed}`
+                    : `${theme.colors.brightGreen}`,
                 }}
               >
                 <InputForm
@@ -102,10 +91,10 @@ export function LoginForm({ setUserMenuTogle }) {
                 <SuccessMessage>Успіх, електронна пошта дійсна!</SuccessMessage>
               ) : null}
 
-              {/* <IconWraper>
+              <IconWraper>
                 {!touched.email ? null : !errors.email ? (
                   <IconCheck style={{ marginLeft: '32px' }}>
-                    <Check />
+                    <CheckCircle />
                   </IconCheck>
                 ) : (
                   <IconCross
@@ -115,10 +104,10 @@ export function LoginForm({ setUserMenuTogle }) {
                       setFieldValue('email', '');
                     }}
                   >
-                    <Cross />
+                    <CrossToDelete />
                   </IconCross>
                 )}
-              </IconWraper> */}
+              </IconWraper>
 
               <ErrorMess name="email" component="p" />
             </FormField>
@@ -127,10 +116,10 @@ export function LoginForm({ setUserMenuTogle }) {
               <InputPasswordWraper
                 style={{
                   borderColor: !touched.password
-                    ? `${theme.colors.blue}`
+                    ? `${theme.colors.green}`
                     : errors.password
-                    ? `${theme.colors.red}`
-                    : `${theme.colors.green}`,
+                    ? `${theme.colors.brightRed}`
+                    : `${theme.colors.brightGreen}`,
                 }}
               >
                 <InputForm
@@ -145,10 +134,10 @@ export function LoginForm({ setUserMenuTogle }) {
                 <SuccessMessage>Пароль безпечний</SuccessMessage>
               ) : null}
 
-              {/* <IconWraper>
+              <IconWraper>
                 {!touched.password ? null : !errors.password ? (
                   <IconCheck>
-                    <Check />
+                    <CheckCircle />
                   </IconCheck>
                 ) : (
                   <IconCross
@@ -157,14 +146,14 @@ export function LoginForm({ setUserMenuTogle }) {
                       setFieldValue('password', '');
                     }}
                   >
-                    <Cross />
+                    <CrossToDelete />
                   </IconCross>
                 )}
 
                 <span id="visibilityBtn" onClick={togglePassword}>
                   {passwordShow ? <OnIcon /> : <OffIcon />}
                 </span>
-              </IconWraper> */}
+              </IconWraper>
 
               <ErrorMess name="password" component="p" />
             </FormField>

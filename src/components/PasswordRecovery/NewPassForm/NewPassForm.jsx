@@ -3,6 +3,7 @@ import { Form, Formik } from 'formik';
 import { newPasswordSchema } from 'utils/shemas/AuthSchema';
 import { theme } from 'styles';
 import { updatePassword } from 'redux/api/auth-operations';
+import { CheckCircle, CrossToDelete } from 'components/Icons';
 
 import { NewPassFormContainer,
     Titel,
@@ -10,14 +11,14 @@ import { NewPassFormContainer,
   InputNewPasswordWraper,
   InputRepeatPasswordWraper,
   InputForm,
-  //   IconWraper,
-  //   IconCheck,
-  //   IconCross,
+    IconWraper,
+    IconCheck,
+    IconCross,
   ErrorMess,
   SuccessMessage,
   Button,
-  //   OnIcon,
-  //   OffIcon,
+    OnIcon,
+    OffIcon,
 
 } from './NewPassForm.styled';
 import { useDispatch } from 'react-redux';
@@ -32,17 +33,17 @@ const initialValues = {
 export const NewPassForm = ({ resetPasswordToken}) => {
     const [
         newPasswordShow,
-        //  setNewPasswordShow
+         setNewPasswordShow
       ] = useState(false);
 
       const [
         repeatPasswordShow,
-        //  setRepeatPasswordShow
+         setRepeatPasswordShow
       ] = useState(false);
       const dispatch = useDispatch()
 
-        // const toggleNewPassword = () => setNewPasswordShow(prevState => !prevState);
-        // const toggleRepeatPasswordShow = () => setRepeatPasswordShow(prevState => !prevState);
+        const toggleNewPassword = () => setNewPasswordShow(prevState => !prevState);
+        const toggleRepeatPasswordShow = () => setRepeatPasswordShow(prevState => !prevState);
     
       const handleSubmit = (values, { resetForm }) => {
         const newPass = {
@@ -51,7 +52,6 @@ export const NewPassForm = ({ resetPasswordToken}) => {
         };
         dispatch(updatePassword(newPass)); 
         resetForm();
-        // setShowPasswordModal(true);
       };
     
 
@@ -78,8 +78,8 @@ export const NewPassForm = ({ resetPasswordToken}) => {
                   borderColor: !touched.newPassword
                     ? `${theme.colors.blue}`
                     : errors.newPassword
-                    ? `${theme.colors.red}`
-                    : `${theme.colors.green}`,
+                    ? `${theme.colors.brightRed}`
+                    : `${theme.colors.brightGreen}`,
                 }}
               >
                 <InputForm
@@ -89,31 +89,32 @@ export const NewPassForm = ({ resetPasswordToken}) => {
                 //   autoComplete="on"
                 />
               </InputNewPasswordWraper>
+
               {!errors.newPassword && touched.newPassword ? (
-                <SuccessMessage>Success, new password is valid!</SuccessMessage>
+                <SuccessMessage>Успіх, новий пароль дійсний!</SuccessMessage>
               ) : null}
 
-              {/* <IconWraper>
+              <IconWraper>
                 {!touched.newPassword ? null : !errors.newPassword ? (
                   <IconCheck style={{ marginLeft: '32px' }}>
-                    <Check />
+                    <CheckCircle />
                   </IconCheck>
                 ) : (
                   <IconCross
-                    style={{ marginLeft: '32px' }}
+                    // style={{ marginLeft: '32px' }}
                     id="resetBtn"
                     onClick={() => {
                       setFieldValue('newPassword', '');
                     }}
                   >
-                    <Cross />
+                    <CrossToDelete />
                   </IconCross>
                 )}
 
                 <span id="visibilityBtn" onClick={toggleNewPassword}>
-                  {newPassword ? <OnIcon /> : <OffIcon />}
+                  {newPasswordShow ? <OnIcon /> : <OffIcon />}
                 </span>
-              </IconWraper> */}
+              </IconWraper>
 
               <ErrorMess name="newPassword" component="p" />
             </FormField>
@@ -124,8 +125,8 @@ export const NewPassForm = ({ resetPasswordToken}) => {
                   borderColor: !touched.repeatPassword
                     ? `${theme.colors.blue}`
                     : errors.repeatPassword
-                    ? `${theme.colors.red}`
-                    : `${theme.colors.green}`,
+                    ? `${theme.colors.brightRed}`
+                    : `${theme.colors.brightGreen}`,
                 }}
               >
                 <InputForm
@@ -137,13 +138,13 @@ export const NewPassForm = ({ resetPasswordToken}) => {
               </InputRepeatPasswordWraper>
 
               {!errors.repeatPassword && touched.repeatPassword ? (
-                <SuccessMessage>Repeated password is valid!</SuccessMessage>
+                <SuccessMessage>Повторний пароль дійсний!</SuccessMessage>
               ) : null}
 
-              {/* <IconWraper>
+              <IconWraper>
                 {!touched.repeatPassword ? null : !errors.repeatPassword ? (
                   <IconCheck>
-                    <Check />
+                    <CheckCircle />
                   </IconCheck>
                 ) : (
                   <IconCross
@@ -152,14 +153,14 @@ export const NewPassForm = ({ resetPasswordToken}) => {
                       setFieldValue('repeatPassword', '');
                     }}
                   >
-                    <Cross />
+                    <CrossToDelete />
                   </IconCross>
                 )}
 
-                <span id="visibilityBtn" onClick={toggleRepeatPassword}>
-                  {repeatPassword ? <OnIcon /> : <OffIcon />}
+                <span id="visibilityBtn" onClick={toggleRepeatPasswordShow}>
+                  {repeatPasswordShow ? <OnIcon /> : <OffIcon />}
                 </span>
-              </IconWraper> */}
+              </IconWraper>
 
               <ErrorMess name="repeatPassword" component="p" />
             </FormField>
