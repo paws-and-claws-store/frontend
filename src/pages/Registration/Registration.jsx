@@ -1,10 +1,8 @@
-// import React, { useEffect, useRef, useState } from 'react';
-// import { useDispatch, useSelector } from 'react-redux';
-
+import React from 'react';
 import { RegistrationContainer } from './Registration.styled';
 import { AuthForm } from 'components/AuthForm/AuthForm';
 
-export const Registration = () => {
+export const Registration = () => {  
   return (
     <RegistrationContainer>
       <AuthForm />

@@ -48,11 +48,13 @@ const authSlice = createSlice({
         state.user = action.payload.user;
         state.isRegistered = true;
         state.isLoading = false;
+        state.error = null;
       })
 
       .addCase(login.fulfilled, (state, action) => {
         state.user = action.payload;
         state.isLoggedIn = true;
+        state.isRegistered = false;
         state.isLoading = false;
       })
       .addCase(logout.fulfilled, (state, action) => {

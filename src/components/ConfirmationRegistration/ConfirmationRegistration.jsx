@@ -1,38 +1,27 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { ResendVerifyEmail } from 'components/ResendVerifyEmail/ResendVerifyEmail';
-import { useAuth } from 'hooks/useAuth';
+import { ResendVerify } from 'components/ResendVerify/ResendVerify';
 import {
   ConfirmationRegistrationContainer,
   Titel,
   Message,
   Button,
 } from './ConfirmationRegistration.styled';
+import { useNavigate } from 'react-router';
 
 export const ConfirmationRegistration = () => {
   const [showResendEmail, setShowResendEmail] = useState(false);
+  const navigation = useNavigate();
+  const persistedString = localStorage.getItem('persist:auth')
+  const  isUser = JSON.parse(persistedString);
+  console.log("isUser:", isUser.isLoggedIn);
 
-  const navigate = useNavigate();
-  const { isLoggedIn } = useAuth();
 
-
-  useEffect(() => {
-    const handleRegistration = () =>{
-      if (isLoggedIn) {
-        navigate('/');
-      }
-      return
+  useEffect(()=>{
+    if(isUser?.isLoggedIn === 'true'){
+      navigation('/')
     }
-
-   window.addEventListener('focus', handleRegistration);
-
-   return ()=>{
-    window.removeEventListener('focus', handleRegistration);
-   }
-  }, [isLoggedIn, navigate]);
-
-  
-
+  },[isUser, navigation])
+ 
   return (
     
       !showResendEmail ? <ConfirmationRegistrationContainer>
@@ -46,7 +35,7 @@ export const ConfirmationRegistration = () => {
           Лист не надійшов
         </Button>
       </ConfirmationRegistrationContainer>
-      : <ResendVerifyEmail setShowResendEmail={setShowResendEmail}/> 
+      : <ResendVerify setShowResendEmail={setShowResendEmail}/> 
     
   );
 };
