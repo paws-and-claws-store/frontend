@@ -17,13 +17,17 @@ import { theme } from 'styles';
 // import { setValueSort } from 'redux/slice/sortSelectSlice';
 // import { selectSortingTypeStoreDefault } from 'redux/selectors/selectors';
 import { useSearchParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { selectSortingTypeStoreDefault } from 'redux/selectors/selectors';
 // const initialState = 'знижки та акції';
 
 export const SortSelect = () => {
   // const sortingType = useSelector(selectSortingTypeStore);
   const [searchParams, setSearchParams] = useSearchParams();
   // const query = searchParams.get('query');
-  const sortBy = searchParams.get('sortBy');
+  const defaultSortSelect = useSelector(selectSortingTypeStoreDefault);
+
+  const sortBy = searchParams.get('sortBy') || defaultSortSelect;
 
   const [isClickBurger, setIsClickBurger] = useState(true);
   const [indicator, setIndicator] = useState(null);
