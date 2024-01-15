@@ -20,7 +20,7 @@ const handleRejected = (state, action) => {
 };
 
 const initialState = {
-  user: {},
+  user: null,
   isLoading: false,
   isRegistered: false,
   error: null,

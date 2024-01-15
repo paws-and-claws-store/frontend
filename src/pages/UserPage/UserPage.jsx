@@ -12,15 +12,15 @@ export const UserPage = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (!user.name) {
+    if (!user) {
       dispatch(getCurrentUser());
     }
-  }, [dispatch, user.name]);
+  }, [dispatch, user]);
 
   return (
     <UserPageContainer>
       {isRegistered && showModal && <UserModal setShowModal={setShowModal} />}
-      {isLoggedIn && user.name && <UserInfo />}
+      {isLoggedIn && user?.name && <UserInfo />}
     </UserPageContainer>
   );
 };
