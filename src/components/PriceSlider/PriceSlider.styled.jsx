@@ -5,6 +5,7 @@ import { theme } from 'styles';
 
 export const PriceContainer = styled.div`
   /* z-index: 12; */
+  visibility: ${props => (props.active ? 'hidden' : 'vissible')};
   z-index: ${theme.zIndexes.priceSlider};
   width: 100%;
   height: 116px;
@@ -12,7 +13,7 @@ export const PriceContainer = styled.div`
   transition-duration: ${theme.animations.transitionDuration};
   transition-timing-function: ${theme.animations.cubicBezier};
 
-  transform: ${props => (props.active ? 'translateY(-90px)' : null)};
+  transform: ${props => (props.active ? 'translateY(-90px)' : null)}, visibility;
 `;
 export const StyledRangeSlider = styled(Slider)`
   position: relative;
