@@ -8,8 +8,10 @@ import { useDispatch } from 'react-redux';
 export const UserModal = ({ setShowModal }) => {
     const dispatch = useDispatch();
     const { user } = useAuth();
+
     
 const closeModal = () =>{
+  window.dispatchEvent(new Event('localStorageChanged'))
     setShowModal(false)
     dispatch(showUserPage())
 }
