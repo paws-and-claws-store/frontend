@@ -16,7 +16,6 @@ import {
   selectCheckedBrands,
   selectIsBrandsFilterSet,
   selectIsPriceRangeSet,
-  selectPriceValue,
   selectSearchQueryStore,
   // selectSortingTypeStore,
   selectSortingTypeStoreDefault,
@@ -46,9 +45,8 @@ export default function Search() {
   const [currentPage, setCurrentPage] = useState(1); // to track the current page of search results.
   const [searchParams, setSearchParams] = useSearchParams();
   const dispatch = useDispatch();
-
   const abortControllerRef = useRef(); // hooks used to store references to the AbortController.
-  const priceValue = useSelector(selectPriceValue); // get price value from price slider
+  // const priceValue = useSelector(selectPriceValue); // get price value from price slider
   const isPriceRangeSet = useSelector(selectIsPriceRangeSet); // get price range set state from price slider
   const isBrandsSet = useSelector(selectIsBrandsFilterSet);
   const checkedBrands = useSelector(selectCheckedBrands);
@@ -59,19 +57,36 @@ export default function Search() {
   const query = searchParams.get('query');
   const sortBy = searchParams.get('sortBy');
   const sortingType = sortBy; // extract sorting type from the Redux store
+  const priceValue = [
+    searchParams.get('minPrice'),
+    searchParams.get('maxPrice'),
+  ];
   const defaultSortSelect = useSelector(selectSortingTypeStoreDefault);
 
-  // console.log('sortBy:', sortBy);
-
   useEffect(() => {
-    if (searchQuery) {
-      // console.log('searchQuery:', searchQuery);
-      setSearchParams({ query: searchQuery });
-    }
+    // if (searchQuery) {
+    //   // console.log('searchQuery:', searchQuery);
+    //   setSearchParams({ query: searchQuery });
+    // }
+    // if (searchQuery && sortBy) {
+    //   setSearchParams({ query: searchQuery, sortBy });
+    //   return;
+    // }
 
-    if (searchQuery && sortBy) {
-      setSearchParams({ query: searchQuery, sortBy });
-      return;
+    if (searchQuery || sortBy) {
+      setSearchParams(prevSearchParams => {
+        const updatedSearchParams = new URLSearchParams(prevSearchParams);
+
+        if (searchQuery) {
+          updatedSearchParams.set('query', searchQuery);
+        }
+
+        if (sortBy) {
+          updatedSearchParams.set('sortBy', sortBy);
+        }
+
+        return updatedSearchParams;
+      });
     }
   }, [searchQuery, setSearchParams, sortBy]);
 
@@ -84,15 +99,15 @@ export default function Search() {
 
   useEffect(() => {
     const query = searchParams.get('query');
-    const sortBy = searchParams.get('sortBy');
+    // const sortBy = searchParams.get('sortBy');
 
     if (query) {
       dispatch(setQuerySearch(query));
     }
 
-    if (sortBy) {
-      dispatch(setValueSort(sortBy));
-    }
+    // if (sortBy) {
+    //   dispatch(setValueSort(sortBy));
+    // }
 
     if (query || query !== null) {
       dispatch(setQuerySearch(query));
@@ -104,11 +119,16 @@ export default function Search() {
     page: currentPage,
   }; // params object to be used in the API call hook useFetchSearchQuery.
 
-  // add price value data if defaultValue is updated in priceRangeSlice
-  if (priceValue[1] !== 1000000) {
+  if (priceValue[1] !== null) {
     params.minPrice = priceValue[0];
     params.maxPrice = priceValue[1];
   }
+
+  // // add price value data if defaultValue is updated in priceRangeSlice
+  // if (priceValue[1] !== null) {
+  //   params.minPrice = priceValue[0];
+  //   params.maxPrice = priceValue[1];
+  // }
 
   useEffect(() => {
     setCurrentPage(1); // set page one to the new search query, sorting type or price calue from price slider

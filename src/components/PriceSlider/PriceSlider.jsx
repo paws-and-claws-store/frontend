@@ -9,6 +9,7 @@ import {
 } from './PriceSlider.styled';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useSearchParams } from 'react-router-dom';
 import {
   selectDefaultPriceRange,
   selectIsClearSetPriceRange,
@@ -19,10 +20,35 @@ import { theme } from 'styles';
 export const PriceSlider = ({ active }) => {
   const resetStatus = useSelector(selectIsClearSetPriceRange);
   const defaultPriceRange = useSelector(selectDefaultPriceRange);
+  console.log('defaultPriceRange:', defaultPriceRange);
   const [priceValueInput, setPriceValueInput] = useState({
     minValue: defaultPriceRange[0],
     maxValue: defaultPriceRange[1],
   }); // set initial data to inputs fileds
+
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  // Функція для оновлення стану та параметрів URL при зміні значень
+  const updateValues = (minValue, maxValue) => {
+    setPriceValueInput({ minValue, maxValue });
+
+    // Оновлення параметрів URL
+    const params = new URLSearchParams(searchParams);
+
+    if (minValue !== defaultPriceRange[0]) {
+      params.set('minPrice', minValue);
+    } else {
+      params.delete('minPrice');
+    }
+
+    if (maxValue !== defaultPriceRange[1]) {
+      params.set('maxPrice', maxValue);
+    } else {
+      params.delete('maxPrice');
+    }
+
+    setSearchParams(params);
+  };
 
   const dispatch = useDispatch();
 
@@ -84,13 +110,30 @@ export const PriceSlider = ({ active }) => {
       return;
     }
 
-    dispatch(
-      setPriceValue([currentPriceValue.minValue, currentPriceValue.maxValue]),
-    ); // set on submit price value to redux state
-    setPriceValueInput(currentPriceValue);
+    // dispatch(
+    //   setPriceValue([currentPriceValue.minValue, currentPriceValue.maxValue]),
+    // ); // set on submit price value to redux state
+    // setPriceValueInput(currentPriceValue);
+    updateValues(currentPriceValue.minValue, currentPriceValue.maxValue);
   };
 
   useEffect(() => {
+    // Оновлення стану та параметрів URL при рендерингу компонента
+    const params = new URLSearchParams(searchParams);
+
+    const minPriceParam = params.get('minPrice');
+    const maxPriceParam = params.get('maxPrice');
+
+    const minValue = minPriceParam
+      ? parseFloat(minPriceParam)
+      : defaultPriceRange[0];
+    const maxValue = maxPriceParam
+      ? parseFloat(maxPriceParam)
+      : defaultPriceRange[1];
+
+    setPriceValueInput({ minValue, maxValue });
+    // dispatch(setPriceValue([minValue, maxValue]));
+
     if (resetStatus === true) {
       setPriceValueInput({
         minValue: defaultPriceRange[0],
@@ -98,7 +141,17 @@ export const PriceSlider = ({ active }) => {
       });
       dispatch(resetPriceRange());
     }
-  }, [defaultPriceRange, dispatch, resetStatus]);
+  }, [searchParams, dispatch, defaultPriceRange, resetStatus]);
+
+  // useEffect(() => {
+  //   if (resetStatus === true) {
+  //     setPriceValueInput({
+  //       minValue: defaultPriceRange[0],
+  //       maxValue: defaultPriceRange[1],
+  //     });
+  //     dispatch(resetPriceRange());
+  //   }
+  // }, [defaultPriceRange, dispatch, resetStatus]);
 
   useEffect(() => {
     setPriceValueInput({
