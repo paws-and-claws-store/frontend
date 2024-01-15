@@ -6,17 +6,16 @@ import * as api from '../../services/auth';
 // -----------------------------------------SIGNUP--------------------------------------------
 export const register = createAsyncThunk(
   'auth/register',
-  async (data, thunkAPI) => {
+  async (newUser, thunkAPI) => {
     try {
-      const result = await api.register(data);
+      const {result: data} = await api.register(newUser);
 
-      return {name: result.data.user.name, email: result.data.user.email};
+      return {name: data.user.name, email: data.user.email};
       
     } catch (error) {
       const message = [409, 401, 400].includes(error?.response?.status)
         ? error?.response?.data?.message
         : `Request was failed with code ${error?.response?.status}`;
-      // console.log(' message:', message);
       Notify.failure(`${message}`, {
         timeout: 5000,
       });
