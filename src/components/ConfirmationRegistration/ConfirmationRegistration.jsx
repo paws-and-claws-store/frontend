@@ -28,7 +28,7 @@ export const ConfirmationRegistration = () => {
     return () => {
       window.removeEventListener('localStorageChanged', handleChange);
     };
-  }, []);
+  }, [navigation]);
 
   return !showResendEmail ? (
     <ConfirmationRegistrationContainer>
