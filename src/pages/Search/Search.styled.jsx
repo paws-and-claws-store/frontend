@@ -126,8 +126,7 @@ export const SearchFilter = styled.div`
   transition-property: max-height, background-color;
   transition-duration: ${theme.animations.transitionDuration};
   transition-timing-function: ${props => props.theme.animations.cubicBezier};
-  background-color: ${props =>
-    props.active ? theme.colors.secGreen : theme.colors.beige};
+  background-color: ${props => (props.active ? theme.colors.secGreen : theme.colors.beige)};
 
   border: 1px solid ${theme.colors.green};
 `;
@@ -145,8 +144,7 @@ export const SearchBrands = styled.div`
   transition-property: max-height, background-color;
   transition-duration: ${theme.animations.transitionDuration};
   transition-timing-function: ${props => props.theme.animations.cubicBezier};
-  background-color: ${props =>
-    props.activeBrands ? theme.colors.secGreen : theme.colors.beige};
+  background-color: ${props => (props.activeBrands ? theme.colors.secGreen : theme.colors.beige)};
 
   border: 1px solid ${theme.colors.green};
 `;
@@ -210,4 +208,55 @@ export const SearchCallToAction = styled.div`
   font-style: normal;
   font-weight: ${theme.fontWeight.Medium};
   line-height: ${theme.lineHeight.xl}; /* 120% */
+`;
+
+export const SearchCheckBoxLabelStyled = styled.label`
+  display: inline-grid;
+  grid-template-columns: auto auto;
+  grid-column-gap: 6px;
+
+  font-variant-numeric: lining-nums proportional-nums;
+  font-feature-settings: 'ss09' on;
+
+  /* content card */
+  font-family: Inter;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: 20px; /* 125% */
+`;
+
+export const SearchCheckBoxStyled = styled.input`
+  display: grid;
+  place-content: center;
+  appearance: none;
+  background-color: inherit;
+  margin: 0;
+  color: currentColor;
+  width: 16px;
+  height: 16px;
+  border: 1px solid ${props => (props.checked ? `${theme.colors.black}` : `${theme.colors.green}`)};
+  border-radius: 0.1em;
+  transform: translateY(2px);
+
+  &::before {
+    content: '';
+    width: 0.65em;
+    height: 0.65em;
+    //transform: scale(0);
+
+    transform: ${props => (props.checked ? 'scale(1)' : 'scale(0)')};
+    // transition: 120ms transform ${theme.animations.cubicBezier};
+    box-shadow: inset 1em 1em ${theme.colors.black};
+    transform-origin: bottom left;
+    /* clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%); */
+    clip-path: polygon(38% 70%, 90% 20%, 100% 24%, 38% 90%, 10% 60%, 18% 51%);
+  }
+
+  &:hover {
+    cursor: pointer;
+
+    border: 1px solid
+      ${props => (props.disabled ? `${theme.colors.green}` : `${theme.colors.black}`)};
+  }
 `;
