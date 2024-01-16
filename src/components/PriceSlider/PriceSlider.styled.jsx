@@ -12,7 +12,7 @@ export const PriceContainer = styled.div`
   transition-duration: ${theme.animations.transitionDuration};
   transition-timing-function: ${theme.animations.cubicBezier};
 
-  transform: ${props => (props.active ? 'translateY(-90px)' : null)};
+  transform: ${props => (props.active ? 'translateY(-100px)' : null)};
 `;
 export const StyledRangeSlider = styled(Slider)`
   position: relative;
@@ -310,8 +310,7 @@ export const PriceRangeStyle = styled.form`
 `;
 
 export const PriceValue = styled.input`
-  width: ${props =>
-    props.value ? props.value?.toString().length + 'ch' : 5 + 'ch'};
+  width: ${props => (props.value ? props.value?.toString().length + 'ch' : 5 + 'ch')};
   height: 16px;
   color: ${theme.colors.orange};
   background-color: ${theme.colors.mainBackground};

@@ -3,6 +3,8 @@ import {
   FoldedContainer,
   SearchBrands,
   SearchCategoryList,
+  SearchCheckBoxLabelStyled,
+  SearchCheckBoxStyled,
   SearchClearFilter,
   SearchFilter,
 } from './Search.styled';
@@ -13,14 +15,14 @@ import { memo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setClearSetStatusPriceRange } from 'redux/slice/priceRangeSlice';
 import { setClearSetStatusBrandsFilter } from 'redux/slice/brandsFilterSlice';
-import {
-  selectIsBrandsFilterSet,
-  selectIsPriceRangeSet,
-} from 'redux/selectors/selectors';
+import { selectIsBrandsFilterSet, selectIsPriceRangeSet } from 'redux/selectors/selectors';
 import { FilterSelectionLayout } from 'components/FilterParametersLayout/FilterSelectionLayout';
+import { useSearchParams } from 'react-router-dom';
 
 export default memo(function SearchCategory() {
   const [active, setActive] = useState({ price: false, brands: false });
+  const [searchParams, setSearchParams] = useSearchParams();
+
   const dispatch = useDispatch();
   const isPriceRangeSet = useSelector(selectIsPriceRangeSet);
   const isBrandsFilterSet = useSelector(selectIsBrandsFilterSet);
@@ -34,6 +36,10 @@ export default memo(function SearchCategory() {
   const handleClickClearFilters = () => {
     dispatch(setClearSetStatusPriceRange(true)); // reset status to price range redux store
     dispatch(setClearSetStatusBrandsFilter(true)); // reset status to Brands filter redux store
+  };
+
+  const handleCheckboxChange = e => {
+    setSearchParams({ availability: e.target.checked });
   };
 
   return (
@@ -61,42 +67,44 @@ export default memo(function SearchCategory() {
               className="FoolderContainer"
               active={active['price']}
               style={{
-                backgroundColor: active['price']
-                  ? theme.colors.secGreen
-                  : theme.colors.beige,
+                backgroundColor: active['price'] ? theme.colors.secGreen : theme.colors.beige,
               }}
               onClick={handleClickToggle}
               name="price"
             >
               <span>Ціна</span>
               <button name="price">
-                <RightArrow
-                  direction={active['price'] ? 'rotate(90)' : 'rotate(-90)'}
-                />
+                <RightArrow direction={active['price'] ? 'rotate(90)' : 'rotate(-90)'} />
               </button>
             </FoldedContainer>
 
             <PriceSlider active={active['price']} />
           </SearchFilter>
         </li>
-
         <li key={2}>
+          <SearchCheckBoxLabelStyled>
+            <SearchCheckBoxStyled
+              type="checkbox"
+              name="availability"
+              onChange={handleCheckboxChange}
+              checked={searchParams.get('availability') === 'true'}
+            />
+            В наявності
+          </SearchCheckBoxLabelStyled>
+        </li>
+        <li key={3}>
           <SearchBrands activeBrands={active['brands']}>
             <FoldedContainer
               className="brand"
               style={{
-                backgroundColor: active['brands']
-                  ? theme.colors.secGreen
-                  : theme.colors.beige,
+                backgroundColor: active['brands'] ? theme.colors.secGreen : theme.colors.beige,
               }}
               onClick={handleClickToggle}
               name="brands"
             >
               <span>Бренди</span>
               <button name="brands">
-                <RightArrow
-                  direction={active['brands'] ? 'rotate(90)' : 'rotate(-90)'}
-                />
+                <RightArrow direction={active['brands'] ? 'rotate(90)' : 'rotate(-90)'} />
               </button>
             </FoldedContainer>
 
