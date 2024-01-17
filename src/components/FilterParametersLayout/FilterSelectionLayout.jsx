@@ -20,6 +20,7 @@ import { useSearchParams } from 'react-router-dom';
 export const FilterSelectionLayout = renderdata => {
   const dispatch = useDispatch();
   const checkedBrands = useSelector(selectCheckedBrands);
+
   const checkboxStates = useSelector(selectCheckboxStates);
   const priceValue = useSelector(selectPriceValueInput);
   const [searchParams, setSearchParams] = useSearchParams();
@@ -44,10 +45,26 @@ export const FilterSelectionLayout = renderdata => {
     }
 
     return (
-      <FilterSelectionOption key={data}>
-        <FilterSelectionText key={data + 'text'}>{renderText.toLowerCase()}</FilterSelectionText>
+      <FilterSelectionOption
+        //  key={data}
+        className="FilterSelectionOption"
+        onClick={() => {
+          if (type === 'brand') {
+            handleClickUnset({ name: data, checked: checkboxStates[data] });
+          }
+          if (type === 'availability') {
+            setSearchParams({ availability: false });
+          }
+          if (type === 'price') {
+            dispatch(setClearSetStatusPriceRange(true)); // reset status to price range redux store
+          }
+        }}
+        key={data + 'button'}
+      >
+        <FilterSelectionText key={data + 'text'}>
+          {renderText.toLowerCase()}
+        </FilterSelectionText>
         <FilterSelectionButton
-          className="111"
           onClick={() => {
             if (type === 'brand') {
               handleClickUnset({ name: data, checked: checkboxStates[data] });
@@ -71,7 +88,9 @@ export const FilterSelectionLayout = renderdata => {
 
   return (
     <FilterSelectionContainer>
-      {isBrandsSet ? checkedBrands.map(item => renderBlock(item, 'brand')) : null}
+      {isBrandsSet
+        ? checkedBrands.map(item => renderBlock(item, 'brand'))
+        : null}
       {isPriceRangeSet ? renderBlock(priceValue, 'price') : null}
       {booleanAvailability ? renderBlock('В наявності', 'availability') : null}
     </FilterSelectionContainer>

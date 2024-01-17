@@ -62,10 +62,13 @@ export const BrandsFilter = ({ active }) => {
               {/* Render alphabet buttons with click functionality */}
               <ButtonLetterStyled
                 disabled={!enabledLetter}
-                activeLetter={activeLetter === item.toUpperCase() ? true : false}
+                activeLetter={
+                  activeLetter === item.toUpperCase() ? true : false
+                }
                 onClick={event => {
                   event.preventDefault();
-                  const brandContainer = document.querySelector('.BrandContainer');
+                  const brandContainer =
+                    document.querySelector('.BrandContainer');
                   const offsetTop = brandContainer.offsetTop;
 
                   // Scrolls to the first brand starting with the clicked letter
@@ -115,7 +118,10 @@ export const BrandsFilter = ({ active }) => {
         })}
       </AlphabetStyled>
 
-      <FilterContainer active={active} className="BrandContainer">
+      <FilterContainer
+        active={active}
+        className="BrandContainer custom-scrollbar"
+      >
         {/* Render brand checkboxes */}
         <BrandsCheckBoxContainer>
           {Object.keys(defaultBrands)?.map(item => {

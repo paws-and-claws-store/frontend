@@ -7,7 +7,7 @@ export const FilterContainer = styled.div`
   /* z-index: 12; */
   z-index: ${theme.zIndexes.filterSearch};
   width: 100%;
-  max-height: 375px;
+  max-height: 392px;
   transition-property: transform;
   transition-duration: ${theme.animations.transitionDuration};
   transition-timing-function: ${theme.animations.cubicBezier};
@@ -42,7 +42,8 @@ export const LetterStyled = styled.li`
 
 export const ButtonLetterStyled = styled.button`
   width: 16px;
-  color: ${props => (props.activeLetter ? theme.colors.orange : theme.colors.black)};
+  color: ${props =>
+    props.activeLetter ? theme.colors.orange : theme.colors.black};
   &:disabled {
     color: ${theme.colors.grey};
     cursor: default;
@@ -63,7 +64,8 @@ export const BrandsCheckBoxStyled = styled.li`
   /* text-align: left; */
   display: flex;
   margin-bottom: 8px;
-  /* color: ${props => (props.disabled ? `${theme.colors.black}` : `${theme.colors.green}`)}; */
+  /* color: ${props =>
+    props.disabled ? `${theme.colors.black}` : `${theme.colors.green}`}; */
   color: ${theme.colors.black};
   font-variant-numeric: lining-nums proportional-nums;
   font-feature-settings: 'ss09' on;
@@ -85,7 +87,9 @@ export const CheckBoxStyled = styled.input`
   color: currentColor;
   width: 16px;
   height: 16px;
-  border: 1px solid ${props => (props.checked ? `${theme.colors.black}` : `${theme.colors.green}`)};
+  border: 1px solid
+    ${props =>
+      props.checked ? `${theme.colors.black}` : `${theme.colors.green}`};
   border-radius: 0.1em;
   transform: translateY(2px);
 
@@ -107,7 +111,8 @@ export const CheckBoxStyled = styled.input`
     cursor: pointer;
 
     border: 1px solid
-      ${props => (props.disabled ? `${theme.colors.green}` : `${theme.colors.black}`)};
+      ${props =>
+        props.disabled ? `${theme.colors.green}` : `${theme.colors.black}`};
   }
 `;
 
