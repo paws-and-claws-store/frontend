@@ -78,4 +78,24 @@ export const GlobalStyles = css`
     --bs-modal-width: 704px;
     /* width: 700px; */
   }
+
+  .custom-scrollbar {
+    &::-webkit-scrollbar {
+      width: 12px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: ${theme.colors.green};
+      border-radius: 6px;
+      height: 36px;
+    }
+
+    &::-webkit-scrollbar-thumb:vertical {
+      height: 36px; /* Встановлюємо висоту */
+    }
+
+    &::-webkit-scrollbar-track {
+      /* background-color: ${theme.colors.beige}; */
+    }
+  }
 `;

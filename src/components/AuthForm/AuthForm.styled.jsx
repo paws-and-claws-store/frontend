@@ -78,7 +78,7 @@ export const InputConfirmPasswordWraper = styled.div`
 `;
 
 export const InputForm = styled(Field)`
-  padding: 12px 16px;
+  padding: 12px 50px 12px 16px;
   width: 100%;
   height: 48px;
   font-size: ${theme.fontSizes.m};

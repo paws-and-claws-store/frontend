@@ -38,7 +38,8 @@ export const PasswordRecovery = ({ setShowWindouwRecoveryPass }) => {
       console.log("isChangePass:", isChangePass)
 
       if (isChangePass?.isChanged === true) {
-        setShowWindouwRecoveryPass(false)
+        // setShowWindouwRecoveryPass(false)
+        document.location.reload()
       }
     };
     window.addEventListener('storage', handleChange);

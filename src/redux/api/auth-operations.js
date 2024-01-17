@@ -10,7 +10,7 @@ export const register = createAsyncThunk(
     try {
       const {result: data} = await api.register(newUser);
 
-      return {name: data.user.name, email: data.user.email};
+      return {name: data?.user?.name, email: data?.user?.email};
       
     } catch (error) {
       const message = [409, 401, 400].includes(error?.response?.status)
