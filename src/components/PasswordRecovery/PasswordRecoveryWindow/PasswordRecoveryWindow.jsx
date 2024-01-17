@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { resetPassword } from 'redux/api/auth-operations';
 import { Form, Formik } from 'formik';
@@ -27,10 +27,26 @@ const initialValues = {
 };
 
 export const PasswordRecovery = ({ setShowWindouwRecoveryPass }) => {
-  const [showPasswordConfirmation, setShowPasswordConfirmation] =
-    useState(false);
+  const [showPasswordConfirmation, setShowPasswordConfirmation] = useState(false);
 
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    const handleChange = () => {
+      const changePass = localStorage.getItem('changePassword');
+      const isChangePass = JSON.parse(changePass);
+      console.log("isChangePass:", isChangePass)
+
+      if (isChangePass?.isChanged === true) {
+        setShowWindouwRecoveryPass(false)
+      }
+    };
+    window.addEventListener('storage', handleChange);
+
+    return () => {
+      window.removeEventListener('storage', handleChange);
+    };
+  }, [setShowWindouwRecoveryPass]);
 
   const handleSubmit = (values, { resetForm }) => {
     dispatch(resetPassword(values.email));

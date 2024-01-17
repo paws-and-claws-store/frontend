@@ -16,17 +16,18 @@ export const ConfirmationRegistration = () => {
   console.log('isUser:', isUser.isLoggedIn);
 
   useEffect(() => {
-    console.log('localStorageChanged');
     const handleChange = () => {
-      // if(isUser.isLoggedIn){
-        navigation('/');
-      // };
-    };
+      const dataAuth = localStorage.getItem('persist:auth');
+      const keyAuth = JSON.parse(dataAuth);
 
-    window.addEventListener('localStorageChanged', handleChange);
+      if (keyAuth?.isLoggedIn === 'true') {
+        navigation('/');
+      }
+    };
+    window.addEventListener('storage', handleChange);
 
     return () => {
-      window.removeEventListener('localStorageChanged', handleChange);
+      window.removeEventListener('storage', handleChange);
     };
   }, [navigation]);
 

@@ -17,9 +17,11 @@ export const PasswordRecoveryModal = () => {
   useEffect(() => {
     window.addEventListener('keydown', handleKeyDown);
     document.addEventListener('mousedown', handleKeyDown);
+    localStorage.setItem('changePassword', JSON.stringify({isChanged: true}));
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
       document.removeEventListener('mousedown', handleKeyDown);
+      localStorage.removeItem('changePassword');
     };
   });
 
