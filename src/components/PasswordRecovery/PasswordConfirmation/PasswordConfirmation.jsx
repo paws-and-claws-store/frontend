@@ -10,12 +10,7 @@ import {
 export const PasswordConfirmation = () => {
   const [recoveryPass] = useState(true)
   const [showResendEmail, setShowResendEmail] = useState(false);
-
-  //   useEffect(() => {
-  //     if (isLoggedIn) {
-  //       navigate('/');
-  //     }
-  //   }, [navigate, isLoggedIn]);
+  
 
   return (
     !showResendEmail 
