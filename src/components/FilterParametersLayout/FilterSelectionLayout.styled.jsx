@@ -9,15 +9,20 @@ export const FilterSelectionContainer = styled.div`
   flex-wrap: wrap;
   gap: 8px;
   margin-bottom: 16px;
-  text-transform: capitalize;
 `;
-export const FilterSelectionOption = styled.div`
+export const FilterSelectionOption = styled.button`
   padding: 4px 8px;
 
   background: ${theme.colors.secGreen};
   display: flex;
   align-items: center;
   gap: 2px;
+
+  text-transform: capitalize;
+  &:hover,
+  &:active {
+    text-decoration: line-through;
+  }
 `;
 
 export const FilterSelectionText = styled.span`
@@ -33,7 +38,7 @@ export const FilterSelectionText = styled.span`
   font-weight: 300;
   line-height: 16px; /* 114.286% */
 `;
-export const FilterSelectionButton = styled.button`
+export const FilterSelectionButton = styled.div`
   padding: 0;
   margin: 0;
   text-decoration: none;
