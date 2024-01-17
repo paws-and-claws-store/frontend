@@ -33,7 +33,10 @@ import {
   setDefaultPriceRange,
   setPriceChange,
 } from 'redux/slice/priceRangeSlice';
-import { setClearSetStatusBrandsFilter, setDefaultBrands } from 'redux/slice/brandsFilterSlice';
+import {
+  setClearSetStatusBrandsFilter,
+  setDefaultBrands,
+} from 'redux/slice/brandsFilterSlice';
 
 export default function Search() {
   const searchQuery = useSelector(selectSearchQueryStore); // extract search query from the Redux store
@@ -140,14 +143,15 @@ export default function Search() {
     params,
   }); // Utilizes a custom hook useFetchSearchQuery to fetch search results based on the params object and the abort signal. It receives data, error, isLoading, isFetching, and isError as response states.
 
-  const { productsList, paginationData, onAddPage, onPageChange } = usePagination({
-    response,
-    isFetching,
-    isError,
-    setCurrentPage,
-    currentPage,
-    sortingType,
-  }); // Use a custom hook usePagination to handle pagination-related functionalities such as managing product lists, pagination data, and changing pages.
+  const { productsList, paginationData, onAddPage, onPageChange } =
+    usePagination({
+      response,
+      isFetching,
+      isError,
+      setCurrentPage,
+      currentPage,
+      sortingType,
+    }); // Use a custom hook usePagination to handle pagination-related functionalities such as managing product lists, pagination data, and changing pages.
 
   const totalDocs = response?.totalDocs;
   useEffect(() => {}, [totalDocs]); // rerender search component when total docs are changed
@@ -161,12 +165,29 @@ export default function Search() {
         dispatch(setDefaultBrands(response?.brands));
       }
     }
-  }, [dispatch, isBrandsSet, isPriceRangeSet, query, response?.brands, response?.minMax]); // update default price range value only if query are changed and response are exists, not selected filters
+
+    if (isPriceRangeSet && !isBrandsSet) {
+      if (response?.brands) {
+        dispatch(setDefaultBrands(response?.brands));
+      }
+    }
+  }, [
+    dispatch,
+    isBrandsSet,
+    isPriceRangeSet,
+    query,
+    response?.brands,
+    response?.minMax,
+  ]); // update default price range value only if query are changed and response are exists, not selected filters
 
   // Render Section
 
   if (error?.status >= 500) {
-    return <div style={{ minHeight: '640px' }}>{(Notify.failure(error.error), (<></>))}</div>; // If there's a server error (status >= 500), it triggers a failure notification using Notify.failure(error.error).
+    return (
+      <div style={{ minHeight: '640px' }}>
+        {(Notify.failure(error.error), (<></>))}
+      </div>
+    ); // If there's a server error (status >= 500), it triggers a failure notification using Notify.failure(error.error).
   }
 
   if (isLoading && !isError) {
@@ -177,7 +198,11 @@ export default function Search() {
     ); // Show a loader if data is loading (isLoading && !isError).
   }
 
-  if (totalDocs > 0 || (totalDocs === 0 && isPriceRangeSet) || (totalDocs === 0 && isBrandsSet)) {
+  if (
+    totalDocs > 0 ||
+    (totalDocs === 0 && isPriceRangeSet) ||
+    (totalDocs === 0 && isBrandsSet)
+  ) {
     return (
       <div style={{ minHeight: '640px' }}>
         {
