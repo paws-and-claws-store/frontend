@@ -6,14 +6,11 @@ import {
   Message,
   Button,
 } from './ConfirmationRegistration.styled';
-import { useNavigate } from 'react-router';
+// import { useNavigate } from 'react-router';
 
 export const ConfirmationRegistration = () => {
   const [showResendEmail, setShowResendEmail] = useState(false);
-  const navigation = useNavigate();
-  const persistedString = localStorage.getItem('persist:auth');
-  const isUser = JSON.parse(persistedString);
-  console.log('isUser:', isUser.isLoggedIn);
+  // const navigation = useNavigate();
 
   useEffect(() => {
     const handleChange = () => {
@@ -21,7 +18,7 @@ export const ConfirmationRegistration = () => {
       const keyAuth = JSON.parse(dataAuth);
 
       if (keyAuth?.isLoggedIn === 'true') {
-        navigation('/');
+        document.location.reload()
       }
     };
     window.addEventListener('storage', handleChange);
@@ -29,7 +26,7 @@ export const ConfirmationRegistration = () => {
     return () => {
       window.removeEventListener('storage', handleChange);
     };
-  }, [navigation]);
+  }, []);
 
   return !showResendEmail ? (
     <ConfirmationRegistrationContainer>

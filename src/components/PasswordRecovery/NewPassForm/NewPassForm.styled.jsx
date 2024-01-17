@@ -65,7 +65,7 @@ export const InputRepeatPasswordWraper = styled.div`
 `;
 
 export const InputForm = styled(Field)`
-  padding: 12px 15px;
+  padding: 12px 50px 12px 15px;
   width: 100%;
   height: 46px;
   font-size: ${theme.fontSizes.m};
