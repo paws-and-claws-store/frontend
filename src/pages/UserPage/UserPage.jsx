@@ -12,10 +12,10 @@ export const UserPage = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (!user?.name) {
+    // if (!user?.name) {
       dispatch(getCurrentUser());
-    }
-  }, []);
+    // }
+  }, [dispatch]);
 
   return (
     <UserPageContainer>
