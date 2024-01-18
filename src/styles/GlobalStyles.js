@@ -81,21 +81,24 @@ export const GlobalStyles = css`
 
   .custom-scrollbar {
     &::-webkit-scrollbar {
-      width: 12px;
+      width: 20px;
     }
 
     &::-webkit-scrollbar-thumb {
+      background-color: ${theme.colors.secGreen};
+      border-radius: 10px;
+      border: 4px solid ${theme.colors.beige};
+    }
+    &::-webkit-scrollbar-thumb:hover {
       background-color: ${theme.colors.green};
-      border-radius: 6px;
-      height: 36px;
     }
 
-    &::-webkit-scrollbar-thumb:vertical {
-      height: 36px; /* Встановлюємо висоту */
-    }
+    /* &::-webkit-scrollbar-thumb:vertical {
+      height: 36px; /* Встановлюємо висоту 
+    } */
 
     &::-webkit-scrollbar-track {
-      /* background-color: ${theme.colors.beige}; */
+      background-color: ${theme.colors.beige};
     }
   }
 `;
