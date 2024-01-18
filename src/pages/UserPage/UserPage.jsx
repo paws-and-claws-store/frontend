@@ -15,7 +15,7 @@ export const UserPage = () => {
     if (user?.name) {
       dispatch(getCurrentUser());
     }
-  }, [dispatch, user]);
+  }, []);
 
   return (
     <UserPageContainer>
