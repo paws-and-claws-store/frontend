@@ -9,10 +9,7 @@ import {
 } from './PriceSlider.styled';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  selectDefaultPriceRange,
-  selectIsClearSetPriceRange,
-} from 'redux/selectors/selectors';
+import { selectDefaultPriceRange, selectIsClearSetPriceRange } from 'redux/selectors/selectors';
 import { resetPriceRange, setPriceValue } from 'redux/slice/priceRangeSlice';
 import { theme } from 'styles';
 
@@ -22,7 +19,7 @@ export const PriceSlider = ({ active }) => {
   const [priceValueInput, setPriceValueInput] = useState({
     minValue: defaultPriceRange[0],
     maxValue: defaultPriceRange[1],
-  }); // set initial data to inputs fileds
+  }); // set initial data to inputs fields
 
   const dispatch = useDispatch();
 
@@ -44,7 +41,9 @@ export const PriceSlider = ({ active }) => {
     const newCount = Number(e.target.value);
 
     if (e.target.value === '') {
-      setPriceValueInput(prevState => ({ ...prevState, [nameField]: '' }));
+      setPriceValueInput(prevState => {
+        return { ...prevState, [nameField]: '' };
+      });
       return;
     }
 
@@ -54,10 +53,17 @@ export const PriceSlider = ({ active }) => {
   const handleChangeOnBlurValue = e => {
     const nameField = e.target.name;
 
-    if (e.target.value === '') {
+    if (e.target.value === '' && nameField === 'minValue') {
       setPriceValueInput(prevState => ({
         ...prevState,
         [nameField]: defaultPriceRange[0],
+      }));
+      return;
+    }
+    if (e.target.value === '' && nameField === 'maxValue') {
+      setPriceValueInput(prevState => ({
+        ...prevState,
+        [nameField]: defaultPriceRange[1],
       }));
       return;
     }
@@ -69,12 +75,18 @@ export const PriceSlider = ({ active }) => {
     const currentPriceValue = { ...priceValueInput };
 
     for (const key in currentPriceValue) {
-      currentPriceValue[key] = parseFloat(currentPriceValue[key]);
+      if (currentPriceValue[key] !== '') {
+        currentPriceValue[key] = parseFloat(currentPriceValue[key]);
+      }
     }
 
     if (
       currentPriceValue.maxValue === currentPriceValue.minValue ||
-      currentPriceValue.minValue > currentPriceValue.maxValue
+      currentPriceValue.minValue > currentPriceValue.maxValue ||
+      currentPriceValue.maxValue === '' ||
+      currentPriceValue.minValue === '' ||
+      currentPriceValue.maxValue > defaultPriceRange[1] ||
+      currentPriceValue.maxValue < defaultPriceRange[0]
     ) {
       setPriceValueInput(prevState => ({
         ...prevState,
@@ -84,9 +96,7 @@ export const PriceSlider = ({ active }) => {
       return;
     }
 
-    dispatch(
-      setPriceValue([currentPriceValue.minValue, currentPriceValue.maxValue]),
-    ); // set on submit price value to redux state
+    dispatch(setPriceValue([currentPriceValue.minValue, currentPriceValue.maxValue])); // set on submit price value to redux state
     setPriceValueInput(currentPriceValue);
   };
 
@@ -112,12 +122,13 @@ export const PriceSlider = ({ active }) => {
   return (
     <PriceContainer active={active}>
       <StyledRangeSlider
-        allowCross={false}
+        allowCross={true} // allow to move nearby slider control by other slider control
         value={[priceValueInput.minValue, priceValueInput.maxValue]}
         onChange={onSliderChange}
         range
         min={defaultPriceRange[0]}
         max={defaultPriceRange[1]}
+        pushable={100} // minimal range between slider controls
       />
       <PriceRangeStyle onSubmit={onSubmitHandler}>
         <div>
