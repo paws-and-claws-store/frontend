@@ -44,9 +44,9 @@ export const login = async (user) => {
     return result;
 };
 
-export const logout = async (token) => {
+export const logout = async () => {
     const { data } = await instance.get("/api/auth/logout");
-    setToken(token);
+    setToken();
     localStorage.clear()
     return data;
 };

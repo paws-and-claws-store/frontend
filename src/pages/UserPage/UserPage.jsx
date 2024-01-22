@@ -12,9 +12,7 @@ export const UserPage = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    // if (!user?.name) {
       dispatch(getCurrentUser());
-    // }
   }, [dispatch]);
 
   return (
