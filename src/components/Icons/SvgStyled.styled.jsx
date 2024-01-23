@@ -77,5 +77,5 @@ export const SvgVectorStyled = styled.svg`
 export const SvgGoogle = styled.svg`
   display: 'block';
   width: 25px;
-  margin-left: 10px;
+  margin-right: 10px;
 `
