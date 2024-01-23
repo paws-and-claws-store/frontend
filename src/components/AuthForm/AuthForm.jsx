@@ -3,6 +3,7 @@ import { Form, Formik } from 'formik';
 import { useDispatch } from 'react-redux';
 // import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import { registerSchema } from 'utils/shemas/AuthSchema';
+import { Google } from 'components/Icons/Google';
 
 import { ConfirmationRegistration } from 'components/ConfirmationRegistration/ConfirmationRegistration';
 
@@ -265,14 +266,10 @@ export function AuthForm() {
                 <ErrorMess name="confirmPassword" component="p" />
               </FormField>
 
-              <div>
                 <Button type="submit" disabled={isSubmitting}>
                   Реєстрація
                 </Button>
-              </div>
-              <div>
-                <Button type="button">Вхід через Google</Button>
-              </div>
+                <Button type="button"><Google/>Вхід через Google</Button>
             </Form>
           )}
         </Formik>

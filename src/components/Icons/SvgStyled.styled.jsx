@@ -73,3 +73,9 @@ export const SvgVectorStyled = styled.svg`
   height: 12px;
   width: 8px;
 `;
+
+export const SvgGoogle = styled.svg`
+  display: 'block';
+  width: 25px;
+  margin-right: 10px;
+`

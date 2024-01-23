@@ -209,6 +209,9 @@ export const OffIconConPass = styled(VisibilityOffIcon)`
 `;
 
 export const Button = styled.button`
+justify-content: center;
+align-items: center;
+display: flex;
   width: 100%;
   height: 48px;
   margin-top: 21px;
