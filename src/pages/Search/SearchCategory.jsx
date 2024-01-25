@@ -2,6 +2,7 @@ import { RightArrow } from 'components/Icons';
 import {
   FoldedContainer,
   SearchBrands,
+  SearchCategories,
   SearchCategoryList,
   SearchCheckBoxLabelStyled,
   SearchCheckBoxStyled,
@@ -18,6 +19,7 @@ import { setClearSetStatusBrandsFilter } from 'redux/slice/brandsFilterSlice';
 import { selectIsBrandsFilterSet, selectIsPriceRangeSet } from 'redux/selectors/selectors';
 import { FilterSelectionLayout } from 'components/FilterParametersLayout/FilterSelectionLayout';
 import { useSearchParams } from 'react-router-dom';
+import { CategoriesFilter } from 'components/CategoriesFilter/CategoriesFilter';
 
 export default memo(function SearchCategory() {
   const [active, setActive] = useState({ price: false, brands: false });
@@ -110,6 +112,25 @@ export default memo(function SearchCategory() {
 
             <BrandsFilter active={active['brands']} />
           </SearchBrands>
+        </li>
+        <li key={4}>
+          <SearchCategories activeCategories={active['categories']}>
+            <FoldedContainer
+              className="categories"
+              style={{
+                backgroundColor: active['categories'] ? theme.colors.secGreen : theme.colors.beige,
+              }}
+              onClick={handleClickToggle}
+              name="categories"
+            >
+              <span>Категорії</span>
+              <button name="categories">
+                <RightArrow direction={active['categories'] ? 'rotate(90)' : 'rotate(-90)'} />
+              </button>
+            </FoldedContainer>
+
+            <CategoriesFilter active={active['categories']} />
+          </SearchCategories>
         </li>
       </ul>
     </SearchCategoryList>

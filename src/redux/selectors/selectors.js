@@ -15,3 +15,4 @@ export const selectDefaultPriceRange = state => state.priceRange.defaultPriceRan
 export const selectCheckedBrands = state => state.brandsFilter.checkedBrands;
 export const selectCheckboxStates = state => state.brandsFilter.checkboxStates;
 export const selectDefaultBrands = state => state.brandsFilter.defaultBrands; // select default brands for query
+export const selectCategories = state => state.categoriesFilter.categories; // select categories from response
