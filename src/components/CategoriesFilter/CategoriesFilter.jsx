@@ -3,17 +3,24 @@ import {
   FilterContainer,
   QuantityBrands,
 } from 'components/BrandsFilter/BrandsFilter.styled';
-import { useSelector } from 'react-redux';
-import { selectCategories } from 'redux/selectors/selectors';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectCategories, selectCheckboxStatesCategories } from 'redux/selectors/selectors';
 import {
   CategoriesCheckBoxContainer,
   CategoriesCheckBoxLabelStyled,
   CategoriesCheckBoxStyled,
 } from './CategoriesFilter.styled';
+import { setCategories } from 'redux/slice/categoriesFilterSlice';
 
 export const CategoriesFilter = ({ active }) => {
   const categories = useSelector(selectCategories);
+  const checkboxStates = useSelector(selectCheckboxStatesCategories);
   const hierarchy = ['_categories', '_variants'];
+  const dispatch = useDispatch();
+
+  const handleCheckboxChange = (name, checked) => {
+    dispatch(setCategories({ name, checked }));
+  };
 
   //console.log('categories :>> ', categories);
 
@@ -30,7 +37,15 @@ export const CategoriesFilter = ({ active }) => {
           return (
             <CategoriesCheckBoxStyled key={Math.random()}>
               <CategoriesCheckBoxLabelStyled key={Math.random()}>
-                <CheckBoxStyled type="checkbox" />
+                {/* Render checkboxes for each category */}
+                <CheckBoxStyled
+                  type="checkbox"
+                  name={item.code}
+                  onChange={e => {
+                    handleCheckboxChange(e.target.name, e.target.checked);
+                  }}
+                  checked={!!checkboxStates[item.code]} // Check if checkbox is checked
+                />
                 {capitalizeFirstLetter(item.ua.toLowerCase())}
               </CategoriesCheckBoxLabelStyled>
               <QuantityBrands>{item ? `(${item.count})` : '(0)'}</QuantityBrands>

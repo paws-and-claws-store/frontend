@@ -6,7 +6,7 @@ import {
   FilterSelectionText,
 } from './FilterSelectionLayout.styled';
 import {
-  selectCheckboxStates,
+  selectCheckboxStatesBrands,
   selectCheckedBrands,
   selectIsBrandsFilterSet,
   selectIsPriceRangeSet,
@@ -21,7 +21,7 @@ export const FilterSelectionLayout = renderdata => {
   const dispatch = useDispatch();
   const checkedBrands = useSelector(selectCheckedBrands);
 
-  const checkboxStates = useSelector(selectCheckboxStates);
+  const checkboxStates = useSelector(selectCheckboxStatesBrands);
   const priceValue = useSelector(selectPriceValueInput);
   const [searchParams, setSearchParams] = useSearchParams();
   const booleanAvailability = searchParams.get('availability') === 'true';
@@ -61,9 +61,7 @@ export const FilterSelectionLayout = renderdata => {
         }}
         key={data + 'button'}
       >
-        <FilterSelectionText key={data + 'text'}>
-          {renderText.toLowerCase()}
-        </FilterSelectionText>
+        <FilterSelectionText key={data + 'text'}>{renderText.toLowerCase()}</FilterSelectionText>
         <FilterSelectionButton
           onClick={() => {
             if (type === 'brand') {
@@ -88,9 +86,7 @@ export const FilterSelectionLayout = renderdata => {
 
   return (
     <FilterSelectionContainer>
-      {isBrandsSet
-        ? checkedBrands.map(item => renderBlock(item, 'brand'))
-        : null}
+      {isBrandsSet ? checkedBrands.map(item => renderBlock(item, 'brand')) : null}
       {isPriceRangeSet ? renderBlock(priceValue, 'price') : null}
       {booleanAvailability ? renderBlock('В наявності', 'availability') : null}
     </FilterSelectionContainer>

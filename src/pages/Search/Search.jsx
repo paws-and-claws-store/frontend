@@ -34,7 +34,7 @@ import {
   setPriceChange,
 } from 'redux/slice/priceRangeSlice';
 import { setClearSetStatusBrandsFilter, setDefaultBrands } from 'redux/slice/brandsFilterSlice';
-import { setCategories } from 'redux/slice/categoriesFilterSlice';
+import { setCategoriesDefault } from 'redux/slice/categoriesFilterSlice';
 
 export default function Search() {
   const searchQuery = useSelector(selectSearchQueryStore); // extract search query from the Redux store
@@ -165,7 +165,7 @@ export default function Search() {
   }, [dispatch, isBrandsSet, isPriceRangeSet, query, response?.brands, response?.minMax]); // update default price range value only if query are changed and response are exists, not selected filters
 
   useEffect(() => {
-    dispatch(setCategories(response?.categories));
+    dispatch(setCategoriesDefault(response?.categories));
   }, [dispatch, response?.categories]);
 
   // Render Section

@@ -14,7 +14,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setBrands, setResetBrands } from 'redux/slice/brandsFilterSlice';
 import {
-  selectCheckboxStates,
+  selectCheckboxStatesBrands,
   selectDefaultBrands,
   selectIsClearSetBrandsFilter,
 } from 'redux/selectors/selectors';
@@ -25,7 +25,7 @@ export const BrandsFilter = ({ active }) => {
   const dispatch = useDispatch();
 
   const defaultBrands = useSelector(selectDefaultBrands);
-  const checkboxStates = useSelector(selectCheckboxStates);
+  const checkboxStates = useSelector(selectCheckboxStatesBrands);
   const resetStatus = useSelector(selectIsClearSetBrandsFilter);
   const [activeLetter, setActiveLetter] = useState('');
 
@@ -118,11 +118,7 @@ export const BrandsFilter = ({ active }) => {
             // Create ref for current brand
             brandRefs[item] = React.createRef();
             return (
-              <BrandsCheckBoxStyled
-                key={item + Math.random()}
-                ref={brandRefs[item]}
-                //    disabled={defaultBrands[item] === undefined ? true : false}
-              >
+              <BrandsCheckBoxStyled key={item + Math.random()} ref={brandRefs[item]}>
                 <CheckBoxLabelStyled>
                   {/* Render checkboxes for each brand */}
                   <CheckBoxStyled
@@ -130,25 +126,8 @@ export const BrandsFilter = ({ active }) => {
                     name={item}
                     onChange={e => {
                       handleCheckboxChange(e.target.name, e.target.checked);
-
-                      // const { name, checked } = e.target;
-
-                      // setCheckboxStates(prevState => ({
-                      //   ...prevState,
-                      //   [name]: checked, // Обновление состояния чекбокса по имени
-                      // }));
-
-                      // if (checked) {
-                      //   setCheckedBrands(prevState => [...prevState, name]);
-                      // } else {
-                      //   const indexBrand = checkedBrands.findIndex(item => item === name);
-                      //   const spliceBrands = [...checkedBrands];
-                      //   spliceBrands.splice(indexBrand, 1);
-                      //   setCheckedBrands(spliceBrands);
-                      // }
                     }}
-                    checked={!!checkboxStates[item]} // Отмечен ли чекбокс
-                    //disabled={brandsCount[item] === undefined ? true : false}
+                    checked={!!checkboxStates[item]} // Check if checkbox is checked
                   />
                   {item.toLowerCase()}
                   <QuantityBrands>
