@@ -54,6 +54,7 @@ export default function Search() {
   const sortBy = searchParams.get('sortBy') || defaultSortSelect;
   const availability = searchParams.get('availability') || false;
   const sortingType = sortBy; // extract sorting type from the Redux store
+  const urlCategories = searchParams.get('categories');
 
   useEffect(() => {
     setSearchParams(prevSearchParams => {
@@ -123,6 +124,9 @@ export default function Search() {
     params.brands = brandsString; // set brands to query
   }
 
+  if (urlCategories) {
+    params.category = urlCategories;
+  }
   if (abortControllerRef.current && searchParams.get('query') === '') {
     abortControllerRef.current.abort('empty query'); // If there's an existing abortControllerRef.current and the searchQuery becomes empty, it aborts the ongoing fetch with a message 'empty query, to avoid abort fetch permamently
   }
@@ -167,6 +171,8 @@ export default function Search() {
   useEffect(() => {
     dispatch(setCategoriesDefault(response?.categories));
   }, [dispatch, response?.categories]);
+
+  useEffect(() => {}, [urlCategories]);
 
   // Render Section
 

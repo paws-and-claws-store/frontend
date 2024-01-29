@@ -3,26 +3,56 @@ import {
   FilterContainer,
   QuantityBrands,
 } from 'components/BrandsFilter/BrandsFilter.styled';
-import { useDispatch, useSelector } from 'react-redux';
-import { selectCategories, selectCheckboxStatesCategories } from 'redux/selectors/selectors';
+import { useSelector } from 'react-redux';
+import { selectCategories } from 'redux/selectors/selectors';
 import {
   CategoriesCheckBoxContainer,
   CategoriesCheckBoxLabelStyled,
   CategoriesCheckBoxStyled,
 } from './CategoriesFilter.styled';
-import { setCategories } from 'redux/slice/categoriesFilterSlice';
+import { useSearchParams } from 'react-router-dom';
+import { useState } from 'react';
 
 export const CategoriesFilter = ({ active }) => {
   const categories = useSelector(selectCategories);
-  const checkboxStates = useSelector(selectCheckboxStatesCategories);
   const hierarchy = ['_categories', '_variants'];
-  const dispatch = useDispatch();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const urlCategories = searchParams.get('categories');
+  const urlCheckboxState = urlCategories
+    ? urlCategories.split(',').reduce((acc, key) => {
+        // Удалить пробелы вокруг ключа, если они есть
+        const trimmedKey = key.trim();
+        // Установить значение ключа в true
+        acc[trimmedKey] = true;
+        return acc;
+      }, {})
+    : {};
+
+  const [checkboxStates, setCheckboxStates] = useState(urlCheckboxState);
+
+  function setCategories(stateParams, action) {
+    const updatedCategories = new Set(stateParams);
+    if (action.checked) {
+      updatedCategories.add(action.name);
+    } else {
+      updatedCategories.delete(action.name);
+    }
+
+    setSearchParams(
+      updatedCategories.size !== 0 ? { categories: [...updatedCategories].toString() } : {},
+    );
+  }
 
   const handleCheckboxChange = (name, checked) => {
-    dispatch(setCategories({ name, checked }));
-  };
+    const urlCategoriesArray = urlCategories
+      ? urlCategories.split(',').map(item => item.trim())
+      : [];
 
-  //console.log('categories :>> ', categories);
+    setCategories(urlCategoriesArray, { name, checked });
+    setCheckboxStates(prevState => {
+      return { ...prevState, [name]: checked };
+    });
+  };
 
   const capitalizeFirstLetter = string => {
     const firstLetter = string.charAt(0).toUpperCase();
