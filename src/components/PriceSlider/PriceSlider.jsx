@@ -139,6 +139,7 @@ export const PriceSlider = ({ active }) => {
             onChange={handleChangePriceValue}
             name="minValue"
             onBlur={handleChangeOnBlurValue}
+            maxLength={String(defaultPriceRange[0]).length}
           />
           <PriceCurrency style={{ marginRight: '8px' }}>₴</PriceCurrency>
           <span
@@ -157,6 +158,7 @@ export const PriceSlider = ({ active }) => {
             onChange={handleChangePriceValue}
             name="maxValue"
             onBlur={handleChangeOnBlurValue}
+            maxLength={String(defaultPriceRange[1]).length}
           />
           <PriceCurrency>₴</PriceCurrency>
         </div>
