@@ -310,7 +310,7 @@ export const PriceRangeStyle = styled.form`
 `;
 
 export const PriceValue = styled.input`
-  width: ${props => (props.value ? props.value?.toString().length + 'ch' : 5 + 'ch')};
+  width: ${props => (props.value ? props.value?.toString().length + 'ch' : 1 + 'ch')};
   height: 16px;
   color: ${theme.colors.orange};
   background-color: ${theme.colors.mainBackground};
