@@ -36,39 +36,6 @@ export const CategoriesFilter = ({ active }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [urlCategories]);
 
-  //   const handleCheckboxChange = (name, checked, data) => {
-  //     const urlCategoriesArray = urlCategories
-  //       ? urlCategories.split(',').map(item => item.trim())
-  //       : [];
-
-  //     const updatedCategories = new Set(urlCategoriesArray);
-
-  //     const handleChildCategories = (category, isChecked) => {
-  //       updatedCategories[isChecked ? 'add' : 'delete'](category.code);
-
-  //       hierarchy.forEach(itemHierarchy => {
-  //         if (Array.isArray(category[itemHierarchy])) {
-  //           category[itemHierarchy].forEach(child => {
-  //             handleChildCategories(child, isChecked);
-  //           });
-  //         }
-  //       });
-  //     };
-
-  //     // Обновление дочерних чекбоксов при снятии/установке родительского чекбокса
-  //     handleChildCategories(data, checked);
-
-  //     setSearchParams(
-  //       updatedCategories.size !== 0 ? { categories: [...updatedCategories].join(',') } : {},
-  //     );
-
-  //     setCheckboxStates(prevState => {
-  //       const newState = { ...prevState, [name]: checked };
-
-  //       return newState;
-  //     });
-  //   };
-
   const handleCheckboxChange = (name, checked, data) => {
     const urlCategoriesArray = urlCategories
       ? urlCategories.split(',').map(item => item.trim())
@@ -89,19 +56,16 @@ export const CategoriesFilter = ({ active }) => {
 
       // Если снимается чекбокс с дочерней категории, снимаем также с родительской
       if (!isChecked && category.code) {
-        for (let index = 0; index < categories.length; index++) {
-          const parentCategory = categories[index][hierarchy[0]].find(cat => {
-            const findCategory = cat[hierarchy[1]].find(item => item.code === category.code);
-            if (findCategory) {
-              return cat.code;
-            }
-            return undefined;
-          });
+        categories.forEach((cat, index) => {
+          const parentCategory = cat[hierarchy[0]].find(parent =>
+            parent[hierarchy[1]].some(item => item.code === category.code),
+          );
+
           if (parentCategory) {
             updatedCategories.delete(parentCategory.code);
             updatedCategories.delete(categories[index].code);
           }
-        }
+        });
       }
     };
 
