@@ -33,6 +33,7 @@ export const CategoriesFilter = ({ active }) => {
   useEffect(() => {
     // При изменении данных снова устанавливаем checkboxStates
     setCheckboxStates(urlCheckboxState);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [urlCategories]);
 
   //   const handleCheckboxChange = (name, checked, data) => {
