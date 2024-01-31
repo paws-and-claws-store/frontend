@@ -10,7 +10,8 @@ export const CategoriesCheckBoxContainer = styled.ul`
 export const CategoriesCheckBoxStyled = styled.li`
   /* text-align: left; */
   //display: flex;
-  margin-bottom: 8px;
+  /* margin-top: 8px;
+  margin-bottom: 8px; */
   /* color: ${props => (props.disabled ? `${theme.colors.black}` : `${theme.colors.green}`)}; */
   color: ${theme.colors.black};
   font-variant-numeric: lining-nums proportional-nums;
@@ -28,6 +29,8 @@ export const CategoriesCheckBoxLabelStyled = styled.label`
   display: inline-grid;
   grid-template-columns: auto auto auto;
   grid-column-gap: 6px;
+  margin-top: 5px;
+  margin-bottom: 5px;
 
   /* gap: 10px; */
   // text-transform: capitalize;

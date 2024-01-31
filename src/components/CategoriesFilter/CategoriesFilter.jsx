@@ -105,7 +105,7 @@ export const CategoriesFilter = ({ active }) => {
                   }}
                   checked={!!checkboxStates[item.code]} // Check if checkbox is checked
                 />
-                {capitalizeFirstLetter(item.code.toLowerCase())}
+                {capitalizeFirstLetter(item.ua.toLowerCase())}
               </CategoriesCheckBoxLabelStyled>
               <QuantityBrands>{item ? `(${item.count})` : '(0)'}</QuantityBrands>
               {hierarchy.map(itemHierarchy => {
