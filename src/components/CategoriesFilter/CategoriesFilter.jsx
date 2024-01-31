@@ -11,7 +11,7 @@ import {
   CategoriesCheckBoxStyled,
 } from './CategoriesFilter.styled';
 import { useSearchParams } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 export const CategoriesFilter = ({ active }) => {
   const categories = useSelector(selectCategories);
@@ -30,27 +30,91 @@ export const CategoriesFilter = ({ active }) => {
 
   const [checkboxStates, setCheckboxStates] = useState(urlCheckboxState);
 
-  function setCategories(stateParams, action) {
-    const updatedCategories = new Set(stateParams);
-    if (action.checked) {
-      updatedCategories.add(action.name);
-    } else {
-      updatedCategories.delete(action.name);
-    }
+  useEffect(() => {
+    // При изменении данных снова устанавливаем checkboxStates
+    setCheckboxStates(urlCheckboxState);
+  }, [urlCategories]);
 
-    setSearchParams(
-      updatedCategories.size !== 0 ? { categories: [...updatedCategories].toString() } : {},
-    );
-  }
+  //   const handleCheckboxChange = (name, checked, data) => {
+  //     const urlCategoriesArray = urlCategories
+  //       ? urlCategories.split(',').map(item => item.trim())
+  //       : [];
 
-  const handleCheckboxChange = (name, checked) => {
+  //     const updatedCategories = new Set(urlCategoriesArray);
+
+  //     const handleChildCategories = (category, isChecked) => {
+  //       updatedCategories[isChecked ? 'add' : 'delete'](category.code);
+
+  //       hierarchy.forEach(itemHierarchy => {
+  //         if (Array.isArray(category[itemHierarchy])) {
+  //           category[itemHierarchy].forEach(child => {
+  //             handleChildCategories(child, isChecked);
+  //           });
+  //         }
+  //       });
+  //     };
+
+  //     // Обновление дочерних чекбоксов при снятии/установке родительского чекбокса
+  //     handleChildCategories(data, checked);
+
+  //     setSearchParams(
+  //       updatedCategories.size !== 0 ? { categories: [...updatedCategories].join(',') } : {},
+  //     );
+
+  //     setCheckboxStates(prevState => {
+  //       const newState = { ...prevState, [name]: checked };
+
+  //       return newState;
+  //     });
+  //   };
+
+  const handleCheckboxChange = (name, checked, data) => {
     const urlCategoriesArray = urlCategories
       ? urlCategories.split(',').map(item => item.trim())
       : [];
 
-    setCategories(urlCategoriesArray, { name, checked });
+    const updatedCategories = new Set(urlCategoriesArray);
+
+    const handleChildCategories = (category, isChecked, parentCategory = null) => {
+      updatedCategories[isChecked ? 'add' : 'delete'](category.code);
+
+      hierarchy.forEach((itemHierarchy, index) => {
+        if (Array.isArray(category[itemHierarchy])) {
+          category[itemHierarchy].forEach(child => {
+            handleChildCategories(child, isChecked);
+          });
+        }
+      });
+
+      // Если снимается чекбокс с дочерней категории, снимаем также с родительской
+      if (!isChecked && category.code) {
+        for (let index = 0; index < categories.length; index++) {
+          const parentCategory = categories[index][hierarchy[0]].find(cat => {
+            const findCategory = cat[hierarchy[1]].find(item => item.code === category.code);
+            if (findCategory) {
+              return cat.code;
+            }
+            return undefined;
+          });
+          if (parentCategory) {
+            updatedCategories.delete(parentCategory.code);
+            updatedCategories.delete(categories[index].code);
+          }
+        }
+      }
+    };
+
+    // Обновление дочерних чекбоксов при снятии/установке родительского чекбокса
+    handleChildCategories(data, checked);
+
+    setSearchParams(
+      updatedCategories.size !== 0 ? { categories: [...updatedCategories].join(',') } : {},
+    );
+
     setCheckboxStates(prevState => {
-      return { ...prevState, [name]: checked };
+      const newState = { ...prevState, [name]: checked };
+
+      return newState;
     });
   };
 
@@ -72,11 +136,11 @@ export const CategoriesFilter = ({ active }) => {
                   type="checkbox"
                   name={item.code}
                   onChange={e => {
-                    handleCheckboxChange(e.target.name, e.target.checked);
+                    handleCheckboxChange(e.target.name, e.target.checked, item);
                   }}
                   checked={!!checkboxStates[item.code]} // Check if checkbox is checked
                 />
-                {capitalizeFirstLetter(item.ua.toLowerCase())}
+                {capitalizeFirstLetter(item.code.toLowerCase())}
               </CategoriesCheckBoxLabelStyled>
               <QuantityBrands>{item ? `(${item.count})` : '(0)'}</QuantityBrands>
               {hierarchy.map(itemHierarchy => {
