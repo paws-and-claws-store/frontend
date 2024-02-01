@@ -28,6 +28,7 @@ export default memo(function SearchCategory() {
   const dispatch = useDispatch();
   const isPriceRangeSet = useSelector(selectIsPriceRangeSet);
   const isBrandsFilterSet = useSelector(selectIsBrandsFilterSet);
+  const isCategoriesURIAvailable = searchParams.get('categories');
 
   const handleClickToggle = e => {
     active[e.currentTarget.attributes.name.value]
@@ -38,6 +39,7 @@ export default memo(function SearchCategory() {
   const handleClickClearFilters = () => {
     dispatch(setClearSetStatusPriceRange(true)); // reset status to price range redux store
     dispatch(setClearSetStatusBrandsFilter(true)); // reset status to Brands filter redux store
+    setSearchParams({});
   };
 
   const handleCheckboxChange = e => {
@@ -46,8 +48,10 @@ export default memo(function SearchCategory() {
 
   return (
     <SearchCategoryList>
-      {(isBrandsFilterSet || isPriceRangeSet) && <FilterSelectionLayout />}
-      {(isBrandsFilterSet || isPriceRangeSet) && (
+      {(isBrandsFilterSet || isPriceRangeSet || isCategoriesURIAvailable) && (
+        <FilterSelectionLayout />
+      )}
+      {(isBrandsFilterSet || isPriceRangeSet || isCategoriesURIAvailable) && (
         <SearchClearFilter
           onClick={() => {
             handleClickClearFilters();

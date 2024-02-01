@@ -25,6 +25,10 @@ export const FilterSelectionLayout = renderdata => {
   const priceValue = useSelector(selectPriceValueInput);
   const [searchParams, setSearchParams] = useSearchParams();
   const booleanAvailability = searchParams.get('availability') === 'true';
+  const checkedBrandsArray = searchParams
+    .get('categories')
+    ?.split(',')
+    .map(item => item.trim());
 
   const isPriceRangeSet = useSelector(selectIsPriceRangeSet);
   const isBrandsSet = useSelector(selectIsBrandsFilterSet);
@@ -44,6 +48,10 @@ export const FilterSelectionLayout = renderdata => {
       renderText = `${data[0]} ₴ - ${data[1]} ₴`.toLowerCase();
     }
 
+    if (type === 'category') {
+      renderText = `${data}`.toLowerCase();
+    }
+
     return (
       <FilterSelectionOption
         //  key={data}
@@ -58,24 +66,18 @@ export const FilterSelectionLayout = renderdata => {
           if (type === 'price') {
             dispatch(setClearSetStatusPriceRange(true)); // reset status to price range redux store
           }
+          if (type === 'category') {
+            const updateParams = checkedBrandsArray.filter(item => item !== data).join(',');
+
+            updateParams.length > 0
+              ? setSearchParams({ categories: updateParams })
+              : setSearchParams({});
+          }
         }}
         key={data + 'button'}
       >
         <FilterSelectionText key={data + 'text'}>{renderText.toLowerCase()}</FilterSelectionText>
-        <FilterSelectionButton
-          onClick={() => {
-            if (type === 'brand') {
-              handleClickUnset({ name: data, checked: checkboxStates[data] });
-            }
-            if (type === 'availability') {
-              setSearchParams({ availability: false });
-            }
-            if (type === 'price') {
-              dispatch(setClearSetStatusPriceRange(true)); // reset status to price range redux store
-            }
-          }}
-          key={data + 'button'}
-        />
+        <FilterSelectionButton key={data + 'button'} />
       </FilterSelectionOption>
     );
   }
@@ -89,6 +91,7 @@ export const FilterSelectionLayout = renderdata => {
       {isBrandsSet ? checkedBrands.map(item => renderBlock(item, 'brand')) : null}
       {isPriceRangeSet ? renderBlock(priceValue, 'price') : null}
       {booleanAvailability ? renderBlock('В наявності', 'availability') : null}
+      {checkedBrandsArray ? checkedBrandsArray.map(item => renderBlock(item, 'category')) : null}
     </FilterSelectionContainer>
   );
 };
