@@ -6,6 +6,7 @@ import {
   FilterSelectionText,
 } from './FilterSelectionLayout.styled';
 import {
+  selectCategories,
   selectCheckboxStatesBrands,
   selectCheckedBrands,
   selectIsBrandsFilterSet,
@@ -33,13 +34,39 @@ export const FilterSelectionLayout = renderdata => {
   const isPriceRangeSet = useSelector(selectIsPriceRangeSet);
   const isBrandsSet = useSelector(selectIsBrandsFilterSet);
 
+  const hierarchyArray = ['_categories', '_variants'];
+  const categories = useSelector(selectCategories);
+
+  const findUaByCode = (obj, code, hierarchy = hierarchyArray, uaObject = {}) => {
+    if (obj.code === code) {
+      uaObject[obj.code] = obj.ua;
+    }
+
+    hierarchy.forEach(categoryType => {
+      const items = obj[categoryType] || [];
+      items.forEach(item => findUaByCode(item, code, hierarchy, uaObject));
+    });
+
+    return uaObject;
+  };
+
+  const uaObject = {};
+
+  if (categories && checkedBrandsArray) {
+    checkedBrandsArray.forEach(code => {
+      categories.forEach(obj => {
+        findUaByCode(obj, code, hierarchyArray, uaObject);
+      });
+    });
+  }
+
   useEffect(() => {
     if (checkedBrands.length === 0) {
       dispatch(setBrandsSet(false));
     }
   }, [checkedBrands, dispatch]);
 
-  function renderBlock(data, type) {
+  function renderBlock(data, type, localization) {
     let renderText;
     if (type === 'brand' || type === 'availability') {
       renderText = `${data}`.toLowerCase();
@@ -49,12 +76,11 @@ export const FilterSelectionLayout = renderdata => {
     }
 
     if (type === 'category') {
-      renderText = `${data}`.toLowerCase();
+      renderText = `${localization}`.toLowerCase();
     }
 
     return (
       <FilterSelectionOption
-        //  key={data}
         className="FilterSelectionOption"
         onClick={() => {
           if (type === 'brand') {
@@ -71,7 +97,7 @@ export const FilterSelectionLayout = renderdata => {
 
             updateParams.length > 0
               ? setSearchParams({ categories: updateParams })
-              : setSearchParams({});
+              : setSearchParams(prevSearchParams => prevSearchParams.delete('categories'));
           }
         }}
         key={data + 'button'}
@@ -91,7 +117,9 @@ export const FilterSelectionLayout = renderdata => {
       {isBrandsSet ? checkedBrands.map(item => renderBlock(item, 'brand')) : null}
       {isPriceRangeSet ? renderBlock(priceValue, 'price') : null}
       {booleanAvailability ? renderBlock('В наявності', 'availability') : null}
-      {checkedBrandsArray ? checkedBrandsArray.map(item => renderBlock(item, 'category')) : null}
+      {checkedBrandsArray
+        ? checkedBrandsArray.map(item => renderBlock(item, 'category', uaObject[item]))
+        : null}
     </FilterSelectionContainer>
   );
 };

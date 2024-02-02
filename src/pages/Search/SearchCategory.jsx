@@ -39,7 +39,7 @@ export default memo(function SearchCategory() {
   const handleClickClearFilters = () => {
     dispatch(setClearSetStatusPriceRange(true)); // reset status to price range redux store
     dispatch(setClearSetStatusBrandsFilter(true)); // reset status to Brands filter redux store
-    setSearchParams({});
+    setSearchParams(prevSearchParams => prevSearchParams.delete('categories')); //clear all categories in URI except query and sorting, code for leaving query and sorting in file
   };
 
   const handleCheckboxChange = e => {
