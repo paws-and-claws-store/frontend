@@ -18,7 +18,6 @@ import {
   selectIsPriceRangeSet,
   selectPriceValue,
   selectSearchQueryStore,
-  selectSortingTypeStoreDefault,
 } from 'redux/selectors/selectors';
 import { NoSearch } from 'components/NoSearch/NoSearch';
 import { Notify } from 'notiflix';
@@ -49,9 +48,8 @@ export default function Search() {
   const checkedBrands = useSelector(selectCheckedBrands);
 
   const brandsString = useSelector(selectBrandsFilter);
-  const defaultSortSelect = useSelector(selectSortingTypeStoreDefault);
   const query = searchParams.get('query');
-  const sortBy = searchParams.get('sortBy') || defaultSortSelect;
+  const sortBy = searchParams.get('sortBy');
   const availability = searchParams.get('availability') || false;
   const sortingType = sortBy; // extract sorting type from the Redux store
   const urlCategories = searchParams.get('categories');

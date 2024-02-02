@@ -72,9 +72,17 @@ export const CategoriesFilter = ({ active }) => {
     // Обновление дочерних чекбоксов при снятии/установке родительского чекбокса
     handleChildCategories(data, checked);
 
-    setSearchParams(
-      updatedCategories.size !== 0 ? { categories: [...updatedCategories].join(',') } : {},
-    );
+    updatedCategories.size !== 0
+      ? setSearchParams(prevSearchParams => {
+          const updatedSearchParams = new URLSearchParams(prevSearchParams);
+          updatedSearchParams.set('categories', [...updatedCategories].join(','));
+          return updatedSearchParams;
+        })
+      : setSearchParams(prevSearchParams => {
+          const updatedSearchParams = new URLSearchParams(prevSearchParams);
+          updatedSearchParams.delete('categories');
+          return updatedSearchParams;
+        });
 
     setCheckboxStates(prevState => {
       const newState = { ...prevState, [name]: checked };
