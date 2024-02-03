@@ -11,37 +11,76 @@ import {
   QuantityBrands,
 } from './BrandsFilter.styled';
 import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { setBrands, setResetBrands } from 'redux/slice/brandsFilterSlice';
-import {
-  selectCheckboxStatesBrands,
-  selectDefaultBrands,
-  selectIsClearSetBrandsFilter,
-} from 'redux/selectors/selectors';
+import { useSelector } from 'react-redux';
+import { selectDefaultBrands } from 'redux/selectors/selectors';
+import { useSearchParams } from 'react-router-dom';
 
 export const BrandsFilter = ({ active }) => {
   // Generates an alphabet array
   const alphabet = [...Array(26)].map((_, i) => String.fromCharCode(i + 97));
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const urlBrands = searchParams.get('brands');
+  const urlCheckboxState = urlBrands
+    ? urlBrands.split(',').reduce((acc, key) => {
+        // Удалить пробелы вокруг ключа, если они есть
+        const trimmedKey = key.trim();
+        // Установить значение ключа в true
+        acc[trimmedKey] = true;
+        return acc;
+      }, {})
+    : {};
 
   const defaultBrands = useSelector(selectDefaultBrands);
-  const checkboxStates = useSelector(selectCheckboxStatesBrands);
-  const resetStatus = useSelector(selectIsClearSetBrandsFilter);
+  //const checkboxStates = useSelector(selectCheckboxStatesBrands);
+  const [checkboxStates, setCheckboxStates] = useState(urlCheckboxState);
+  //const resetStatus = useSelector(selectIsClearSetBrandsFilter);
   const [activeLetter, setActiveLetter] = useState('');
 
   // Object to store refs to brands
   const brandRefs = {};
 
   const handleCheckboxChange = (name, checked) => {
-    dispatch(setBrands({ name, checked }));
+    setCheckboxStates(prevState => {
+      const newState = { ...prevState, [name]: checked };
+
+      return newState;
+    });
+
+    const urlBrandsArray = urlBrands ? urlBrands.split(',').map(item => item.trim()) : [];
+
+    const updatedBrands = new Set(urlBrandsArray);
+    if (checked) {
+      updatedBrands.add(name);
+    } else {
+      updatedBrands.delete(name);
+    }
+
+    updatedBrands.size !== 0
+      ? setSearchParams(prevSearchParams => {
+          const updatedSearchParams = new URLSearchParams(prevSearchParams);
+          updatedSearchParams.set('brands', [...updatedBrands].join(','));
+          return updatedSearchParams;
+        })
+      : setSearchParams(prevSearchParams => {
+          const updatedSearchParams = new URLSearchParams(prevSearchParams);
+          updatedSearchParams.delete('brands');
+          return updatedSearchParams;
+        });
   };
 
+  // useEffect(() => {
+  //   if (resetStatus === true) {
+  //     // setCheckboxStates({}); // flush checkbox status state for render on curent page
+  //     dispatch(setResetBrands()); // flush checkbox status at redux store for coorect query
+  //   }
+  // }, [dispatch, resetStatus]);
+
   useEffect(() => {
-    if (resetStatus === true) {
-      // setCheckboxStates({}); // flush checkbox status state for render on curent page
-      dispatch(setResetBrands()); // flush checkbox status at redux store for coorect query
-    }
-  }, [dispatch, resetStatus]);
+    // При изменении данных снова устанавливаем checkboxStates
+    setCheckboxStates(urlCheckboxState);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [urlBrands]);
 
   return (
     <>
@@ -75,29 +114,6 @@ export const BrandsFilter = ({ active }) => {
                         top: -offsetTop + offsetFromTop,
                         behavior: 'smooth',
                       });
-
-                      // Scroll to the calculated offset with delay for acting code brandContainer.scrollIntoView first if container with brands is not visible
-                      // setTimeout(() => {
-                      //   brandContainer.scrollTo({
-                      //     top: -offsetTop + offsetFromTop,
-                      //     behavior: 'smooth',
-                      //   });
-                      // }, 300);
-
-                      // Check if the container is not fully visible and scroll it into view
-                      // const containerRect = brandContainer.getBoundingClientRect();
-                      // const isContainerVisible =
-                      //   containerRect.top >= 0 &&
-                      //   containerRect.bottom <=
-                      //     (window.innerHeight || document.documentElement.clientHeight);
-                      // console.log(isContainerVisible);
-
-                      // if (!isContainerVisible) {
-                      //   brandContainer.scrollIntoView({
-                      //     behavior: 'smooth',
-                      //     block: 'start',
-                      //   });
-                      // }
                     }
 
                     setActiveLetter(item.toUpperCase());

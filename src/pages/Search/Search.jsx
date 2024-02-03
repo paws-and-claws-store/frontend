@@ -12,7 +12,6 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import { SortSelect } from 'components/SortSelect/SortSelect';
 import {
-  selectBrandsFilter,
   selectCheckedBrands,
   selectIsBrandsFilterSet,
   selectIsPriceRangeSet,
@@ -47,12 +46,12 @@ export default function Search() {
   const isBrandsSet = useSelector(selectIsBrandsFilterSet);
   const checkedBrands = useSelector(selectCheckedBrands);
 
-  const brandsString = useSelector(selectBrandsFilter);
   const query = searchParams.get('query');
   const sortBy = searchParams.get('sortBy');
   const availability = searchParams.get('availability') || false;
   const sortingType = sortBy; // extract sorting type from the Redux store
   const urlCategories = searchParams.get('categories');
+  const urlBrands = searchParams.get('brands');
 
   useEffect(() => {
     setSearchParams(prevSearchParams => {
@@ -118,12 +117,16 @@ export default function Search() {
     params.availability = availability;
   }
 
-  if (brandsString !== '') {
-    params.brands = brandsString; // set brands to query
-  }
+  // if (brandsString !== '') {
+  //   params.brands = brandsString; // set brands to query
+  // }
 
   if (urlCategories) {
     params.category = urlCategories;
+  }
+
+  if (urlBrands) {
+    params.brands = urlBrands;
   }
   if (abortControllerRef.current && searchParams.get('query') === '') {
     abortControllerRef.current.abort('empty query'); // If there's an existing abortControllerRef.current and the searchQuery becomes empty, it aborts the ongoing fetch with a message 'empty query, to avoid abort fetch permamently
@@ -211,7 +214,6 @@ export default function Search() {
                 params={{
                   currentPage,
                   productsList,
-
                   paginationData,
                   onPageChange,
                   onAddPage,

@@ -13,7 +13,6 @@ import {
   selectIsPriceRangeSet,
   selectPriceValueInput,
 } from 'redux/selectors/selectors';
-import { setBrands, setBrandsSet } from 'redux/slice/brandsFilterSlice';
 import { setClearSetStatusPriceRange } from 'redux/slice/priceRangeSlice';
 import { useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
@@ -62,7 +61,7 @@ export const FilterSelectionLayout = renderdata => {
 
   useEffect(() => {
     if (checkedBrands.length === 0) {
-      dispatch(setBrandsSet(false));
+      // dispatch(setBrandsSet(false));
     }
   }, [checkedBrands, dispatch]);
 
@@ -109,7 +108,7 @@ export const FilterSelectionLayout = renderdata => {
   }
 
   const handleClickUnset = ({ name, checked }) => {
-    dispatch(setBrands({ name, checked: !checked }));
+    // dispatch(setBrands({ name, checked: !checked }));
   };
 
   return (
