@@ -7,31 +7,27 @@ import {
 } from './FilterSelectionLayout.styled';
 import {
   selectCategories,
-  selectCheckboxStatesBrands,
-  selectCheckedBrands,
-  selectIsBrandsFilterSet,
   selectIsPriceRangeSet,
   selectPriceValueInput,
 } from 'redux/selectors/selectors';
 import { setClearSetStatusPriceRange } from 'redux/slice/priceRangeSlice';
-import { useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
-export const FilterSelectionLayout = renderdata => {
+export const FilterSelectionLayout = () => {
   const dispatch = useDispatch();
-  const checkedBrands = useSelector(selectCheckedBrands);
-
-  const checkboxStates = useSelector(selectCheckboxStatesBrands);
   const priceValue = useSelector(selectPriceValueInput);
   const [searchParams, setSearchParams] = useSearchParams();
   const booleanAvailability = searchParams.get('availability') === 'true';
-  const checkedBrandsArray = searchParams
+  const checkedCategoriesArray = searchParams
     .get('categories')
+    ?.split(',')
+    .map(item => item.trim());
+  const checkedBrandsArray = searchParams
+    .get('brands')
     ?.split(',')
     .map(item => item.trim());
 
   const isPriceRangeSet = useSelector(selectIsPriceRangeSet);
-  const isBrandsSet = useSelector(selectIsBrandsFilterSet);
 
   const hierarchyArray = ['_categories', '_variants'];
   const categories = useSelector(selectCategories);
@@ -51,19 +47,13 @@ export const FilterSelectionLayout = renderdata => {
 
   const uaObject = {};
 
-  if (categories && checkedBrandsArray) {
-    checkedBrandsArray.forEach(code => {
+  if (categories && checkedCategoriesArray) {
+    checkedCategoriesArray.forEach(code => {
       categories.forEach(obj => {
         findUaByCode(obj, code, hierarchyArray, uaObject);
       });
     });
   }
-
-  useEffect(() => {
-    if (checkedBrands.length === 0) {
-      // dispatch(setBrandsSet(false));
-    }
-  }, [checkedBrands, dispatch]);
 
   function renderBlock(data, type, localization) {
     let renderText;
@@ -83,7 +73,15 @@ export const FilterSelectionLayout = renderdata => {
         className="FilterSelectionOption"
         onClick={() => {
           if (type === 'brand') {
-            handleClickUnset({ name: data, checked: checkboxStates[data] });
+            const updateParams = checkedBrandsArray.filter(item => item !== data).join(',');
+
+            updateParams.length > 0
+              ? setSearchParams({ brands: updateParams })
+              : setSearchParams(prevSearchParams => {
+                  const updatedSearchParams = new URLSearchParams(prevSearchParams);
+                  updatedSearchParams.delete('brands');
+                  return updatedSearchParams;
+                });
           }
           if (type === 'availability') {
             setSearchParams({ availability: false });
@@ -92,11 +90,15 @@ export const FilterSelectionLayout = renderdata => {
             dispatch(setClearSetStatusPriceRange(true)); // reset status to price range redux store
           }
           if (type === 'category') {
-            const updateParams = checkedBrandsArray.filter(item => item !== data).join(',');
+            const updateParams = checkedCategoriesArray.filter(item => item !== data).join(',');
 
             updateParams.length > 0
               ? setSearchParams({ categories: updateParams })
-              : setSearchParams(prevSearchParams => prevSearchParams.delete('categories'));
+              : setSearchParams(prevSearchParams => {
+                  const updatedSearchParams = new URLSearchParams(prevSearchParams);
+                  updatedSearchParams.delete('categories');
+                  return updatedSearchParams;
+                });
           }
         }}
         key={data + 'button'}
@@ -107,17 +109,13 @@ export const FilterSelectionLayout = renderdata => {
     );
   }
 
-  const handleClickUnset = ({ name, checked }) => {
-    // dispatch(setBrands({ name, checked: !checked }));
-  };
-
   return (
     <FilterSelectionContainer>
-      {isBrandsSet ? checkedBrands.map(item => renderBlock(item, 'brand')) : null}
+      {checkedBrandsArray ? checkedBrandsArray.map(item => renderBlock(item, 'brand')) : null}
       {isPriceRangeSet ? renderBlock(priceValue, 'price') : null}
       {booleanAvailability ? renderBlock('В наявності', 'availability') : null}
-      {checkedBrandsArray
-        ? checkedBrandsArray.map(item => renderBlock(item, 'category', uaObject[item]))
+      {checkedCategoriesArray
+        ? checkedCategoriesArray.map(item => renderBlock(item, 'category', uaObject[item]))
         : null}
     </FilterSelectionContainer>
   );

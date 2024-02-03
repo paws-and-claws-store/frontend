@@ -15,7 +15,6 @@ import { theme } from 'styles';
 import { memo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setClearSetStatusPriceRange } from 'redux/slice/priceRangeSlice';
-import { setClearSetStatusBrandsFilter } from 'redux/slice/brandsFilterSlice';
 import { selectIsBrandsFilterSet, selectIsPriceRangeSet } from 'redux/selectors/selectors';
 import { FilterSelectionLayout } from 'components/FilterParametersLayout/FilterSelectionLayout';
 import { useSearchParams } from 'react-router-dom';
@@ -29,6 +28,7 @@ export default memo(function SearchCategory() {
   const isPriceRangeSet = useSelector(selectIsPriceRangeSet);
   const isBrandsFilterSet = useSelector(selectIsBrandsFilterSet);
   const isCategoriesURIAvailable = searchParams.get('categories');
+  const isBrandsURIAvailable = searchParams.get('brands');
 
   const handleClickToggle = e => {
     active[e.currentTarget.attributes.name.value]
@@ -38,10 +38,10 @@ export default memo(function SearchCategory() {
 
   const handleClickClearFilters = () => {
     dispatch(setClearSetStatusPriceRange(true)); // reset status to price range redux store
-    dispatch(setClearSetStatusBrandsFilter(true)); // reset status to Brands filter redux store
     setSearchParams(prevSearchParams => {
       const updatedSearchParams = new URLSearchParams(prevSearchParams);
       updatedSearchParams.delete('categories');
+      updatedSearchParams.delete('brands');
       return updatedSearchParams;
     }); //clear all categories in URI except query and sorting, code for leaving query and sorting in file
   };
@@ -52,10 +52,14 @@ export default memo(function SearchCategory() {
 
   return (
     <SearchCategoryList>
-      {(isBrandsFilterSet || isPriceRangeSet || isCategoriesURIAvailable) && (
-        <FilterSelectionLayout />
-      )}
-      {(isBrandsFilterSet || isPriceRangeSet || isCategoriesURIAvailable) && (
+      {(isBrandsFilterSet ||
+        isPriceRangeSet ||
+        isCategoriesURIAvailable ||
+        isBrandsURIAvailable) && <FilterSelectionLayout />}
+      {(isBrandsFilterSet ||
+        isPriceRangeSet ||
+        isCategoriesURIAvailable ||
+        isBrandsURIAvailable) && (
         <SearchClearFilter
           onClick={() => {
             handleClickClearFilters();

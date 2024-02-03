@@ -163,11 +163,11 @@ export default function Search() {
       if (response?.minMax) {
         dispatch(setDefaultPriceRange(response?.minMax));
       }
-      if (response?.brands) {
-        dispatch(setDefaultBrands(response?.brands));
+      if (response?.brandsDefault) {
+        dispatch(setDefaultBrands(response?.brandsDefault));
       }
     }
-  }, [dispatch, isBrandsSet, isPriceRangeSet, query, response?.brands, response?.minMax]); // update default price range value only if query are changed and response are exists, not selected filters
+  }, [dispatch, isBrandsSet, isPriceRangeSet, query, response?.brandsDefault, response?.minMax]); // update default price range value only if query are changed and response are exists, not selected filters
 
   useEffect(() => {
     dispatch(setCategoriesDefault(response?.categories));
@@ -189,7 +189,12 @@ export default function Search() {
     ); // Show a loader if data is loading (isLoading && !isError).
   }
 
-  if (totalDocs > 0 || (totalDocs === 0 && isPriceRangeSet) || (totalDocs === 0 && isBrandsSet)) {
+  if (
+    totalDocs > 0 ||
+    (totalDocs === 0 && isPriceRangeSet) ||
+    (totalDocs === 0 && urlBrands) ||
+    (totalDocs === 0 && urlCategories)
+  ) {
     return (
       <div style={{ minHeight: '640px' }}>
         {
