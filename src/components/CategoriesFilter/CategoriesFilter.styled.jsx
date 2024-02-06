@@ -1,18 +1,24 @@
 import styled from '@emotion/styled';
 import { theme } from 'styles';
 
+export const CategoriesFilterContainer = styled.div`
+  overflow: auto;
+  z-index: ${theme.zIndexes.filterSearch};
+  width: 100%;
+  max-height: 392px;
+  transition-property: transform;
+  transition-duration: ${theme.animations.transitionDuration};
+  transition-timing-function: ${theme.animations.cubicBezier};
+  transform: ${props => (props.active ? 'translateY(-90px)' : null)};
+`;
+
 export const CategoriesCheckBoxContainer = styled.ul`
   display: grid;
   grid-template-rows: 1fr;
-  padding-left: 10px;
+  padding-left: 24px;
 `;
 
 export const CategoriesCheckBoxStyled = styled.li`
-  /* text-align: left; */
-  //display: flex;
-  /* margin-top: 8px;
-  margin-bottom: 8px; */
-  /* color: ${props => (props.disabled ? `${theme.colors.black}` : `${theme.colors.green}`)}; */
   color: ${theme.colors.black};
   font-variant-numeric: lining-nums proportional-nums;
   font-feature-settings: 'ss09' on;
@@ -28,11 +34,9 @@ export const CategoriesCheckBoxStyled = styled.li`
 export const CategoriesCheckBoxLabelStyled = styled.label`
   display: inline-grid;
   grid-template-columns: auto auto auto;
-  grid-column-gap: 6px;
-  margin-top: 5px;
-  margin-bottom: 5px;
+  grid-column-gap: 4px;
+  margin-top: 4px;
 
-  /* gap: 10px; */
-  // text-transform: capitalize;
+  margin-bottom: 4px;
   cursor: pointer;
 `;

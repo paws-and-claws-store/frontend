@@ -1,17 +1,14 @@
-import {
-  CheckBoxStyled,
-  FilterContainer,
-  QuantityBrands,
-} from 'components/BrandsFilter/BrandsFilter.styled';
+import { CheckBoxStyled, QuantityBrands } from 'components/BrandsFilter/BrandsFilter.styled';
 import { useSelector } from 'react-redux';
 import { selectCategories } from 'redux/selectors/selectors';
 import {
   CategoriesCheckBoxContainer,
   CategoriesCheckBoxLabelStyled,
   CategoriesCheckBoxStyled,
+  CategoriesFilterContainer,
 } from './CategoriesFilter.styled';
 import { useSearchParams } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 
 export const CategoriesFilter = ({ active }) => {
   const categories = useSelector(selectCategories);
@@ -133,12 +130,15 @@ export const CategoriesFilter = ({ active }) => {
 
   if (categories) {
     return (
-      <FilterContainer active={active} className="custom-scrollbar">
+      <CategoriesFilterContainer active={active} className="custom-scrollbar">
         {/* Render categories checkboxes */}
-        {Array.isArray(categories) && categories.length > 0
-          ? renderCheckBoxes(categories, hierarchy)
-          : null}
-      </FilterContainer>
+
+        <div style={{ position: 'relative', left: '-16px' }}>
+          {Array.isArray(categories) && categories.length > 0
+            ? renderCheckBoxes(categories, hierarchy)
+            : null}
+        </div>
+      </CategoriesFilterContainer>
     );
   }
 };
