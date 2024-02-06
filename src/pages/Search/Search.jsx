@@ -11,13 +11,7 @@ import {
 } from './Search.styled';
 import { useDispatch, useSelector } from 'react-redux';
 import { SortSelect } from 'components/SortSelect/SortSelect';
-import {
-  selectCheckedBrands,
-  selectIsBrandsFilterSet,
-  selectIsPriceRangeSet,
-  selectPriceValue,
-  selectSearchQueryStore,
-} from 'redux/selectors/selectors';
+import { selectSearchQueryStore } from 'redux/selectors/selectors';
 import { NoSearch } from 'components/NoSearch/NoSearch';
 import { Notify } from 'notiflix';
 import SearchWrapper from './SearchWarapper';
@@ -41,10 +35,6 @@ export default function Search() {
   const dispatch = useDispatch();
 
   const abortControllerRef = useRef(); // hooks used to store references to the AbortController.
-  const priceValue = useSelector(selectPriceValue); // get price value from price slider
-  const isPriceRangeSet = useSelector(selectIsPriceRangeSet); // get price range set state from price slider
-  const isBrandsSet = useSelector(selectIsBrandsFilterSet);
-  const checkedBrands = useSelector(selectCheckedBrands);
 
   const query = searchParams.get('query');
   const sortBy = searchParams.get('sortBy');
@@ -52,6 +42,8 @@ export default function Search() {
   const sortingType = sortBy; // extract sorting type from the Redux store
   const urlCategories = searchParams.get('categories');
   const urlBrands = searchParams.get('brands');
+  const priceRange = searchParams.get('price');
+  const priceRangeArray = priceRange ? priceRange.split('-').map(item => Number(item.trim())) : [];
 
   useEffect(() => {
     setSearchParams(prevSearchParams => {
@@ -91,35 +83,18 @@ export default function Search() {
     sortBy,
   }; // params object to be used in the API call hook useFetchSearchQuery.
 
-  // add price value data if defaultValue is updated in priceRangeSlice
-  if (priceValue[1] !== 1000000) {
-    params.minPrice = priceValue[0];
-    params.maxPrice = priceValue[1];
+  if (priceRange) {
+    params.minPrice = priceRangeArray[0];
+    params.maxPrice = priceRangeArray[1];
   }
 
   useEffect(() => {
     setCurrentPage(1); // set page one to the new search query, sorting type or price calue from price slider
-  }, [searchQuery, checkedBrands, sortBy]);
-
-  // if (sortingType !== '') {
-  //   params.sortBy = sortingType; // set to params object sorting type if sorting type is exists
-  // }
-
-  // if (!sortBy) {
-  //   params.sortBy = defaultSortSelect;
-  // }
-
-  // if (sortBy) {
-  //   params.sortBy = sortBy; // set to params object sorting type if sorting type is exists
-  // }
+  }, [searchQuery, urlBrands, sortBy]);
 
   if (availability) {
     params.availability = availability;
   }
-
-  // if (brandsString !== '') {
-  //   params.brands = brandsString; // set brands to query
-  // }
 
   if (urlCategories) {
     params.category = urlCategories;
@@ -159,19 +134,22 @@ export default function Search() {
   useEffect(() => {}, [totalDocs]); // rerender search component when total docs are changed
 
   useEffect(() => {
-    if (!isPriceRangeSet && !isBrandsSet) {
-      if (response?.minMax) {
-        dispatch(setDefaultPriceRange(response?.minMax));
-      }
-      if (response?.brandsDefault) {
-        dispatch(setDefaultBrands(response?.brandsDefault));
-      }
+    if (response?.categories) {
+      dispatch(setCategoriesDefault(response?.categories));
     }
-  }, [dispatch, isBrandsSet, isPriceRangeSet, query, response?.brandsDefault, response?.minMax]); // update default price range value only if query are changed and response are exists, not selected filters
+  }, [dispatch, response?.categories]);
 
   useEffect(() => {
-    dispatch(setCategoriesDefault(response?.categories));
-  }, [dispatch, response?.categories]);
+    if (response?.minMax) {
+      dispatch(setDefaultPriceRange(response?.minMax));
+    }
+  }, [dispatch, response?.minMax]);
+
+  useEffect(() => {
+    if (response?.brandsDefault) {
+      dispatch(setDefaultBrands(response?.brandsDefault));
+    }
+  }, [dispatch, response?.brandsDefault]);
 
   useEffect(() => {}, [urlCategories]);
 
@@ -191,9 +169,10 @@ export default function Search() {
 
   if (
     totalDocs > 0 ||
-    (totalDocs === 0 && isPriceRangeSet) ||
+    (totalDocs === 0 && priceRange) ||
     (totalDocs === 0 && urlBrands) ||
-    (totalDocs === 0 && urlCategories)
+    (totalDocs === 0 && urlCategories) ||
+    (totalDocs === 0 && priceRange)
   ) {
     return (
       <div style={{ minHeight: '640px' }}>

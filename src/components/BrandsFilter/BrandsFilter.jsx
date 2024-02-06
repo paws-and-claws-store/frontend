@@ -18,7 +18,6 @@ import { useSearchParams } from 'react-router-dom';
 export const BrandsFilter = ({ active }) => {
   // Generates an alphabet array
   const alphabet = [...Array(26)].map((_, i) => String.fromCharCode(i + 97));
-  // const dispatch = useDispatch();
   const [searchParams, setSearchParams] = useSearchParams();
   const urlBrands = searchParams.get('brands');
   const urlCheckboxState = urlBrands
@@ -32,9 +31,7 @@ export const BrandsFilter = ({ active }) => {
     : {};
 
   const defaultBrands = useSelector(selectDefaultBrands);
-  //const checkboxStates = useSelector(selectCheckboxStatesBrands);
   const [checkboxStates, setCheckboxStates] = useState(urlCheckboxState);
-  //const resetStatus = useSelector(selectIsClearSetBrandsFilter);
   const [activeLetter, setActiveLetter] = useState('');
 
   // Object to store refs to brands
@@ -69,13 +66,6 @@ export const BrandsFilter = ({ active }) => {
         });
   };
 
-  // useEffect(() => {
-  //   if (resetStatus === true) {
-  //     // setCheckboxStates({}); // flush checkbox status state for render on curent page
-  //     dispatch(setResetBrands()); // flush checkbox status at redux store for coorect query
-  //   }
-  // }, [dispatch, resetStatus]);
-
   useEffect(() => {
     // При изменении данных снова устанавливаем checkboxStates
     setCheckboxStates(urlCheckboxState);
@@ -88,9 +78,9 @@ export const BrandsFilter = ({ active }) => {
       <AlphabetStyled>
         {alphabet.map(item => {
           // Checks if the letter is enabled based on available brands
-          const enabledLetter = Object.keys(defaultBrands)?.find(
-            i => i[0].toUpperCase() === item.toUpperCase(),
-          );
+          const enabledLetter = Object.keys(defaultBrands)?.find(i => {
+            return i[0].toUpperCase() === item.toUpperCase() && defaultBrands[i] !== 0;
+          });
 
           return (
             <LetterStyled key={item}>
@@ -133,25 +123,28 @@ export const BrandsFilter = ({ active }) => {
           {Object.keys(defaultBrands)?.map(item => {
             // Create ref for current brand
             brandRefs[item] = React.createRef();
-            return (
-              <BrandsCheckBoxStyled key={item + Math.random()} ref={brandRefs[item]}>
-                <CheckBoxLabelStyled>
-                  {/* Render checkboxes for each brand */}
-                  <CheckBoxStyled
-                    type="checkbox"
-                    name={item}
-                    onChange={e => {
-                      handleCheckboxChange(e.target.name, e.target.checked);
-                    }}
-                    checked={!!checkboxStates[item]} // Check if checkbox is checked
-                  />
-                  {item.toLowerCase()}
-                  <QuantityBrands>
-                    {defaultBrands[item] ? `(${defaultBrands[item]})` : '(0)'}
-                  </QuantityBrands>
-                </CheckBoxLabelStyled>
-              </BrandsCheckBoxStyled>
-            );
+            if (defaultBrands[item] !== 0) {
+              return (
+                <BrandsCheckBoxStyled key={item + Math.random()} ref={brandRefs[item]}>
+                  <CheckBoxLabelStyled>
+                    {/* Render checkboxes for each brand */}
+                    <CheckBoxStyled
+                      type="checkbox"
+                      name={item}
+                      onChange={e => {
+                        handleCheckboxChange(e.target.name, e.target.checked);
+                      }}
+                      checked={!!checkboxStates[item]} // Check if checkbox is checked
+                    />
+                    {item.toLowerCase()}
+                    <QuantityBrands>
+                      {defaultBrands[item] ? `(${defaultBrands[item]})` : '(0)'}
+                    </QuantityBrands>
+                  </CheckBoxLabelStyled>
+                </BrandsCheckBoxStyled>
+              );
+            }
+            return null;
           })}
         </BrandsCheckBoxContainer>
       </FilterContainer>

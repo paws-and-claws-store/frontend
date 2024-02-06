@@ -1,21 +1,14 @@
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import {
   FilterSelectionButton,
   FilterSelectionContainer,
   FilterSelectionOption,
   FilterSelectionText,
 } from './FilterSelectionLayout.styled';
-import {
-  selectCategories,
-  selectIsPriceRangeSet,
-  selectPriceValueInput,
-} from 'redux/selectors/selectors';
-import { setClearSetStatusPriceRange } from 'redux/slice/priceRangeSlice';
+import { selectCategories } from 'redux/selectors/selectors';
 import { useSearchParams } from 'react-router-dom';
 
 export const FilterSelectionLayout = () => {
-  const dispatch = useDispatch();
-  const priceValue = useSelector(selectPriceValueInput);
   const [searchParams, setSearchParams] = useSearchParams();
   const booleanAvailability = searchParams.get('availability') === 'true';
   const checkedCategoriesArray = searchParams
@@ -27,7 +20,10 @@ export const FilterSelectionLayout = () => {
     ?.split(',')
     .map(item => item.trim());
 
-  const isPriceRangeSet = useSelector(selectIsPriceRangeSet);
+  const priceRangeArray = searchParams
+    .get('price')
+    ?.split('-')
+    .map(item => item.trim());
 
   const hierarchyArray = ['_categories', '_variants'];
   const categories = useSelector(selectCategories);
@@ -68,6 +64,10 @@ export const FilterSelectionLayout = () => {
       renderText = `${localization}`.toLowerCase();
     }
 
+    if (type === 'availability') {
+      renderText = `${data}`.toLowerCase();
+    }
+
     return (
       <FilterSelectionOption
         className="FilterSelectionOption"
@@ -84,10 +84,19 @@ export const FilterSelectionLayout = () => {
                 });
           }
           if (type === 'availability') {
-            setSearchParams({ availability: false });
+            // setSearchParams({ availability: false });
+            setSearchParams(prevSearchParams => {
+              const updatedSearchParams = new URLSearchParams(prevSearchParams);
+              updatedSearchParams.set('availability', 'false');
+              return updatedSearchParams;
+            });
           }
           if (type === 'price') {
-            dispatch(setClearSetStatusPriceRange(true)); // reset status to price range redux store
+            setSearchParams(prevSearchParams => {
+              const updatedSearchParams = new URLSearchParams(prevSearchParams);
+              updatedSearchParams.delete('price');
+              return updatedSearchParams;
+            });
           }
           if (type === 'category') {
             const updateParams = checkedCategoriesArray.filter(item => item !== data).join(',');
@@ -112,7 +121,7 @@ export const FilterSelectionLayout = () => {
   return (
     <FilterSelectionContainer>
       {checkedBrandsArray ? checkedBrandsArray.map(item => renderBlock(item, 'brand')) : null}
-      {isPriceRangeSet ? renderBlock(priceValue, 'price') : null}
+      {priceRangeArray ? renderBlock(priceRangeArray, 'price') : null}
       {booleanAvailability ? renderBlock('В наявності', 'availability') : null}
       {checkedCategoriesArray
         ? checkedCategoriesArray.map(item => renderBlock(item, 'category', uaObject[item]))

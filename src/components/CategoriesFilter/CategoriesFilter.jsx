@@ -101,28 +101,31 @@ export const CategoriesFilter = ({ active }) => {
     return (
       <CategoriesCheckBoxContainer key={Math.random()}>
         {data.map(item => {
-          return (
-            <CategoriesCheckBoxStyled key={Math.random()}>
-              <CategoriesCheckBoxLabelStyled key={Math.random()}>
-                {/* Render checkboxes for each category */}
-                <CheckBoxStyled
-                  type="checkbox"
-                  name={item.code}
-                  onChange={e => {
-                    handleCheckboxChange(e.target.name, e.target.checked, item);
-                  }}
-                  checked={!!checkboxStates[item.code]} // Check if checkbox is checked
-                />
-                {capitalizeFirstLetter(item.ua.toLowerCase())}
-              </CategoriesCheckBoxLabelStyled>
-              <QuantityBrands>{item ? `(${item.count})` : '(0)'}</QuantityBrands>
-              {hierarchy.map(itemHierarchy => {
-                return Array.isArray(item[itemHierarchy]) && item[itemHierarchy].length > 0
-                  ? renderCheckBoxes(item[itemHierarchy], types)
-                  : null;
-              })}
-            </CategoriesCheckBoxStyled>
-          );
+          if (item.count !== 0) {
+            return (
+              <CategoriesCheckBoxStyled key={Math.random()}>
+                <CategoriesCheckBoxLabelStyled key={Math.random()}>
+                  {/* Render checkboxes for each category */}
+                  <CheckBoxStyled
+                    type="checkbox"
+                    name={item.code}
+                    onChange={e => {
+                      handleCheckboxChange(e.target.name, e.target.checked, item);
+                    }}
+                    checked={!!checkboxStates[item.code]} // Check if checkbox is checked
+                  />
+                  {capitalizeFirstLetter(item.ua.toLowerCase())}
+                </CategoriesCheckBoxLabelStyled>
+                <QuantityBrands>{item ? `(${item.count})` : '(0)'}</QuantityBrands>
+                {hierarchy.map(itemHierarchy => {
+                  return Array.isArray(item[itemHierarchy]) && item[itemHierarchy].length > 0
+                    ? renderCheckBoxes(item[itemHierarchy], types)
+                    : null;
+                })}
+              </CategoriesCheckBoxStyled>
+            );
+          }
+          return null;
         })}
       </CategoriesCheckBoxContainer>
     );

@@ -13,9 +13,8 @@ import { PriceSlider } from 'components/PriceSlider/PriceSlider';
 import { BrandsFilter } from 'components/BrandsFilter/BrandsFilter';
 import { theme } from 'styles';
 import { memo, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { setClearSetStatusPriceRange } from 'redux/slice/priceRangeSlice';
-import { selectIsBrandsFilterSet, selectIsPriceRangeSet } from 'redux/selectors/selectors';
 import { FilterSelectionLayout } from 'components/FilterParametersLayout/FilterSelectionLayout';
 import { useSearchParams } from 'react-router-dom';
 import { CategoriesFilter } from 'components/CategoriesFilter/CategoriesFilter';
@@ -25,10 +24,10 @@ export default memo(function SearchCategory() {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const dispatch = useDispatch();
-  const isPriceRangeSet = useSelector(selectIsPriceRangeSet);
-  const isBrandsFilterSet = useSelector(selectIsBrandsFilterSet);
   const isCategoriesURIAvailable = searchParams.get('categories');
   const isBrandsURIAvailable = searchParams.get('brands');
+  const isPriceRangeURIAvailable = searchParams.get('price');
+  const booleanAvailability = searchParams.get('availability') === 'true';
 
   const handleClickToggle = e => {
     active[e.currentTarget.attributes.name.value]
@@ -42,24 +41,30 @@ export default memo(function SearchCategory() {
       const updatedSearchParams = new URLSearchParams(prevSearchParams);
       updatedSearchParams.delete('categories');
       updatedSearchParams.delete('brands');
+      updatedSearchParams.delete('price');
+      updatedSearchParams.set('availability', 'false');
       return updatedSearchParams;
     }); //clear all categories in URI except query and sorting, code for leaving query and sorting in file
   };
 
-  const handleCheckboxChange = e => {
-    setSearchParams({ availability: e.target.checked });
+  const handleCheckboxChangeAvailability = e => {
+    setSearchParams(prevSearchParams => {
+      const updatedSearchParams = new URLSearchParams(prevSearchParams);
+      updatedSearchParams.set('availability', `${e.target.checked}`);
+      return updatedSearchParams;
+    });
   };
 
   return (
     <SearchCategoryList>
-      {(isBrandsFilterSet ||
-        isPriceRangeSet ||
-        isCategoriesURIAvailable ||
-        isBrandsURIAvailable) && <FilterSelectionLayout />}
-      {(isBrandsFilterSet ||
-        isPriceRangeSet ||
-        isCategoriesURIAvailable ||
-        isBrandsURIAvailable) && (
+      {(isCategoriesURIAvailable ||
+        isBrandsURIAvailable ||
+        isPriceRangeURIAvailable ||
+        booleanAvailability) && <FilterSelectionLayout />}
+      {(isCategoriesURIAvailable ||
+        isBrandsURIAvailable ||
+        isPriceRangeURIAvailable ||
+        booleanAvailability) && (
         <SearchClearFilter
           onClick={() => {
             handleClickClearFilters();
@@ -100,7 +105,7 @@ export default memo(function SearchCategory() {
             <SearchCheckBoxStyled
               type="checkbox"
               name="availability"
-              onChange={handleCheckboxChange}
+              onChange={handleCheckboxChangeAvailability}
               checked={searchParams.get('availability') === 'true'}
             />
             В наявності
