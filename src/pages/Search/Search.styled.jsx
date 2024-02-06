@@ -260,3 +260,23 @@ export const SearchCheckBoxStyled = styled.input`
       ${props => (props.disabled ? `${theme.colors.green}` : `${theme.colors.black}`)};
   }
 `;
+
+export const SearchCategories = styled.div`
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: start;
+
+  width: 100%;
+  min-height: 44px;
+  max-height: ${props => (props.activeCategories ? '44px' : '500px')};
+  transition-property: max-height, background-color;
+  transition-duration: ${theme.animations.transitionDuration};
+  transition-timing-function: ${props => props.theme.animations.cubicBezier};
+  background-color: ${props =>
+    props.activeCategories ? theme.colors.secGreen : theme.colors.beige};
+
+  border: 1px solid ${theme.colors.green};
+`;

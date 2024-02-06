@@ -8,20 +8,21 @@ import {
   SubmitBtnPriceSlider,
 } from './PriceSlider.styled';
 import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { selectDefaultPriceRange, selectIsClearSetPriceRange } from 'redux/selectors/selectors';
-import { resetPriceRange, setPriceValue } from 'redux/slice/priceRangeSlice';
+import { useSelector } from 'react-redux';
+import { useSearchParams } from 'react-router-dom';
+import { selectDefaultPriceRange } from 'redux/selectors/selectors';
 import { theme } from 'styles';
 
 export const PriceSlider = ({ active }) => {
-  const resetStatus = useSelector(selectIsClearSetPriceRange);
   const defaultPriceRange = useSelector(selectDefaultPriceRange);
-  const [priceValueInput, setPriceValueInput] = useState({
-    minValue: defaultPriceRange[0],
-    maxValue: defaultPriceRange[1],
-  }); // set initial data to inputs fields
 
-  const dispatch = useDispatch();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const priceRange = searchParams.get('price');
+  const priceRangeArray = priceRange ? priceRange.split('-').map(item => Number(item.trim())) : [];
+  const [priceValueInput, setPriceValueInput] = useState({
+    minValue: priceRange ? priceRangeArray[0] : defaultPriceRange[0],
+    maxValue: priceRange ? priceRangeArray[1] : defaultPriceRange[1],
+  }); // set initial data to inputs fields
 
   const onSliderChange = value => {
     if (value[0] < value[1]) {
@@ -86,7 +87,8 @@ export const PriceSlider = ({ active }) => {
       currentPriceValue.maxValue === '' ||
       currentPriceValue.minValue === '' ||
       currentPriceValue.maxValue > defaultPriceRange[1] ||
-      currentPriceValue.maxValue < defaultPriceRange[0]
+      currentPriceValue.maxValue < defaultPriceRange[0] ||
+      currentPriceValue.minValue < defaultPriceRange[0]
     ) {
       setPriceValueInput(prevState => ({
         ...prevState,
@@ -96,26 +98,25 @@ export const PriceSlider = ({ active }) => {
       return;
     }
 
-    dispatch(setPriceValue([currentPriceValue.minValue, currentPriceValue.maxValue])); // set on submit price value to redux state
+    setSearchParams(prevSearchParams => {
+      const updatedSearchParams = new URLSearchParams(prevSearchParams);
+      updatedSearchParams.set(
+        'price',
+        [currentPriceValue.minValue, currentPriceValue.maxValue].join('-'),
+      );
+      return updatedSearchParams;
+    });
     setPriceValueInput(currentPriceValue);
   };
 
   useEffect(() => {
-    if (resetStatus === true) {
+    if (!priceRange) {
       setPriceValueInput({
         minValue: defaultPriceRange[0],
         maxValue: defaultPriceRange[1],
       });
-      dispatch(resetPriceRange());
     }
-  }, [defaultPriceRange, dispatch, resetStatus]);
-
-  useEffect(() => {
-    setPriceValueInput({
-      minValue: defaultPriceRange[0],
-      maxValue: defaultPriceRange[1],
-    });
-  }, [defaultPriceRange]); // update data in input fields if default price range for query is updated
+  }, [defaultPriceRange, priceRange]); // update data in input fields if default price range for query is updated
 
   useEffect(() => {}, [priceValueInput]);
 
@@ -139,7 +140,7 @@ export const PriceSlider = ({ active }) => {
             onChange={handleChangePriceValue}
             name="minValue"
             onBlur={handleChangeOnBlurValue}
-            maxLength={String(defaultPriceRange[0]).length}
+            maxLength={String(defaultPriceRange[1]).length}
           />
           <PriceCurrency style={{ marginRight: '8px' }}>₴</PriceCurrency>
           <span
