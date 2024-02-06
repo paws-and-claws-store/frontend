@@ -13,5 +13,7 @@ export const selectIsClearSetBrandsFilter = state => state.brandsFilter.isClearS
 export const selectBrandsFilter = state => state.brandsFilter.brands; // select list of selectrd brands in Brands filter
 export const selectDefaultPriceRange = state => state.priceRange.defaultPriceRange; // select default price range for query
 export const selectCheckedBrands = state => state.brandsFilter.checkedBrands;
-export const selectCheckboxStates = state => state.brandsFilter.checkboxStates;
+export const selectCheckboxStatesBrands = state => state.brandsFilter.checkboxStates; // checkbox states for brabds filter
 export const selectDefaultBrands = state => state.brandsFilter.defaultBrands; // select default brands for query
+export const selectCategories = state => state.categoriesFilter.categories; // select categories from response
+export const selectCheckboxStatesCategories = state => state.categoriesFilter.checkboxStates; // checkbox states for category filter

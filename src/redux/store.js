@@ -23,6 +23,7 @@ import { viewedProductsReducer } from './slice/viewedProductsSlice';
 import { priceRangeReducer } from './slice/priceRangeSlice';
 import { authReducer } from './slice/authSlice';
 import { brandsFilterReducer } from './slice/brandsFilterSlice';
+import { categoriesFilterReducer } from './slice/categoriesFilterSlice';
 
 const persistedAuthReducer = persistReducer(
   {
@@ -51,6 +52,7 @@ const reducers = combineReducers({
   viewedProducts: viewedProductsReducer,
   priceRange: priceRangeReducer,
   brandsFilter: brandsFilterReducer,
+  categoriesFilter: categoriesFilterReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, reducers);

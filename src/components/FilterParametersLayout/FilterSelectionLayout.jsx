@@ -1,41 +1,57 @@
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import {
   FilterSelectionButton,
   FilterSelectionContainer,
   FilterSelectionOption,
   FilterSelectionText,
 } from './FilterSelectionLayout.styled';
-import {
-  selectCheckboxStates,
-  selectCheckedBrands,
-  selectIsBrandsFilterSet,
-  selectIsPriceRangeSet,
-  selectPriceValueInput,
-} from 'redux/selectors/selectors';
-import { setBrands, setBrandsSet } from 'redux/slice/brandsFilterSlice';
-import { setClearSetStatusPriceRange } from 'redux/slice/priceRangeSlice';
-import { useEffect } from 'react';
+import { selectCategories } from 'redux/selectors/selectors';
 import { useSearchParams } from 'react-router-dom';
 
-export const FilterSelectionLayout = renderdata => {
-  const dispatch = useDispatch();
-  const checkedBrands = useSelector(selectCheckedBrands);
-
-  const checkboxStates = useSelector(selectCheckboxStates);
-  const priceValue = useSelector(selectPriceValueInput);
+export const FilterSelectionLayout = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const booleanAvailability = searchParams.get('availability') === 'true';
+  const checkedCategoriesArray = searchParams
+    .get('categories')
+    ?.split(',')
+    .map(item => item.trim());
+  const checkedBrandsArray = searchParams
+    .get('brands')
+    ?.split(',')
+    .map(item => item.trim());
 
-  const isPriceRangeSet = useSelector(selectIsPriceRangeSet);
-  const isBrandsSet = useSelector(selectIsBrandsFilterSet);
+  const priceRangeArray = searchParams
+    .get('price')
+    ?.split('-')
+    .map(item => item.trim());
 
-  useEffect(() => {
-    if (checkedBrands.length === 0) {
-      dispatch(setBrandsSet(false));
+  const hierarchyArray = ['_categories', '_variants'];
+  const categories = useSelector(selectCategories);
+
+  const findUaByCode = (obj, code, hierarchy = hierarchyArray, uaObject = {}) => {
+    if (obj.code === code) {
+      uaObject[obj.code] = obj.ua;
     }
-  }, [checkedBrands, dispatch]);
 
-  function renderBlock(data, type) {
+    hierarchy.forEach(categoryType => {
+      const items = obj[categoryType] || [];
+      items.forEach(item => findUaByCode(item, code, hierarchy, uaObject));
+    });
+
+    return uaObject;
+  };
+
+  const uaObject = {};
+
+  if (categories && checkedCategoriesArray) {
+    checkedCategoriesArray.forEach(code => {
+      categories.forEach(obj => {
+        findUaByCode(obj, code, hierarchyArray, uaObject);
+      });
+    });
+  }
+
+  function renderBlock(data, type, localization) {
     let renderText;
     if (type === 'brand' || type === 'availability') {
       renderText = `${data}`.toLowerCase();
@@ -44,55 +60,72 @@ export const FilterSelectionLayout = renderdata => {
       renderText = `${data[0]} ₴ - ${data[1]} ₴`.toLowerCase();
     }
 
+    if (type === 'category') {
+      renderText = `${localization}`.toLowerCase();
+    }
+
+    if (type === 'availability') {
+      renderText = `${data}`.toLowerCase();
+    }
+
     return (
       <FilterSelectionOption
-        //  key={data}
         className="FilterSelectionOption"
         onClick={() => {
           if (type === 'brand') {
-            handleClickUnset({ name: data, checked: checkboxStates[data] });
+            const updateParams = checkedBrandsArray.filter(item => item !== data).join(',');
+
+            updateParams.length > 0
+              ? setSearchParams({ brands: updateParams })
+              : setSearchParams(prevSearchParams => {
+                  const updatedSearchParams = new URLSearchParams(prevSearchParams);
+                  updatedSearchParams.delete('brands');
+                  return updatedSearchParams;
+                });
           }
           if (type === 'availability') {
-            setSearchParams({ availability: false });
+            // setSearchParams({ availability: false });
+            setSearchParams(prevSearchParams => {
+              const updatedSearchParams = new URLSearchParams(prevSearchParams);
+              updatedSearchParams.set('availability', 'false');
+              return updatedSearchParams;
+            });
           }
           if (type === 'price') {
-            dispatch(setClearSetStatusPriceRange(true)); // reset status to price range redux store
+            setSearchParams(prevSearchParams => {
+              const updatedSearchParams = new URLSearchParams(prevSearchParams);
+              updatedSearchParams.delete('price');
+              return updatedSearchParams;
+            });
+          }
+          if (type === 'category') {
+            const updateParams = checkedCategoriesArray.filter(item => item !== data).join(',');
+
+            updateParams.length > 0
+              ? setSearchParams({ categories: updateParams })
+              : setSearchParams(prevSearchParams => {
+                  const updatedSearchParams = new URLSearchParams(prevSearchParams);
+                  updatedSearchParams.delete('categories');
+                  return updatedSearchParams;
+                });
           }
         }}
         key={data + 'button'}
       >
-        <FilterSelectionText key={data + 'text'}>
-          {renderText.toLowerCase()}
-        </FilterSelectionText>
-        <FilterSelectionButton
-          onClick={() => {
-            if (type === 'brand') {
-              handleClickUnset({ name: data, checked: checkboxStates[data] });
-            }
-            if (type === 'availability') {
-              setSearchParams({ availability: false });
-            }
-            if (type === 'price') {
-              dispatch(setClearSetStatusPriceRange(true)); // reset status to price range redux store
-            }
-          }}
-          key={data + 'button'}
-        />
+        <FilterSelectionText key={data + 'text'}>{renderText.toLowerCase()}</FilterSelectionText>
+        <FilterSelectionButton key={data + 'button'} />
       </FilterSelectionOption>
     );
   }
 
-  const handleClickUnset = ({ name, checked }) => {
-    dispatch(setBrands({ name, checked: !checked }));
-  };
-
   return (
     <FilterSelectionContainer>
-      {isBrandsSet
-        ? checkedBrands.map(item => renderBlock(item, 'brand'))
-        : null}
-      {isPriceRangeSet ? renderBlock(priceValue, 'price') : null}
+      {checkedBrandsArray ? checkedBrandsArray.map(item => renderBlock(item, 'brand')) : null}
+      {priceRangeArray ? renderBlock(priceRangeArray, 'price') : null}
       {booleanAvailability ? renderBlock('В наявності', 'availability') : null}
+      {checkedCategoriesArray
+        ? checkedCategoriesArray.map(item => renderBlock(item, 'category', uaObject[item]))
+        : null}
     </FilterSelectionContainer>
   );
 };
