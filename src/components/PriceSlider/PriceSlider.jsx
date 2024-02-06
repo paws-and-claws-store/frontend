@@ -87,7 +87,8 @@ export const PriceSlider = ({ active }) => {
       currentPriceValue.maxValue === '' ||
       currentPriceValue.minValue === '' ||
       currentPriceValue.maxValue > defaultPriceRange[1] ||
-      currentPriceValue.maxValue < defaultPriceRange[0]
+      currentPriceValue.maxValue < defaultPriceRange[0] ||
+      currentPriceValue.minValue < defaultPriceRange[0]
     ) {
       setPriceValueInput(prevState => ({
         ...prevState,
@@ -139,7 +140,7 @@ export const PriceSlider = ({ active }) => {
             onChange={handleChangePriceValue}
             name="minValue"
             onBlur={handleChangeOnBlurValue}
-            maxLength={String(defaultPriceRange[0]).length}
+            maxLength={String(defaultPriceRange[1]).length}
           />
           <PriceCurrency style={{ marginRight: '8px' }}>₴</PriceCurrency>
           <span
