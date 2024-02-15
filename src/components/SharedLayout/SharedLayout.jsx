@@ -1,5 +1,5 @@
-import { Outlet } from 'react-router-dom';
-import { Suspense } from 'react';
+import { Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { Suspense, useEffect } from 'react';
 import Loader from 'components/Loader/Loader';
 import {
   BoxMT,
@@ -14,15 +14,35 @@ import {
 } from 'components';
 import ScrollToTop from 'components/ScrollToTop/ScrollToTop';
 import Breadcrumbs from 'components/Breadcrumbs/BreadCrumbs';
-// import { getCurrentUser } from 'redux/api/auth-operations';
-// import { useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { showUserPage } from 'redux/slice/authSlice';
 
 const SharedLayout = () => {
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
+  const navigation = useNavigate()
 
-  // useEffect(() => {
-  //   dispatch(getCurrentUser());
-  // }, [dispatch]);
+  const location = useLocation();
+  
+
+  useEffect(()=>{
+    // const handleTokenChange = ()=>{
+      const searchParams = new URLSearchParams(location.search);
+  const token = searchParams.get('token');
+  if(token) {
+    localStorage.setItem("accessToken", token);
+    dispatch(showUserPage());
+    navigation('user')
+  }
+    // }
+    // handleTokenChange();
+
+    // window.addEventListener('popstate', handleTokenChange);
+
+    // return () => {
+    //   window.removeEventListener('popstate', handleTokenChange)
+    // }
+  },[location.search, dispatch, navigation])
+
   return (
     <SharedLayoutBox className="SharedLayoutBox">
       <ScrollToTopOnRouteChange />
