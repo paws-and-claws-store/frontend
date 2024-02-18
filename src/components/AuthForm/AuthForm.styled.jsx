@@ -209,13 +209,31 @@ export const OffIconConPass = styled(VisibilityOffIcon)`
 `;
 
 export const Button = styled.button`
-justify-content: center;
-align-items: center;
-display: flex;
+  justify-content: center;
+  align-items: center;
+  display: flex;
   width: 100%;
   height: 48px;
   margin-top: 21px;
   /* margin-bottom: 8px; */
+  font-size: ${theme.fontSizes.l};
+  font-weight: 600;
+  color: ${theme.colors.black};
+  border-radius: 15px;
+  background-color: ${theme.colors.secGreen};
+  transition: all 250ms;
+  &:hover {
+    background-color: rgb(140, 140, 140);
+  }
+`;
+
+export const GoogleLink = styled.a`
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  width: 100%;
+  height: 48px;
+  margin-top: 21px;
   font-size: ${theme.fontSizes.l};
   font-weight: 600;
   color: ${theme.colors.black};
