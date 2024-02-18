@@ -25,6 +25,7 @@ import {
   OffIconPass,
   OnIconConPass,
   OffIconConPass,
+  GoogleLink,
 } from './AuthForm.styled';
 
 import { register } from 'redux/api/auth-operations';
@@ -269,7 +270,8 @@ export function AuthForm() {
                 <Button type="submit" disabled={isSubmitting}>
                   Реєстрація
                 </Button>
-                <Button type="button"><Google/>Вхід через Google</Button>
+                {/* <Button type="button"><Google/>Вхід через Google</Button> */}
+                <GoogleLink href='https://paws-and-claws-store.onrender.com/api/auth/google'><Google/>Вхід через Google</GoogleLink>
             </Form>
           )}
         </Formik>

@@ -2,6 +2,8 @@ import axios from 'axios';
 
 const instance = axios.create({
   baseURL: 'https://paws-and-claws-store.onrender.com',
+  // baseURL: 'http://localhost:4000',
+  // withCredentials: true,
 });
 
 const setToken = token => {
@@ -16,11 +18,11 @@ instance.interceptors.response.use(
   async error => {
     if (error.response.status === 401 && !error.config._retry && error.request.responseURL !== 'https://paws-and-claws-store.onrender.com/api/auth/verifyResetToken') {
       error.config._retry = true;
-      const refreshToken = localStorage.getItem('refreshToken');
-      const { data } = await instance.post('/api/auth/refresh', {refreshToken});
+      // const refreshToken = localStorage.getItem('refreshToken');
+      const { data } = await instance.post('/api/auth/refresh');
       setToken(data.accessToken);
       localStorage.setItem('accessToken', data.accessToken);
-      localStorage.setItem('refreshToken', data.refreshToken);
+      // localStorage.setItem('refreshToken', data.refreshToken);
 
       return instance(error.config);
     }
@@ -58,6 +60,7 @@ export const getCurrent = async (token) => {
         return data;
     }
     catch (error) {
+        console.log("error:", error)
         setToken();
         throw error;
     }
