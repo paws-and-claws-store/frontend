@@ -64,9 +64,9 @@ export const logout = createAsyncThunk('auth/logOut', async (_, thunkAPI) => {
 export const getCurrentUser = createAsyncThunk(
   'auth/currentUser',
   async (_, thunkAPI) => {
-    const accessToken = localStorage.getItem('accessToken');
+
     try {
-      const data = await api.getCurrent(accessToken);
+      const data = await api.getCurrent();
       return data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);

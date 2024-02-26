@@ -22,26 +22,17 @@ const SharedLayout = () => {
   const navigation = useNavigate()
 
   const location = useLocation();
-  
+  const searchParams = new URLSearchParams(location.search);
+  const token = searchParams.get('token');
 
   useEffect(()=>{
-    // const handleTokenChange = ()=>{
-      const searchParams = new URLSearchParams(location.search);
-  const token = searchParams.get('token');
+      
   if(token) {
     localStorage.setItem("accessToken", token);
     dispatch(showUserPage());
-    navigation('user')
+    navigation('/user')
   }
-    // }
-    // handleTokenChange();
-
-    // window.addEventListener('popstate', handleTokenChange);
-
-    // return () => {
-    //   window.removeEventListener('popstate', handleTokenChange)
-    // }
-  },[location.search, dispatch, navigation])
+  },[token, dispatch, navigation])
 
   return (
     <SharedLayoutBox className="SharedLayoutBox">
