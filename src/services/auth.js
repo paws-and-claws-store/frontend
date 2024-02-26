@@ -3,29 +3,26 @@ import axios from 'axios';
 const instance = axios.create({
   baseURL: 'https://paws-and-claws-store.onrender.com',
   // baseURL: 'http://localhost:4000',
-  // withCredentials: true,
+  withCredentials: true,
 });
 
 const setToken = token => {
-  if (token) {
-    return (instance.defaults.headers.common.Authorization = `Bearer ${token}`);
-  }
-  instance.defaults.headers.common.Authorization = '';
+    return (instance.defaults.headers.common.authorization = token?  `Bearer ${token}` : '');
 };
+
+
 
 instance.interceptors.response.use(
   response => response,
   async error => {
-    if (error.response.status === 401 && !error.config._retry && error.request.responseURL !== 'https://paws-and-claws-store.onrender.com/api/auth/verifyResetToken') {
-      error.config._retry = true;
-      // const refreshToken = localStorage.getItem('refreshToken');
-      const { data } = await instance.post('/api/auth/refresh');
-      setToken(data.accessToken);
-      localStorage.setItem('accessToken', data.accessToken);
-      // localStorage.setItem('refreshToken', data.refreshToken);
-
-      return instance(error.config);
-    }
+       
+    if (error?.response?.status === 401 && !error?.config?._retry && error.request.responseURL !== 'https://paws-and-claws-store/api/auth/verifyResetToken') {
+        const { data } = await instance.get('/api/auth/refresh', {withCredentials: true});
+        localStorage.setItem('accessToken',data?.accessToken);
+        error.config.headers.authorization = `Bearer ${data?.accessToken}`;
+        setToken(data?.accessToken);
+        return instance(error.config);
+  }
     return Promise.reject(error);
   },
 );
@@ -33,7 +30,6 @@ instance.interceptors.response.use(
 export const register = async (newUser) => {
     const { data: result } = await instance.post("/api/auth/register", newUser);    
     setToken(result.data.user.accessToken);
-    localStorage.setItem("refreshToken", result.data.user.refreshToken);
     localStorage.setItem("accessToken", result.data.user.accessToken);
     return result;
 };
@@ -41,7 +37,7 @@ export const register = async (newUser) => {
 export const login = async (user) => {
     const { data: result } = await instance.post("/api/auth/login", user);
     setToken(result.data.user.accessToken);
-    localStorage.setItem("refreshToken", result.data.user.refreshToken);
+    // localStorage.setItem("refreshToken", result.data.user.refreshToken);
     localStorage.setItem("accessToken", result.data.user.accessToken);
     return result;
 };
@@ -53,9 +49,11 @@ export const logout = async () => {
     return data;
 };
 
-export const getCurrent = async (token) => {
+export const getCurrent = async () => {
     try {
-        setToken(token);
+        const accessToken = localStorage.getItem('accessToken');
+        setToken(accessToken);
+
         const { data } = await instance.get("/api/auth/current");
         return data;
     }
